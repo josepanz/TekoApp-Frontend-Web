@@ -36,8 +36,8 @@
 | Componente       | Enlace                                                                 | Tecnologías Principales                 |
 |------------------|------------------------------------------------------------------------|-----------------------------------------|
 | **Backend**      | [TekoApp-Backend](https://github.com/josepanz/TekoApp-Backend)         | NestJS, MongoDB, PostgreSQL, Docker     |
-| **Frontend App** | [TekoApp-Frontend](https://github.com/josepanz/TekoApp-Frontend-Mobile)| Flutter                                 |
-| **Frontend Web** | [TekoApp-Frontend](https://github.com/josepanz/TekoApp-Frontend-Web)   | React.js, Tailwind CSS                  |
+| **Frontend App** | [TekoApp-Mobile](https://github.com/josepanz/TekoApp-Frontend-Mobile)  | Flutter                                 |
+| **Frontend Web** | [TekoApp-Web](https://github.com/josepanz/TekoApp-Frontend-Web)        | React.js, Tailwind CSS                  |
 
 ## 🛠️ Tecnologías
 
