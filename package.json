@@ -8,6 +8,7 @@
   "engines": {
     "node": ">=22"
   },
+  "packageManager": "pnpm@11.15.1",
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -90,12 +91,5 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.10"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "msw",
-      "sharp",
-      "unrs-resolver"
-    ]
   }
 }
