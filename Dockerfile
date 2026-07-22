@@ -2,7 +2,11 @@
 # (node:22-alpine, USER node antes de CMD). Portable: el mismo build corre en Vercel/AWS también.
 
 FROM node:22-alpine AS base
-RUN corepack enable pnpm
+# Fijo a pnpm 10 (misma major que .github/workflows/pipeline.yml, pnpm/action-setup@v4
+# version: 10) - sin esto, corepack resuelve "latest" y puede saltar a una major nueva
+# con cambios de comportamiento no probados acá (ej. v11 volvio fatal el chequeo de
+# build scripts no aprobados).
+RUN corepack enable pnpm && corepack prepare pnpm@10.34.5 --activate
 
 # ---- deps ----
 FROM base AS deps
