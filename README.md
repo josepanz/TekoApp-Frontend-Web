@@ -1,183 +1,183 @@
-# TekoApp テコ - Plataforma de Servicios Profesionales 🛠️
+<div align="center">
 
-![TekoApp Banner](https://example.com/path/to/your/banner.png) <!-- Reemplaza con tu imagen -->
+# TekoApp テコ — Portal Web de Administración
 
-**Conectamos clientes con profesionales calificados en tiempo real**
+![TekoApp Banner](https://example.com/path/to/your/banner.png)
 
-## 🌟 Descripción
+**El panel de control detrás de la conexión entre talento y necesidad.**
 
-**TekoApp** es una plataforma innovadora que conecta a usuarios con profesionales de diversas categorías (electricistas, plomeros, pintores, etc.) de manera rápida y segura. Inspirada en modelos como Uber, Bolt, Pedidos Ya, etc., pero para servicios profesionales, ofrece:
+[![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white)](https://tanstack.com/query)
 
-- ✅ Doble Rol: Los usuarios pueden registrarse como clientes o profesionales.
-- 📍 Geolocalización en tiempo real de profesionales disponibles
-- ⭐ Sistema de calificaciones bidireccional (clientes ↔ profesionales)
-- 💰 Precios dinámicos establecidos por cada profesional
-- 📱 Aplicación móvil y versión web integradas
+</div>
 
-1. **En guaraní**: El nombre "Teko" proviene del guaraní y significa "vida" o "estilo de vida", representando nuestra misión de mejorar la vida de las personas conectándolas con los mejores profesionales.
-   - Significa *"vida" o "estilo de vida"*, representando nuestra misión de mejorar el día a día de las personas.
-   - Representa la conexión entre los profesionales y los clientes.
-   - Evoca un sentido de comunidad y bienestar.
-3. **En japonés (テコ)**: Significa *"palanca"*, simbolizando cómo nuestra app sirve como herramienta para **conectar y potenciar** oportunidades entre profesionales y clientes, lo que añade un significado poderoso y simbólico reforzando el concepto de conexión y facilitación de servicios.
-   - Escritura japonesa: テコ (katakana) / 梃子 (kanji menos común).
-   - Significado:
-     - Palanca (herramienta física que multiplica fuerza).
-     - Apalancamiento (en contexto figurado: "ser un puente" o "facilitador").
-     - Uso: Es una palabra reconocida en japonés, aunque no es de uso cotidiano (se usa más en contextos técnicos/mecánicos).
-## ♟️ El poder detrás del nombre "Teko"
+---
 
-| Idioma   | Escritura | Significado        | Simbolismo para la app                  |
-|----------|-----------|--------------------|------------------------------------------|
-| Guaraní  | Teko      | "Vida"             | Conectar estilos de vida                 |
-| Japonés  | テコ      | "Palanca"          | Ser el puente que potencia oportunidades |
+## Descripción
 
-## 🚀 Repositorios
+**TekoApp-Web** es el panel de administración desde el que el equipo de TekoApp gestiona todo el
+ecosistema: usuarios y profesionales, solicitudes de servicio en curso, pagos, promociones,
+calificaciones, roles/permisos y ubicaciones en tiempo real — la cabina de control de la
+plataforma que conecta a las personas con los profesionales que necesitan.
 
-| Componente       | Enlace                                                                 | Tecnologías Principales                 |
-|------------------|------------------------------------------------------------------------|-----------------------------------------|
-| **Backend**      | [TekoApp-Backend](https://github.com/josepanz/TekoApp-Backend)         | NestJS, MongoDB, PostgreSQL, Docker     |
-| **Frontend App** | [TekoApp-Mobile](https://github.com/josepanz/TekoApp-Frontend-Mobile)  | Flutter                                 |
-| **Frontend Web** | [TekoApp-Web](https://github.com/josepanz/TekoApp-Frontend-Web)        | React.js, Tailwind CSS                  |
+No es un simple CRUD: es el **Backend-for-Frontend** de todo el ecosistema TekoApp. Next.js corre
+del lado del servidor como una capa de seguridad propia — cifra credenciales, oculta secretos de
+integración y nunca deja que el navegador le hable directo a la API — antes de mostrar un dashboard
+rápido, con tema claro/oscuro nativo y pensado para que un desarrollador nuevo encuentre las cosas
+sin perderse.
 
-## 🛠️ Tecnologías
+---
 
-### Backend
-- **NestJS** - Framework backend modular
-- **MongoDB** - Base de datos NoSQL para datos flexibles
-- **PostgreSQL** - Base de datos SQL para transacciones críticas
-- **TypeORM** - ORM para bases de datos
-- **JWT** - Autenticación segura
-- **Google Maps API** - Integración de mapas
-- **Firebase Cloud Messaging** - Notificaciones push
-- **Docker** - Contenerización y despliegue
+## El poder detrás del nombre "Teko"
 
-#### Estructura del Proyecto
-````bash
-TekoApp-Backend/
-├── src/
-│   ├── auth/                  # Autenticación (JWT, OAuth)
-│   ├── users/                 # Gestión de usuarios (clientes/profesionales)
-│   ├── professionals/         # Lógica específica de profesionales
-│   ├── services/              # Solicitudes de servicios
-│   ├── ratings/               # Sistema de calificaciones
-│   ├── locations/             # Geolocalización en tiempo real
-│   ├── shared/                # Utilidades comunes (middlewares, guards)
-│   └── main.ts                # Punto de entrada
-├── .env                       # Variables de entorno
-├── docker-compose.yml         # Configuración para Docker
-└── README.md                  # Documentación adicional
-````
+El nombre de la plataforma fusiona dos conceptos culturales que definen su misión — la misma
+historia que el backend, porque toda la marca (acá, en Flutter cuando llegue, y en cualquier
+superficie futura) nace de un solo lugar:
 
-#### 🔧 Instalación
-##### 1. Clona el repositorio:
-````bash
-git clone https://github.com/josepanz/TekoApp-Backend.git
-````
+| Idioma      | Escritura | Significado       | Simbolismo en este panel                                                                                                                                          |
+| ----------- | --------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Guaraní** | Teko      | _"Vida / Estilo"_ | Cada pantalla de este portal existe para mejorar el día a día de alguien del otro lado — un cliente esperando un servicio, un profesional gestionando su trabajo. |
+| **Japonés** | テコ      | _"Palanca"_       | El panel es la palanca operativa: con pocos clics, el equipo de TekoApp multiplica su capacidad de gestionar toda la plataforma.                                  |
 
-##### 2. Instala dependencias:
-````bash
-npm install
-````
+---
 
-##### 3. Configura las variables de entorno (.env):
-````env
-DATABASE_URL=mongodb://localhost:27017/tekoapp
-POSTGRES_URL=postgres://user:password@localhost:5432/tekoapp
-JWT_SECRET=tu_clave_secreta
-GOOGLE_MAPS_API_KEY=tu_api_key
-````
-##### 4. Ejecuta en desarrollo:
-````bash
-npm run start:dev
-````
+## Ecosistema de repositorios
 
-### Frontend
-- **Flutter** - Aplicación móvil multiplataforma
-- **React.js** - Versión web
-- **Tailwind CSS** - Estilos para la web
-- **Provider** - Gestión de estado (Flutter)
-- **Redux** - Gestión de estado (React)
-- **Google Maps SDK** - Integración de mapas
+| Componente                  | Repositorio                                                           | Stack                                     |
+| --------------------------- | --------------------------------------------------------------------- | ----------------------------------------- |
+| **Backend Core**            | [TekoApp-Backend](https://github.com/josepanz/TekoApp-Backend)        | NestJS 10, Prisma, Mongoose, Redis, Sharp |
+| **Mobile App**              | [TekoApp-Mobile](https://github.com/josepanz/TekoApp-Frontend-Mobile) | Flutter 3, Riverpod, go_router, dio       |
+| **Web Admin** _(este repo)_ | TekoApp-Web                                                           | Next.js 16, shadcn/ui, TanStack Query     |
 
-#### Estructura del proyecto
-````bash
-TekoApp-Frontend/
-├── lib/                       # Código Flutter
-│   ├── screens/               # Pantallas (login, mapa, perfil)
-│   ├── widgets/               # Componentes reutilizables
-│   ├── models/                # Modelos de datos
-│   ├── services/              # Llamadas a la API
-│   └── main.dart              # Punto de entrada
-├── web/                       # Versión web (React.js)
-│   ├── public/
-│   ├── src/
-│   │   ├── components/        # Componentes React
-│   │   ├── pages/             # Páginas web
-│   │   └── App.jsx            # Punto de entrada
-│   └── tailwind.config.js     # Configuración de Tailwind
-└── README.md                  # Documentación adicional
-````
+---
 
-#### 📲 Instalación (Flutter)
-##### 1. Clona el repositorio:
-````bash
-git clone https://github.com/josepanz/TekoApp-Frontend-Mobile.git
-````
+## Identidad y diseño
 
-##### 2. Instala dependencias:
-````bash
-flutter pub get
-````
+La marca vive en un único lugar — `src/design-system/tokens/tokens.json` (formato W3C Design
+Tokens) — y de ahí se genera todo lo demás (`pnpm tokens:build`). Cuando arranque la etapa Flutter,
+el mismo archivo alimenta también la app móvil, sin duplicar la definición de marca en ningún lado.
 
-##### 3. Configura las variables de entorno (lib/config/env.dart):
-````env
-const String API_URL = "http://localhost:3000";
-const String GOOGLE_MAPS_API_KEY = "tu_api_key";
-````
+| Elemento        | Definición                                    | Por qué                                                                                                                           |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Primario**    | Índigo/violeta profundo                       | Confianza y carácter tech-forward — deliberadamente distinto del negro de Uber y del verde de Bolt, para tener identidad propia   |
+| **Acento**      | Coral/naranja vibrante                        | Reservado para CTAs — energía sin competir con el primario                                                                        |
+| **Modo oscuro** | Navy oscuro (`oklch` ~0.16), nunca negro puro | Permite capas/elevación reales en cards y modales; es el modo por defecto para un panel de uso prolongado                         |
+| **Tipografía**  | Geist (cuerpo) + Sora (títulos)               | Geist da pulcritud técnica; Sora le da carácter y personalidad a los headings sin sacrificar legibilidad                          |
+| **Componentes** | shadcn/ui sobre Base UI                       | El código de cada componente vive en el repo (no en `node_modules`) — cualquiera puede abrirlo y entenderlo, no es una caja negra |
+| **Catálogo**    | Storybook                                     | La forma de encontrar qué componentes ya existen sin tener que leer código                                                        |
 
-##### 4. Ejecuta la app:
-````bash
-flutter run
-````
+Ver `.claude/documentation/architecture.md` para el razonamiento completo, y
+`.claude/rules/design-system.md` para las reglas de uso.
 
-#### 🌐 Instalación (Web - React.js)
-##### 1. Clona el repositorio:
-````bash
+---
+
+## Arquitectura
+
+Next.js 16 (App Router) actúa como **BFF (Backend-for-Frontend)** frente a `TekoApp-Backend`: el
+navegador nunca le habla directo a la API de NestJS. Todo pasa por un proxy autenticado que:
+
+- cifra el password con RSA antes de loguear (nunca texto plano hacia el backend real),
+- inyecta las credenciales de cliente (Basic Auth) que la API exige, sin exponerlas jamás al navegador,
+- traduce entre las cookies httpOnly que usa el backend y el header `Authorization: Bearer` que sus rutas protegidas realmente esperan.
+
+```
+src/
+├── app/                    # Routing y HTTP — Route Handlers del BFF (paralelo a api/* del backend)
+│   ├── (auth)/login/
+│   ├── (dashboard)/        # Overview, users, professionals, services, payments, promotions...
+│   └── api/
+│       ├── auth/           # login (cifra RSA), refresh, logout
+│       ├── realtime/       # ticket de socket.io
+│       └── backend/[...path]/  # proxy reverso genérico hacia TekoApp-Backend
+├── features/                # Lógica + UI por dominio (paralelo a modules/* del backend)
+├── components/{ui,layout}/  # Primitivos shadcn + AppShell/Sidebar/DataTable
+├── design-system/tokens/    # Fuente de verdad de marca
+├── core/{api-client,auth,config,stores}/
+└── lib/                     # Utilidades puras
+```
+
+Mapeo completo del razonamiento (por qué Next.js, cómo se resuelve cada fricción de auth del
+backend, riesgos conocidos a validar con el equipo de backend) en
+`.claude/documentation/architecture.md`.
+
+### Stack
+
+| Capa               | Tecnología                                                                                           | Por qué                                                         |
+| ------------------ | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Framework          | Next.js 16 (App Router), React 19, TS strict                                                         | Server Components + Route Handlers = el BFF de arriba           |
+| UI                 | Tailwind CSS 4 + shadcn/ui (Base UI) + lucide-react                                                  | Componentes accesibles, código propio, no una dependencia opaca |
+| Servidor de estado | TanStack Query                                                                                       | Cache/reintentos/invalidación sin el boilerplate de Redux       |
+| Estado de UI       | Zustand                                                                                              | Sidebar, tema, filtros — sin sobre-ingeniería                   |
+| Formularios        | React Hook Form + Zod                                                                                | Mismo espíritu schema-first que `class-validator` en el backend |
+| Tipos de API       | `openapi-typescript` desde el Swagger del backend                                                    | Los DTOs nunca se escriben a mano ni se desincronizan           |
+| Tests              | Vitest + Testing Library + MSW (unit) · Playwright (e2e)                                             | TDD para todo lo nuevo                                          |
+| Mapas              | `@vis.gl/react-google-maps`                                                                          | Mismo proveedor que ya usa el backend                           |
+| Realtime           | `socket.io-client`                                                                                   | Contra `LocationsGateway` del backend                           |
+| CI/CD              | GitHub Actions (lint→test→build→docker→deploy) + semantic-release                                    | Mismo patrón que `TekoApp-Backend`                              |
+| Deploy             | Docker (`output: 'standalone'`), self-hosted K3s/ArgoCD por ahora, portable a Vercel/AWS sin cambios | Sin vendor lock-in                                              |
+
+---
+
+## Instalación y desarrollo local
+
+**Requisitos:** Node.js 22+, pnpm 10+, y `TekoApp-Backend` corriendo (ver su propio README).
+
+```bash
 git clone https://github.com/josepanz/TekoApp-Frontend-Web.git
-````
+cd TekoApp-Frontend-Web
+pnpm install
 
-##### 2. Entra a la carpeta web:
-````bash
-cd web
-````
+cp .env.example .env.local
+# completar BACKEND_API_URL, BACKEND_CLIENT_ID/SECRET, BACKEND_JWT_PUBLIC_KEY, etc.
+# (ver .env.example — cada variable tiene su explicación)
 
-##### 3.Instala dependencias:
-````bash
-npm install
-````
-##### 4. Ejecuta en desarrollo:
-````bash
-npm start
-````
-#### 📦 Despliegue
-##### Backend: Usa Docker para empaquetar y desplegar en AWS/GCP:
-````bash
-docker-compose up --build
-````
-##### Frontend:
-###### - Flutter: Genera APK/IPA con flutter build.
-###### - React.js: Despliega en Vercel/Netlify.
+pnpm tokens:build          # genera theme.generated.css desde tokens.json
+pnpm dev                    # http://localhost:3001
+```
 
-📢 Nota: Asegúrate de configurar correctamente las claves de API (Google Maps, Firebase) y las variables de entorno antes de desplegar.
+### Comandos útiles
 
-### 🤝 Cómo Contribuir
-1. Haz fork del proyecto
-2. Crea tu rama (git checkout -b feature/nueva-funcionalidad)
-3. Haz commit de tus cambios (git commit -m 'Añade nueva funcionalidad')
-4. Haz push a la rama (git push origin feature/nueva-funcionalidad)
-5. Abre un Pull Request
+```bash
+pnpm lint                  # ESLint + auto-fix
+pnpm check:types           # tsc --noEmit
+pnpm test                  # Vitest (unit/integración)
+pnpm test:e2e              # Playwright
+pnpm tokens:build           # regenerar CSS de marca desde tokens.json
+pnpm generate:api-types     # regenerar tipos desde el Swagger del backend
+pnpm build && pnpm start    # producción local
+```
 
-## ✉️ Contacto
-José Panza - En X @PanzerPy - josepanza1@gmail.com
+### Docker
 
-✨ "Conectando talento con necesidad, donde sea, cuando sea."
+```bash
+docker build -t tekoapp-frontend-web:latest .
+docker run -p 3001:3001 --env-file .env tekoapp-frontend-web:latest
+```
+
+---
+
+## Contribuir
+
+1. Fork del repositorio.
+2. Rama: `git checkout -b feature/nueva-feature`.
+3. `pnpm lint && pnpm check:types && pnpm test` en verde antes de abrir el PR.
+4. Commits siguiendo Conventional Commits: `git commit -m 'feat: descripción'`.
+5. Pull Request describiendo el cambio y su motivación.
+
+> Todo el código fuertemente tipado — no se aceptan PRs con `any` ni sin test para lógica nueva.
+> Ver `.claude/CLAUDE.md` para las reglas completas del proyecto.
+
+---
+
+## Contacto
+
+**José Panza** — CEO/CTO, Tech Lead, Architect & Senior Staff Engineer
+
+- 𝕏 (Twitter): [@PanzerPy](https://twitter.com/PanzerPy)
+- Email: josepanza1@gmail.com
+
+✨ _"Conectando talento con necesidad, donde sea, cuando sea."_
