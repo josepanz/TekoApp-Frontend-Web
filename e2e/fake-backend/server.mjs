@@ -108,6 +108,13 @@ function sendJson(res, status, body, headers = {}) {
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
+  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/auth/nonce') {
+    return sendJson(res, 200, {
+      success: true,
+      data: { nonce: 'fake-e2e-nonce' },
+    });
+  }
+
   if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/auth/login') {
     const body = await readBody(req);
     if (body.email === 'fail@tekoapp.com.py') {
