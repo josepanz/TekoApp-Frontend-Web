@@ -4,6 +4,7 @@ import type { Category } from '@/features/categories/api';
 export function buildCategory(overrides: Partial<Category> = {}): Category {
   return {
     id: 1,
+    referenceId: 'cat-ref-001',
     name: 'Plomería',
     slug: 'plomeria',
     description: 'Servicios de reparación e instalaciones sanitarias',

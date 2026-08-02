@@ -4,7 +4,7 @@ import { LogOut, User as UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -19,6 +19,7 @@ import {
 interface UserMenuProps {
   name: string;
   email: string;
+  avatarUrl?: string | null;
 }
 
 function getInitials(name: string): string {
@@ -32,7 +33,7 @@ function getInitials(name: string): string {
   );
 }
 
-export function UserMenu({ name, email }: UserMenuProps) {
+export function UserMenu({ name, email, avatarUrl }: UserMenuProps) {
   const t = useTranslations('layout.userMenu');
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -54,6 +55,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
             aria-label={t('trigger')}
           >
             <Avatar className="size-6">
+              {avatarUrl && <AvatarImage src={avatarUrl} alt="" />}
               <AvatarFallback>{getInitials(name)}</AvatarFallback>
             </Avatar>
             <span className="hidden text-sm font-medium sm:inline">{name}</span>
@@ -72,7 +74,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled>
+        <DropdownMenuItem onClick={() => router.push('/perfil')}>
           <UserIcon aria-hidden="true" />
           {t('profile')}
         </DropdownMenuItem>

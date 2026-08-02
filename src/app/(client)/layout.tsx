@@ -24,6 +24,7 @@ export default async function ClientLayout({
         <Topbar
           userName={`${session.firstName} ${session.lastName}`.trim()}
           userEmail={session.email}
+          userAvatarUrl={session.avatarUrl}
         />
         <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
           {children}

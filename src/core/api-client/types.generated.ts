@@ -1,4 +1,4 @@
-// GENERADO por `pnpm generate:api-types` desde http://127.0.0.1:3000/tekoapp-backend/api/swagger-json — no editar a mano.
+// GENERADO por `pnpm generate:api-types` desde http://localhost:3000/tekoapp-backend/api/swagger-json — no editar a mano.
 export interface paths {
     "/tekoapp-backend/api/healthcheck": {
         parameters: {
@@ -77,6 +77,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/v1/auth/change-expired-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Cambio de contraseña expirada (pre-login).
+         * @description Permite cambiar la contraseña cuando ya expiró y el usuario no puede loguearse. Valida la contraseña vieja contra la credencial activa más reciente, aplica complejidad a la nueva y rota manteniendo el histórico.
+         */
+        put: operations["AuthApiController_changeExpiredPassword"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/v1/auth/forgot-password": {
         parameters: {
             query?: never;
@@ -90,6 +110,50 @@ export interface paths {
          * @description Olvide mi contraseña. Cambio de credenciales y password del usuario.
          */
         put: operations["AuthApiController_forgotPassword"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/nonce": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Genera un nonce anti-replay para el login.
+         * @description Devuelve un nonce de uso único con TTL corto que el frontend debe incluir dentro del payload cifrado del login ({ password, nonce }).
+         */
+        post: operations["AuthApiController_nonce"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Perfil del usuario autenticado.
+         * @description Devuelve el perfil del usuario logueado (identificador público referenceId, nunca el id interno), roles y permisos.
+         */
+        get: operations["AuthApiController_me"];
+        /**
+         * Autoedición de perfil del usuario autenticado.
+         * @description El propio usuario actualiza sus datos básicos (nombre, teléfono, avatar) — nunca email, status ni campos administrativos, eso sigue en PUT /users/:id (requiere permiso de admin).
+         */
+        put: operations["AuthApiController_updateMe"];
         post?: never;
         delete?: never;
         options?: never;
@@ -223,6 +287,124 @@ export interface paths {
         /** Enviar email para recuperación de contraseña */
         post: operations["AuthApiController_sendPasswordResetEmail"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sube una imagen y la almacena en S3. Optimiza con Sharp si está disponible. */
+        post: operations["UploadsController_uploadImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/document": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sube un documento (PDF, Word) y lo almacena en S3. */
+        post: operations["UploadsController_uploadDocument"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/avatar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sube un avatar (solo imágenes). Crea thumbnail 150x150 automáticamente. */
+        post: operations["UploadsController_uploadAvatar"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/merchant-docs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sube documentos de onboarding de merchant a S3 y actualiza los datos de documento del usuario. */
+        post: operations["UploadsController_uploadMerchantDocs"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/presigned-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Genera una URL presignada de acceso temporal para un archivo en S3. */
+        get: operations["UploadsController_getPresignedUrl"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/info/{filename}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UploadsController_getFileInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/uploads/{filename}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Elimina un archivo de S3 por su clave. */
+        delete: operations["UploadsController_deleteFile"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1781,124 +1963,6 @@ export interface paths {
         patch: operations["CategoriesController_toggleVisibility"];
         trace?: never;
     };
-    "/tekoapp-backend/api/v1/uploads/image": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sube una imagen y la almacena en S3. Optimiza con Sharp si está disponible. */
-        post: operations["UploadsController_uploadImage"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/document": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sube un documento (PDF, Word) y lo almacena en S3. */
-        post: operations["UploadsController_uploadDocument"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/avatar": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sube un avatar (solo imágenes). Crea thumbnail 150x150 automáticamente. */
-        post: operations["UploadsController_uploadAvatar"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/merchant-docs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sube documentos de onboarding de merchant a S3 y actualiza los datos de documento del usuario. */
-        post: operations["UploadsController_uploadMerchantDocs"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/presigned-url": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Genera una URL presignada de acceso temporal para un archivo en S3. */
-        get: operations["UploadsController_getPresignedUrl"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/info/{filename}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["UploadsController_getFileInfo"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/uploads/{filename}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Elimina un archivo de S3 por su clave. */
-        delete: operations["UploadsController_deleteFile"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/tekoapp-backend/api/analytics/dashboard": {
         parameters: {
             query?: never;
@@ -1925,6 +1989,126 @@ export interface paths {
         };
         /** Listar rendimiento financiero y operativo ordenado por categorías */
         get: operations["AnalyticsController_getCategoryPerformance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar países
+         * @description Retorna el catálogo paginado de países activos. Admite búsqueda por nombre o código ISO.
+         */
+        get: operations["CountriesController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/countries/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener país por ID
+         * @description Retorna el detalle de un país por su identificador.
+         */
+        get: operations["CountriesController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/currencies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar monedas
+         * @description Retorna el catálogo completo de monedas activas (ISO 4217).
+         */
+        get: operations["CurrenciesController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/currencies/{alphaCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener moneda por código
+         * @description Retorna el detalle de una moneda por su código alfabético.
+         */
+        get: operations["CurrenciesController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/languages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar idiomas
+         * @description Retorna el catálogo completo de idiomas activos.
+         */
+        get: operations["LanguagesController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/languages/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener idioma por ID
+         * @description Retorna el detalle de un idioma por su identificador.
+         */
+        get: operations["LanguagesController_findOne"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2014,6 +2198,31 @@ export interface components {
              */
             encryptedNewPassword: string;
         };
+        ChangeExpiredPasswordDTO: {
+            /**
+             * @description Email del usuario.
+             * @example user@example.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @description Contraseña actual (expirada) encriptada del usuario.
+             * @example oldPassword123
+             */
+            encryptedOldPassword: string;
+            /**
+             * Format: password
+             * @description Nueva contraseña encriptada del usuario.
+             * @example newPassword456
+             */
+            encryptedNewPassword: string;
+        };
+        PasswordResponseDTO: {
+            /** @description Indica si la operación fue exitosa */
+            success: boolean;
+            /** @description Mensaje descriptivo del resultado de la operación */
+            message: string;
+        };
         ForgotUserPasswordDTO: {
             /**
              * @description Token temporal enviado por email para recuperación.
@@ -2032,6 +2241,82 @@ export interface components {
              * @example newPassword123
              */
             encryptedConfirmPassword: string;
+        };
+        NonceResponseDTO: {
+            /**
+             * @description Nonce aleatorio (32 chars hex) con TTL corto y de uso único.
+             * @example a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+             */
+            nonce: string;
+        };
+        MeResponseDTO: {
+            /**
+             * @description Identificador público del usuario (referenceId).
+             * @example 123e4567-e89b-12d3-a456-426614174000
+             */
+            id: string;
+            /**
+             * @description Email.
+             * @example user@example.com
+             */
+            email: string;
+            /**
+             * @description Nombre.
+             * @example Juan
+             */
+            firstName: string;
+            /**
+             * @description Apellido.
+             * @example Pérez
+             */
+            lastName: string;
+            /**
+             * @description URL pública de la foto de perfil.
+             * @example https://cdn.tekoapp.com.py/avatars/abc123.jpg
+             */
+            avatarUrl?: string | null;
+            /**
+             * @description Estado del usuario.
+             * @example ACTIVE
+             */
+            status: string;
+            /**
+             * @description Estado del perfil.
+             * @example COMPLETE
+             */
+            profileStatus: string;
+            /**
+             * @description Nivel de acceso del usuario.
+             * @example 1
+             */
+            accessLevelId?: number | null;
+            /**
+             * @description Roles del usuario.
+             * @example [
+             *       "ADMIN"
+             *     ]
+             */
+            roles: string[];
+            /**
+             * @description Permisos efectivos del usuario (roles + directos).
+             * @example [
+             *       "users:read"
+             *     ]
+             */
+            permissions: string[];
+        };
+        UpdateMeRequestDTO: {
+            /** @example Juan */
+            firstName?: string;
+            /** @example Pérez */
+            lastName?: string;
+            /** @example +595981234567 */
+            phoneNumber?: string;
+            /**
+             * @description Key de S3 devuelta por el campo `key` de POST /uploads/avatar — este endpoint solo persiste la key, no sube el archivo. La respuesta expone `avatarUrl` (una URL presignada resuelta fresca en el momento de la lectura, nunca la key cruda).
+             * @example a1b2c3d4-e5f6.jpg
+             */
+            avatarKey?: string;
         };
         RoleScopeDTO: {
             /** @example merchant-admin */
@@ -2055,7 +2340,8 @@ export interface components {
              *       "isEmployee": false,
              *       "documentType": "CI",
              *       "documentNumber": "12345678",
-             *       "phoneNumber": "+595981234567"
+             *       "phoneNumber": "+595981234567",
+             *       "avatarUrl": null
              *     }
              */
             user: Record<string, never>;
@@ -2072,6 +2358,23 @@ export interface components {
         PasswordOnlyMessageResponseDTO: {
             /** @description Mensaje descriptivo del resultado de la operación */
             message: string;
+        };
+        FileInfoResponseDTO: {
+            /** @description Nombre único del archivo en el sistema */
+            filename: string;
+            /** @description Nombre original del archivo */
+            originalname: string;
+            /** @description Tipo MIME del archivo */
+            mimetype: string;
+            /** @description Tamaño en bytes */
+            size: number;
+            /**
+             * @description Clave del objeto en S3
+             * @example a1b2c3d4.jpg
+             */
+            key: string;
+            /** @description URL presignada para acceso inmediato al archivo */
+            url: string;
         };
         CreateRoleRequestDTO: {
             /**
@@ -2091,6 +2394,11 @@ export interface components {
              * @example 1
              */
             id: number;
+            /**
+             * @description referenceId (UUID) público del rol
+             * @example a1b2c3d4-e5f6-7890-abcd-ef1234567890
+             */
+            referenceId: string;
             /**
              * @description Nombre del rol
              * @example MerchantAdmin
@@ -2595,6 +2903,11 @@ export interface components {
             documentNumber?: string;
             /** @example +595991234567 */
             phoneNumber?: string;
+            /**
+             * @description URL presignada de la foto de perfil, resuelta fresca en el momento de la respuesta (expira en 900s) — nunca almacenar/cachear este valor, siempre volver a pedirlo.
+             * @example https://tekoapp-uploads.s3.amazonaws.com/avatars/abc123.jpg?X-Amz-...
+             */
+            avatarUrl?: string | null;
             /** @example true */
             isEmployee: boolean;
             /** @example false */
@@ -2772,10 +3085,10 @@ export interface components {
              */
             phoneNumber?: string;
             /**
-             * @description ID del usuario en el sistema legacy.
-             * @example legacy-123
+             * @description Key de S3 de la foto de perfil (campo `key` de POST /uploads/avatar), no una URL.
+             * @example a1b2c3d4-e5f6.jpg
              */
-            legacyUserId?: string;
+            avatarKey?: string;
             /**
              * @description El nivel de acceso del usuario.
              * @example 1
@@ -3460,10 +3773,10 @@ export interface components {
              */
             professionalId: string;
             /**
-             * @description ID de la solicitud de servicio
+             * @description ID (UUID público) del servicio a pagar
              * @example 123e4567-e89b-12d3-a456-426614174000
              */
-            serviceRequestId: string;
+            serviceId: string;
             /**
              * @description Monto del pago (sin comisiones ni impuestos)
              * @example 100
@@ -3525,8 +3838,11 @@ export interface components {
             userId: number;
             /** @example 5 */
             professionalId: number;
-            /** @example req-uuid-123 */
-            serviceRequestId: string;
+            /**
+             * @description ID (UUID público) del servicio pagado
+             * @example a63b5212-db5e-4ef5-9614-726614174000
+             */
+            serviceId: string;
             /** @example 150000 */
             amount: number;
             /** @example PYG */
@@ -4548,6 +4864,11 @@ export interface components {
              */
             id: number;
             /**
+             * @description referenceId (UUID) público de la categoría
+             * @example a1b2c3d4-e5f6-7890-abcd-ef1234567890
+             */
+            referenceId: string;
+            /**
              * @description Nombre único de la categoría
              * @example Plomería
              */
@@ -4701,23 +5022,6 @@ export interface components {
              */
             metadata?: Record<string, never>;
         };
-        FileInfoResponseDTO: {
-            /** @description Nombre único del archivo en el sistema */
-            filename: string;
-            /** @description Nombre original del archivo */
-            originalname: string;
-            /** @description Tipo MIME del archivo */
-            mimetype: string;
-            /** @description Tamaño en bytes */
-            size: number;
-            /**
-             * @description Clave del objeto en S3
-             * @example a1b2c3d4.jpg
-             */
-            key: string;
-            /** @description URL presignada para acceso inmediato al archivo */
-            url: string;
-        };
         UserStatsDTO: {
             /** @example 1500 */
             total: number;
@@ -4819,6 +5123,117 @@ export interface components {
         CategoryPerformanceResponseDTO: {
             success: boolean;
             data: components["schemas"]["CategoryPerformanceItemDTO"][];
+        };
+        CountryResponseDTO: {
+            /**
+             * @description ID del país
+             * @example 1
+             */
+            id: number;
+            /**
+             * @description Nombre común
+             * @example Paraguay
+             */
+            commonName: string;
+            /**
+             * @description Nombre oficial
+             * @example República del Paraguay
+             */
+            officialName: string;
+            /**
+             * @description Código ISO 3166-1 alfa-2
+             * @example PY
+             */
+            iso2: string;
+            /**
+             * @description Código ISO 3166-1 alfa-3
+             * @example PRY
+             */
+            iso3: string;
+            /**
+             * @description Código numérico ISO 3166-1
+             * @example 600
+             */
+            numericCode: string;
+            /**
+             * @description Prefijo telefónico
+             * @example +595
+             */
+            phonePrefixCode: string;
+            /**
+             * @description Observaciones
+             * @example null
+             */
+            observations?: string | null;
+            /**
+             * @description Indica si el país está activo
+             * @example true
+             */
+            isActive: boolean;
+        };
+        GetCountriesListResponseDTO: {
+            /** @description Lista de países */
+            data: components["schemas"]["CountryResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        CurrencyResponseDTO: {
+            /**
+             * @description Código alfabético ISO 4217
+             * @example PYG
+             */
+            alphaCode: string;
+            /**
+             * @description Código numérico ISO 4217
+             * @example 600
+             */
+            numberCode: string;
+            /**
+             * @description Cantidad de decimales (0 para el Guaraní)
+             * @example 0
+             */
+            decimalQuantity: number;
+            /**
+             * @description Nombre de la moneda
+             * @example Guaraní paraguayo
+             */
+            name: string;
+            /**
+             * @description Símbolo de la moneda
+             * @example ₲
+             */
+            symbol?: string | null;
+            /**
+             * @description ID del país emisor
+             * @example 1
+             */
+            countryId: number;
+            /**
+             * @description Indica si la moneda está activa
+             * @example true
+             */
+            isActive: boolean;
+        };
+        LanguageResponseDTO: {
+            /**
+             * @description ID del idioma
+             * @example 1
+             */
+            id: number;
+            /**
+             * @description Código ISO 639-1 (con región opcional, ej. es-PY)
+             * @example es
+             */
+            code: string;
+            /**
+             * @description Nombre del idioma en su propio idioma
+             * @example Español
+             */
+            name: string;
+            /**
+             * @description Indica si el idioma está activo
+             * @example true
+             */
+            isActive: boolean;
         };
     };
     responses: never;
@@ -5023,6 +5438,44 @@ export interface operations {
             };
         };
     };
+    AuthApiController_changeExpiredPassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeExpiredPasswordDTO"];
+            };
+        };
+        responses: {
+            /** @description Contraseña actualizada correctamente. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasswordResponseDTO"];
+                };
+            };
+            /** @description La nueva contraseña no cumple la política de complejidad. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Credenciales inválidas. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     AuthApiController_forgotPassword: {
         parameters: {
             query?: never;
@@ -5037,6 +5490,91 @@ export interface operations {
         };
         responses: {
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthApiController_nonce: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Nonce generado correctamente. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NonceResponseDTO"];
+                };
+            };
+        };
+    };
+    AuthApiController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Perfil obtenido con éxito. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeResponseDTO"];
+                };
+            };
+            /** @description Token inválido o expirado. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthApiController_updateMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateMeRequestDTO"];
+            };
+        };
+        responses: {
+            /** @description Perfil actualizado con éxito. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeResponseDTO"];
+                };
+            };
+            /** @description Datos inválidos. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Token inválido o expirado. */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5276,6 +5814,200 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    UploadsController_uploadImage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileInfoResponseDTO"];
+                };
+            };
+        };
+    };
+    UploadsController_uploadDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileInfoResponseDTO"];
+                };
+            };
+        };
+    };
+    UploadsController_uploadAvatar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileInfoResponseDTO"];
+                };
+            };
+        };
+    };
+    UploadsController_uploadMerchantDocs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Archivo: documentFrontImage (Max: 1)
+                     */
+                    documentFrontImage: string;
+                    /**
+                     * Format: binary
+                     * @description Archivo: documentBackImage (Max: 1)
+                     */
+                    documentBackImage: string;
+                    /**
+                     * Format: binary
+                     * @description Archivo: commercialInvoiceImage (Max: 1)
+                     */
+                    commercialInvoiceImage: string;
+                    /**
+                     * Format: binary
+                     * @description Archivo: businessLicenseImage (Max: 1)
+                     */
+                    businessLicenseImage: string;
+                    /**
+                     * Format: binary
+                     * @description Archivo: storefrontImage (Max: 1)
+                     */
+                    storefrontImage: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Documentos subidos exitosamente. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UploadsController_getPresignedUrl: {
+        parameters: {
+            query: {
+                /** @description Clave S3 del archivo */
+                key: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        url?: string;
+                    };
+                };
+            };
+        };
+    };
+    UploadsController_getFileInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Nombre del archivo */
+                filename: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UploadsController_deleteFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Nombre del archivo */
+                filename: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        message?: string;
+                    };
+                };
             };
         };
     };
@@ -7135,8 +7867,8 @@ export interface operations {
                 longitude: number;
                 /** @description Radio máximo de búsqueda en kilómetros */
                 radius?: number;
-                /** @description Filtrar por ID de categoría única (UUID v4) */
-                categoryId?: string;
+                /** @description Filtrar por ID interno de categoría */
+                categoryId?: number;
                 /** @description Número máximo de registros a retornar */
                 limit?: number;
                 /** @description Filtrar solo profesionales con estado disponible habilitado */
@@ -8805,200 +9537,6 @@ export interface operations {
             };
         };
     };
-    UploadsController_uploadImage: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /** Format: binary */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FileInfoResponseDTO"];
-                };
-            };
-        };
-    };
-    UploadsController_uploadDocument: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /** Format: binary */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FileInfoResponseDTO"];
-                };
-            };
-        };
-    };
-    UploadsController_uploadAvatar: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /** Format: binary */
-                    file: string;
-                };
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FileInfoResponseDTO"];
-                };
-            };
-        };
-    };
-    UploadsController_uploadMerchantDocs: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": {
-                    /**
-                     * Format: binary
-                     * @description Archivo: documentFrontImage (Max: 1)
-                     */
-                    documentFrontImage: string;
-                    /**
-                     * Format: binary
-                     * @description Archivo: documentBackImage (Max: 1)
-                     */
-                    documentBackImage: string;
-                    /**
-                     * Format: binary
-                     * @description Archivo: commercialInvoiceImage (Max: 1)
-                     */
-                    commercialInvoiceImage: string;
-                    /**
-                     * Format: binary
-                     * @description Archivo: businessLicenseImage (Max: 1)
-                     */
-                    businessLicenseImage: string;
-                    /**
-                     * Format: binary
-                     * @description Archivo: storefrontImage (Max: 1)
-                     */
-                    storefrontImage: string;
-                };
-            };
-        };
-        responses: {
-            /** @description Documentos subidos exitosamente. */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    UploadsController_getPresignedUrl: {
-        parameters: {
-            query: {
-                /** @description Clave S3 del archivo */
-                key: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        url?: string;
-                    };
-                };
-            };
-        };
-    };
-    UploadsController_getFileInfo: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Nombre del archivo */
-                filename: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    UploadsController_deleteFile: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Nombre del archivo */
-                filename: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        message?: string;
-                    };
-                };
-            };
-        };
-    };
     AnalyticsController_getDashboardStats: {
         parameters: {
             query?: {
@@ -9084,6 +9622,171 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CategoryPerformanceResponseDTO"];
                 };
+            };
+        };
+    };
+    CountriesController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Texto de búsqueda (nombre común/oficial o códigos ISO alfa-2/alfa-3) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Listado paginado de países. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetCountriesListResponseDTO"];
+                };
+            };
+        };
+    };
+    CountriesController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID del país */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detalle del país. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CountryResponseDTO"];
+                };
+            };
+            /** @description País no encontrado. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CurrenciesController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de monedas activas. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CurrencyResponseDTO"][];
+                };
+            };
+        };
+    };
+    CurrenciesController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Código alfabético ISO 4217 */
+                alphaCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detalle de la moneda. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CurrencyResponseDTO"];
+                };
+            };
+            /** @description Moneda no encontrada. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LanguagesController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de idiomas activos. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LanguageResponseDTO"][];
+                };
+            };
+        };
+    };
+    LanguagesController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID del idioma */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Detalle del idioma. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LanguageResponseDTO"];
+                };
+            };
+            /** @description Idioma no encontrado. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

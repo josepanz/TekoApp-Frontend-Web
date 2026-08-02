@@ -4,10 +4,12 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
 import { useUsersQuery } from '../hooks';
 import type { User } from '../api';
+import { UserDetailDialog } from './user-detail-dialog';
 
 const STATUS_VARIANT: Record<
   User['status'],
@@ -26,6 +28,9 @@ const PAGE_SIZE = 10;
 export function UsersTable() {
   const t = useTranslations('users');
   const [page, setPage] = useState(1);
+  const [selectedReferenceId, setSelectedReferenceId] = useState<string | null>(
+    null,
+  );
   const { data, isPending, isError } = useUsersQuery({
     page,
     pageSize: PAGE_SIZE,
@@ -64,6 +69,19 @@ export function UsersTable() {
         </Badge>
       ),
     },
+    {
+      id: 'actions',
+      header: '',
+      cell: ({ row }) => (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setSelectedReferenceId(row.original.referenceId)}
+        >
+          Ver detalle
+        </Button>
+      ),
+    },
   ];
 
   if (isPending) {
@@ -75,15 +93,21 @@ export function UsersTable() {
   }
 
   return (
-    <DataTable
-      columns={columns}
-      data={data.data}
-      emptyMessage={t('table.empty')}
-      pagination={{
-        page: data.pagination.page,
-        totalPages: data.pagination.totalPages,
-        onPageChange: setPage,
-      }}
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={data.data}
+        emptyMessage={t('table.empty')}
+        pagination={{
+          page: data.pagination.page,
+          totalPages: data.pagination.totalPages,
+          onPageChange: setPage,
+        }}
+      />
+      <UserDetailDialog
+        referenceId={selectedReferenceId}
+        onOpenChange={(open) => !open && setSelectedReferenceId(null)}
+      />
+    </>
   );
 }

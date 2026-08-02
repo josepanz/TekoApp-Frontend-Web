@@ -6,7 +6,7 @@ export function buildPayment(overrides: Partial<Payment> = {}): Payment {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
     userId: 1,
     professionalId: 5,
-    serviceRequestId: 'req-uuid-123',
+    serviceId: 'req-uuid-123',
     amount: 150000,
     currencyCode: 'PYG',
     fee: 4350,

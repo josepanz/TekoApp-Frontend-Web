@@ -2,6 +2,7 @@ import { analyticsHandlers } from './handlers/analytics';
 import { authHandlers } from './handlers/auth';
 import { categoriesHandlers } from './handlers/categories';
 import { locationsHandlers } from './handlers/locations';
+import { myProfileHandlers } from './handlers/my-profile';
 import { notificationsHandlers } from './handlers/notifications';
 import { paymentsHandlers } from './handlers/payments';
 import { professionalsHandlers } from './handlers/professionals';
@@ -26,4 +27,5 @@ export const handlers = [
   ...rolesHandlers,
   ...categoriesHandlers,
   ...notificationsHandlers,
+  ...myProfileHandlers,
 ];

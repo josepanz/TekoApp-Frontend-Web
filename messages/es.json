@@ -78,6 +78,17 @@
       "system": "Sistema"
     }
   },
+  "myProfile": {
+    "back": "Volver",
+    "title": "Mi perfil",
+    "subtitle": "Editá tus datos personales y tu foto de perfil.",
+    "avatarHint": "Hacé clic en el ícono de cámara para cambiar tu foto",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phoneNumber": "Teléfono",
+    "save": "Guardar cambios",
+    "saving": "Guardando..."
+  },
   "auth": {
     "login": {
       "pageTitle": "TekoApp",

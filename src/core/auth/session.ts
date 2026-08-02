@@ -15,6 +15,7 @@ export interface SessionUser {
   email: string;
   firstName: string;
   lastName: string;
+  avatarUrl: string | null;
   accessLevelId: number;
   userStatus: string;
   profileStatus: string;
@@ -28,6 +29,7 @@ interface UserScopeResponse {
     email: string;
     firstName: string;
     lastName: string;
+    avatarUrl: string | null;
     status: string;
     profileStatus: string;
     accessLevelId: number;
@@ -99,6 +101,7 @@ export async function getSession(): Promise<SessionUser | null> {
     email: scope.user.email,
     firstName: scope.user.firstName,
     lastName: scope.user.lastName,
+    avatarUrl: scope.user.avatarUrl ?? null,
     accessLevelId: scope.user.accessLevelId,
     userStatus: scope.user.status,
     profileStatus: scope.user.profileStatus,

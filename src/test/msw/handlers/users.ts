@@ -10,6 +10,7 @@ export function buildUser(overrides: Partial<User> = {}): User {
     firstName: 'Ana',
     lastName: 'González',
     phoneNumber: '+595991234567',
+    avatarUrl: null,
     isEmployee: false,
     isLdap: false,
     lastLogin: '2026-06-16T10:20:30Z',
@@ -39,5 +40,16 @@ export const usersHandlers = [
       data: fakeUsersPage1.data,
       pagination: { ...fakeUsersPage1.pagination, page },
     });
+  }),
+
+  http.get('/api/backend/users/reference/:referenceId', ({ params }) => {
+    return HttpResponse.json(
+      buildUser({ referenceId: String(params.referenceId) }),
+    );
+  }),
+
+  http.put('/api/backend/users/reference/:referenceId', async ({ request }) => {
+    const body = (await request.json()) as Partial<User>;
+    return HttpResponse.json(buildUser(body));
   }),
 ];

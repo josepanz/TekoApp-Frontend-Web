@@ -107,6 +107,7 @@ describe('getSession', () => {
       email: 'user@test.com',
       firstName: 'Ana',
       lastName: 'Gómez',
+      avatarUrl: null,
       accessLevelId: 1,
       userStatus: 'ACTIVE',
       profileStatus: 'COMPLETE',

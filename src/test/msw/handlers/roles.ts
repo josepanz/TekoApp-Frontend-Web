@@ -9,6 +9,7 @@ import type {
 export function buildRole(overrides: Partial<Role> = {}): Role {
   return {
     id: 1,
+    referenceId: 'role-ref-001',
     name: 'MerchantAdmin',
     displayName: 'Administrador de comercio',
     description: 'Administrador del comercio con acceso completo',

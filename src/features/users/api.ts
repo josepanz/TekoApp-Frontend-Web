@@ -3,6 +3,7 @@ import type { components } from '@/core/api-client/types.generated';
 
 export type UsersListResponse = components['schemas']['UsersListResponseDTO'];
 export type User = components['schemas']['UserResponseDTO'];
+export type UpdateUserDto = components['schemas']['UpdateUserRequestDTO'];
 
 export interface GetUsersParams {
   page: number;
@@ -21,4 +22,18 @@ export function getUsers({
     pageSize: String(pageSize),
   });
   return apiFetch<UsersListResponse>(`users?${query.toString()}`);
+}
+
+export function getUserByReference(referenceId: string): Promise<User> {
+  return apiFetch<User>(`users/reference/${referenceId}`);
+}
+
+export function updateUserByReference(
+  referenceId: string,
+  dto: UpdateUserDto,
+): Promise<User> {
+  return apiFetch<User>(`users/reference/${referenceId}`, {
+    method: 'PUT',
+    body: JSON.stringify(dto),
+  });
 }

@@ -61,3 +61,39 @@ export async function apiFetch<T>(
   const body: unknown = await response.json();
   return (isBackendEnvelope<T>(body) ? body.data : body) as T;
 }
+
+/**
+ * Sube un archivo vía `multipart/form-data` (avatar, documentos, etc.). NUNCA reusar `apiFetch`
+ * para esto — fuerza `Content-Type: application/json`, que rompe el multipart. Acá se deja que
+ * el browser calcule el `Content-Type` (con el boundary) automáticamente al pasar un `FormData`.
+ */
+export async function uploadFile<T>(
+  path: string,
+  file: File,
+  fieldName = 'file',
+): Promise<T> {
+  const formData = new FormData();
+  formData.append(fieldName, file);
+
+  const response = await fetch(`/api/backend/${path}`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let body: unknown;
+    try {
+      body = await response.json();
+    } catch {
+      body = await response.text();
+    }
+    const message =
+      body && typeof body === 'object' && 'message' in body
+        ? String((body as { message: unknown }).message)
+        : `Error ${response.status} en ${path}`;
+    throw new ApiError(response.status, message, body);
+  }
+
+  const body: unknown = await response.json();
+  return (isBackendEnvelope<T>(body) ? body.data : body) as T;
+}
