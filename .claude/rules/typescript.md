@@ -32,6 +32,26 @@ src/features/<dominio>/
   solo maneja lo específico de Next (metadata, layout de la ruta, leer `searchParams`).
 - Nunca poner lógica de negocio ni llamadas a `fetch` directamente en `app/`.
 
+### Generador de scaffolding (`pnpm generate:feature`)
+
+Para una feature nueva de tipo "tabla" (CRUD admin: listado + crear/editar + eliminar) no armes la
+estructura a mano — usá el generador, que replica el patrón de `src/features/categories`:
+
+```
+pnpm generate:feature <nombre-kebab-singular> [plural-kebab] [--paginated] [--force]
+```
+
+- Ejemplo: `pnpm generate:feature promotion` (listado plano) o `pnpm generate:feature promotion --paginated`
+  (listado server-side paginado, patrón de `features/users`).
+- Deriva el plural con una heurística simple (`s` / `es` / `ies`); si falla, pasá el plural como 2º
+  argumento (`pnpm generate:feature category-tax category-taxes`).
+- Crea `api.ts`, `hooks.ts`, `schemas.ts`, `components/<plural>-table.tsx`,
+  `components/<singular>-form-dialog.tsx`, `components/new-<singular>-button.tsx` y
+  `src/app/admin/<plural>/page.tsx`. Aborta si algo ya existe (salvo `--force`).
+- La salida es un **esqueleto editable** (campos de ejemplo `name`/`description`), no un archivo
+  re-generable: ajustá los campos a los DTOs reales tras correr `pnpm generate:api-types`, y agregá
+  los `.test.tsx` que exige `rules/test.md`. Script: `scripts/generate-feature.mjs`.
+
 ## Componentes
 
 - Un componente por archivo, nombre de archivo = nombre del componente (`UserTable.tsx` exporta `UserTable`).

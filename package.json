@@ -29,6 +29,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "generate:api-types": "node scripts/generate-api-types.mjs",
+    "generate:feature": "node scripts/generate-feature.mjs",
     "prepare": "husky || true"
   },
   "dependencies": {
