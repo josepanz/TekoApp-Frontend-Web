@@ -80,4 +80,36 @@ export const notificationsHandlers = [
       }),
     );
   }),
+
+  http.get('/api/backend/notifications/unread/count', () => {
+    return HttpResponse.json({ count: 2 });
+  }),
+
+  http.put(
+    '/api/backend/notifications/read-all',
+    () => new HttpResponse(null, { status: 204 }),
+  ),
+
+  http.get('/api/backend/notifications/push/vapid-public-key', () => {
+    return HttpResponse.json({
+      publicKey:
+        'BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4',
+    });
+  }),
+
+  http.post('/api/backend/notifications/push-subscriptions', () => {
+    return HttpResponse.json(
+      {
+        referenceId: 'push-sub-ref-1',
+        endpoint: 'https://fcm.googleapis.com/fcm/send/abc123',
+        createdAt: '2026-08-02T00:00:00.000Z',
+      },
+      { status: 201 },
+    );
+  }),
+
+  http.delete(
+    '/api/backend/notifications/push-subscriptions/:referenceId',
+    () => new HttpResponse(null, { status: 204 }),
+  ),
 ];

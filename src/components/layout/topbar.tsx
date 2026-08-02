@@ -1,4 +1,5 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { NotificationBell } from '@/features/notifications/components/notification-bell';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
 import { UserMenu } from './user-menu';
@@ -16,6 +17,7 @@ export function Topbar({ userName, userEmail, userAvatarUrl }: TopbarProps) {
       <div className="flex items-center gap-1">
         <LanguageSwitcher />
         <ThemeToggle />
+        <NotificationBell />
         <UserMenu name={userName} email={userEmail} avatarUrl={userAvatarUrl} />
       </div>
     </header>

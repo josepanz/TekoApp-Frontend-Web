@@ -71,6 +71,12 @@
       "logout": "Log out",
       "loggingOut": "Logging out..."
     },
+    "notificationBell": {
+      "trigger": "Notifications",
+      "title": "Notifications",
+      "empty": "You don't have any notifications yet",
+      "markAllRead": "Mark all as read"
+    },
     "themeToggle": {
       "trigger": "Change theme",
       "light": "Light",
@@ -87,7 +93,12 @@
     "lastName": "Last name",
     "phoneNumber": "Phone",
     "save": "Save changes",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "push": {
+      "title": "Push notifications",
+      "hint": "Get updates even when the tab isn't open.",
+      "blocked": "Blocked in your browser settings."
+    }
   },
   "auth": {
     "login": {
@@ -468,6 +479,7 @@
     "channel": {
       "in_app": "In-app",
       "push": "Push",
+      "fcm": "FCM (mobile)",
       "email": "Email"
     },
     "table": {

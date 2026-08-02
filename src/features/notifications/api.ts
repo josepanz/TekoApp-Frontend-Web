@@ -6,6 +6,12 @@ export type NotificationType = Notification['type'];
 export type NotificationStatus = Notification['status'];
 export type CreateNotificationRequest =
   components['schemas']['CreateNotificationRequestDTO'];
+export type VapidPublicKeyResponse =
+  components['schemas']['VapidPublicKeyResponseDTO'];
+export type CreatePushSubscriptionRequest =
+  components['schemas']['CreatePushSubscriptionRequestDTO'];
+export type PushSubscriptionResponse =
+  components['schemas']['PushSubscriptionResponseDTO'];
 
 export interface GetNotificationsParams {
   limit?: number;
@@ -50,5 +56,44 @@ export function createNotification(
 export function markNotificationAsRead(id: string): Promise<Notification> {
   return apiFetch<Notification>(`notifications/${id}/read`, {
     method: 'PUT',
+  });
+}
+
+// GET /tekoapp-backend/api/notifications/unread/count
+export function getUnreadCount(): Promise<{ count: number }> {
+  return apiFetch<{ count: number }>('notifications/unread/count');
+}
+
+// PUT /tekoapp-backend/api/notifications/read-all — 204 sin body.
+export function markAllNotificationsAsRead(): Promise<void> {
+  return apiFetch<void>('notifications/read-all', { method: 'PUT' });
+}
+
+// GET /tekoapp-backend/api/notifications/push/vapid-public-key — clave pública VAPID, no es
+// secreta (el Service Worker la necesita para pushManager.subscribe()).
+export function getVapidPublicKey(): Promise<VapidPublicKeyResponse> {
+  return apiFetch<VapidPublicKeyResponse>(
+    'notifications/push/vapid-public-key',
+  );
+}
+
+// POST /tekoapp-backend/api/notifications/push-subscriptions — registra (o actualiza) la
+// suscripción Web Push del Service Worker del navegador actual.
+export function subscribeToPush(
+  dto: CreatePushSubscriptionRequest,
+): Promise<PushSubscriptionResponse> {
+  return apiFetch<PushSubscriptionResponse>(
+    'notifications/push-subscriptions',
+    {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    },
+  );
+}
+
+// DELETE /tekoapp-backend/api/notifications/push-subscriptions/{referenceId}
+export function unsubscribeFromPush(referenceId: string): Promise<void> {
+  return apiFetch<void>(`notifications/push-subscriptions/${referenceId}`, {
+    method: 'DELETE',
   });
 }

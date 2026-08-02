@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import type { SessionUser } from '@/core/auth/session';
+import { PushSubscriptionToggle } from '@/features/notifications/components/push-subscription-toggle';
 import { useUpdateMeMutation } from '../hooks';
 import { profileFormSchema, type ProfileFormValues } from '../schemas';
 import { AvatarUpload } from './avatar-upload';
@@ -93,6 +94,8 @@ export function ProfileForm({ session }: ProfileFormProps) {
           {updateMutation.isPending ? t('saving') : t('save')}
         </Button>
       </form>
+
+      <PushSubscriptionToggle />
     </div>
   );
 }

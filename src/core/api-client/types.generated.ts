@@ -1457,6 +1457,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/notifications/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stream en tiempo real de notificaciones (SSE) para el usuario autenticado — solo cubre "app abierta ahora mismo", complementario a Web Push/FCM */
+        get: operations["NotificationsController_stream"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/notifications/push/vapid-public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener la clave pública VAPID para pushManager.subscribe() */
+        get: operations["NotificationsController_getVapidPublicKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/notifications/push-subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) la suscripción Web Push del navegador actual */
+        post: operations["NotificationsController_registerPushSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/notifications/push-subscriptions/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja una suscripción Web Push */
+        delete: operations["NotificationsController_removePushSubscription"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/notifications/fcm-tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) el token FCM del dispositivo actual */
+        post: operations["NotificationsController_registerFcmToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/notifications/fcm-tokens/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja un token FCM */
+        delete: operations["NotificationsController_removeFcmToken"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/promotions": {
         parameters: {
             query?: never;
@@ -4230,6 +4332,86 @@ export interface components {
              * @example 5
              */
             count: number;
+        };
+        VapidPublicKeyResponseDTO: {
+            /**
+             * @description Clave pública VAPID — la usa el frontend en pushManager.subscribe({ applicationServerKey })
+             * @example BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4
+             */
+            publicKey: string;
+        };
+        PushSubscriptionKeysDTO: {
+            /**
+             * @description Clave pública P-256 de la suscripción (cifrado del payload)
+             * @example BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM
+             */
+            p256dh: string;
+            /**
+             * @description Secreto de autenticación de la suscripción
+             * @example tBHItJI5svbpez7KI4CCXg
+             */
+            auth: string;
+        };
+        CreatePushSubscriptionRequestDTO: {
+            /**
+             * @description URL única del endpoint del navegador para este dispositivo/sesión
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /** @description Claves de cifrado de la suscripción */
+            keys: components["schemas"]["PushSubscriptionKeysDTO"];
+            /**
+             * @description User-Agent del navegador al momento de suscribirse (informativo, para soporte)
+             * @example Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+             */
+            userAgent?: string;
+        };
+        PushSubscriptionResponseDTO: {
+            /**
+             * @description Identificador público de la suscripción
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Endpoint del navegador registrado
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /**
+             * Format: date-time
+             * @description Fecha de creación de la suscripción
+             */
+            createdAt: string;
+        };
+        CreateFcmTokenRequestDTO: {
+            /**
+             * @description Token FCM del dispositivo (retornado por firebase_messaging/getToken())
+             * @example dGVzdC1mY20tdG9rZW4tZXhhbXBsZQ
+             */
+            token: string;
+            /**
+             * @description Plataforma que registra el token
+             * @example ANDROID
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+        };
+        FcmTokenResponseDTO: {
+            /**
+             * @description Identificador público del token
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Plataforma del dispositivo
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+            /**
+             * Format: date-time
+             * @description Fecha de registro del token
+             */
+            createdAt: string;
         };
         CreatePromotionRequestDTO: {
             /**
@@ -8460,6 +8642,128 @@ export interface operations {
             path: {
                 /** @description Identificador único de la notificación (MongoDB ObjectId) */
                 id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_stream: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_getVapidPublicKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VapidPublicKeyResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_registerPushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePushSubscriptionRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removePushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público de la suscripción Web Push */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_registerFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFcmTokenRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FcmTokenResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removeFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público del token FCM */
+                referenceId: string;
             };
             cookie?: never;
         };

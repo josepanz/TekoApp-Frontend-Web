@@ -71,6 +71,12 @@
       "logout": "Cerrar sesión",
       "loggingOut": "Cerrando sesión..."
     },
+    "notificationBell": {
+      "trigger": "Notificaciones",
+      "title": "Notificaciones",
+      "empty": "No tenés notificaciones todavía",
+      "markAllRead": "Marcar todas como leídas"
+    },
     "themeToggle": {
       "trigger": "Cambiar tema",
       "light": "Claro",
@@ -87,7 +93,12 @@
     "lastName": "Apellido",
     "phoneNumber": "Teléfono",
     "save": "Guardar cambios",
-    "saving": "Guardando..."
+    "saving": "Guardando...",
+    "push": {
+      "title": "Notificaciones push",
+      "hint": "Recibí novedades aunque no tengas la pestaña abierta.",
+      "blocked": "Bloqueadas en la configuración del navegador."
+    }
   },
   "auth": {
     "login": {
@@ -468,6 +479,7 @@
     "channel": {
       "in_app": "In-app",
       "push": "Push",
+      "fcm": "FCM (mobile)",
       "email": "Email"
     },
     "table": {

@@ -19,6 +19,7 @@ export const NOTIFICATION_TYPE_OPTIONS = [
 export const NOTIFICATION_CHANNEL_OPTIONS = [
   'in_app',
   'push',
+  'fcm',
   'email',
 ] as const;
 
