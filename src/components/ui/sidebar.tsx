@@ -475,7 +475,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<'li'>) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  // El ítem activo usa `sidebar-primary` (el índigo/violeta de marca), no `sidebar-accent` (gris
+  // El ítem activo usa `sidebar-primary` (el verde de marca), no `sidebar-accent` (gris
   // neutro casi sin chroma) — antes la nav activa se veía igual de gris que el hover, sin ninguna
   // presencia de color de marca en el elemento más visible de "dónde estoy parado".
   'peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-primary data-active:font-medium data-active:text-sidebar-primary-foreground data-active:hover:bg-sidebar-primary/90 [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate',

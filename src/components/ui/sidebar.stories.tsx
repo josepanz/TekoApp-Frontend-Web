@@ -35,7 +35,7 @@ const items = [
   { title: 'Calificaciones', icon: Star, active: false },
 ] as const;
 
-// El ítem activo usa `sidebar-primary` (índigo de marca), no el gris del hover — ver el comentario
+// El ítem activo usa `sidebar-primary` (verde de marca), no el gris del hover — ver el comentario
 // en sidebar.tsx. `collapsible="icon"`: el SidebarTrigger colapsa a solo-íconos.
 export const Default: Story = {
   render: () => (

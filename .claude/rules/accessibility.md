@@ -12,19 +12,22 @@ Voz de la copy: **"vos"** (igual que el resto del producto — "no tenés servic
 - Texto grande (≥ 24px, o ≥ 18.66px bold) y componentes de UI / bordes / íconos que transmiten
   información: **≥ 3:1**.
 - Los tokens ya están pensados para esto: no bajes `muted-foreground` por debajo de su valor de
-  token, y no pongas texto sobre `accent` (coral) o `primary` sin usar su `-foreground` correspondiente.
+  token, y no pongas texto sobre `accent` (teal de marca, rebrand 2026-08-02) o `primary` (verde de
+  marca) sin usar su `-foreground` correspondiente.
 - Los slots semánticos de estado (`success`/`warning`/`info`/`destructive`) se usan como **texto de
   color sobre fondo tenue** (`bg-success/10 text-success`, patrón de `Badge`/`Alert`), no como fondo
-  sólido con texto encima. `warning` se bajó de lightness (0.75 → 0.64) justamente para que sirva de
-  texto sobre fondo claro — no lo vuelvas a aclarar. Si agregás un slot semántico nuevo, mantené su
-  lightness en la banda ~0.58–0.64 para que funcione de texto en ambos temas.
+  sólido con texto encima. `warning` (dorado de marca) se bajó de lightness (valor crudo del hex
+  #FFC107 es 0.844 → se usa 0.64) justamente para que sirva de texto sobre fondo claro — no lo
+  vuelvas a aclarar. Si agregás un slot semántico nuevo, mantené su lightness en la banda ~0.58–0.64
+  para que funcione de texto en ambos temas.
 - Verificá en **claro Y oscuro** — un color que pasa en uno puede fallar en el otro.
 
 ## Foco de teclado visible
 
 - Todo elemento interactivo muestra un anillo de foco visible. El estándar de este repo es:
   `focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50` (ver `button.tsx`,
-  `input.tsx`, `badge.tsx`). `--ring` deriva de `primary`, así que el foco es índigo de marca.
+  `input.tsx`, `badge.tsx`). `--ring` deriva de `primary`, así que el foco es verde de marca
+  (rebrand 2026-08-02 — antes índigo).
 - No uses `outline-none` / `focus:outline-hidden` sin reponer un `focus-visible:ring-*` equivalente
   — quitar el foco sin reemplazo es una regresión de accesibilidad, no un detalle de estilo.
 - El orden de tabulación sigue el orden del DOM: no lo rompas con `tabindex` positivos.
