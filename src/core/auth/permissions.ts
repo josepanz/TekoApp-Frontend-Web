@@ -2,9 +2,9 @@
  * Espejo 1:1 de PERMISSIONS en TekoApp-Backend (src/common/enum/permissions.enum.ts).
  * Sin codegen automático — si el backend agrega/renombra un permiso, actualizar acá a mano.
  *
- * Nota: MERCHANT/BRANCH/GROUPING/ACCESS_ASSOCIATION/MOVEMENTS/CUSTOMERS parecen residuo de un
- * template de portal de comercios (no son conceptos de dominio de TekoApp) — se mantienen porque
- * es lo que el backend realmente expone hoy, no porque apliquen a este proyecto. Los permisos de
+ * MERCHANT/BRANCH/GROUPING/ACCESS_ASSOCIATION/MOVEMENTS/CUSTOMERS (residuo de un template de
+ * portal de comercios, no eran conceptos de dominio de TekoApp) se eliminaron del backend por no
+ * tener ninguna referencia real — eliminados acá también para mantener el espejo. Los permisos de
  * professionals/services/payments/promotions/ratings del backend NO usan @Permissions() todavía
  * (solo JwtAuthGuard a nivel de clase) — ver documentation/architecture.md.
  */
@@ -41,42 +41,6 @@ export const PERMISSIONS = {
     USER_PERMISSION: 'user.permission.assignment:create',
     UNASSIGN_USER: 'user.permission.unassignment:delete',
     UNASSIGN_ROLE: 'role.permission.unassignment:delete',
-  },
-  MERCHANT: {
-    CREATE: 'merchant:create',
-    READ: 'merchant:read',
-    UPDATE: 'merchant:update',
-    DELETE: 'merchant:delete',
-    MANAGEMENT: 'merchant:management',
-    WITH_SPI: 'merchant.spi:read',
-    WITH_GIROS: 'merchant.giros:read',
-  },
-  BRANCH: {
-    CREATE: 'branch:create',
-    READ: 'branch:read',
-    UPDATE: 'branch:update',
-    DELETE: 'branch:delete',
-  },
-  GROUPING: {
-    CREATE: 'merchant.grouping:create',
-    READ: 'merchant.grouping:read',
-    UPDATE: 'merchant.grouping:update',
-    DELETE: 'merchant.grouping:delete',
-  },
-  ACCESS_ASSOCIATION: {
-    CREATE: 'user.merchant.access.association:create',
-    READ: 'user.merchant.access.association:read',
-    UPDATE: 'user.merchant.access.association:update',
-    DELETE: 'user.merchant.access.association:delete',
-  },
-  MOVEMENTS: {
-    READ: 'movement:read',
-  },
-  CUSTOMERS: {
-    CREATE: 'customers:create',
-    READ: 'customers:read',
-    UPDATE: 'customers:update',
-    DELETE: 'customers:delete',
   },
 } as const;
 
