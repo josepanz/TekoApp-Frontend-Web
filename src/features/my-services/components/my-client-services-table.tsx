@@ -1,10 +1,12 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { DataTable } from '@/components/layout/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RateProfessionalDialog } from '@/features/rate-professional/components/rate-professional-dialog';
+import { formatCurrency } from '@/lib/formatters';
 import { useMyClientServicesQuery } from '../hooks';
 import type { Service } from '../api';
 import { CancelServiceDialog } from './cancel-service-dialog';
@@ -20,53 +22,46 @@ const STATUS_VARIANT: Record<
   CANCELLED: 'destructive',
 };
 
-const STATUS_LABEL: Record<Service['status'], string> = {
-  PENDING: 'Pendiente',
-  ACCEPTED: 'Aceptado',
-  IN_PROGRESS: 'En curso',
-  COMPLETED: 'Completado',
-  CANCELLED: 'Cancelado',
-};
-
 const CANCELLABLE = new Set<Service['status']>(['PENDING', 'ACCEPTED']);
 
 export function MyClientServicesTable() {
+  const t = useTranslations('myServices');
   const { data, isPending, isError } = useMyClientServicesQuery({});
 
   const columns: ColumnDef<Service, unknown>[] = [
-    { accessorKey: 'title', header: 'Servicio' },
+    { accessorKey: 'title', header: t('table.service') },
     {
       id: 'professional',
-      header: 'Profesional',
+      header: t('table.professional'),
       cell: ({ row }) =>
         row.original.professional
           ? `${row.original.professional.user.firstName} ${row.original.professional.user.lastName}`
-          : 'Sin asignar',
+          : t('table.unassigned'),
     },
     {
       accessorKey: 'status',
-      header: 'Estado',
+      header: t('table.status'),
       cell: ({ row }) => (
         <Badge variant={STATUS_VARIANT[row.original.status]}>
-          {STATUS_LABEL[row.original.status]}
+          {t(`status.${row.original.status}`)}
         </Badge>
       ),
     },
     {
       id: 'amount',
-      header: 'Monto',
+      header: t('table.amount'),
       cell: ({ row }) => {
         const amount =
           row.original.finalAmount ??
           row.original.totalAmount ??
           row.original.fixedPrice ??
           row.original.hourlyRate;
-        return amount ? `Gs. ${Number(amount).toLocaleString('es-PY')}` : '—';
+        return amount ? formatCurrency(Number(amount)) : '—';
       },
     },
     {
       id: 'actions',
-      header: 'Acciones',
+      header: t('table.actions'),
       cell: ({ row }) => {
         const service = row.original;
         if (CANCELLABLE.has(service.status)) {
@@ -93,18 +88,10 @@ export function MyClientServicesTable() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudieron cargar tus servicios. Intentá recargar la página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
   }
 
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      emptyMessage="Todavía no solicitaste ningún servicio"
-    />
+    <DataTable columns={columns} data={data} emptyMessage={t('table.empty')} />
   );
 }

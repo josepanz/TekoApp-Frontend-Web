@@ -2,6 +2,7 @@
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -15,6 +16,7 @@ import { useLoginMutation } from '../hooks';
 import { loginSchema, type LoginFormValues } from '../schemas';
 
 export function LoginForm() {
+  const t = useTranslations('auth.login');
   const router = useRouter();
   const searchParams = useSearchParams();
   const loginMutation = useLoginMutation();
@@ -60,7 +62,7 @@ export function LoginForm() {
       )}
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t('email')}</Label>
         <Input
           id="email"
           type="email"
@@ -74,7 +76,7 @@ export function LoginForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="password">Contraseña</Label>
+        <Label htmlFor="password">{t('password')}</Label>
         <PasswordInput
           id="password"
           autoComplete="current-password"
@@ -97,14 +99,14 @@ export function LoginForm() {
               onCheckedChange={(checked) => field.onChange(checked)}
             />
             <Label htmlFor="rememberMe" className="font-normal">
-              Mantener la sesión iniciada
+              {t('rememberMe')}
             </Label>
           </div>
         )}
       />
 
       <Button type="submit" disabled={loginMutation.isPending}>
-        {loginMutation.isPending ? 'Ingresando...' : 'Ingresar'}
+        {loginMutation.isPending ? t('submitting') : t('submit')}
       </Button>
     </form>
   );

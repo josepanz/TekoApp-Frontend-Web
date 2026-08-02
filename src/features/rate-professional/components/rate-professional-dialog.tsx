@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -36,6 +37,8 @@ export function RateProfessionalDialog({
   professionalUserReferenceId,
   professionalName,
 }: RateProfessionalDialogProps) {
+  const t = useTranslations('rateProfessional');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const mutation = useRateProfessionalMutation();
   const {
@@ -63,9 +66,7 @@ export function RateProfessionalDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger
-        render={<Button size="sm">Calificar profesional</Button>}
-      />
+      <DialogTrigger render={<Button size="sm">{t('trigger')}</Button>} />
       <DialogContent>
         <form
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
@@ -73,14 +74,14 @@ export function RateProfessionalDialog({
           noValidate
         >
           <DialogHeader>
-            <DialogTitle>Calificar a {professionalName}</DialogTitle>
-            <DialogDescription>
-              Calificá tu experiencia con este profesional.
-            </DialogDescription>
+            <DialogTitle>
+              {t('dialog.title', { name: professionalName })}
+            </DialogTitle>
+            <DialogDescription>{t('dialog.description')}</DialogDescription>
           </DialogHeader>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="rating">Calificación (1-5)</Label>
+            <Label htmlFor="rating">{t('dialog.ratingLabel')}</Label>
             <Input
               id="rating"
               type="number"
@@ -97,7 +98,7 @@ export function RateProfessionalDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="comment">Comentario (opcional)</Label>
+            <Label htmlFor="comment">{t('dialog.commentLabel')}</Label>
             <Textarea id="comment" {...register('comment')} />
           </div>
 
@@ -107,10 +108,10 @@ export function RateProfessionalDialog({
               variant="outline"
               onClick={() => setOpen(false)}
             >
-              Cancelar
+              {tCommon('actions.cancel')}
             </Button>
             <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Enviando...' : 'Enviar calificación'}
+              {mutation.isPending ? t('dialog.submitting') : t('dialog.submit')}
             </Button>
           </DialogFooter>
         </form>

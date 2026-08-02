@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -28,6 +29,7 @@ interface SuspendProfessionalDialogProps {
 export function SuspendProfessionalDialog({
   professional,
 }: SuspendProfessionalDialogProps) {
+  const t = useTranslations('professionals.suspend');
   const [open, setOpen] = useState(false);
   const suspendMutation = useSuspendProfessionalMutation();
 
@@ -58,13 +60,13 @@ export function SuspendProfessionalDialog({
       <DialogTrigger
         render={
           <Button size="sm" variant="destructive">
-            Suspender
+            {t('trigger')}
           </Button>
         }
       />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Suspender profesional</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
@@ -72,7 +74,7 @@ export function SuspendProfessionalDialog({
           noValidate
         >
           <div className="flex flex-col gap-2">
-            <Label htmlFor="reason">Motivo</Label>
+            <Label htmlFor="reason">{t('reason')}</Label>
             <Textarea
               id="reason"
               aria-invalid={!!errors.reason}
@@ -91,9 +93,7 @@ export function SuspendProfessionalDialog({
               variant="destructive"
               disabled={suspendMutation.isPending}
             >
-              {suspendMutation.isPending
-                ? 'Suspendiendo...'
-                : 'Confirmar suspensión'}
+              {suspendMutation.isPending ? t('submitting') : t('submit')}
             </Button>
           </DialogFooter>
         </form>

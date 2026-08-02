@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
@@ -37,6 +38,7 @@ const LocationPickerMap = dynamic(
 const DEFAULT_LOCATION = { latitude: -25.2637, longitude: -57.5759 };
 
 export function RequestServiceForm() {
+  const t = useTranslations('requestService');
   const router = useRouter();
   const { data: categories, isPending: categoriesPending } =
     useActiveCategoriesQuery();
@@ -72,7 +74,7 @@ export function RequestServiceForm() {
       noValidate
     >
       <div className="flex flex-col gap-2">
-        <Label htmlFor="title">Título</Label>
+        <Label htmlFor="title">{t('form.title')}</Label>
         <Input
           id="title"
           aria-invalid={!!errors.title}
@@ -84,7 +86,7 @@ export function RequestServiceForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="description">Descripción</Label>
+        <Label htmlFor="description">{t('form.description')}</Label>
         <Textarea
           id="description"
           aria-invalid={!!errors.description}
@@ -99,7 +101,7 @@ export function RequestServiceForm() {
 
       <div className="flex gap-4">
         <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="categoryId">Categoría</Label>
+          <Label htmlFor="categoryId">{t('form.category')}</Label>
           <Controller
             control={control}
             name="categoryId"
@@ -108,8 +110,8 @@ export function RequestServiceForm() {
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={(value) => field.onChange(Number(value))}
               >
-                <SelectTrigger id="categoryId" aria-label="Categoría">
-                  <SelectValue placeholder="Elegí una categoría" />
+                <SelectTrigger id="categoryId" aria-label={t('form.category')}>
+                  <SelectValue placeholder={t('form.categoryPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories?.map((category) => (
@@ -129,7 +131,7 @@ export function RequestServiceForm() {
         </div>
 
         <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="serviceTypeId">Tipo de servicio</Label>
+          <Label htmlFor="serviceTypeId">{t('form.serviceType')}</Label>
           <Controller
             control={control}
             name="serviceTypeId"
@@ -138,8 +140,11 @@ export function RequestServiceForm() {
                 value={field.value ? String(field.value) : undefined}
                 onValueChange={(value) => field.onChange(Number(value))}
               >
-                <SelectTrigger id="serviceTypeId" aria-label="Tipo de servicio">
-                  <SelectValue placeholder="Elegí un tipo" />
+                <SelectTrigger
+                  id="serviceTypeId"
+                  aria-label={t('form.serviceType')}
+                >
+                  <SelectValue placeholder={t('form.serviceTypePlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   {serviceTypes?.map((type) => (
@@ -160,7 +165,7 @@ export function RequestServiceForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="address">Dirección</Label>
+        <Label htmlFor="address">{t('form.address')}</Label>
         <Input
           id="address"
           aria-invalid={!!errors.address}
@@ -172,10 +177,9 @@ export function RequestServiceForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label>Ubicación del servicio</Label>
+        <Label>{t('form.location')}</Label>
         <p className="text-muted-foreground text-sm">
-          Hacé click en el mapa o arrastrá el marcador para elegir dónde es el
-          trabajo.
+          {t('form.locationHint')}
         </p>
         <Controller
           control={control}
@@ -210,14 +214,14 @@ export function RequestServiceForm() {
               onCheckedChange={(checked) => field.onChange(checked === true)}
             />
             <Label htmlFor="isUrgent" className="font-normal">
-              Es urgente
+              {t('form.urgent')}
             </Label>
           </div>
         )}
       />
 
       <Button type="submit" disabled={createMutation.isPending}>
-        {createMutation.isPending ? 'Enviando...' : 'Solicitar profesional'}
+        {createMutation.isPending ? t('form.submitting') : t('form.submit')}
       </Button>
     </form>
   );

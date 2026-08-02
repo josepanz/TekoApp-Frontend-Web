@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -21,6 +22,8 @@ export function NearbySearchForm({
   onSearch,
   isPending,
 }: NearbySearchFormProps) {
+  const t = useTranslations('locations');
+  const tCommon = useTranslations('common');
   const {
     register,
     control,
@@ -43,7 +46,7 @@ export function NearbySearchForm({
       className="flex flex-wrap items-end gap-4"
     >
       <div className="flex flex-col gap-2">
-        <Label htmlFor="latitude">Latitud</Label>
+        <Label htmlFor="latitude">{t('search.latitude')}</Label>
         <Input
           id="latitude"
           type="number"
@@ -56,7 +59,7 @@ export function NearbySearchForm({
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="longitude">Longitud</Label>
+        <Label htmlFor="longitude">{t('search.longitude')}</Label>
         <Input
           id="longitude"
           type="number"
@@ -69,7 +72,7 @@ export function NearbySearchForm({
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="radius">Radio (km)</Label>
+        <Label htmlFor="radius">{t('search.radius')}</Label>
         <Input
           id="radius"
           type="number"
@@ -92,7 +95,7 @@ export function NearbySearchForm({
               onCheckedChange={(checked) => field.onChange(checked === true)}
             />
             <Label htmlFor="availableOnly" className="font-normal">
-              Solo disponibles
+              {t('search.availableOnly')}
             </Label>
           </div>
         )}
@@ -109,14 +112,14 @@ export function NearbySearchForm({
               onCheckedChange={(checked) => field.onChange(checked === true)}
             />
             <Label htmlFor="onlineOnly" className="font-normal">
-              Solo en línea
+              {t('search.onlineOnly')}
             </Label>
           </div>
         )}
       />
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? 'Buscando...' : 'Buscar'}
+        {isPending ? t('search.searching') : tCommon('actions.search')}
       </Button>
     </form>
   );

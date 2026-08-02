@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ShieldCheck, User, Wrench } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { useMyProfessionalProfileQuery } from '@/features/professional-profile/hooks';
 import {
@@ -10,12 +11,6 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import type { SidebarVariant } from './app-sidebar';
-
-const MODE_LABEL: Record<SidebarVariant, string> = {
-  client: 'Modo cliente',
-  pro: 'Modo profesional',
-  admin: 'Panel de administración',
-};
 
 const MODE_ICON = {
   client: User,
@@ -34,6 +29,7 @@ const MODE_HREF: Record<SidebarVariant, string> = {
 // lo sigue haciendo cada layout (permisos para /admin, perfil profesional para /pro) — esto solo
 // oculta el link cuando ya sabemos que no corresponde, para no ofrecer un camino que va a rebotar.
 export function ModeSwitcher({ current }: { current: SidebarVariant }) {
+  const t = useTranslations('layout.modeSwitcher');
   const { data: scope } = useSessionScopeQuery();
   const { data: professional, isError: noProfessionalProfile } =
     useMyProfessionalProfileQuery();
@@ -54,14 +50,15 @@ export function ModeSwitcher({ current }: { current: SidebarVariant }) {
     <SidebarMenu>
       {otherModes.map((mode) => {
         const Icon = MODE_ICON[mode];
+        const label = t(mode);
         return (
           <SidebarMenuItem key={mode}>
             <SidebarMenuButton
-              tooltip={MODE_LABEL[mode]}
+              tooltip={label}
               render={
                 <Link href={MODE_HREF[mode]}>
                   <Icon />
-                  <span>{MODE_LABEL[mode]}</span>
+                  <span>{label}</span>
                 </Link>
               }
             />

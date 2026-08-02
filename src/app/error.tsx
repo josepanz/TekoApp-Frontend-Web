@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -15,18 +16,20 @@ export default function RootError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations('pages.error');
+  const tCommon = useTranslations('common');
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-4 px-4 text-center">
-      <h1 className="font-heading text-2xl font-semibold">Algo salió mal</h1>
+      <h1 className="font-heading text-2xl font-semibold">{t('title')}</h1>
       <p className="text-muted-foreground max-w-md text-sm">
-        No pudimos completar la solicitud. Puede ser un problema temporario del
-        servidor — probá de nuevo en unos segundos.
+        {t('description')}
       </p>
-      <Button onClick={() => reset()}>Reintentar</Button>
+      <Button onClick={() => reset()}>{tCommon('actions.retry')}</Button>
     </div>
   );
 }

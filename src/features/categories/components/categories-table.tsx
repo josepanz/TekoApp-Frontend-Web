@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -25,6 +26,8 @@ import {
 import { CategoryFormDialog } from './category-form-dialog';
 
 export function CategoriesTable() {
+  const t = useTranslations('categories');
+  const tCommon = useTranslations('common');
   const { data, isPending, isError } = useCategoriesQuery();
   const toggleVisibilityMutation = useToggleCategoryVisibilityMutation();
   const deleteMutation = useDeleteCategoryMutation();
@@ -36,18 +39,18 @@ export function CategoriesTable() {
   const columns: ColumnDef<Category, unknown>[] = [
     {
       accessorKey: 'name',
-      header: 'Nombre',
+      header: t('table.name'),
     },
     {
       accessorKey: 'slug',
-      header: 'Slug',
+      header: t('table.slug'),
       cell: ({ row }) => (
         <span className="text-muted-foreground">{row.original.slug}</span>
       ),
     },
     {
       id: 'iconColor',
-      header: 'Ícono / Color',
+      header: t('table.iconColor'),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           {row.original.color && (
@@ -65,7 +68,7 @@ export function CategoriesTable() {
     },
     {
       id: 'isVisible',
-      header: 'Visible',
+      header: t('table.visible'),
       cell: ({ row }) => (
         <Switch
           checked={row.original.isVisible}
@@ -75,15 +78,15 @@ export function CategoriesTable() {
           }
           aria-label={
             row.original.isVisible
-              ? `Ocultar ${row.original.name}`
-              : `Mostrar ${row.original.name}`
+              ? t('table.hide', { name: row.original.name })
+              : t('table.show', { name: row.original.name })
           }
         />
       ),
     },
     {
       id: 'actions',
-      header: 'Acciones',
+      header: t('table.actions'),
       cell: ({ row }) => (
         <div className="flex gap-2">
           <Button
@@ -91,14 +94,14 @@ export function CategoriesTable() {
             size="sm"
             onClick={() => setEditingCategory(row.original)}
           >
-            Editar
+            {tCommon('actions.edit')}
           </Button>
           <Button
             variant="destructive"
             size="sm"
             onClick={() => setDeletingCategory(row.original)}
           >
-            Eliminar
+            {tCommon('actions.delete')}
           </Button>
         </div>
       ),
@@ -110,11 +113,7 @@ export function CategoriesTable() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudo cargar la lista de categorías. Intentá recargar la página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
   }
 
   return (
@@ -122,7 +121,7 @@ export function CategoriesTable() {
       <DataTable
         columns={columns}
         data={data}
-        emptyMessage="No hay categorías para mostrar"
+        emptyMessage={t('table.empty')}
       />
 
       <CategoryFormDialog
@@ -141,14 +140,13 @@ export function CategoriesTable() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Eliminar categoría</AlertDialogTitle>
+            <AlertDialogTitle>{t('delete.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Esta acción eliminará permanentemente la categoría &quot;
-              {deletingCategory?.name}&quot;. No se puede deshacer.
+              {t('delete.description', { name: deletingCategory?.name ?? '' })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel>{tCommon('actions.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={deleteMutation.isPending}
@@ -159,7 +157,9 @@ export function CategoriesTable() {
                 });
               }}
             >
-              {deleteMutation.isPending ? 'Eliminando...' : 'Eliminar'}
+              {deleteMutation.isPending
+                ? tCommon('states.deleting')
+                : tCommon('actions.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

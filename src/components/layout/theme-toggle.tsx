@@ -1,6 +1,7 @@
 'use client';
 
 import { Monitor, Moon, Sun } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -11,13 +12,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+// `labelKey` en vez del label literal: la traducción se resuelve en el render (hook de next-intl),
+// no en el módulo — un objeto a nivel de módulo no puede llamar hooks.
 const OPTIONS = [
-  { value: 'light', label: 'Claro', icon: Sun },
-  { value: 'dark', label: 'Oscuro', icon: Moon },
-  { value: 'system', label: 'Sistema', icon: Monitor },
+  { value: 'light', labelKey: 'light', icon: Sun },
+  { value: 'dark', labelKey: 'dark', icon: Moon },
+  { value: 'system', labelKey: 'system', icon: Monitor },
 ] as const;
 
 export function ThemeToggle() {
+  const t = useTranslations('layout.themeToggle');
   const { theme, setTheme } = useTheme();
   // next-themes solo conoce el tema real después del primer render en el cliente —
   // evita el flash/mismatch de hidratación mostrando un ícono neutro hasta entonces.
@@ -36,7 +40,7 @@ export function ThemeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" size="icon" aria-label="Cambiar tema">
+          <Button variant="ghost" size="icon" aria-label={t('trigger')}>
             {mounted ? (
               <CurrentIcon aria-hidden="true" />
             ) : (
@@ -46,10 +50,10 @@ export function ThemeToggle() {
         }
       />
       <DropdownMenuContent align="end">
-        {OPTIONS.map(({ value, label, icon: Icon }) => (
+        {OPTIONS.map(({ value, labelKey, icon: Icon }) => (
           <DropdownMenuItem key={value} onClick={() => setTheme(value)}>
             <Icon aria-hidden="true" />
-            {label}
+            {t(labelKey)}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -38,6 +39,8 @@ interface RoleFormDialogProps {
 // -- el backend todavía no acepta un campo `permissions` en CreateRoleRequestDTO/
 // UpdateRoleRequestDTO, así que el payload enviado a la mutation nunca lo incluye.
 export function RoleFormDialog({ role, trigger }: RoleFormDialogProps) {
+  const t = useTranslations('rolesPermission.form');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const isEditing = Boolean(role);
   const createMutation = useCreateRoleMutation();
@@ -95,11 +98,11 @@ export function RoleFormDialog({ role, trigger }: RoleFormDialogProps) {
       <DialogTrigger render={trigger} />
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{isEditing ? 'Editar rol' : 'Nuevo rol'}</DialogTitle>
+          <DialogTitle>
+            {isEditing ? t('editTitle') : t('createTitle')}
+          </DialogTitle>
           <DialogDescription>
-            {isEditing
-              ? 'Modificá el nombre, la descripción y los permisos del rol.'
-              : 'Definí el nombre, la descripción y los permisos del nuevo rol.'}
+            {isEditing ? t('editDescription') : t('createDescription')}
           </DialogDescription>
         </DialogHeader>
 
@@ -109,7 +112,7 @@ export function RoleFormDialog({ role, trigger }: RoleFormDialogProps) {
           noValidate
         >
           <div className="flex flex-col gap-2">
-            <Label htmlFor="role-name">Nombre</Label>
+            <Label htmlFor="role-name">{t('name')}</Label>
             <Input
               id="role-name"
               aria-invalid={!!errors.name}
@@ -121,12 +124,12 @@ export function RoleFormDialog({ role, trigger }: RoleFormDialogProps) {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="role-description">Descripción</Label>
+            <Label htmlFor="role-description">{t('description')}</Label>
             <Textarea id="role-description" {...register('description')} />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Permisos</Label>
+            <Label>{t('permissions')}</Label>
             <Controller
               control={control}
               name="permissions"
@@ -146,7 +149,9 @@ export function RoleFormDialog({ role, trigger }: RoleFormDialogProps) {
 
           <DialogFooter>
             <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Guardando...' : 'Guardar'}
+              {mutation.isPending
+                ? tCommon('states.saving')
+                : tCommon('actions.save')}
             </Button>
           </DialogFooter>
         </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -28,19 +29,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { useRefundPaymentMutation } from '../hooks';
 import { refundPaymentSchema, type RefundPaymentFormValues } from '../schemas';
 
-const REASON_LABEL: Record<RefundPaymentFormValues['reason'], string> = {
-  customer_request: 'Solicitud del cliente',
-  duplicate_payment: 'Pago duplicado',
-  fraud: 'Fraude',
-  service_not_provided: 'Servicio no prestado',
-  poor_service_quality: 'Calidad de servicio deficiente',
-  technical_issue: 'Problema técnico',
-  other: 'Otro',
-};
-
-const REASON_OPTIONS = Object.keys(REASON_LABEL) as Array<
-  keyof typeof REASON_LABEL
->;
+const REASON_OPTIONS: RefundPaymentFormValues['reason'][] = [
+  'customer_request',
+  'duplicate_payment',
+  'fraud',
+  'service_not_provided',
+  'poor_service_quality',
+  'technical_issue',
+  'other',
+];
 
 interface RefundPaymentDialogProps {
   paymentId: string;
@@ -54,6 +51,8 @@ export function RefundPaymentDialog({
   paymentId,
   amount,
 }: RefundPaymentDialogProps) {
+  const t = useTranslations('payments.refund');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const refundMutation = useRefundPaymentMutation();
 
@@ -93,7 +92,7 @@ export function RefundPaymentDialog({
       <AlertDialogTrigger
         render={
           <Button variant="outline" size="sm">
-            Reembolsar
+            {t('trigger')}
           </Button>
         }
       />
@@ -103,15 +102,13 @@ export function RefundPaymentDialog({
           noValidate
         >
           <AlertDialogHeader>
-            <AlertDialogTitle>Reembolsar pago</AlertDialogTitle>
-            <AlertDialogDescription>
-              Esta acción reembolsará el pago al usuario. No se puede deshacer.
-            </AlertDialogDescription>
+            <AlertDialogTitle>{t('title')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('description')}</AlertDialogDescription>
           </AlertDialogHeader>
 
           <div className="flex flex-col gap-3 py-2">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="refund-amount">Monto a reembolsar</Label>
+              <Label htmlFor="refund-amount">{t('amountLabel')}</Label>
               <Input
                 id="refund-amount"
                 type="number"
@@ -127,19 +124,19 @@ export function RefundPaymentDialog({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="refund-reason">Motivo</Label>
+              <Label htmlFor="refund-reason">{t('reasonLabel')}</Label>
               <Controller
                 control={control}
                 name="reason"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger id="refund-reason" className="w-full">
-                      <SelectValue placeholder="Seleccioná un motivo" />
+                      <SelectValue placeholder={t('reasonPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       {REASON_OPTIONS.map((reason) => (
                         <SelectItem key={reason} value={reason}>
-                          {REASON_LABEL[reason]}
+                          {t(`reasons.${reason}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -154,20 +151,20 @@ export function RefundPaymentDialog({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="refund-description">Descripción (opcional)</Label>
+              <Label htmlFor="refund-description">
+                {t('descriptionLabel')}
+              </Label>
               <Textarea id="refund-description" {...register('description')} />
             </div>
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel>Volver</AlertDialogCancel>
+            <AlertDialogCancel>{tCommon('actions.back')}</AlertDialogCancel>
             <AlertDialogAction
               type="submit"
               disabled={refundMutation.isPending}
             >
-              {refundMutation.isPending
-                ? 'Reembolsando...'
-                : 'Confirmar reembolso'}
+              {refundMutation.isPending ? t('pending') : t('confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </form>

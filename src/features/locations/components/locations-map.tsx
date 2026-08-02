@@ -1,6 +1,7 @@
 'use client';
 
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { useTranslations } from 'next-intl';
 import type { NearbyProfessional } from '../api';
 
 interface LocationsMapProps {
@@ -11,12 +12,13 @@ interface LocationsMapProps {
 // `Marker` (legacy), no `AdvancedMarker` — este último exige un `mapId` de Google Cloud Console
 // configurado para el proyecto, que no tenemos provisionado todavía.
 export function LocationsMap({ professionals, center }: LocationsMapProps) {
+  const t = useTranslations('locations');
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   if (!apiKey) {
     return (
       <p className="text-muted-foreground rounded-md border border-dashed p-6 text-sm">
-        Falta configurar NEXT_PUBLIC_GOOGLE_MAPS_API_KEY para mostrar el mapa.
+        {t('map.missingApiKey')}
       </p>
     );
   }
@@ -41,11 +43,18 @@ export function LocationsMap({ professionals, center }: LocationsMapProps) {
                   lat: Number(professional.currentLatitude),
                   lng: Number(professional.currentLongitude),
                 }}
-                title={`Profesional #${professional.referenceId.slice(0, 8)} · ⭐ ${Number(professional.averageRating).toFixed(1)}${
+                title={
                   professional.distance !== undefined
-                    ? ` · ${professional.distance.toFixed(1)} km`
-                    : ''
-                }`}
+                    ? t('map.markerTitleWithDistance', {
+                        id: professional.referenceId.slice(0, 8),
+                        rating: Number(professional.averageRating).toFixed(1),
+                        distance: professional.distance.toFixed(1),
+                      })
+                    : t('map.markerTitle', {
+                        id: professional.referenceId.slice(0, 8),
+                        rating: Number(professional.averageRating).toFixed(1),
+                      })
+                }
               />
             ))}
         </Map>

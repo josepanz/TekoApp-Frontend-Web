@@ -1,15 +1,15 @@
 import { BrowseProfessionalsList } from '@/features/browse-professionals/components/browse-professionals-list';
+import { getTranslations } from 'next-intl/server';
 
-export default function ProfesionalesPage() {
+export default async function ProfesionalesPage() {
+  const t = await getTranslations('pages.client.professionals');
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Profesionales
+          {t('title')}
         </h1>
-        <p className="text-muted-foreground">
-          Buscá profesionales disponibles y su reputación.
-        </p>
+        <p className="text-muted-foreground">{t('description')}</p>
       </div>
       <BrowseProfessionalsList />
     </div>

@@ -1,11 +1,13 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/layout/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RateClientDialog } from '@/features/professional-ratings/components/rate-client-dialog';
+import { formatCurrency } from '@/lib/formatters';
 import {
   useCompleteServiceMutation,
   useMyServicesQuery,
@@ -24,51 +26,44 @@ const STATUS_VARIANT: Record<
   CANCELLED: 'destructive',
 };
 
-const STATUS_LABEL: Record<Service['status'], string> = {
-  PENDING: 'Pendiente',
-  ACCEPTED: 'Aceptado',
-  IN_PROGRESS: 'En curso',
-  COMPLETED: 'Completado',
-  CANCELLED: 'Cancelado',
-};
-
 export function MyServicesTable() {
+  const t = useTranslations('professionalServices');
   const { data, isPending, isError } = useMyServicesQuery({});
   const startMutation = useStartServiceMutation();
   const completeMutation = useCompleteServiceMutation();
 
   const columns: ColumnDef<Service, unknown>[] = [
-    { accessorKey: 'title', header: 'Servicio' },
+    { accessorKey: 'title', header: t('table.service') },
     {
       id: 'client',
-      header: 'Cliente',
+      header: t('table.client'),
       cell: ({ row }) =>
         `${row.original.users.firstName} ${row.original.users.lastName}`,
     },
     {
       accessorKey: 'status',
-      header: 'Estado',
+      header: t('table.status'),
       cell: ({ row }) => (
         <Badge variant={STATUS_VARIANT[row.original.status]}>
-          {STATUS_LABEL[row.original.status]}
+          {t(`status.${row.original.status}`)}
         </Badge>
       ),
     },
     {
       id: 'amount',
-      header: 'Monto',
+      header: t('table.amount'),
       cell: ({ row }) => {
         const amount =
           row.original.finalAmount ??
           row.original.totalAmount ??
           row.original.fixedPrice ??
           row.original.hourlyRate;
-        return amount ? `Gs. ${Number(amount).toLocaleString('es-PY')}` : '—';
+        return amount ? formatCurrency(Number(amount)) : '—';
       },
     },
     {
       id: 'actions',
-      header: 'Acciones',
+      header: t('table.actions'),
       cell: ({ row }) => {
         const service = row.original;
         if (service.status === 'ACCEPTED') {
@@ -78,7 +73,7 @@ export function MyServicesTable() {
               disabled={startMutation.isPending}
               onClick={() => startMutation.mutate(service.id)}
             >
-              Iniciar
+              {t('table.start')}
             </Button>
           );
         }
@@ -89,7 +84,7 @@ export function MyServicesTable() {
               disabled={completeMutation.isPending}
               onClick={() => completeMutation.mutate(service.id)}
             >
-              Completar
+              {t('table.complete')}
             </Button>
           );
         }
@@ -112,18 +107,10 @@ export function MyServicesTable() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudieron cargar tus servicios. Intentá recargar la página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
   }
 
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      emptyMessage="No tenés servicios asignados todavía"
-    />
+    <DataTable columns={columns} data={data} emptyMessage={t('table.empty')} />
   );
 }

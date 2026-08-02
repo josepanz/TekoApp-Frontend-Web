@@ -1,12 +1,16 @@
 'use client';
 
 import { CreditCard, Star, UserCog, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatCurrency, formatNumber, formatPercent } from '@/lib/formatters';
 import { useDashboardStatsQuery } from '../hooks';
 import { StatCard } from './stat-card';
 
 export function Overview() {
+  const t = useTranslations('analytics');
+  const locale = useAppLocale();
   const { data, isPending, isError } = useDashboardStatsQuery();
 
   if (isPending) {
@@ -20,39 +24,42 @@ export function Overview() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudieron cargar las métricas del panel. Intentá recargar la
-        página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('loadError')}</p>;
   }
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <StatCard
-        title="Usuarios totales"
-        value={formatNumber(data.users.total)}
-        trend={`${formatPercent(data.users.growth)} este período`}
+        title={t('stats.totalUsers')}
+        value={formatNumber(data.users.total, locale)}
+        trend={t('trends.thisPeriod', {
+          value: formatPercent(data.users.growth),
+        })}
         trendDirection={data.users.growth >= 0 ? 'up' : 'down'}
         icon={Users}
       />
       <StatCard
-        title="Profesionales verificados"
-        value={formatNumber(data.professionals.verified)}
-        trend={`${formatNumber(data.professionals.total)} en total`}
+        title={t('stats.verifiedProfessionals')}
+        value={formatNumber(data.professionals.verified, locale)}
+        trend={t('trends.totalCount', {
+          value: formatNumber(data.professionals.total, locale),
+        })}
         icon={UserCog}
       />
       <StatCard
-        title="Facturación del período"
+        title={t('stats.periodRevenue')}
         value={formatCurrency(data.revenue.period)}
-        trend={`${formatCurrency(data.revenue.total)} acumulado`}
+        trend={t('trends.accumulated', {
+          value: formatCurrency(data.revenue.total),
+        })}
         icon={CreditCard}
       />
       <StatCard
-        title="Calificación promedio"
+        title={t('stats.averageRating')}
         value={data.ratings.average.toFixed(1)}
-        trend={`${formatNumber(data.ratings.total)} calificaciones`}
+        trend={t('trends.ratingsCount', {
+          value: formatNumber(data.ratings.total, locale),
+        })}
         icon={Star}
       />
     </div>

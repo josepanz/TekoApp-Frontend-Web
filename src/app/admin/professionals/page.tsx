@@ -1,16 +1,15 @@
 import { ProfessionalsTable } from '@/features/professionals/components/professionals-table';
+import { getTranslations } from 'next-intl/server';
 
-export default function ProfessionalsPage() {
+export default async function ProfessionalsPage() {
+  const t = await getTranslations('pages.admin.professionals');
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Profesionales
+          {t('title')}
         </h1>
-        <p className="text-muted-foreground">
-          Verificación y suspensión de perfiles profesionales registrados en la
-          plataforma.
-        </p>
+        <p className="text-muted-foreground">{t('description')}</p>
       </div>
       <ProfessionalsTable />
     </div>

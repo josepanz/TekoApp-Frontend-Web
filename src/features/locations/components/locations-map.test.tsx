@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '@/test/render';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { NearbyProfessional } from '../api';
 import { LocationsMap } from './locations-map';

@@ -1,15 +1,15 @@
 import { LocationsExplorer } from '@/features/locations/components/locations-explorer';
+import { getTranslations } from 'next-intl/server';
 
-export default function LocationsPage() {
+export default async function LocationsPage() {
+  const t = await getTranslations('pages.admin.locations');
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Ubicaciones
+          {t('title')}
         </h1>
-        <p className="text-muted-foreground">
-          Profesionales conectados y su posición geográfica en tiempo real.
-        </p>
+        <p className="text-muted-foreground">{t('description')}</p>
       </div>
       <LocationsExplorer />
     </div>

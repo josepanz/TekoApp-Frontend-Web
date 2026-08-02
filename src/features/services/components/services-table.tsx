@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -12,7 +13,8 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
-import { formatCurrency } from '@/lib/formatters';
+import { useAppLocale } from '@/i18n/use-app-locale';
+import { formatCurrency, formatDate } from '@/lib/formatters';
 import { useServicesQuery } from '../hooks';
 import type { Service, ServiceStatus } from '../api';
 
@@ -25,14 +27,6 @@ const STATUS_VARIANT: Record<
   IN_PROGRESS: 'default',
   COMPLETED: 'secondary',
   CANCELLED: 'destructive',
-};
-
-const STATUS_LABEL: Record<ServiceStatus, string> = {
-  PENDING: 'Pendiente',
-  ACCEPTED: 'Aceptado',
-  IN_PROGRESS: 'En curso',
-  COMPLETED: 'Completado',
-  CANCELLED: 'Cancelado',
 };
 
 const STATUS_FILTER_OPTIONS: ServiceStatus[] = [
@@ -57,66 +51,11 @@ function getDisplayAmount(service: Service): number | undefined {
   );
 }
 
-function getProfessionalLabel(service: Service): string {
-  return service.professionalId
-    ? `Profesional #${service.professionalId}`
-    : 'Sin asignar';
-}
-
-const columns: ColumnDef<Service, unknown>[] = [
-  {
-    id: 'service',
-    header: 'Servicio',
-    cell: ({ row }) => (
-      <div className="flex flex-col">
-        <span className="font-medium">{row.original.title}</span>
-        {row.original.category && (
-          <span className="text-muted-foreground text-xs">
-            {row.original.category.name}
-          </span>
-        )}
-      </div>
-    ),
-  },
-  {
-    id: 'client',
-    header: 'Cliente',
-    cell: ({ row }) =>
-      `${row.original.users.firstName} ${row.original.users.lastName}`,
-  },
-  {
-    id: 'professional',
-    header: 'Profesional',
-    cell: ({ row }) => getProfessionalLabel(row.original),
-  },
-  {
-    accessorKey: 'status',
-    header: 'Estado',
-    cell: ({ row }) => (
-      <Badge variant={STATUS_VARIANT[row.original.status]}>
-        {STATUS_LABEL[row.original.status]}
-      </Badge>
-    ),
-  },
-  {
-    id: 'amount',
-    header: 'Monto',
-    cell: ({ row }) => {
-      const amount = getDisplayAmount(row.original);
-      return amount !== undefined ? formatCurrency(amount) : '—';
-    },
-  },
-  {
-    accessorKey: 'createdAt',
-    header: 'Fecha',
-    cell: ({ row }) =>
-      new Date(row.original.createdAt).toLocaleDateString('es-PY'),
-  },
-];
-
 const PAGE_SIZE = 10;
 
 export function ServicesTable() {
+  const t = useTranslations('services');
+  const locale = useAppLocale();
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<ServiceStatus | undefined>(undefined);
   const { data, isPending, isError } = useServicesQuery({
@@ -124,6 +63,70 @@ export function ServicesTable() {
     pageSize: PAGE_SIZE,
     status,
   });
+
+  const statusLabel: Record<ServiceStatus, string> = {
+    PENDING: t('status.PENDING'),
+    ACCEPTED: t('status.ACCEPTED'),
+    IN_PROGRESS: t('status.IN_PROGRESS'),
+    COMPLETED: t('status.COMPLETED'),
+    CANCELLED: t('status.CANCELLED'),
+  };
+
+  function getProfessionalLabel(service: Service): string {
+    return service.professionalId
+      ? t('table.professionalRef', { id: String(service.professionalId) })
+      : t('table.unassigned');
+  }
+
+  const columns: ColumnDef<Service, unknown>[] = [
+    {
+      id: 'service',
+      header: t('table.service'),
+      cell: ({ row }) => (
+        <div className="flex flex-col">
+          <span className="font-medium">{row.original.title}</span>
+          {row.original.category && (
+            <span className="text-muted-foreground text-xs">
+              {row.original.category.name}
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
+      id: 'client',
+      header: t('table.client'),
+      cell: ({ row }) =>
+        `${row.original.users.firstName} ${row.original.users.lastName}`,
+    },
+    {
+      id: 'professional',
+      header: t('table.professional'),
+      cell: ({ row }) => getProfessionalLabel(row.original),
+    },
+    {
+      accessorKey: 'status',
+      header: t('table.status'),
+      cell: ({ row }) => (
+        <Badge variant={STATUS_VARIANT[row.original.status]}>
+          {statusLabel[row.original.status]}
+        </Badge>
+      ),
+    },
+    {
+      id: 'amount',
+      header: t('table.amount'),
+      cell: ({ row }) => {
+        const amount = getDisplayAmount(row.original);
+        return amount !== undefined ? formatCurrency(amount) : '—';
+      },
+    },
+    {
+      accessorKey: 'createdAt',
+      header: t('table.date'),
+      cell: ({ row }) => formatDate(row.original.createdAt, locale),
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-4">
@@ -136,14 +139,14 @@ export function ServicesTable() {
           setPage(1);
         }}
       >
-        <SelectTrigger aria-label="Filtrar por estado" className="w-56">
-          <SelectValue placeholder="Filtrar por estado" />
+        <SelectTrigger aria-label={t('filter.label')} className="w-56">
+          <SelectValue placeholder={t('filter.label')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL_STATUSES}>Todos los estados</SelectItem>
+          <SelectItem value={ALL_STATUSES}>{t('filter.all')}</SelectItem>
           {STATUS_FILTER_OPTIONS.map((option) => (
             <SelectItem key={option} value={option}>
-              {STATUS_LABEL[option]}
+              {statusLabel[option]}
             </SelectItem>
           ))}
         </SelectContent>
@@ -152,14 +155,12 @@ export function ServicesTable() {
       {isPending ? (
         <Skeleton className="h-64" />
       ) : isError ? (
-        <p className="text-muted-foreground">
-          No se pudo cargar la lista de servicios. Intentá recargar la página.
-        </p>
+        <p className="text-muted-foreground">{t('table.loadError')}</p>
       ) : (
         <DataTable
           columns={columns}
           data={data.data}
-          emptyMessage="No hay servicios para mostrar"
+          emptyMessage={t('table.empty')}
           pagination={{
             page: data.pagination.page,
             totalPages: data.pagination.totalPages,

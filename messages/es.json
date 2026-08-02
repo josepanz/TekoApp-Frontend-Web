@@ -1,0 +1,666 @@
+{
+  "common": {
+    "language": {
+      "label": "Cambiar idioma",
+      "es": "Español",
+      "en": "English"
+    },
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "create": "Crear",
+      "save": "Guardar",
+      "saveChanges": "Guardar cambios",
+      "close": "Cerrar",
+      "confirm": "Confirmar",
+      "search": "Buscar",
+      "retry": "Reintentar",
+      "back": "Volver",
+      "view": "Ver"
+    },
+    "states": {
+      "loading": "Cargando...",
+      "saving": "Guardando...",
+      "deleting": "Eliminando..."
+    },
+    "unexpectedError": "Ocurrió un error inesperado. Intentá de nuevo."
+  },
+  "layout": {
+    "brand": {
+      "admin": "TekoApp",
+      "pro": "TekoApp Pro",
+      "client": "TekoApp"
+    },
+    "nav": {
+      "admin": {
+        "dashboard": "Resumen",
+        "users": "Usuarios",
+        "professionals": "Profesionales",
+        "services": "Servicios",
+        "payments": "Pagos",
+        "promotions": "Promociones",
+        "ratings": "Calificaciones",
+        "rolesPermission": "Roles y permisos",
+        "categories": "Categorías",
+        "locations": "Ubicaciones",
+        "notifications": "Notificaciones"
+      },
+      "client": {
+        "home": "Inicio",
+        "request": "Solicitar",
+        "myServices": "Mis servicios",
+        "professionals": "Profesionales"
+      },
+      "pro": {
+        "requests": "Solicitudes",
+        "myServices": "Mis servicios",
+        "ratings": "Calificaciones",
+        "profile": "Perfil"
+      }
+    },
+    "modeSwitcher": {
+      "groupLabel": "Cambiar de modo",
+      "client": "Modo cliente",
+      "pro": "Modo profesional",
+      "admin": "Panel de administración"
+    },
+    "userMenu": {
+      "trigger": "Menú de usuario",
+      "profile": "Mi perfil",
+      "logout": "Cerrar sesión",
+      "loggingOut": "Cerrando sesión..."
+    },
+    "themeToggle": {
+      "trigger": "Cambiar tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    }
+  },
+  "auth": {
+    "login": {
+      "pageTitle": "TekoApp",
+      "pageSubtitle": "Portal de administración — iniciá sesión para continuar.",
+      "email": "Email",
+      "password": "Contraseña",
+      "rememberMe": "Mantener la sesión iniciada",
+      "submit": "Ingresar",
+      "submitting": "Ingresando...",
+      "genericError": "No se pudo iniciar sesión. Intentá de nuevo."
+    }
+  },
+  "categories": {
+    "table": {
+      "name": "Nombre",
+      "slug": "Slug",
+      "iconColor": "Ícono / Color",
+      "visible": "Visible",
+      "actions": "Acciones",
+      "hide": "Ocultar {name}",
+      "show": "Mostrar {name}",
+      "empty": "No hay categorías para mostrar",
+      "loadError": "No se pudo cargar la lista de categorías. Intentá recargar la página."
+    },
+    "delete": {
+      "title": "Eliminar categoría",
+      "description": "Esta acción eliminará permanentemente la categoría \"{name}\". No se puede deshacer."
+    },
+    "form": {
+      "editTitle": "Editar categoría",
+      "createTitle": "Nueva categoría",
+      "editDescription": "Modificá los datos de la categoría seleccionada.",
+      "createDescription": "Completá los datos para crear una nueva categoría de servicios.",
+      "name": "Nombre",
+      "slug": "Slug",
+      "slugPlaceholder": "Se autogenera si se omite",
+      "description": "Descripción",
+      "icon": "Ícono",
+      "color": "Color",
+      "parentId": "ID de categoría padre (opcional)",
+      "visibleLabel": "Visible en el buscador de clientes",
+      "submitCreate": "Crear categoría"
+    },
+    "newButton": "Nueva categoría"
+  },
+  "pages": {
+    "admin": {
+      "dashboard": {
+        "title": "Resumen",
+        "description": "Métricas globales de la plataforma en tiempo real."
+      },
+      "users": {
+        "title": "Usuarios",
+        "description": "Gestión de clientes y profesionales registrados en la plataforma."
+      },
+      "professionals": {
+        "title": "Profesionales",
+        "description": "Verificación y suspensión de perfiles profesionales registrados en la plataforma."
+      },
+      "services": {
+        "title": "Servicios",
+        "description": "Monitoreo de los servicios solicitados por clientes en la plataforma."
+      },
+      "payments": {
+        "title": "Pagos",
+        "description": "Monitoreo y gestión de pagos: reembolsos y cancelaciones."
+      },
+      "promotions": {
+        "title": "Promociones",
+        "description": "Gestión de promociones y cupones de descuento de la plataforma.",
+        "newButton": "Nueva promoción"
+      },
+      "ratings": {
+        "title": "Calificaciones",
+        "description": "Moderación de calificaciones reportadas o inapropiadas de la plataforma."
+      },
+      "rolesPermission": {
+        "title": "Roles y permisos",
+        "description": "Gestión de roles administrativos y los permisos que agrupan.",
+        "newButton": "Nuevo rol"
+      },
+      "categories": {
+        "title": "Categorías",
+        "description": "Gestión del catálogo de categorías de servicios profesionales."
+      },
+      "locations": {
+        "title": "Ubicaciones",
+        "description": "Profesionales conectados y su posición geográfica en tiempo real."
+      },
+      "notifications": {
+        "title": "Notificaciones",
+        "description": "Log de notificaciones del sistema y envío de notificaciones manuales."
+      }
+    },
+    "client": {
+      "home": {
+        "greeting": "Hola, {name}",
+        "description": "Solicitá un profesional, hacé seguimiento a tus servicios y calificá cuando termine el trabajo.",
+        "requestCta": "Solicitar un profesional",
+        "browseCta": "Buscar profesionales",
+        "adminCta": "Ir al panel de administración"
+      },
+      "myServices": {
+        "title": "Mis servicios",
+        "description": "Seguimiento de los servicios que solicitaste."
+      },
+      "professionals": {
+        "title": "Profesionales",
+        "description": "Buscá profesionales disponibles y su reputación."
+      },
+      "professionalDetail": {
+        "title": "Perfil del profesional"
+      },
+      "request": {
+        "title": "Solicitar un profesional",
+        "description": "Contanos qué necesitás y un profesional disponible lo aceptará."
+      }
+    },
+    "pro": {
+      "requests": {
+        "title": "Solicitudes",
+        "description": "Servicios pendientes en tu categoría que podés aceptar."
+      },
+      "services": {
+        "title": "Mis servicios",
+        "description": "Servicios aceptados, en curso e historial."
+      },
+      "ratings": {
+        "title": "Calificaciones",
+        "description": "Reseñas recibidas de tus clientes."
+      },
+      "profile": {
+        "title": "Mi perfil",
+        "description": "Editá tu descripción, tarifas y disponibilidad."
+      }
+    },
+    "error": {
+      "title": "Algo salió mal",
+      "description": "No pudimos completar la solicitud. Puede ser un problema temporario del servidor — probá de nuevo en unos segundos."
+    }
+  },
+  "users": {
+    "table": {
+      "email": "Email",
+      "name": "Nombre",
+      "phone": "Teléfono",
+      "status": "Estado",
+      "empty": "No hay usuarios para mostrar",
+      "loadError": "No se pudo cargar la lista de usuarios. Intentá recargar la página."
+    },
+    "status": {
+      "ACTIVE": "Activo",
+      "PENDING_VERIFICATION": "Verificación pendiente",
+      "INACTIVE": "Inactivo",
+      "BLOCKED": "Bloqueado",
+      "DELETED": "Eliminado",
+      "REFUSED": "Rechazado"
+    }
+  },
+  "professionals": {
+    "table": {
+      "name": "Nombre",
+      "category": "Categoría",
+      "status": "Estado",
+      "verification": "Verificación",
+      "rating": "Calificación",
+      "available": "Disponible",
+      "yes": "Sí",
+      "no": "No",
+      "actions": "Acciones",
+      "empty": "No hay profesionales para mostrar",
+      "loadError": "No se pudo cargar la lista de profesionales. Intentá recargar la página."
+    },
+    "status": {
+      "PENDING": "Pendiente",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "SUSPENDED": "Suspendido"
+    },
+    "suspend": {
+      "trigger": "Suspender",
+      "title": "Suspender profesional",
+      "reason": "Motivo",
+      "submit": "Confirmar suspensión",
+      "submitting": "Suspendiendo..."
+    },
+    "verify": {
+      "trigger": "Verificar",
+      "title": "Verificar profesional",
+      "verifiedLabel": "Marcar como verificado",
+      "notes": "Notas"
+    }
+  },
+  "services": {
+    "table": {
+      "service": "Servicio",
+      "client": "Cliente",
+      "professional": "Profesional",
+      "professionalRef": "Profesional #{id}",
+      "unassigned": "Sin asignar",
+      "status": "Estado",
+      "amount": "Monto",
+      "date": "Fecha",
+      "empty": "No hay servicios para mostrar",
+      "loadError": "No se pudo cargar la lista de servicios. Intentá recargar la página."
+    },
+    "status": {
+      "PENDING": "Pendiente",
+      "ACCEPTED": "Aceptado",
+      "IN_PROGRESS": "En curso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "filter": {
+      "label": "Filtrar por estado",
+      "all": "Todos los estados"
+    }
+  },
+  "rolesPermission": {
+    "table": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "status": "Estado",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "actions": "Acciones",
+      "empty": "No hay roles para mostrar",
+      "loadError": "No se pudo cargar la lista de roles. Intentá recargar la página."
+    },
+    "form": {
+      "createTitle": "Nuevo rol",
+      "editTitle": "Editar rol",
+      "createDescription": "Definí el nombre, la descripción y los permisos del nuevo rol.",
+      "editDescription": "Modificá el nombre, la descripción y los permisos del rol.",
+      "name": "Nombre",
+      "description": "Descripción",
+      "permissions": "Permisos"
+    }
+  },
+  "payments": {
+    "status": {
+      "PENDING": "Pendiente",
+      "PROCESSING": "Procesando",
+      "PAID": "Pagado",
+      "COMPLETED": "Completado",
+      "REFUNDED": "Reembolsado",
+      "PARTIAL_REFUNDED": "Reembolso parcial",
+      "FAILED": "Fallido",
+      "CANCELLED": "Cancelado"
+    },
+    "filter": {
+      "label": "Filtrar por estado",
+      "all": "Todos los estados"
+    },
+    "table": {
+      "reference": "Referencia",
+      "amount": "Monto",
+      "status": "Estado",
+      "user": "Usuario",
+      "professional": "Profesional",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "empty": "No hay pagos para mostrar",
+      "loadError": "No se pudo cargar la lista de pagos. Intentá recargar la página."
+    },
+    "cancel": {
+      "title": "¿Cancelar este pago?",
+      "description": "Esta acción cancelará el pago de forma permanente. No se puede deshacer.",
+      "pending": "Cancelando...",
+      "confirm": "Sí, cancelar"
+    },
+    "refund": {
+      "trigger": "Reembolsar",
+      "title": "Reembolsar pago",
+      "description": "Esta acción reembolsará el pago al usuario. No se puede deshacer.",
+      "amountLabel": "Monto a reembolsar",
+      "reasonLabel": "Motivo",
+      "reasonPlaceholder": "Seleccioná un motivo",
+      "descriptionLabel": "Descripción (opcional)",
+      "pending": "Reembolsando...",
+      "confirm": "Confirmar reembolso",
+      "reasons": {
+        "customer_request": "Solicitud del cliente",
+        "duplicate_payment": "Pago duplicado",
+        "fraud": "Fraude",
+        "service_not_provided": "Servicio no prestado",
+        "poor_service_quality": "Calidad de servicio deficiente",
+        "technical_issue": "Problema técnico",
+        "other": "Otro"
+      }
+    }
+  },
+  "promotions": {
+    "status": {
+      "ACTIVE": "Activa",
+      "INACTIVE": "Inactiva",
+      "EXPIRED": "Expirada",
+      "DEPLETED": "Agotada"
+    },
+    "type": {
+      "PERCENTAGE": "Porcentaje",
+      "FIXED_AMOUNT": "Monto fijo",
+      "FREE_SERVICE": "Servicio gratis"
+    },
+    "table": {
+      "code": "Código",
+      "name": "Nombre",
+      "discount": "Descuento",
+      "validity": "Vigencia",
+      "status": "Estado",
+      "actions": "Acciones",
+      "empty": "No hay promociones para mostrar",
+      "loadError": "No se pudo cargar la lista de promociones. Intentá recargar la página."
+    },
+    "deactivate": {
+      "title": "¿Desactivar esta promoción?",
+      "description": "La promoción \"{name}\" se marcará como inactiva y dejará de aplicarse a nuevos servicios.",
+      "pending": "Desactivando...",
+      "confirm": "Desactivar"
+    },
+    "form": {
+      "createTitle": "Nueva promoción",
+      "editTitle": "Editar promoción",
+      "code": "Código",
+      "name": "Nombre",
+      "description": "Descripción",
+      "type": "Tipo de descuento",
+      "typePlaceholder": "Seleccioná un tipo",
+      "discountValue": "Valor del descuento",
+      "validFrom": "Vigente desde",
+      "validUntil": "Vigente hasta",
+      "minimumAmount": "Monto mínimo",
+      "maximumDiscount": "Descuento máximo",
+      "maxUsage": "Usos máximos",
+      "maxUsagePerUser": "Usos máximos por usuario",
+      "isFirstTimeOnly": "Solo para el primer uso del usuario",
+      "isProfessionalOnly": "Solo para profesionales",
+      "isClientOnly": "Solo para clientes",
+      "submitCreate": "Crear promoción"
+    }
+  },
+  "ratings": {
+    "type": {
+      "CLIENT_TO_PROFESSIONAL": "Cliente → Profesional",
+      "PROFESSIONAL_TO_CLIENT": "Profesional → Cliente"
+    },
+    "table": {
+      "user": "Usuario",
+      "professional": "Profesional",
+      "rating": "Calificación",
+      "type": "Tipo",
+      "reported": "Reportada",
+      "reportedBadge": "Reportada",
+      "review": "Comentario",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "empty": "No hay calificaciones para mostrar",
+      "loadError": "No se pudo cargar la lista de calificaciones. Intentá recargar la página."
+    },
+    "delete": {
+      "title": "Eliminar calificación",
+      "description": "Esta acción no se puede deshacer. La calificación se eliminará permanentemente.",
+      "confirm": "Confirmar eliminación"
+    }
+  },
+  "notifications": {
+    "type": {
+      "service_request": "Solicitud de servicio",
+      "service_accepted": "Servicio aceptado",
+      "service_rejected": "Servicio rechazado",
+      "service_completed": "Servicio completado",
+      "payment_received": "Pago recibido",
+      "rating_received": "Calificación recibida",
+      "promotion": "Promoción",
+      "system": "Sistema"
+    },
+    "channel": {
+      "in_app": "In-app",
+      "push": "Push",
+      "email": "Email"
+    },
+    "table": {
+      "title": "Título",
+      "message": "Mensaje",
+      "type": "Tipo",
+      "read": "Leída",
+      "yes": "Sí",
+      "no": "No",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "markAsRead": "Marcar como leída",
+      "loadMore": "Cargar más",
+      "empty": "No hay notificaciones para mostrar",
+      "loadError": "No se pudo cargar el log de notificaciones. Intentá recargar la página."
+    },
+    "form": {
+      "trigger": "Nueva notificación",
+      "title": "Nueva notificación",
+      "titleLabel": "Título",
+      "messageLabel": "Mensaje",
+      "typeLabel": "Tipo",
+      "typePlaceholder": "Seleccioná un tipo",
+      "channelsLabel": "Canales",
+      "pending": "Enviando...",
+      "submit": "Enviar notificación"
+    }
+  },
+  "locations": {
+    "explorer": {
+      "loadError": "No se pudo cargar la búsqueda de profesionales cercanos. Intentá de nuevo.",
+      "empty": "No se encontraron profesionales en el área buscada.",
+      "results": "{count} profesional(es) encontrados."
+    },
+    "map": {
+      "missingApiKey": "Falta configurar NEXT_PUBLIC_GOOGLE_MAPS_API_KEY para mostrar el mapa.",
+      "markerTitle": "Profesional #{id} · ⭐ {rating}",
+      "markerTitleWithDistance": "Profesional #{id} · ⭐ {rating} · {distance} km"
+    },
+    "search": {
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "radius": "Radio (km)",
+      "availableOnly": "Solo disponibles",
+      "onlineOnly": "Solo en línea",
+      "searching": "Buscando..."
+    },
+    "onlineStat": {
+      "title": "Profesionales en línea"
+    }
+  },
+  "analytics": {
+    "loadError": "No se pudieron cargar las métricas del panel. Intentá recargar la página.",
+    "stats": {
+      "totalUsers": "Usuarios totales",
+      "verifiedProfessionals": "Profesionales verificados",
+      "periodRevenue": "Facturación del período",
+      "averageRating": "Calificación promedio"
+    },
+    "trends": {
+      "thisPeriod": "{value} este período",
+      "totalCount": "{value} en total",
+      "accumulated": "{value} acumulado",
+      "ratingsCount": "{value} calificaciones"
+    }
+  },
+  "browseProfessionals": {
+    "list": {
+      "loadError": "No se pudieron cargar los profesionales. Intentá recargar la página.",
+      "empty": "No hay profesionales disponibles en este momento.",
+      "reviews": "{count} reseñas",
+      "viewProfile": "Ver perfil",
+      "pagination": "Página {page} de {totalPages}",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    },
+    "detail": {
+      "loadError": "No se pudo cargar el perfil de este profesional.",
+      "rating": "⭐ {rating} ({count} reseñas)",
+      "hourlyRate": "Tarifa por hora: {rate}",
+      "experience": "{years} años de experiencia"
+    }
+  },
+  "requestService": {
+    "form": {
+      "title": "Título",
+      "description": "Descripción",
+      "category": "Categoría",
+      "categoryPlaceholder": "Elegí una categoría",
+      "serviceType": "Tipo de servicio",
+      "serviceTypePlaceholder": "Elegí un tipo",
+      "address": "Dirección",
+      "location": "Ubicación del servicio",
+      "locationHint": "Hacé click en el mapa o arrastrá el marcador para elegir dónde es el trabajo.",
+      "urgent": "Es urgente",
+      "submitting": "Enviando...",
+      "submit": "Solicitar profesional"
+    },
+    "map": {
+      "ariaLabel": "Mapa para elegir la ubicación del servicio"
+    }
+  },
+  "rateProfessional": {
+    "trigger": "Calificar profesional",
+    "dialog": {
+      "title": "Calificar a {name}",
+      "description": "Calificá tu experiencia con este profesional.",
+      "ratingLabel": "Calificación (1-5)",
+      "commentLabel": "Comentario (opcional)",
+      "submitting": "Enviando...",
+      "submit": "Enviar calificación"
+    }
+  },
+  "myServices": {
+    "table": {
+      "service": "Servicio",
+      "professional": "Profesional",
+      "unassigned": "Sin asignar",
+      "status": "Estado",
+      "amount": "Monto",
+      "actions": "Acciones",
+      "empty": "Todavía no solicitaste ningún servicio",
+      "loadError": "No se pudieron cargar tus servicios. Intentá recargar la página."
+    },
+    "status": {
+      "PENDING": "Pendiente",
+      "ACCEPTED": "Aceptado",
+      "IN_PROGRESS": "En curso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "cancel": {
+      "title": "Cancelar servicio",
+      "description": "Contanos brevemente por qué cancelás este servicio.",
+      "reasonLabel": "Motivo",
+      "submitting": "Cancelando...",
+      "submit": "Confirmar cancelación"
+    }
+  },
+  "professionalProfile": {
+    "proModeLink": "Ir al modo profesional",
+    "availability": {
+      "available": "Disponible",
+      "unavailable": "No disponible"
+    },
+    "form": {
+      "loadError": "No se pudo cargar tu perfil profesional.",
+      "description": "Descripción",
+      "hourlyRate": "Tarifa por hora",
+      "fixedRate": "Tarifa fija (opcional)",
+      "yearsOfExperience": "Años de experiencia",
+      "skills": "Habilidades (separadas por coma)"
+    }
+  },
+  "professionalRatings": {
+    "table": {
+      "client": "Cliente",
+      "anonymous": "Anónimo",
+      "rating": "Calificación",
+      "comment": "Comentario",
+      "date": "Fecha",
+      "empty": "Todavía no tenés calificaciones",
+      "loadError": "No se pudieron cargar tus calificaciones. Intentá recargar la página."
+    },
+    "rateClient": {
+      "trigger": "Calificar cliente",
+      "title": "Calificar a {name}",
+      "description": "Calificá tu experiencia trabajando con este cliente.",
+      "ratingLabel": "Calificación (1-5)",
+      "commentLabel": "Comentario (opcional)",
+      "submitting": "Enviando...",
+      "submit": "Enviar calificación"
+    }
+  },
+  "professionalRequests": {
+    "table": {
+      "service": "Servicio",
+      "client": "Cliente",
+      "amount": "Monto",
+      "urgent": "Urgente",
+      "actions": "Acciones",
+      "accept": "Aceptar",
+      "empty": "No hay solicitudes pendientes en tu categoría",
+      "loadError": "No se pudieron cargar las solicitudes pendientes. Intentá recargar la página."
+    }
+  },
+  "professionalServices": {
+    "table": {
+      "service": "Servicio",
+      "client": "Cliente",
+      "status": "Estado",
+      "amount": "Monto",
+      "actions": "Acciones",
+      "start": "Iniciar",
+      "complete": "Completar",
+      "empty": "No tenés servicios asignados todavía",
+      "loadError": "No se pudieron cargar tus servicios. Intentá recargar la página."
+    },
+    "status": {
+      "PENDING": "Pendiente",
+      "ACCEPTED": "Aceptado",
+      "IN_PROGRESS": "En curso",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    }
+  }
+}

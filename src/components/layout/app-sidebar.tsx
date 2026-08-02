@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -22,10 +23,13 @@ import { ModeSwitcher } from './mode-switcher';
 
 export type SidebarVariant = 'admin' | 'pro' | 'client';
 
+// `label` sale de `layout.brand.<variant>` y los títulos de item de `layout.nav.<variant>` —
+// la marca ("TekoApp") no se traduce, pero vive igual en los mensajes para no partir el label
+// entre dos fuentes distintas.
 const VARIANT_CONFIG = {
-  admin: { items: NAV_ITEMS, label: 'TekoApp' },
-  pro: { items: PRO_NAV_ITEMS, label: 'TekoApp Pro' },
-  client: { items: CLIENT_NAV_ITEMS, label: 'TekoApp' },
+  admin: { items: NAV_ITEMS },
+  pro: { items: PRO_NAV_ITEMS },
+  client: { items: CLIENT_NAV_ITEMS },
 } as const;
 
 interface AppSidebarProps {
@@ -39,7 +43,11 @@ interface AppSidebarProps {
 // Client Components"). Los items + íconos se resuelven acá adentro, nunca cruzan el límite RSC.
 export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
   const pathname = usePathname();
-  const { items, label } = VARIANT_CONFIG[variant];
+  const t = useTranslations('layout');
+  // Translator raíz: los items de nav guardan la clave completa (`layout.nav.<área>.<item>`).
+  const tRoot = useTranslations();
+  const { items } = VARIANT_CONFIG[variant];
+  const label = t(`brand.${variant}`);
 
   return (
     <Sidebar collapsible="icon">
@@ -52,9 +60,10 @@ export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map(({ title, href, icon: Icon }) => {
+              {items.map(({ titleKey, href, icon: Icon }) => {
                 const isActive =
                   pathname === href || pathname.startsWith(`${href}/`);
+                const title = tRoot(titleKey);
                 return (
                   <SidebarMenuItem key={href}>
                     <SidebarMenuButton
@@ -77,7 +86,7 @@ export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
       <SidebarFooter>
         <SidebarSeparator />
         <SidebarGroup>
-          <SidebarGroupLabel>Cambiar de modo</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('modeSwitcher.groupLabel')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <ModeSwitcher current={variant} />
           </SidebarGroupContent>

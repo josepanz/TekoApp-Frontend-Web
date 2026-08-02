@@ -1,6 +1,7 @@
 'use client';
 
 import { LogOut, User as UserIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -32,6 +33,7 @@ function getInitials(name: string): string {
 }
 
 export function UserMenu({ name, email }: UserMenuProps) {
+  const t = useTranslations('layout.userMenu');
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -49,7 +51,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
           <Button
             variant="ghost"
             className="h-9 gap-2 px-2"
-            aria-label="Menú de usuario"
+            aria-label={t('trigger')}
           >
             <Avatar className="size-6">
               <AvatarFallback>{getInitials(name)}</AvatarFallback>
@@ -72,7 +74,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled>
           <UserIcon aria-hidden="true" />
-          Mi perfil
+          {t('profile')}
         </DropdownMenuItem>
         <DropdownMenuItem
           variant="destructive"
@@ -80,7 +82,7 @@ export function UserMenu({ name, email }: UserMenuProps) {
           onClick={handleLogout}
         >
           <LogOut aria-hidden="true" />
-          {isLoggingOut ? 'Cerrando sesión...' : 'Cerrar sesión'}
+          {isLoggingOut ? t('loggingOut') : t('logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

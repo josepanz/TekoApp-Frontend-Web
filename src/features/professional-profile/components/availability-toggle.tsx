@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import type { Professional } from '../api';
@@ -10,6 +11,7 @@ export function AvailabilityToggle({
 }: {
   professional: Professional;
 }) {
+  const t = useTranslations('professionalProfile.availability');
   const mutation = useUpdateMyAvailabilityMutation();
 
   return (
@@ -26,7 +28,7 @@ export function AvailabilityToggle({
         }
       />
       <Label htmlFor="availability" className="font-normal">
-        {professional.isAvailable ? 'Disponible' : 'No disponible'}
+        {professional.isAvailable ? t('available') : t('unavailable')}
       </Label>
     </div>
   );

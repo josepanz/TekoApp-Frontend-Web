@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useNearbyProfessionalsQuery } from '../hooks';
@@ -10,6 +11,7 @@ import { NearbySearchForm } from './nearby-search-form';
 import { OnlineProfessionalsStat } from './online-professionals-stat';
 
 export function LocationsExplorer() {
+  const t = useTranslations('locations');
   const [searchParams, setSearchParams] = useState<
     GetNearbyProfessionalsParams | undefined
   >(undefined);
@@ -26,10 +28,7 @@ export function LocationsExplorer() {
       <NearbySearchForm onSearch={handleSearch} isPending={isFetching} />
 
       {isError && (
-        <p className="text-muted-foreground">
-          No se pudo cargar la búsqueda de profesionales cercanos. Intentá de
-          nuevo.
-        </p>
+        <p className="text-muted-foreground">{t('explorer.loadError')}</p>
       )}
 
       {isFetching && !data && <Skeleton className="h-[500px] w-full" />}
@@ -38,8 +37,8 @@ export function LocationsExplorer() {
         <>
           <p className="text-muted-foreground text-sm">
             {data.length === 0
-              ? 'No se encontraron profesionales en el área buscada.'
-              : `${data.length} profesional(es) encontrados.`}
+              ? t('explorer.empty')
+              : t('explorer.results', { count: data.length })}
           </p>
           <LocationsMap
             professionals={data}

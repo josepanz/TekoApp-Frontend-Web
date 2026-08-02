@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -30,29 +31,12 @@ import {
   newNotificationSchema,
   type NewNotificationFormValues,
 } from '../schemas';
-import type { NotificationType } from '../api';
 
-const TYPE_LABEL: Record<NotificationType, string> = {
-  service_request: 'Solicitud de servicio',
-  service_accepted: 'Servicio aceptado',
-  service_rejected: 'Servicio rechazado',
-  service_completed: 'Servicio completado',
-  payment_received: 'Pago recibido',
-  rating_received: 'Calificación recibida',
-  promotion: 'Promoción',
-  system: 'Sistema',
-};
-
-const CHANNEL_LABEL: Record<
-  (typeof NOTIFICATION_CHANNEL_OPTIONS)[number],
-  string
-> = {
-  in_app: 'In-app',
-  push: 'Push',
-  email: 'Email',
-};
+// Las etiquetas de tipo (`notifications.type.*`) se comparten con la tabla de notificaciones; las
+// de canal viven en `notifications.channel.*`.
 
 export function NewNotificationDialog() {
+  const t = useTranslations('notifications');
   const [open, setOpen] = useState(false);
   const createNotificationMutation = useCreateNotificationMutation();
 
@@ -83,10 +67,10 @@ export function NewNotificationDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button>Nueva notificación</Button>} />
+      <DialogTrigger render={<Button>{t('form.trigger')}</Button>} />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Nueva notificación</DialogTitle>
+          <DialogTitle>{t('form.title')}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
@@ -94,7 +78,7 @@ export function NewNotificationDialog() {
           noValidate
         >
           <div className="flex flex-col gap-2">
-            <Label htmlFor="title">Título</Label>
+            <Label htmlFor="title">{t('form.titleLabel')}</Label>
             <Input
               id="title"
               aria-invalid={!!errors.title}
@@ -106,7 +90,7 @@ export function NewNotificationDialog() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="message">Mensaje</Label>
+            <Label htmlFor="message">{t('form.messageLabel')}</Label>
             <Textarea
               id="message"
               aria-invalid={!!errors.message}
@@ -120,19 +104,19 @@ export function NewNotificationDialog() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="type">Tipo</Label>
+            <Label htmlFor="type">{t('form.typeLabel')}</Label>
             <Controller
               control={control}
               name="type"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger id="type" aria-invalid={!!errors.type}>
-                    <SelectValue placeholder="Seleccioná un tipo" />
+                    <SelectValue placeholder={t('form.typePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {NOTIFICATION_TYPE_OPTIONS.map((option) => (
                       <SelectItem key={option} value={option}>
-                        {TYPE_LABEL[option]}
+                        {t(`type.${option}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -145,7 +129,7 @@ export function NewNotificationDialog() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Canales</Label>
+            <Label>{t('form.channelsLabel')}</Label>
             <Controller
               control={control}
               name="channels"
@@ -168,7 +152,7 @@ export function NewNotificationDialog() {
                         htmlFor={`channel-${channel}`}
                         className="font-normal"
                       >
-                        {CHANNEL_LABEL[channel]}
+                        {t(`channel.${channel}`)}
                       </Label>
                     </div>
                   ))}
@@ -188,8 +172,8 @@ export function NewNotificationDialog() {
               disabled={createNotificationMutation.isPending}
             >
               {createNotificationMutation.isPending
-                ? 'Enviando...'
-                : 'Enviar notificación'}
+                ? t('form.pending')
+                : t('form.submit')}
             </Button>
           </DialogFooter>
         </form>

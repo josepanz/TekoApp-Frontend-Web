@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -18,6 +19,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { useCancelServiceMutation } from '../hooks';
 
 export function CancelServiceDialog({ serviceId }: { serviceId: string }) {
+  const t = useTranslations('myServices.cancel');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState('');
   const mutation = useCancelServiceMutation();
@@ -27,19 +30,17 @@ export function CancelServiceDialog({ serviceId }: { serviceId: string }) {
       <AlertDialogTrigger
         render={
           <Button size="sm" variant="destructive">
-            Cancelar
+            {tCommon('actions.cancel')}
           </Button>
         }
       />
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Cancelar servicio</AlertDialogTitle>
-          <AlertDialogDescription>
-            Contanos brevemente por qué cancelás este servicio.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
+          <AlertDialogDescription>{t('description')}</AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="cancel-reason">Motivo</Label>
+          <Label htmlFor="cancel-reason">{t('reasonLabel')}</Label>
           <Textarea
             id="cancel-reason"
             value={reason}
@@ -47,7 +48,7 @@ export function CancelServiceDialog({ serviceId }: { serviceId: string }) {
           />
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel>Volver</AlertDialogCancel>
+          <AlertDialogCancel>{tCommon('actions.back')}</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
             disabled={mutation.isPending || !reason.trim()}
@@ -58,7 +59,7 @@ export function CancelServiceDialog({ serviceId }: { serviceId: string }) {
               )
             }
           >
-            {mutation.isPending ? 'Cancelando...' : 'Confirmar cancelación'}
+            {mutation.isPending ? t('submitting') : t('submit')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

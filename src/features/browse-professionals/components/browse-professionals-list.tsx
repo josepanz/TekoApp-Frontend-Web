@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -17,6 +18,7 @@ import { useBrowseProfessionalsQuery } from '../hooks';
 const PAGE_SIZE = 12;
 
 export function BrowseProfessionalsList() {
+  const t = useTranslations('browseProfessionals');
   const [page, setPage] = useState(1);
   const { data, isPending, isError } = useBrowseProfessionalsQuery({
     page,
@@ -34,19 +36,11 @@ export function BrowseProfessionalsList() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudieron cargar los profesionales. Intentá recargar la página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('list.loadError')}</p>;
   }
 
   if (data.data.length === 0) {
-    return (
-      <p className="text-muted-foreground">
-        No hay profesionales disponibles en este momento.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('list.empty')}</p>;
   }
 
   return (
@@ -66,7 +60,7 @@ export function BrowseProfessionalsList() {
                   ⭐ {Number(professional.averageRating).toFixed(1)}
                 </Badge>
                 <span className="text-muted-foreground text-sm">
-                  {professional.totalRatings} reseñas
+                  {t('list.reviews', { count: professional.totalRatings })}
                 </span>
               </div>
               <p className="text-muted-foreground line-clamp-2 text-sm">
@@ -76,7 +70,7 @@ export function BrowseProfessionalsList() {
                 size="sm"
                 render={
                   <Link href={`/profesionales/${professional.referenceId}`}>
-                    Ver perfil
+                    {t('list.viewProfile')}
                   </Link>
                 }
               />
@@ -88,7 +82,10 @@ export function BrowseProfessionalsList() {
       {data.pagination.totalPages > 1 && (
         <div className="flex items-center justify-end gap-2">
           <span className="text-muted-foreground text-sm">
-            Página {data.pagination.page} de {data.pagination.totalPages}
+            {t('list.pagination', {
+              page: data.pagination.page,
+              totalPages: data.pagination.totalPages,
+            })}
           </span>
           <Button
             variant="outline"
@@ -96,7 +93,7 @@ export function BrowseProfessionalsList() {
             disabled={page <= 1}
             onClick={() => setPage((p) => p - 1)}
           >
-            Anterior
+            {t('list.previous')}
           </Button>
           <Button
             variant="outline"
@@ -104,7 +101,7 @@ export function BrowseProfessionalsList() {
             disabled={page >= data.pagination.totalPages}
             onClick={() => setPage((p) => p + 1)}
           >
-            Siguiente
+            {t('list.next')}
           </Button>
         </div>
       )}

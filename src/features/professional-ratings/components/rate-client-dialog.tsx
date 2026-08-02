@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -30,6 +31,8 @@ export function RateClientDialog({
   clientReferenceId,
   clientName,
 }: RateClientDialogProps) {
+  const t = useTranslations('professionalRatings.rateClient');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const mutation = useRateClientMutation();
   const {
@@ -56,7 +59,7 @@ export function RateClientDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button size="sm">Calificar cliente</Button>} />
+      <DialogTrigger render={<Button size="sm">{t('trigger')}</Button>} />
       <DialogContent>
         <form
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
@@ -64,14 +67,12 @@ export function RateClientDialog({
           noValidate
         >
           <DialogHeader>
-            <DialogTitle>Calificar a {clientName}</DialogTitle>
-            <DialogDescription>
-              Calificá tu experiencia trabajando con este cliente.
-            </DialogDescription>
+            <DialogTitle>{t('title', { name: clientName })}</DialogTitle>
+            <DialogDescription>{t('description')}</DialogDescription>
           </DialogHeader>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="rating">Calificación (1-5)</Label>
+            <Label htmlFor="rating">{t('ratingLabel')}</Label>
             <Input
               id="rating"
               type="number"
@@ -88,7 +89,7 @@ export function RateClientDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="comment">Comentario (opcional)</Label>
+            <Label htmlFor="comment">{t('commentLabel')}</Label>
             <Textarea id="comment" {...register('comment')} />
           </div>
 
@@ -98,10 +99,10 @@ export function RateClientDialog({
               variant="outline"
               onClick={() => setOpen(false)}
             >
-              Cancelar
+              {tCommon('actions.cancel')}
             </Button>
             <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? 'Enviando...' : 'Enviar calificación'}
+              {mutation.isPending ? t('submitting') : t('submit')}
             </Button>
           </DialogFooter>
         </form>

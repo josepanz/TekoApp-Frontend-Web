@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -34,10 +35,11 @@ import {
   type PromotionFormValues,
 } from '../schemas';
 
-const TYPE_OPTIONS: { value: PromotionFormValues['type']; label: string }[] = [
-  { value: 'PERCENTAGE', label: 'Porcentaje' },
-  { value: 'FIXED_AMOUNT', label: 'Monto fijo' },
-  { value: 'FREE_SERVICE', label: 'Servicio gratis' },
+// Las etiquetas visibles viven en el namespace `promotions.type` (compartidas con la tabla).
+const TYPE_OPTIONS: PromotionFormValues['type'][] = [
+  'PERCENTAGE',
+  'FIXED_AMOUNT',
+  'FREE_SERVICE',
 ];
 
 interface PromotionFormDialogProps {
@@ -131,6 +133,8 @@ export function PromotionFormDialog({
   promotion,
   trigger,
 }: PromotionFormDialogProps) {
+  const t = useTranslations('promotions');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const isEditMode = !!promotion;
   const createMutation = useCreatePromotionMutation();
@@ -182,7 +186,7 @@ export function PromotionFormDialog({
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>
-            {isEditMode ? 'Editar promoción' : 'Nueva promoción'}
+            {isEditMode ? t('form.editTitle') : t('form.createTitle')}
           </DialogTitle>
         </DialogHeader>
         <form
@@ -192,7 +196,7 @@ export function PromotionFormDialog({
         >
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="code">Código</Label>
+              <Label htmlFor="code">{t('form.code')}</Label>
               <Input
                 id="code"
                 aria-invalid={!!errors.code}
@@ -206,7 +210,7 @@ export function PromotionFormDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Nombre</Label>
+              <Label htmlFor="name">{t('form.name')}</Label>
               <Input
                 id="name"
                 aria-invalid={!!errors.name}
@@ -221,25 +225,25 @@ export function PromotionFormDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Descripción</Label>
+            <Label htmlFor="description">{t('form.description')}</Label>
             <Textarea id="description" {...register('description')} />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="type">Tipo de descuento</Label>
+              <Label htmlFor="type">{t('form.type')}</Label>
               <Controller
                 control={control}
                 name="type"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger id="type" className="w-full">
-                      <SelectValue placeholder="Seleccioná un tipo" />
+                      <SelectValue placeholder={t('form.typePlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       {TYPE_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
+                        <SelectItem key={option} value={option}>
+                          {t(`type.${option}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -254,7 +258,7 @@ export function PromotionFormDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="discountValue">Valor del descuento</Label>
+              <Label htmlFor="discountValue">{t('form.discountValue')}</Label>
               <Input
                 id="discountValue"
                 type="number"
@@ -272,7 +276,7 @@ export function PromotionFormDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="validFrom">Vigente desde</Label>
+              <Label htmlFor="validFrom">{t('form.validFrom')}</Label>
               <Input
                 id="validFrom"
                 type="date"
@@ -287,7 +291,7 @@ export function PromotionFormDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="validUntil">Vigente hasta</Label>
+              <Label htmlFor="validUntil">{t('form.validUntil')}</Label>
               <Input
                 id="validUntil"
                 type="date"
@@ -304,7 +308,7 @@ export function PromotionFormDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="minimumAmount">Monto mínimo</Label>
+              <Label htmlFor="minimumAmount">{t('form.minimumAmount')}</Label>
               <Input
                 id="minimumAmount"
                 type="number"
@@ -319,7 +323,9 @@ export function PromotionFormDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="maximumDiscount">Descuento máximo</Label>
+              <Label htmlFor="maximumDiscount">
+                {t('form.maximumDiscount')}
+              </Label>
               <Input
                 id="maximumDiscount"
                 type="number"
@@ -336,7 +342,7 @@ export function PromotionFormDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="maxUsage">Usos máximos</Label>
+              <Label htmlFor="maxUsage">{t('form.maxUsage')}</Label>
               <Input id="maxUsage" type="number" {...register('maxUsage')} />
               {errors.maxUsage && (
                 <p className="text-destructive text-sm">
@@ -346,7 +352,9 @@ export function PromotionFormDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="maxUsagePerUser">Usos máximos por usuario</Label>
+              <Label htmlFor="maxUsagePerUser">
+                {t('form.maxUsagePerUser')}
+              </Label>
               <Input
                 id="maxUsagePerUser"
                 type="number"
@@ -372,7 +380,7 @@ export function PromotionFormDialog({
                     onCheckedChange={field.onChange}
                   />
                   <Label htmlFor="isFirstTimeOnly" className="font-normal">
-                    Solo para el primer uso del usuario
+                    {t('form.isFirstTimeOnly')}
                   </Label>
                 </div>
               )}
@@ -389,7 +397,7 @@ export function PromotionFormDialog({
                     onCheckedChange={field.onChange}
                   />
                   <Label htmlFor="isProfessionalOnly" className="font-normal">
-                    Solo para profesionales
+                    {t('form.isProfessionalOnly')}
                   </Label>
                 </div>
               )}
@@ -406,7 +414,7 @@ export function PromotionFormDialog({
                     onCheckedChange={field.onChange}
                   />
                   <Label htmlFor="isClientOnly" className="font-normal">
-                    Solo para clientes
+                    {t('form.isClientOnly')}
                   </Label>
                 </div>
               )}
@@ -416,10 +424,10 @@ export function PromotionFormDialog({
           <DialogFooter>
             <Button type="submit" disabled={isPending}>
               {isPending
-                ? 'Guardando...'
+                ? tCommon('states.saving')
                 : isEditMode
-                  ? 'Guardar cambios'
-                  : 'Crear promoción'}
+                  ? tCommon('actions.saveChanges')
+                  : t('form.submitCreate')}
             </Button>
           </DialogFooter>
         </form>

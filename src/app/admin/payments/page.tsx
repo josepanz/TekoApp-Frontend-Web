@@ -1,15 +1,15 @@
 import { PaymentsTable } from '@/features/payments/components/payments-table';
+import { getTranslations } from 'next-intl/server';
 
-export default function PaymentsPage() {
+export default async function PaymentsPage() {
+  const t = await getTranslations('pages.admin.payments');
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Pagos
+          {t('title')}
         </h1>
-        <p className="text-muted-foreground">
-          Monitoreo y gestión de pagos: reembolsos y cancelaciones.
-        </p>
+        <p className="text-muted-foreground">{t('description')}</p>
       </div>
       <PaymentsTable />
     </div>

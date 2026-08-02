@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -29,6 +30,8 @@ interface VerifyProfessionalDialogProps {
 export function VerifyProfessionalDialog({
   professional,
 }: VerifyProfessionalDialogProps) {
+  const t = useTranslations('professionals.verify');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const verifyMutation = useVerifyProfessionalMutation();
 
@@ -63,10 +66,10 @@ export function VerifyProfessionalDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button size="sm">Verificar</Button>} />
+      <DialogTrigger render={<Button size="sm">{t('trigger')}</Button>} />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Verificar profesional</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
@@ -84,14 +87,14 @@ export function VerifyProfessionalDialog({
                   onCheckedChange={field.onChange}
                 />
                 <Label htmlFor="isVerified" className="font-normal">
-                  Marcar como verificado
+                  {t('verifiedLabel')}
                 </Label>
               </div>
             )}
           />
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="notes">Notas</Label>
+            <Label htmlFor="notes">{t('notes')}</Label>
             <Textarea
               id="notes"
               aria-invalid={!!errors.notes}
@@ -104,7 +107,9 @@ export function VerifyProfessionalDialog({
 
           <DialogFooter>
             <Button type="submit" disabled={verifyMutation.isPending}>
-              {verifyMutation.isPending ? 'Guardando...' : 'Confirmar'}
+              {verifyMutation.isPending
+                ? tCommon('states.saving')
+                : tCommon('actions.confirm')}
             </Button>
           </DialogFooter>
         </form>

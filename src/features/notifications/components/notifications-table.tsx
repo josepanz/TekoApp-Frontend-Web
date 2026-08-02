@@ -1,27 +1,19 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
+import { useAppLocale } from '@/i18n/use-app-locale';
+import { formatDate } from '@/lib/formatters';
 import {
   useMarkNotificationAsReadMutation,
   useNotificationsQuery,
 } from '../hooks';
 import type { Notification, NotificationType } from '../api';
-
-const TYPE_LABEL: Record<NotificationType, string> = {
-  service_request: 'Solicitud de servicio',
-  service_accepted: 'Servicio aceptado',
-  service_rejected: 'Servicio rechazado',
-  service_completed: 'Servicio completado',
-  payment_received: 'Pago recibido',
-  rating_received: 'Calificación recibida',
-  promotion: 'Promoción',
-  system: 'Sistema',
-};
 
 const TYPE_VARIANT: Record<
   NotificationType,
@@ -49,6 +41,8 @@ const DEFAULT_LIMIT = 20;
 const LIMIT_STEP = 20;
 
 export function NotificationsTable() {
+  const t = useTranslations('notifications');
+  const locale = useAppLocale();
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
   const { data, isPending, isError } = useNotificationsQuery({ limit });
   const markAsReadMutation = useMarkNotificationAsReadMutation();
@@ -58,21 +52,17 @@ export function NotificationsTable() {
   }
 
   if (isError) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudo cargar el log de notificaciones. Intentá recargar la página.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
   }
 
   const columns: ColumnDef<Notification, unknown>[] = [
     {
       accessorKey: 'title',
-      header: 'Título',
+      header: t('table.title'),
     },
     {
       id: 'message',
-      header: 'Mensaje',
+      header: t('table.message'),
       cell: ({ row }) => (
         <span title={row.original.message}>
           {truncateMessage(row.original.message)}
@@ -81,33 +71,32 @@ export function NotificationsTable() {
     },
     {
       accessorKey: 'type',
-      header: 'Tipo',
+      header: t('table.type'),
       cell: ({ row }) => (
         <Badge variant={TYPE_VARIANT[row.original.type]}>
-          {TYPE_LABEL[row.original.type]}
+          {t(`type.${row.original.type}`)}
         </Badge>
       ),
     },
     {
       id: 'read',
-      header: 'Leída',
+      header: t('table.read'),
       cell: ({ row }) => (
         <Badge
           variant={row.original.status === 'read' ? 'secondary' : 'default'}
         >
-          {row.original.status === 'read' ? 'Sí' : 'No'}
+          {row.original.status === 'read' ? t('table.yes') : t('table.no')}
         </Badge>
       ),
     },
     {
       accessorKey: 'createdAt',
-      header: 'Fecha',
-      cell: ({ row }) =>
-        new Date(row.original.createdAt).toLocaleDateString('es-PY'),
+      header: t('table.date'),
+      cell: ({ row }) => formatDate(row.original.createdAt, locale),
     },
     {
       id: 'actions',
-      header: 'Acciones',
+      header: t('table.actions'),
       cell: ({ row }) =>
         row.original.status !== 'read' ? (
           <Button
@@ -119,7 +108,7 @@ export function NotificationsTable() {
             }
             onClick={() => markAsReadMutation.mutate(row.original.id)}
           >
-            Marcar como leída
+            {t('table.markAsRead')}
           </Button>
         ) : null,
     },
@@ -130,7 +119,7 @@ export function NotificationsTable() {
       <DataTable
         columns={columns}
         data={data}
-        emptyMessage="No hay notificaciones para mostrar"
+        emptyMessage={t('table.empty')}
       />
 
       {data.length >= limit && (
@@ -139,7 +128,7 @@ export function NotificationsTable() {
             variant="outline"
             onClick={() => setLimit((prev) => prev + LIMIT_STEP)}
           >
-            Cargar más
+            {t('table.loadMore')}
           </Button>
         </div>
       )}

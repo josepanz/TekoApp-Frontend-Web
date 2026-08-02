@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -22,6 +23,8 @@ interface CancelPaymentDialogProps {
 // Cancelar es una acción destructiva/irreversible sin body (PaymentController_cancel no acepta
 // requestBody) — solo confirmación, sin formulario.
 export function CancelPaymentDialog({ paymentId }: CancelPaymentDialogProps) {
+  const t = useTranslations('payments.cancel');
+  const tCommon = useTranslations('common');
   const [open, setOpen] = useState(false);
   const cancelMutation = useCancelPaymentMutation();
 
@@ -36,25 +39,22 @@ export function CancelPaymentDialog({ paymentId }: CancelPaymentDialogProps) {
       <AlertDialogTrigger
         render={
           <Button variant="outline" size="sm">
-            Cancelar
+            {tCommon('actions.cancel')}
           </Button>
         }
       />
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>¿Cancelar este pago?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Esta acción cancelará el pago de forma permanente. No se puede
-            deshacer.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t('title')}</AlertDialogTitle>
+          <AlertDialogDescription>{t('description')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Volver</AlertDialogCancel>
+          <AlertDialogCancel>{tCommon('actions.back')}</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={cancelMutation.isPending}
           >
-            {cancelMutation.isPending ? 'Cancelando...' : 'Sí, cancelar'}
+            {cancelMutation.isPending ? t('pending') : t('confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

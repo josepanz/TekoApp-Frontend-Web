@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -67,6 +68,8 @@ export function CategoryFormDialog({
   onOpenChange,
   category,
 }: CategoryFormDialogProps) {
+  const t = useTranslations('categories.form');
+  const tCommon = useTranslations('common');
   const isEditing = !!category;
   const createMutation = useCreateCategoryMutation();
   const updateMutation = useUpdateCategoryMutation();
@@ -126,12 +129,10 @@ export function CategoryFormDialog({
         >
           <DialogHeader>
             <DialogTitle>
-              {isEditing ? 'Editar categoría' : 'Nueva categoría'}
+              {isEditing ? t('editTitle') : t('createTitle')}
             </DialogTitle>
             <DialogDescription>
-              {isEditing
-                ? 'Modificá los datos de la categoría seleccionada.'
-                : 'Completá los datos para crear una nueva categoría de servicios.'}
+              {isEditing ? t('editDescription') : t('createDescription')}
             </DialogDescription>
           </DialogHeader>
 
@@ -140,7 +141,7 @@ export function CategoryFormDialog({
           )}
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Nombre</Label>
+            <Label htmlFor="name">{t('name')}</Label>
             <Input
               id="name"
               aria-invalid={!!errors.name}
@@ -152,10 +153,10 @@ export function CategoryFormDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="slug">Slug</Label>
+            <Label htmlFor="slug">{t('slug')}</Label>
             <Input
               id="slug"
-              placeholder="Se autogenera si se omite"
+              placeholder={t('slugPlaceholder')}
               aria-invalid={!!errors.slug}
               {...register('slug')}
             />
@@ -165,13 +166,13 @@ export function CategoryFormDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Descripción</Label>
+            <Label htmlFor="description">{t('description')}</Label>
             <Textarea id="description" {...register('description')} />
           </div>
 
           <div className="flex gap-4">
             <div className="flex flex-1 flex-col gap-2">
-              <Label htmlFor="icon">Ícono</Label>
+              <Label htmlFor="icon">{t('icon')}</Label>
               <Input
                 id="icon"
                 placeholder="wrench-outline"
@@ -180,7 +181,7 @@ export function CategoryFormDialog({
             </div>
 
             <div className="flex flex-1 flex-col gap-2">
-              <Label htmlFor="color">Color</Label>
+              <Label htmlFor="color">{t('color')}</Label>
               <Input
                 id="color"
                 placeholder="#2ecc71"
@@ -196,9 +197,7 @@ export function CategoryFormDialog({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="parentCategoryId">
-              ID de categoría padre (opcional)
-            </Label>
+            <Label htmlFor="parentCategoryId">{t('parentId')}</Label>
             <Input
               id="parentCategoryId"
               type="number"
@@ -224,7 +223,7 @@ export function CategoryFormDialog({
                   onCheckedChange={(checked) => field.onChange(checked)}
                 />
                 <Label htmlFor="isVisible" className="font-normal">
-                  Visible en el buscador de clientes
+                  {t('visibleLabel')}
                 </Label>
               </div>
             )}
@@ -236,14 +235,14 @@ export function CategoryFormDialog({
               variant="outline"
               onClick={() => onOpenChange(false)}
             >
-              Cancelar
+              {tCommon('actions.cancel')}
             </Button>
             <Button type="submit" disabled={mutation.isPending}>
               {mutation.isPending
-                ? 'Guardando...'
+                ? tCommon('states.saving')
                 : isEditing
-                  ? 'Guardar cambios'
-                  : 'Crear categoría'}
+                  ? tCommon('actions.saveChanges')
+                  : t('submitCreate')}
             </Button>
           </DialogFooter>
         </form>

@@ -1,15 +1,15 @@
 import { ServicesTable } from '@/features/services/components/services-table';
+import { getTranslations } from 'next-intl/server';
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const t = await getTranslations('pages.admin.services');
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Servicios
+          {t('title')}
         </h1>
-        <p className="text-muted-foreground">
-          Monitoreo de los servicios solicitados por clientes en la plataforma.
-        </p>
+        <p className="text-muted-foreground">{t('description')}</p>
       </div>
       <ServicesTable />
     </div>

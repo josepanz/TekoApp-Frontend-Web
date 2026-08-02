@@ -1,6 +1,7 @@
 'use client';
 
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,8 @@ import {
 } from '../schemas';
 
 export function ProfessionalProfileForm() {
+  const t = useTranslations('professionalProfile.form');
+  const tCommon = useTranslations('common');
   const {
     data: professional,
     isPending,
@@ -48,11 +51,7 @@ export function ProfessionalProfileForm() {
   }
 
   if (isError || !professional) {
-    return (
-      <p className="text-muted-foreground">
-        No se pudo cargar tu perfil profesional.
-      </p>
-    );
+    return <p className="text-muted-foreground">{t('loadError')}</p>;
   }
 
   function onSubmit(values: ProfessionalProfileFormValues) {
@@ -86,7 +85,7 @@ export function ProfessionalProfileForm() {
         noValidate
       >
         <div className="flex flex-col gap-2">
-          <Label htmlFor="description">Descripción</Label>
+          <Label htmlFor="description">{t('description')}</Label>
           <Textarea
             id="description"
             aria-invalid={!!errors.description}
@@ -101,7 +100,7 @@ export function ProfessionalProfileForm() {
 
         <div className="flex gap-4">
           <div className="flex flex-1 flex-col gap-2">
-            <Label htmlFor="hourlyRate">Tarifa por hora</Label>
+            <Label htmlFor="hourlyRate">{t('hourlyRate')}</Label>
             <Input
               id="hourlyRate"
               type="number"
@@ -116,7 +115,7 @@ export function ProfessionalProfileForm() {
           </div>
 
           <div className="flex flex-1 flex-col gap-2">
-            <Label htmlFor="fixedRate">Tarifa fija (opcional)</Label>
+            <Label htmlFor="fixedRate">{t('fixedRate')}</Label>
             <Input
               id="fixedRate"
               type="number"
@@ -126,7 +125,7 @@ export function ProfessionalProfileForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="yearsOfExperience">Años de experiencia</Label>
+          <Label htmlFor="yearsOfExperience">{t('yearsOfExperience')}</Label>
           <Input
             id="yearsOfExperience"
             type="number"
@@ -135,12 +134,14 @@ export function ProfessionalProfileForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="skills">Habilidades (separadas por coma)</Label>
+          <Label htmlFor="skills">{t('skills')}</Label>
           <Input id="skills" {...register('skills')} />
         </div>
 
         <Button type="submit" disabled={updateMutation.isPending}>
-          {updateMutation.isPending ? 'Guardando...' : 'Guardar cambios'}
+          {updateMutation.isPending
+            ? tCommon('states.saving')
+            : tCommon('actions.saveChanges')}
         </Button>
       </form>
     </div>
