@@ -68,6 +68,7 @@ export function BrowseProfessionalsList() {
               </p>
               <Button
                 size="sm"
+                nativeButton={false}
                 render={
                   <Link href={`/profesionales/${professional.referenceId}`}>
                     {t('list.viewProfile')}
