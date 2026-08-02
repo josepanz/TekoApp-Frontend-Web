@@ -110,6 +110,16 @@ debería revisar en algún momento — **no se tocan desde este repo**:
   referencia están vacías. Crear un usuario de prueba real requiere que el equipo de backend
   siembre esos datos — está fuera del alcance de este repo.
 
+## Notificaciones push (decisión 2026-08-02, no implementada todavía)
+
+Hoy las notificaciones son 100% in-app (`GET /notifications`, sin push ni tiempo real). Decisión
+tomada para cuando se implemente: **Web Push (VAPID)** acá, **Firebase Cloud Messaging** en
+`TekoApp-Mobile` — mismo backend de notificaciones para los tres canales (in-app ya existente +
+los dos nuevos). El razonamiento completo, el estado actual verificado línea por línea, y el
+backlog de implementación (Service Worker, opt-in en `/perfil`, endpoints de suscripción, etc.)
+están documentados en `TekoApp-Backend/.claude/documentation/notifications-push-architecture.md`
+— léase ahí antes de empezar a construir este canal en cualquiera de los 3 repos.
+
 ## Permisos
 
 El JWT del backend trae `permissions: string[]` y `roles: string[]` planos (no objetos anidados),
