@@ -72,6 +72,7 @@ de `core/api-client` (que a su vez pega a `/api/backend/*`, nunca a `BACKEND_API
 - @./rules/typescript.md
 - @./rules/test.md
 - @./rules/design-system.md
+- @./rules/accessibility.md
 - @./rules/infra.md
 - @./rules/auth.md
 

@@ -20,6 +20,33 @@ duplica la definición de marca, se agrega un output nuevo al mismo `build.mjs`.
   (ej. para un gráfico o un badge con más variantes), usar `var(--teko-primary-300)` — nunca el
   valor oklch/hex directo.
 
+## Balance de marca: 80/20 primary sobre accent
+
+La identidad de TekoApp es el **índigo/violeta (`primary`)**, no el coral. El coral (`accent`) es
+condimento, no plato principal. Regla de dominancia en cualquier pantalla:
+
+- **`primary` domina (~80% del color de marca visible)**: nav/ítem activo, botones primarios de
+  acción, focus rings (`--ring` deriva de `primary`), links, headings destacados, estados
+  seleccionados. Cuando dudes de qué color de marca usar, es `primary`.
+- **`accent` es minoritario (~20%, un único punto de énfasis por vista)**: el CTA más importante de
+  la pantalla, un badge de "nuevo"/"destacado", el gradiente de acento del topbar. Si en una vista
+  ya hay un elemento coral tirando del ojo, el siguiente candidato a coral pasa a `primary` o a un
+  slot neutro/semántico.
+
+- ❌ Header coral + botón coral + card resaltada coral en la misma vista (dos focos de coral
+  compitiendo → se pierde la jerarquía y el coral deja de leerse como "esto es lo importante").
+- ✅ Toda la estructura en índigo/neutros, y **un** acento coral en el CTA principal.
+
+Nunca uses `primary` y `accent` en proporción pareja en la misma pantalla: si los dos gritan, no
+grita ninguno. Para estados (éxito/alerta/error/info) usá los slots semánticos
+(`success`/`warning`/`info`/`destructive`), no `accent` — el coral no significa "atención", significa
+"marca".
+
+> Nota de sistema: el slot `--accent` de shadcn está cableado al coral de marca, así que los estados
+> `hover`/`focus` de los primitivos de menú (`DropdownMenu`, `Select`) resaltan en coral por defecto.
+> Es intencional y acotado a la interacción; no lo repliques además como color de fondo dominante de
+> una sección entera.
+
 ## Dark mode
 
 - Se implementa con `next-themes` (`class` strategy, ya cableado por Tailwind
