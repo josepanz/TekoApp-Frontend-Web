@@ -2,7 +2,7 @@
 
 # TekoApp テコ — Portal Web de Administración
 
-![TekoApp Banner](https://example.com/path/to/your/banner.png)
+![TekoApp Banner](public/brand/banner.png)
 
 **El panel de control detrás de la conexión entre talento y necesidad.**
 
@@ -57,18 +57,28 @@ superficie futura) nace de un solo lugar:
 
 ## Identidad y diseño
 
+<img src="public/brand/logo.png" alt="Logo de TekoApp" width="220" />
+
 La marca vive en un único lugar — `src/design-system/tokens/tokens.json` (formato W3C Design
 Tokens) — y de ahí se genera todo lo demás (`pnpm tokens:build`). Cuando arranque la etapa Flutter,
 el mismo archivo alimenta también la app móvil, sin duplicar la definición de marca en ningún lado.
 
-| Elemento        | Definición                                    | Por qué                                                                                                                           |
-| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **Primario**    | Índigo/violeta profundo                       | Confianza y carácter tech-forward — deliberadamente distinto del negro de Uber y del verde de Bolt, para tener identidad propia   |
-| **Acento**      | Coral/naranja vibrante                        | Reservado para CTAs — energía sin competir con el primario                                                                        |
-| **Modo oscuro** | Navy oscuro (`oklch` ~0.16), nunca negro puro | Permite capas/elevación reales en cards y modales; es el modo por defecto para un panel de uso prolongado                         |
-| **Tipografía**  | Geist (cuerpo) + Sora (títulos)               | Geist da pulcritud técnica; Sora le da carácter y personalidad a los headings sin sacrificar legibilidad                          |
-| **Componentes** | shadcn/ui sobre Base UI                       | El código de cada componente vive en el repo (no en `node_modules`) — cualquiera puede abrirlo y entenderlo, no es una caja negra |
-| **Catálogo**    | Storybook                                     | La forma de encontrar qué componentes ya existen sin tener que leer código                                                        |
+El manual de marca oficial (assets fuente: logo, banner y manual completo) vive en
+[`.claude/documentation/brand/`](.claude/documentation/brand/) — es la referencia autoritativa para
+cualquier duda de color/tipografía que no esté ya resuelta en los tokens.
+
+**Rebrand 2026-08-02**: la paleta se realineó al manual de marca oficial (antes era una paleta
+provisoria índigo/coral). Todos los valores están recalculados con contraste WCAG AA real, no solo
+a ojo — ver `.claude/rules/accessibility.md` para el detalle de por qué cada shade es el que es.
+
+| Elemento        | Definición                                           | Por qué                                                                                                                           |
+| --------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Primario**    | Verde TekoApp `#28A745`                              | Color central del manual de marca — usado en el wordmark ("App" del logo) y en los CTA del banner oficial                         |
+| **Acento**      | Teal TekoApp `#17BEBB`                               | Segundo color del manual — presente en la iconografía del logo, reservado a un único punto de énfasis por vista (regla 80/20)     |
+| **Modo oscuro** | Navy TekoApp `#0D1B2A` exacto, nunca negro puro      | Es el navy real del manual de marca (antes una aproximación índigo) — permite capas/elevación reales en cards y modales           |
+| **Tipografía**  | Poppins (única familia, Light/Regular/SemiBold/Bold) | Tipografía oficial del manual — antes Geist (cuerpo) + Sora (títulos), dos familias que el manual no contempla                    |
+| **Componentes** | shadcn/ui sobre Base UI                              | El código de cada componente vive en el repo (no en `node_modules`) — cualquiera puede abrirlo y entenderlo, no es una caja negra |
+| **Catálogo**    | Storybook                                            | La forma de encontrar qué componentes ya existen sin tener que leer código                                                        |
 
 Ver `.claude/documentation/architecture.md` para el razonamiento completo, y
 `.claude/rules/design-system.md` para las reglas de uso.
