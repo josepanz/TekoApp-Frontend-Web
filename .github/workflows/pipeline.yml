@@ -1,0 +1,234 @@
+name: Pipeline
+
+on:
+  push:
+    branches: [develop, qa, master]
+  pull_request:
+    branches: [develop, qa, master]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'Ambiente de despliegue'
+        required: true
+        default: 'develop'
+        type: choice
+        options:
+          - develop
+          - qa
+          - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # ================================================================
+  # PR ONLY — Valida calidad antes del merge
+  # ================================================================
+
+  lint:
+    name: Lint & Format
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ESLint
+        run: pnpm exec eslint .
+
+      - name: Prettier (check-only)
+        run: pnpm exec prettier --check "src/**/*.{ts,tsx,css}"
+
+      - name: TypeScript strict check
+        run: pnpm check:types
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build design tokens
+        run: pnpm tokens:build
+
+      - name: Run tests
+        run: pnpm test:coverage
+
+      # Playwright e2e no bloquea el pipeline todavía — no hay un backend de test
+      # desplegado en CI para correr el flujo de login real contra él. Se activa
+      # (quitar `if: false`) cuando exista ese entorno.
+      - name: Install Playwright browsers
+        if: false
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run e2e tests
+        if: false
+        run: pnpm test:e2e
+
+  docker-validate:
+    name: Docker Build (validate)
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image (sin push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ================================================================
+  # PUSH ONLY — Versioning + Docker + Deploy (post-merge)
+  # ================================================================
+
+  release:
+    name: Version & Publish
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
+    outputs:
+      new_version: ${{ steps.version.outputs.new_version }}
+      released: ${{ steps.version.outputs.released }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ambiente || github.ref_name }}
+
+      # semantic-release requiere refs locales para ejecutar `git tag --merged <branch>`
+      # actions/checkout solo crea ref local para la rama actual; las demás quedan solo en origin/*
+      # --tags es explícito: el auto-follow de git no es confiable cuando los objetos ya están
+      # descargados por el checkout inicial (no hay "objetos nuevos" que disparen el follow)
+      - name: Setup local branches for semantic-release
+        run: |
+          git fetch origin develop:develop qa:qa master:master --update-head-ok 2>/dev/null || true
+          git fetch origin --tags --force
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Semantic Release: determina versión, actualiza CHANGELOG, package.json,
+      # ejecuta replace-version.sh (deployment.yml), commitea y crea git tag.
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          HUSKY: 0
+        run: npx semantic-release
+
+      # Captura el tag recién creado para pasar a los pasos siguientes
+      - name: Capture released version
+        id: version
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$TAG" ]; then
+            echo "new_version=$TAG" >> $GITHUB_OUTPUT
+            echo "released=true" >> $GITHUB_OUTPUT
+            echo "Nueva versión: $TAG"
+          else
+            echo "released=false" >> $GITHUB_OUTPUT
+            echo "Sin nueva versión — no hay commits relevantes desde el último release."
+          fi
+
+      # Docker build + push a ghcr.io (GitHub Container Registry — gratis, sin secrets extra)
+      # Solo si semantic-release generó una nueva versión
+      - uses: docker/setup-buildx-action@v3
+        if: steps.version.outputs.released == 'true'
+
+      - name: Login to ghcr.io
+        if: steps.version.outputs.released == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push image
+        if: steps.version.outputs.released == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/tekoapp-frontend-web:${{ steps.version.outputs.new_version }}
+            ghcr.io/${{ github.repository_owner }}/tekoapp-frontend-web:${{ github.ref_name }}-latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ================================================================
+  # DEPLOY — GitOps hacia K3s via ArgoCD
+  # Actualmente en modo simulación. Cuando ArgoCD y K3s estén listos,
+  # reemplazar el step "Simulación" con el sync real (mismo TODO que el backend).
+  # ================================================================
+
+  deploy:
+    name: Deploy to K3s
+    runs-on: ubuntu-latest
+    needs: release
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.release.outputs.released == 'true'
+    environment:
+      name: ${{ github.event_name == 'workflow_dispatch' && inputs.ambiente || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # TODO(deploy-activate): mismo procedimiento que TekoApp-Backend — ver ese
+      # workflow para el bloque comentado con las dos opciones (ArgoCD / kubectl).
+      - name: GitOps — simulación (pendiente ArgoCD/K3s)
+        run: |
+          echo "  Ambiente  : ${{ github.ref_name }}"
+          echo "  Versión   : ${{ needs.release.outputs.new_version }}"
+          echo "  Imagen    : ghcr.io/${{ github.repository_owner }}/tekoapp-frontend-web:${{ needs.release.outputs.new_version }}"
+          echo "  Manifiesto: ci/${{ github.ref_name }}/1_deployment.yml (ya actualizado en commit de release)"
+          echo "  ⏳ Deploy real pendiente — ver TODO(deploy-activate) en este archivo."

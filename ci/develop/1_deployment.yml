@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-tekoapp-frontend-web
+  namespace: default
+spec:
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: deploy-tekoapp-frontend-web
+  template:
+    metadata:
+      name: deploy-tekoapp-frontend-web
+      labels:
+        app: deploy-tekoapp-frontend-web
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/auth-path: auth/dev-k3s
+        vault.hashicorp.com/role: tekoapp-frontend-web-role
+        vault.hashicorp.com/agent-run-as-user: '1000'
+        vault.hashicorp.com/agent-inject-secret-tekoapp-frontend-web-configmap: project/data/dev/tekoapp-frontend-web-configmap
+        vault.hashicorp.com/agent-inject-template-tekoapp-frontend-web-configmap: |
+          {{- with secret "project/data/dev/tekoapp-frontend-web-configmap" -}}
+          {{- range $key, $value := .Data.data }}
+            export {{ $key }}="{{ $value }}"
+          {{- end }}
+          {{ end }}
+    spec:
+      serviceAccountName: tekoapp-frontend-web
+      imagePullSecrets:
+        - name: regcred
+      enableServiceLinks: false
+      containers:
+        - image: ghcr.io/josepanz/tekoapp-frontend-web:0.1.0
+          resources:
+            limits:
+              cpu: '500m'
+              memory: '350Mi'
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          name: deploy-tekoapp-frontend-web
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3001
+              name: http
+          command:
+            - '/bin/sh'
+            - '-c'
+            - |
+              . /vault/secrets/tekoapp-frontend-web-configmap
+              node server.js
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 12
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3001
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3

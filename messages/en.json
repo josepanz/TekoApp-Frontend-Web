@@ -1,0 +1,817 @@
+{
+  "common": {
+    "language": {
+      "label": "Change language",
+      "es": "Español",
+      "en": "English"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "create": "Create",
+      "save": "Save",
+      "saveChanges": "Save changes",
+      "close": "Close",
+      "confirm": "Confirm",
+      "search": "Search",
+      "retry": "Retry",
+      "back": "Back",
+      "view": "View"
+    },
+    "states": {
+      "loading": "Loading...",
+      "saving": "Saving...",
+      "deleting": "Deleting..."
+    },
+    "unexpectedError": "Something went wrong. Please try again."
+  },
+  "layout": {
+    "brand": {
+      "admin": "TekoApp",
+      "pro": "TekoApp Pro",
+      "client": "TekoApp"
+    },
+    "nav": {
+      "admin": {
+        "dashboard": "Overview",
+        "users": "Users",
+        "professionals": "Professionals",
+        "services": "Services",
+        "payments": "Payments",
+        "promotions": "Promotions",
+        "ratings": "Ratings",
+        "rolesPermission": "Roles & permissions",
+        "categories": "Categories",
+        "locations": "Locations",
+        "notifications": "Notifications"
+      },
+      "client": {
+        "home": "Home",
+        "request": "Request",
+        "myServices": "My services",
+        "professionals": "Professionals"
+      },
+      "pro": {
+        "requests": "Requests",
+        "myServices": "My services",
+        "ratings": "Ratings",
+        "profile": "Profile"
+      }
+    },
+    "modeSwitcher": {
+      "groupLabel": "Switch mode",
+      "client": "Client mode",
+      "pro": "Professional mode",
+      "admin": "Admin panel"
+    },
+    "userMenu": {
+      "trigger": "User menu",
+      "profile": "My profile",
+      "logout": "Log out",
+      "loggingOut": "Logging out..."
+    },
+    "notificationBell": {
+      "trigger": "Notifications",
+      "title": "Notifications",
+      "empty": "You don't have any notifications yet",
+      "markAllRead": "Mark all as read"
+    },
+    "themeToggle": {
+      "trigger": "Change theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "myProfile": {
+    "back": "Back",
+    "title": "My profile",
+    "subtitle": "Edit your personal info and profile photo.",
+    "avatarHint": "Click the camera icon to change your photo",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phoneNumber": "Phone",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "push": {
+      "title": "Push notifications",
+      "hint": "Get updates even when the tab isn't open.",
+      "blocked": "Blocked in your browser settings."
+    }
+  },
+  "auth": {
+    "login": {
+      "pageTitle": "TekoApp",
+      "pageSubtitle": "Admin portal — sign in to continue.",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Keep me signed in",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "genericError": "Couldn't sign in. Please try again."
+    }
+  },
+  "categories": {
+    "table": {
+      "name": "Name",
+      "slug": "Slug",
+      "iconColor": "Icon / Color",
+      "visible": "Visible",
+      "actions": "Actions",
+      "hide": "Hide {name}",
+      "show": "Show {name}",
+      "empty": "No categories to show",
+      "loadError": "Couldn't load the category list. Try reloading the page."
+    },
+    "delete": {
+      "title": "Delete category",
+      "description": "This will permanently delete the category \"{name}\". This can't be undone."
+    },
+    "form": {
+      "editTitle": "Edit category",
+      "createTitle": "New category",
+      "editDescription": "Edit the details of the selected category.",
+      "createDescription": "Fill in the details to create a new service category.",
+      "name": "Name",
+      "slug": "Slug",
+      "slugPlaceholder": "Auto-generated if left empty",
+      "description": "Description",
+      "icon": "Icon",
+      "color": "Color",
+      "parentId": "Parent category ID (optional)",
+      "visibleLabel": "Visible in the client search",
+      "submitCreate": "Create category"
+    },
+    "newButton": "New category",
+    "status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    },
+    "detail": {
+      "back": "Back to categories",
+      "loadError": "Couldn't load this category's detail.",
+      "slugLabel": "Slug: {slug}",
+      "yes": "Yes",
+      "no": "No",
+      "visibleLabel": "visible in search",
+      "requiresVerificationLabel": "requires verification",
+      "sortOrderLabel": "Order: {order}",
+      "parentCategoryLabel": "Parent category: #{id}",
+      "statsLoadError": "Couldn't load the stats.",
+      "statsTitle": "Stats",
+      "professionalCount": "{count} professionals",
+      "serviceCount": "{count} services",
+      "averageRating": "⭐ {rating} average",
+      "createdAt": "Created on {date}",
+      "lastChangedAt": "Modified on {date}"
+    }
+  },
+  "pages": {
+    "admin": {
+      "dashboard": {
+        "title": "Overview",
+        "description": "Platform-wide metrics in real time."
+      },
+      "users": {
+        "title": "Users",
+        "description": "Manage clients and professionals registered on the platform."
+      },
+      "userDetail": {
+        "title": "User detail"
+      },
+      "professionals": {
+        "title": "Professionals",
+        "description": "Verify and suspend professional profiles registered on the platform."
+      },
+      "professionalDetail": {
+        "title": "Professional detail"
+      },
+      "services": {
+        "title": "Services",
+        "description": "Monitor the services requested by clients on the platform."
+      },
+      "serviceDetail": {
+        "title": "Service detail"
+      },
+      "payments": {
+        "title": "Payments",
+        "description": "Monitor and manage payments: refunds and cancellations."
+      },
+      "paymentDetail": {
+        "title": "Payment detail"
+      },
+      "promotions": {
+        "title": "Promotions",
+        "description": "Manage the platform's promotions and discount coupons.",
+        "newButton": "New promotion"
+      },
+      "promotionDetail": {
+        "title": "Promotion detail"
+      },
+      "ratings": {
+        "title": "Ratings",
+        "description": "Moderate ratings reported as inappropriate on the platform."
+      },
+      "rolesPermission": {
+        "title": "Roles & permissions",
+        "description": "Manage admin roles and the permissions they group.",
+        "newButton": "New role"
+      },
+      "roleDetail": {
+        "title": "Role detail"
+      },
+      "categories": {
+        "title": "Categories",
+        "description": "Manage the catalog of professional service categories."
+      },
+      "categoryDetail": {
+        "title": "Category detail"
+      },
+      "locations": {
+        "title": "Locations",
+        "description": "Connected professionals and their geographic position in real time."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "System notification log and manual notification sending."
+      }
+    },
+    "client": {
+      "home": {
+        "greeting": "Hi, {name}",
+        "description": "Request a professional, keep track of your services, and leave a rating once the job is done.",
+        "requestCta": "Request a professional",
+        "browseCta": "Find professionals",
+        "adminCta": "Go to the admin panel"
+      },
+      "myServices": {
+        "title": "My services",
+        "description": "Keep track of the services you requested."
+      },
+      "professionals": {
+        "title": "Professionals",
+        "description": "Find available professionals and check their reputation."
+      },
+      "professionalDetail": {
+        "title": "Professional profile"
+      },
+      "request": {
+        "title": "Request a professional",
+        "description": "Tell us what you need and an available professional will take it."
+      }
+    },
+    "pro": {
+      "requests": {
+        "title": "Requests",
+        "description": "Pending services in your category that you can accept."
+      },
+      "services": {
+        "title": "My services",
+        "description": "Accepted services, in progress, and history."
+      },
+      "ratings": {
+        "title": "Ratings",
+        "description": "Reviews received from your clients."
+      },
+      "profile": {
+        "title": "My profile",
+        "description": "Edit your description, rates, and availability."
+      }
+    },
+    "error": {
+      "title": "Something went wrong",
+      "description": "We couldn't complete the request. It may be a temporary server issue — try again in a few seconds."
+    }
+  },
+  "users": {
+    "table": {
+      "email": "Email",
+      "name": "Name",
+      "phone": "Phone",
+      "status": "Status",
+      "empty": "No users to show",
+      "loadError": "Couldn't load the user list. Try reloading the page."
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "PENDING_VERIFICATION": "Pending verification",
+      "INACTIVE": "Inactive",
+      "BLOCKED": "Blocked",
+      "DELETED": "Deleted",
+      "REFUSED": "Rejected"
+    },
+    "detail": {
+      "back": "Back to users",
+      "loadError": "Couldn't load the user."
+    }
+  },
+  "professionals": {
+    "table": {
+      "name": "Name",
+      "category": "Category",
+      "status": "Status",
+      "verification": "Verification",
+      "rating": "Rating",
+      "available": "Available",
+      "yes": "Yes",
+      "no": "No",
+      "actions": "Actions",
+      "empty": "No professionals to show",
+      "loadError": "Couldn't load the professionals list. Try reloading the page."
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    },
+    "suspend": {
+      "trigger": "Suspend",
+      "title": "Suspend professional",
+      "reason": "Reason",
+      "submit": "Confirm suspension",
+      "submitting": "Suspending..."
+    },
+    "verify": {
+      "trigger": "Verify",
+      "title": "Verify professional",
+      "verifiedLabel": "Mark as verified",
+      "notes": "Notes"
+    },
+    "detail": {
+      "back": "Back to professionals",
+      "loadError": "Couldn't load this professional's profile.",
+      "rating": "⭐ {rating} ({count} reviews)",
+      "hourlyRate": "Hourly rate: {rate}",
+      "experience": "{years} years of experience",
+      "totalServices": "{count} completed services",
+      "availableLabel": "available now",
+      "certifications": "Certifications",
+      "memberSince": "Member since {date}"
+    }
+  },
+  "services": {
+    "table": {
+      "service": "Service",
+      "client": "Client",
+      "professional": "Professional",
+      "professionalRef": "Professional #{id}",
+      "unassigned": "Unassigned",
+      "status": "Status",
+      "amount": "Amount",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "No services to show",
+      "loadError": "Couldn't load the services list. Try reloading the page."
+    },
+    "status": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "filter": {
+      "label": "Filter by status",
+      "all": "All statuses"
+    },
+    "detail": {
+      "back": "Back to services",
+      "loadError": "Couldn't load the service.",
+      "urgent": "Urgent",
+      "client": "Client",
+      "professional": "Professional",
+      "unassigned": "Unassigned",
+      "estimatedHours": "{hours} estimated hours",
+      "actualHours": "{hours} actual hours",
+      "hourlyRate": "Hourly rate: {rate}",
+      "fixedPrice": "Fixed price: {price}",
+      "totalAmount": "Total amount: {amount}",
+      "finalAmount": "Final amount: {amount}",
+      "address": "Address",
+      "additionalNotes": "Additional notes",
+      "images": "Images",
+      "cancellationReason": "Cancellation reason: {reason}",
+      "scheduledAt": "Scheduled: {date}",
+      "startedAt": "Started: {date}",
+      "completedAt": "Completed: {date}",
+      "cancelledAt": "Cancelled: {date}",
+      "createdAt": "Created: {date}"
+    }
+  },
+  "rolesPermission": {
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "actions": "Actions",
+      "empty": "No roles to show",
+      "loadError": "Couldn't load the roles list. Try reloading the page."
+    },
+    "form": {
+      "createTitle": "New role",
+      "editTitle": "Edit role",
+      "createDescription": "Set the name, description and permissions for the new role.",
+      "editDescription": "Change the role's name, description and permissions.",
+      "name": "Name",
+      "description": "Description",
+      "permissions": "Permissions"
+    },
+    "detail": {
+      "back": "Back to roles & permissions",
+      "loadError": "Couldn't load the role.",
+      "permissionsCount": "{count} permissions",
+      "permissionsTitle": "Assigned permissions",
+      "createdBy": "Created by {user}"
+    }
+  },
+  "payments": {
+    "status": {
+      "PENDING": "Pending",
+      "PROCESSING": "Processing",
+      "PAID": "Paid",
+      "COMPLETED": "Completed",
+      "REFUNDED": "Refunded",
+      "PARTIAL_REFUNDED": "Partially refunded",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled"
+    },
+    "filter": {
+      "label": "Filter by status",
+      "all": "All statuses"
+    },
+    "table": {
+      "reference": "Reference",
+      "amount": "Amount",
+      "status": "Status",
+      "user": "User",
+      "professional": "Professional",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "No payments to show",
+      "loadError": "We couldn't load the payments list. Try reloading the page."
+    },
+    "cancel": {
+      "title": "Cancel this payment?",
+      "description": "This will cancel the payment permanently. It can't be undone.",
+      "pending": "Cancelling...",
+      "confirm": "Yes, cancel it"
+    },
+    "refund": {
+      "trigger": "Refund",
+      "title": "Refund payment",
+      "description": "This will refund the payment to the user. It can't be undone.",
+      "amountLabel": "Amount to refund",
+      "reasonLabel": "Reason",
+      "reasonPlaceholder": "Pick a reason",
+      "descriptionLabel": "Description (optional)",
+      "pending": "Refunding...",
+      "confirm": "Confirm refund",
+      "reasons": {
+        "customer_request": "Customer request",
+        "duplicate_payment": "Duplicate payment",
+        "fraud": "Fraud",
+        "service_not_provided": "Service not provided",
+        "poor_service_quality": "Poor service quality",
+        "technical_issue": "Technical issue",
+        "other": "Other"
+      }
+    },
+    "detail": {
+      "back": "Back to payments",
+      "loadError": "Couldn't load this payment's detail.",
+      "title": "Payment {reference}",
+      "userLabel": "User",
+      "professionalLabel": "Professional",
+      "serviceLabel": "Service",
+      "recurring": "Recurring",
+      "amountLabel": "Amount",
+      "feeLabel": "Fee",
+      "taxLabel": "Tax",
+      "totalLabel": "Total",
+      "platformFeeLabel": "Platform fee",
+      "professionalNetAmountLabel": "Professional net amount",
+      "transactionIdLabel": "Transaction ID",
+      "externalTransactionIdLabel": "External transaction ID",
+      "createdAtLabel": "Created",
+      "processedAtLabel": "Processed",
+      "paidAtLabel": "Paid",
+      "failedAtLabel": "Failed",
+      "failureReasonLabel": "Failure reason",
+      "refundDetailsLabel": "Refund details"
+    }
+  },
+  "promotions": {
+    "status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "EXPIRED": "Expired",
+      "DEPLETED": "Used up"
+    },
+    "type": {
+      "PERCENTAGE": "Percentage",
+      "FIXED_AMOUNT": "Fixed amount",
+      "FREE_SERVICE": "Free service"
+    },
+    "table": {
+      "code": "Code",
+      "name": "Name",
+      "discount": "Discount",
+      "validity": "Valid period",
+      "status": "Status",
+      "actions": "Actions",
+      "empty": "No promotions to show",
+      "loadError": "We couldn't load the promotions list. Try reloading the page."
+    },
+    "deactivate": {
+      "title": "Deactivate this promotion?",
+      "description": "The promotion \"{name}\" will be marked as inactive and will stop applying to new services.",
+      "pending": "Deactivating...",
+      "confirm": "Deactivate"
+    },
+    "form": {
+      "createTitle": "New promotion",
+      "editTitle": "Edit promotion",
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "type": "Discount type",
+      "typePlaceholder": "Pick a type",
+      "discountValue": "Discount value",
+      "validFrom": "Valid from",
+      "validUntil": "Valid until",
+      "minimumAmount": "Minimum amount",
+      "maximumDiscount": "Maximum discount",
+      "maxUsage": "Max uses",
+      "maxUsagePerUser": "Max uses per user",
+      "isFirstTimeOnly": "Only for the user's first use",
+      "isProfessionalOnly": "Professionals only",
+      "isClientOnly": "Clients only",
+      "submitCreate": "Create promotion"
+    },
+    "detail": {
+      "back": "Back to promotions",
+      "loadError": "Couldn't load this promotion's detail.",
+      "editButton": "Edit",
+      "discount": "Discount: {value}",
+      "minimumAmount": "Minimum amount: {amount}",
+      "maximumDiscount": "Maximum discount: {amount}",
+      "usageUnlimited": "{current} uses (unlimited)",
+      "usage": "{current} / {max} uses",
+      "maxUsagePerUser": "Max {count} per user",
+      "validity": "Valid from {from} until {until}",
+      "allowedUserTypes": "Allowed user types",
+      "specificUsers": "Restricted to {count} specific users",
+      "createdAt": "Created on {date}"
+    }
+  },
+  "ratings": {
+    "type": {
+      "CLIENT_TO_PROFESSIONAL": "Client → Professional",
+      "PROFESSIONAL_TO_CLIENT": "Professional → Client"
+    },
+    "table": {
+      "user": "User",
+      "professional": "Professional",
+      "rating": "Rating",
+      "type": "Type",
+      "reported": "Reported",
+      "reportedBadge": "Reported",
+      "review": "Comment",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "No ratings to show",
+      "loadError": "We couldn't load the ratings list. Try reloading the page."
+    },
+    "delete": {
+      "title": "Delete rating",
+      "description": "This can't be undone. The rating will be deleted permanently.",
+      "confirm": "Confirm deletion"
+    }
+  },
+  "notifications": {
+    "type": {
+      "service_request": "Service request",
+      "service_accepted": "Service accepted",
+      "service_rejected": "Service rejected",
+      "service_completed": "Service completed",
+      "payment_received": "Payment received",
+      "rating_received": "Rating received",
+      "promotion": "Promotion",
+      "system": "System"
+    },
+    "channel": {
+      "in_app": "In-app",
+      "push": "Push",
+      "fcm": "FCM (mobile)",
+      "email": "Email"
+    },
+    "table": {
+      "title": "Title",
+      "message": "Message",
+      "type": "Type",
+      "read": "Read",
+      "yes": "Yes",
+      "no": "No",
+      "date": "Date",
+      "actions": "Actions",
+      "markAsRead": "Mark as read",
+      "loadMore": "Load more",
+      "empty": "No notifications to show",
+      "loadError": "We couldn't load the notifications log. Try reloading the page."
+    },
+    "form": {
+      "trigger": "New notification",
+      "title": "New notification",
+      "titleLabel": "Title",
+      "messageLabel": "Message",
+      "typeLabel": "Type",
+      "typePlaceholder": "Pick a type",
+      "channelsLabel": "Channels",
+      "pending": "Sending...",
+      "submit": "Send notification"
+    }
+  },
+  "locations": {
+    "explorer": {
+      "loadError": "Couldn't load the nearby professionals search. Try again.",
+      "empty": "No professionals found in the searched area.",
+      "results": "{count} professional(s) found."
+    },
+    "map": {
+      "missingApiKey": "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured, so the map can't be shown.",
+      "markerTitle": "Professional #{id} · ⭐ {rating}",
+      "markerTitleWithDistance": "Professional #{id} · ⭐ {rating} · {distance} km"
+    },
+    "search": {
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "radius": "Radius (km)",
+      "availableOnly": "Available only",
+      "onlineOnly": "Online only",
+      "searching": "Searching..."
+    },
+    "onlineStat": {
+      "title": "Professionals online"
+    }
+  },
+  "analytics": {
+    "loadError": "Couldn't load the dashboard metrics. Try reloading the page.",
+    "stats": {
+      "totalUsers": "Total users",
+      "verifiedProfessionals": "Verified professionals",
+      "periodRevenue": "Revenue this period",
+      "averageRating": "Average rating"
+    },
+    "trends": {
+      "thisPeriod": "{value} this period",
+      "totalCount": "{value} total",
+      "accumulated": "{value} accumulated",
+      "ratingsCount": "{value} ratings"
+    }
+  },
+  "browseProfessionals": {
+    "list": {
+      "loadError": "Couldn't load the professionals. Try reloading the page.",
+      "empty": "There are no professionals available right now.",
+      "reviews": "{count} reviews",
+      "viewProfile": "View profile",
+      "pagination": "Page {page} of {totalPages}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "detail": {
+      "loadError": "Couldn't load this professional's profile.",
+      "rating": "⭐ {rating} ({count} reviews)",
+      "hourlyRate": "Hourly rate: {rate}",
+      "experience": "{years} years of experience"
+    }
+  },
+  "requestService": {
+    "form": {
+      "title": "Title",
+      "description": "Description",
+      "category": "Category",
+      "categoryPlaceholder": "Pick a category",
+      "serviceType": "Service type",
+      "serviceTypePlaceholder": "Pick a type",
+      "address": "Address",
+      "location": "Service location",
+      "locationHint": "Click on the map or drag the marker to pick where the job is.",
+      "urgent": "It's urgent",
+      "submitting": "Sending...",
+      "submit": "Request a professional"
+    },
+    "map": {
+      "ariaLabel": "Map to pick the service location"
+    }
+  },
+  "rateProfessional": {
+    "trigger": "Rate professional",
+    "dialog": {
+      "title": "Rate {name}",
+      "description": "Rate your experience with this professional.",
+      "ratingLabel": "Rating (1-5)",
+      "commentLabel": "Comment (optional)",
+      "submitting": "Sending...",
+      "submit": "Send rating"
+    }
+  },
+  "myServices": {
+    "table": {
+      "service": "Service",
+      "professional": "Professional",
+      "unassigned": "Unassigned",
+      "status": "Status",
+      "amount": "Amount",
+      "actions": "Actions",
+      "empty": "You haven't requested any services yet",
+      "loadError": "We couldn't load your services. Try reloading the page."
+    },
+    "status": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "cancel": {
+      "title": "Cancel service",
+      "description": "Tell us briefly why you're cancelling this service.",
+      "reasonLabel": "Reason",
+      "submitting": "Cancelling...",
+      "submit": "Confirm cancellation"
+    }
+  },
+  "professionalProfile": {
+    "proModeLink": "Go to professional mode",
+    "availability": {
+      "available": "Available",
+      "unavailable": "Unavailable"
+    },
+    "form": {
+      "loadError": "We couldn't load your professional profile.",
+      "description": "Description",
+      "hourlyRate": "Hourly rate",
+      "fixedRate": "Flat rate (optional)",
+      "yearsOfExperience": "Years of experience",
+      "skills": "Skills (comma separated)"
+    }
+  },
+  "professionalRatings": {
+    "table": {
+      "client": "Client",
+      "anonymous": "Anonymous",
+      "rating": "Rating",
+      "comment": "Comment",
+      "date": "Date",
+      "empty": "You don't have any ratings yet",
+      "loadError": "We couldn't load your ratings. Try reloading the page."
+    },
+    "rateClient": {
+      "trigger": "Rate client",
+      "title": "Rate {name}",
+      "description": "Rate your experience working with this client.",
+      "ratingLabel": "Rating (1-5)",
+      "commentLabel": "Comment (optional)",
+      "submitting": "Sending...",
+      "submit": "Send rating"
+    }
+  },
+  "professionalRequests": {
+    "table": {
+      "service": "Service",
+      "client": "Client",
+      "amount": "Amount",
+      "urgent": "Urgent",
+      "actions": "Actions",
+      "accept": "Accept",
+      "empty": "There are no pending requests in your category",
+      "loadError": "We couldn't load the pending requests. Try reloading the page."
+    }
+  },
+  "professionalServices": {
+    "table": {
+      "service": "Service",
+      "client": "Client",
+      "status": "Status",
+      "amount": "Amount",
+      "actions": "Actions",
+      "start": "Start",
+      "complete": "Complete",
+      "empty": "You don't have any services assigned yet",
+      "loadError": "We couldn't load your services. Try reloading the page."
+    },
+    "status": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "IN_PROGRESS": "In progress",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    }
+  }
+}
