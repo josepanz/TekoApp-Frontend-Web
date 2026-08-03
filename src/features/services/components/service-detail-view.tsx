@@ -251,7 +251,7 @@ function ProfessionalInfo({
   return (
     <div className="flex flex-col gap-1">
       <span className="text-sm font-medium">{label}</span>
-      {service.professional ? (
+      {service.professional?.user ? (
         <>
           <span>
             {service.professional.user.firstName}{' '}
