@@ -1,0 +1,9 @@
+.next
+node_modules
+graphify-out
+coverage
+playwright-report
+test-results
+src/design-system/tokens/theme.generated.css
+src/core/api-client/types.generated.ts
+pnpm-lock.yaml

@@ -1,0 +1,18 @@
+# =============================================================
+# Variables de entorno — Ambiente MASTER
+# Estas claves deben existir en Vault bajo:
+#   project/data/prod/tekoapp-frontend-web-configmap
+# =============================================================
+
+NODE_ENV=production
+PORT=3001
+
+# Backend real (server-only — nunca expuesto al browser)
+BACKEND_API_URL=https://tekoapp.com.py/tekoapp-backend/api
+BACKEND_CLIENT_ID=tekoapp-web
+BACKEND_CLIENT_SECRET=
+BACKEND_JWT_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----\n"
+BACKEND_SOCKET_URL=https://tekoapp.com.py
+
+NEXT_PUBLIC_APP_URL=https://tekoapp.com.py
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSy...
