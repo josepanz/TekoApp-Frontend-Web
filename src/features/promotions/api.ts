@@ -2,6 +2,8 @@ import { apiFetch } from '@/core/api-client/client';
 import type { components } from '@/core/api-client/types.generated';
 
 export type Promotion = components['schemas']['PromotionDetailResponseDTO'];
+export type PromotionDetail =
+  components['schemas']['PromotionDetailResponseDTO'];
 export type CreatePromotionRequest =
   components['schemas']['CreatePromotionRequestDTO'];
 
@@ -17,6 +19,12 @@ export type UpdatePromotionRequest = Partial<CreatePromotionRequest>;
 // wrapper de paginación `{data, pagination}` en el backend.
 export function getPromotions(): Promise<Promotion[]> {
   return apiFetch<Promotion[]>('promotions');
+}
+
+// GET /promotions/{id} (PromotionsController_findOne) — sin guard en esta ruta puntual, a
+// diferencia del resto del CRUD de promociones.
+export function getPromotionById(id: string): Promise<PromotionDetail> {
+  return apiFetch<PromotionDetail>(`promotions/${id}`);
 }
 
 export function createPromotion(

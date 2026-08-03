@@ -29,8 +29,13 @@ const EMPTY_VALUES: RoleFormValues = {
 };
 
 interface RoleFormDialogProps {
-  /** Rol a editar. Si se omite, el diálogo funciona en modo "crear rol". */
-  role?: Role;
+  /**
+   * Rol a editar. Si se omite, el diálogo funciona en modo "crear rol". Tipado como `Pick` (no
+   * `Role` completo) porque el diálogo solo lee `id`/`name`/`description` — permite reusarlo
+   * también desde `RoleDetailView`, que recibe `RoleWithPermissions` (forma distinta, sin
+   * `referenceId`).
+   */
+  role?: Pick<Role, 'id' | 'name' | 'description'>;
   trigger: React.ReactElement;
 }
 

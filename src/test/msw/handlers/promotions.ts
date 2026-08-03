@@ -50,6 +50,14 @@ export const fakePromotions: Promotion[] = [
 export const promotionsHandlers = [
   http.get('/api/backend/promotions', () => HttpResponse.json(fakePromotions)),
 
+  http.get('/api/backend/promotions/:id', ({ params }) => {
+    const promotion = fakePromotions.find((item) => item.id === params.id);
+    if (!promotion) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(promotion);
+  }),
+
   http.post('/api/backend/promotions', async ({ request }) => {
     const body = (await request.json()) as CreatePromotionRequest;
     return HttpResponse.json(

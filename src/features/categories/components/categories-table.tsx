@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
@@ -89,6 +90,16 @@ export function CategoriesTable() {
       header: t('table.actions'),
       cell: ({ row }) => (
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link href={`/admin/categories/${row.original.id}`}>
+                {tCommon('actions.view')}
+              </Link>
+            }
+          />
           <Button
             variant="outline"
             size="sm"

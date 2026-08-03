@@ -153,13 +153,13 @@ español por default) — no hay URLs tipo `/en/...`, es el mismo patrón en tod
 
 ## 5. Dónde vive cada tipo de documentación
 
-| Pregunta                                                   | Dónde mirar                                               |
-| ---------------------------------------------------------- | --------------------------------------------------------- |
-| "¿Por qué se decidió X arquitectura?"                      | `.claude/documentation/architecture.md`                   |
-| "¿Cómo hago Y en el día a día?"                            | Este archivo                                              |
-| "¿Cuál es la regla exacta para Z?" (colores, tests, tipos) | `.claude/rules/*.md`                                      |
-| "¿Qué decisión de marca se tomó y quién la definió?"       | `.claude/documentation/brand/` (assets + manual de marca) |
-| "¿Qué endpoints expone el backend y qué forma tienen?"     | `src/core/api-client/types.generated.ts` (nunca a mano)   |
+| Pregunta                                                   | Dónde mirar                                             |
+| ---------------------------------------------------------- | ------------------------------------------------------- |
+| "¿Por qué se decidió X arquitectura?"                      | `.claude/documentation/architecture.md`                 |
+| "¿Cómo hago Y en el día a día?"                            | Este archivo                                            |
+| "¿Cuál es la regla exacta para Z?" (colores, tests, tipos) | `.claude/rules/*.md`                                    |
+| "¿Qué decisión de marca se tomó y quién la definió?"       | `brand/` (assets + manual de marca)                     |
+| "¿Qué endpoints expone el backend y qué forma tienen?"     | `src/core/api-client/types.generated.ts` (nunca a mano) |
 
 ## 6. Checklist antes de dar una tarea por terminada
 

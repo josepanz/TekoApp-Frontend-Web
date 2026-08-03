@@ -143,7 +143,30 @@
       "visibleLabel": "Visible en el buscador de clientes",
       "submitCreate": "Crear categoría"
     },
-    "newButton": "Nueva categoría"
+    "newButton": "Nueva categoría",
+    "status": {
+      "ACTIVE": "Activa",
+      "INACTIVE": "Inactiva",
+      "PENDING": "Pendiente"
+    },
+    "detail": {
+      "back": "Volver a categorías",
+      "loadError": "No se pudo cargar el detalle de esta categoría.",
+      "slugLabel": "Slug: {slug}",
+      "yes": "Sí",
+      "no": "No",
+      "visibleLabel": "visible en el buscador",
+      "requiresVerificationLabel": "requiere verificación",
+      "sortOrderLabel": "Orden: {order}",
+      "parentCategoryLabel": "Categoría padre: #{id}",
+      "statsLoadError": "No se pudieron cargar las estadísticas.",
+      "statsTitle": "Estadísticas",
+      "professionalCount": "{count} profesionales",
+      "serviceCount": "{count} servicios",
+      "averageRating": "⭐ {rating} promedio",
+      "createdAt": "Creada el {date}",
+      "lastChangedAt": "Modificada el {date}"
+    }
   },
   "pages": {
     "admin": {
@@ -155,22 +178,37 @@
         "title": "Usuarios",
         "description": "Gestión de clientes y profesionales registrados en la plataforma."
       },
+      "userDetail": {
+        "title": "Detalle del usuario"
+      },
       "professionals": {
         "title": "Profesionales",
         "description": "Verificación y suspensión de perfiles profesionales registrados en la plataforma."
+      },
+      "professionalDetail": {
+        "title": "Detalle del profesional"
       },
       "services": {
         "title": "Servicios",
         "description": "Monitoreo de los servicios solicitados por clientes en la plataforma."
       },
+      "serviceDetail": {
+        "title": "Detalle del servicio"
+      },
       "payments": {
         "title": "Pagos",
         "description": "Monitoreo y gestión de pagos: reembolsos y cancelaciones."
+      },
+      "paymentDetail": {
+        "title": "Detalle del pago"
       },
       "promotions": {
         "title": "Promociones",
         "description": "Gestión de promociones y cupones de descuento de la plataforma.",
         "newButton": "Nueva promoción"
+      },
+      "promotionDetail": {
+        "title": "Detalle de la promoción"
       },
       "ratings": {
         "title": "Calificaciones",
@@ -181,9 +219,15 @@
         "description": "Gestión de roles administrativos y los permisos que agrupan.",
         "newButton": "Nuevo rol"
       },
+      "roleDetail": {
+        "title": "Detalle del rol"
+      },
       "categories": {
         "title": "Categorías",
         "description": "Gestión del catálogo de categorías de servicios profesionales."
+      },
+      "categoryDetail": {
+        "title": "Detalle de la categoría"
       },
       "locations": {
         "title": "Ubicaciones",
@@ -257,6 +301,10 @@
       "BLOCKED": "Bloqueado",
       "DELETED": "Eliminado",
       "REFUSED": "Rechazado"
+    },
+    "detail": {
+      "back": "Volver a usuarios",
+      "loadError": "No se pudo cargar el usuario."
     }
   },
   "professionals": {
@@ -291,6 +339,17 @@
       "title": "Verificar profesional",
       "verifiedLabel": "Marcar como verificado",
       "notes": "Notas"
+    },
+    "detail": {
+      "back": "Volver a profesionales",
+      "loadError": "No se pudo cargar el perfil de este profesional.",
+      "rating": "⭐ {rating} ({count} reseñas)",
+      "hourlyRate": "Tarifa por hora: {rate}",
+      "experience": "{years} años de experiencia",
+      "totalServices": "{count} servicios completados",
+      "availableLabel": "disponible ahora",
+      "certifications": "Certificaciones",
+      "memberSince": "Miembro desde {date}"
     }
   },
   "services": {
@@ -303,6 +362,7 @@
       "status": "Estado",
       "amount": "Monto",
       "date": "Fecha",
+      "actions": "Acciones",
       "empty": "No hay servicios para mostrar",
       "loadError": "No se pudo cargar la lista de servicios. Intentá recargar la página."
     },
@@ -316,6 +376,29 @@
     "filter": {
       "label": "Filtrar por estado",
       "all": "Todos los estados"
+    },
+    "detail": {
+      "back": "Volver a servicios",
+      "loadError": "No se pudo cargar el servicio.",
+      "urgent": "Urgente",
+      "client": "Cliente",
+      "professional": "Profesional",
+      "unassigned": "Sin asignar",
+      "estimatedHours": "{hours} horas estimadas",
+      "actualHours": "{hours} horas reales",
+      "hourlyRate": "Tarifa por hora: {rate}",
+      "fixedPrice": "Precio fijo: {price}",
+      "totalAmount": "Monto total: {amount}",
+      "finalAmount": "Monto final: {amount}",
+      "address": "Dirección",
+      "additionalNotes": "Notas adicionales",
+      "images": "Imágenes",
+      "cancellationReason": "Motivo de cancelación: {reason}",
+      "scheduledAt": "Programado: {date}",
+      "startedAt": "Iniciado: {date}",
+      "completedAt": "Completado: {date}",
+      "cancelledAt": "Cancelado: {date}",
+      "createdAt": "Creado: {date}"
     }
   },
   "rolesPermission": {
@@ -337,6 +420,13 @@
       "name": "Nombre",
       "description": "Descripción",
       "permissions": "Permisos"
+    },
+    "detail": {
+      "back": "Volver a roles y permisos",
+      "loadError": "No se pudo cargar el rol.",
+      "permissionsCount": "{count} permisos",
+      "permissionsTitle": "Permisos asignados",
+      "createdBy": "Creado por {user}"
     }
   },
   "payments": {
@@ -390,6 +480,29 @@
         "technical_issue": "Problema técnico",
         "other": "Otro"
       }
+    },
+    "detail": {
+      "back": "Volver a pagos",
+      "loadError": "No se pudo cargar el detalle de este pago.",
+      "title": "Pago {reference}",
+      "userLabel": "Usuario",
+      "professionalLabel": "Profesional",
+      "serviceLabel": "Servicio",
+      "recurring": "Recurrente",
+      "amountLabel": "Monto",
+      "feeLabel": "Comisión",
+      "taxLabel": "Impuesto",
+      "totalLabel": "Total",
+      "platformFeeLabel": "Comisión de plataforma",
+      "professionalNetAmountLabel": "Neto del profesional",
+      "transactionIdLabel": "ID de transacción",
+      "externalTransactionIdLabel": "ID de transacción externa",
+      "createdAtLabel": "Creado",
+      "processedAtLabel": "Procesado",
+      "paidAtLabel": "Pagado",
+      "failedAtLabel": "Fallido",
+      "failureReasonLabel": "Motivo de falla",
+      "refundDetailsLabel": "Detalles del reembolso"
     }
   },
   "promotions": {
@@ -439,6 +552,21 @@
       "isProfessionalOnly": "Solo para profesionales",
       "isClientOnly": "Solo para clientes",
       "submitCreate": "Crear promoción"
+    },
+    "detail": {
+      "back": "Volver a promociones",
+      "loadError": "No se pudo cargar el detalle de esta promoción.",
+      "editButton": "Editar",
+      "discount": "Descuento: {value}",
+      "minimumAmount": "Monto mínimo: {amount}",
+      "maximumDiscount": "Descuento máximo: {amount}",
+      "usageUnlimited": "{current} usos (ilimitado)",
+      "usage": "{current} / {max} usos",
+      "maxUsagePerUser": "Máx. {count} por usuario",
+      "validity": "Vigente desde {from} hasta {until}",
+      "allowedUserTypes": "Tipos de usuario permitidos",
+      "specificUsers": "Restringida a {count} usuarios específicos",
+      "createdAt": "Creada el {date}"
     }
   },
   "ratings": {

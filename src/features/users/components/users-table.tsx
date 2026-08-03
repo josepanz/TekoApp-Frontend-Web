@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +28,7 @@ const PAGE_SIZE = 10;
 
 export function UsersTable() {
   const t = useTranslations('users');
+  const tCommon = useTranslations('common');
   const [page, setPage] = useState(1);
   const [selectedReferenceId, setSelectedReferenceId] = useState<string | null>(
     null,
@@ -73,13 +75,25 @@ export function UsersTable() {
       id: 'actions',
       header: '',
       cell: ({ row }) => (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setSelectedReferenceId(row.original.referenceId)}
-        >
-          Ver detalle
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link href={`/admin/users/${row.original.referenceId}`}>
+                {tCommon('actions.view')}
+              </Link>
+            }
+          />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSelectedReferenceId(row.original.referenceId)}
+          >
+            Ver detalle
+          </Button>
+        </div>
       ),
     },
   ];

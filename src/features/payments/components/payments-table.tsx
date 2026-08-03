@@ -1,9 +1,11 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/layout/data-table';
 import {
   Select,
@@ -46,6 +48,7 @@ type StatusFilterValue = PaymentStatus | typeof STATUS_FILTER_ALL;
 
 export function PaymentsTable() {
   const t = useTranslations('payments');
+  const tCommon = useTranslations('common');
   const locale = useAppLocale();
   const [statusFilter, setStatusFilter] =
     useState<StatusFilterValue>(STATUS_FILTER_ALL);
@@ -97,18 +100,29 @@ export function PaymentsTable() {
       header: t('table.actions'),
       cell: ({ row }) => {
         const payment = row.original;
-        if (REFUNDABLE_STATUSES.includes(payment.status)) {
-          return (
-            <RefundPaymentDialog
-              paymentId={payment.id}
-              amount={payment.totalAmount}
+        return (
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              render={
+                <Link href={`/admin/payments/${payment.id}`}>
+                  {tCommon('actions.view')}
+                </Link>
+              }
             />
-          );
-        }
-        if (CANCELLABLE_STATUSES.includes(payment.status)) {
-          return <CancelPaymentDialog paymentId={payment.id} />;
-        }
-        return <span className="text-muted-foreground">—</span>;
+            {REFUNDABLE_STATUSES.includes(payment.status) && (
+              <RefundPaymentDialog
+                paymentId={payment.id}
+                amount={payment.totalAmount}
+              />
+            )}
+            {CANCELLABLE_STATUSES.includes(payment.status) && (
+              <CancelPaymentDialog paymentId={payment.id} />
+            )}
+          </div>
+        );
       },
     },
   ];

@@ -47,3 +47,9 @@ export function cancelPayment(id: string): Promise<Payment> {
     method: 'POST',
   });
 }
+
+// GET /payments/{id} (PaymentController_findOne) — mismo DTO plano que /payments (sin objetos
+// user/professional/service anidados, solo las FK sueltas).
+export function getPaymentById(id: string): Promise<Payment> {
+  return apiFetch<Payment>(`payments/${id}`);
+}

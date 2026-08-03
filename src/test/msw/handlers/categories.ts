@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { Category } from '@/features/categories/api';
+import type { Category, CategoryStats } from '@/features/categories/api';
 
 export function buildCategory(overrides: Partial<Category> = {}): Category {
   return {
@@ -47,10 +47,42 @@ export const fakeCategories: Category[] = [
   }),
 ];
 
+export function buildCategoryStats(
+  overrides: Partial<CategoryStats> = {},
+): CategoryStats {
+  return {
+    professionalCount: 12,
+    serviceCount: 34,
+    averageRating: 4.5,
+    totalServices: 34,
+    ...overrides,
+  };
+}
+
 export const categoriesHandlers = [
   http.get('/api/backend/categories/all', () =>
     HttpResponse.json(fakeCategories),
   ),
+
+  http.get('/api/backend/categories/:id/stats', ({ params }) => {
+    const existing = fakeCategories.find(
+      (category) => category.id === Number(params.id),
+    );
+    if (!existing) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(buildCategoryStats());
+  }),
+
+  http.get('/api/backend/categories/:id', ({ params }) => {
+    const existing = fakeCategories.find(
+      (category) => category.id === Number(params.id),
+    );
+    if (!existing) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(existing);
+  }),
 
   http.post('/api/backend/categories', async ({ request }) => {
     const body = (await request.json()) as Partial<Category>;

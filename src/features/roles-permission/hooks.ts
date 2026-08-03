@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { ApiError } from '@/core/api-client/errors';
 import {
   createRole,
+  getRoleById,
   getRoles,
   updateRole,
   type CreateRoleRequest,
@@ -19,6 +20,13 @@ export function useRolesQuery() {
   return useQuery({
     queryKey: [ROLES_QUERY_KEY],
     queryFn: () => getRoles(),
+  });
+}
+
+export function useRoleDetailQuery(id: number) {
+  return useQuery({
+    queryKey: [ROLES_QUERY_KEY, 'detail', id],
+    queryFn: () => getRoleById(id),
   });
 }
 

@@ -75,4 +75,12 @@ export const paymentsHandlers = [
     }
     return HttpResponse.json({ ...payment, status: 'CANCELLED' });
   }),
+
+  http.get('/api/backend/payments/:id', ({ params }) => {
+    const payment = fakePayments.find((item) => item.id === params.id);
+    if (!payment) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(payment);
+  }),
 ];

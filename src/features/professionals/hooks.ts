@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
+  getProfessionalByReference,
   getProfessionals,
   suspendProfessional,
   verifyProfessional,
@@ -19,6 +20,13 @@ export function useProfessionalsQuery(params: GetProfessionalsParams) {
     queryKey: ['professionals', params],
     queryFn: () => getProfessionals(params),
     placeholderData: keepPreviousData,
+  });
+}
+
+export function useProfessionalDetailQuery(referenceId: string) {
+  return useQuery({
+    queryKey: ['professionals', 'detail', referenceId],
+    queryFn: () => getProfessionalByReference(referenceId),
   });
 }
 

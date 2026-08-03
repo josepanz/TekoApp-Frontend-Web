@@ -2,6 +2,8 @@ import { apiFetch } from '@/core/api-client/client';
 import type { components } from '@/core/api-client/types.generated';
 
 export type Role = components['schemas']['RoleResponseDTO'];
+export type RoleWithPermissions =
+  components['schemas']['RoleWithPermissionsResponseDTO'];
 export type RoleListResponse = components['schemas']['RoleListResponseDTO'];
 export type CreateRoleRequest = components['schemas']['CreateRoleRequestDTO'];
 export type UpdateRoleRequest = components['schemas']['UpdateRoleRequestDTO'];
@@ -34,6 +36,12 @@ export function updateRole(id: number, dto: UpdateRoleRequest): Promise<Role> {
     method: 'PUT',
     body: JSON.stringify(dto),
   });
+}
+
+// GET /roles/{id} devuelve el rol junto con sus permisos asignados (RoleWithPermissionsResponseDTO)
+// -- distinto del RoleResponseDTO plano que usa el listado.
+export function getRoleById(id: number): Promise<RoleWithPermissions> {
+  return apiFetch<RoleWithPermissions>(`roles/${id}`);
 }
 
 // No existe DELETE /roles/{id} en types.generated.ts (la ruta "/roles/{id}" solo declara

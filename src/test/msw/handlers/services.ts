@@ -99,4 +99,14 @@ export const servicesHandlers = [
       pagination: { ...fakeServicesPage1.pagination, page },
     });
   }),
+
+  http.get('/api/backend/services/:id', ({ params }) => {
+    const service = fakeServicesPage1.data.find(
+      (item) => item.id === params.id,
+    );
+    if (!service) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(service);
+  }),
 ];

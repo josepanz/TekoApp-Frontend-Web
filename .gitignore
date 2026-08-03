@@ -13,6 +13,9 @@
 # testing
 /coverage
 /playwright-report
+
+# logs de dev server (nohup, etc.) — nunca committear
+*.log
 /test-results
 /storybook-static
 

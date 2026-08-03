@@ -135,10 +135,6 @@ export function RatingsTable() {
   }
 
   return (
-    <DataTable
-      columns={columns}
-      data={data.data}
-      emptyMessage={t('table.empty')}
-    />
+    <DataTable columns={columns} data={data} emptyMessage={t('table.empty')} />
   );
 }

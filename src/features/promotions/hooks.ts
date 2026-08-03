@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import {
   createPromotion,
   deletePromotion,
+  getPromotionById,
   getPromotions,
   updatePromotion,
   type CreatePromotionRequest,
@@ -15,6 +16,13 @@ export function usePromotionsQuery() {
   return useQuery({
     queryKey: PROMOTIONS_QUERY_KEY,
     queryFn: getPromotions,
+  });
+}
+
+export function usePromotionDetailQuery(id: string) {
+  return useQuery({
+    queryKey: ['promotions', 'detail', id],
+    queryFn: () => getPromotionById(id),
   });
 }
 

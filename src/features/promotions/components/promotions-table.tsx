@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
@@ -52,6 +53,17 @@ function PromotionRowActions({ promotion }: { promotion: Promotion }) {
 
   return (
     <div className="flex justify-end gap-2">
+      <Button
+        variant="outline"
+        size="sm"
+        nativeButton={false}
+        render={
+          <Link href={`/admin/promotions/${promotion.id}`}>
+            {tCommon('actions.view')}
+          </Link>
+        }
+      />
+
       <PromotionFormDialog
         promotion={promotion}
         trigger={

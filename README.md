@@ -64,7 +64,7 @@ Tokens) — y de ahí se genera todo lo demás (`pnpm tokens:build`). Cuando arr
 el mismo archivo alimenta también la app móvil, sin duplicar la definición de marca en ningún lado.
 
 El manual de marca oficial (assets fuente: logo, banner y manual completo) vive en
-[`.claude/documentation/brand/`](.claude/documentation/brand/) — es la referencia autoritativa para
+[`brand/`](brand/) — es la referencia autoritativa para
 cualquier duda de color/tipografía que no esté ya resuelta en los tokens.
 
 **Rebrand 2026-08-02**: la paleta se realineó al manual de marca oficial (antes era una paleta

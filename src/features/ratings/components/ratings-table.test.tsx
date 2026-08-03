@@ -105,6 +105,6 @@ describe('RatingsTable', () => {
     );
 
     // Assert
-    await waitFor(() => expect(deletedId).toBe(fakeRatings.data[0].id));
+    await waitFor(() => expect(deletedId).toBe(fakeRatings[0].id));
   });
 });

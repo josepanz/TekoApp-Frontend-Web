@@ -443,7 +443,7 @@ export interface paths {
         };
         /**
          * Obtener un rol por ID
-         * @description Obtiene los detalles de un rol específico por su ID.
+         * @description Obtiene los detalles de un rol específico por su ID, incluyendo los permisos asignados.
          */
         get: operations["RolesApiController_getRoleById"];
         /**
@@ -2563,6 +2563,94 @@ export interface components {
              */
             inactive: number;
         };
+        PermissionSummaryDTO: {
+            /**
+             * @description ID del permiso
+             * @example 1
+             */
+            id: number;
+            /**
+             * @description Nombre del permiso
+             * @example customers:read
+             */
+            name: string;
+            /**
+             * @description Nombre para mostrar del permiso
+             * @example Leer clientes
+             */
+            displayName: string;
+            /**
+             * @description Descripción del permiso
+             * @example Permite leer información de clientes
+             */
+            description: string | null;
+            /**
+             * @description Estado del permiso
+             * @example true
+             */
+            isActive: boolean;
+        };
+        RoleWithPermissionsResponseDTO: {
+            /**
+             * @description ID del rol
+             * @example 1
+             */
+            id: number;
+            /**
+             * @description Nombre del rol
+             * @example MerchantAdmin
+             */
+            name: string;
+            /**
+             * @description Nombre para mostrar del permiso
+             * @example Leer clientes
+             */
+            displayName: string;
+            /**
+             * @description Descripción del rol
+             * @example Administrador del comercio con acceso completo
+             */
+            description: string | null;
+            /**
+             * @description Estado del rol
+             * @example true
+             */
+            isActive: boolean;
+            /**
+             * @description Permisos asignados a este rol
+             * @example [
+             *       {
+             *         "id": 1,
+             *         "name": "customers:read",
+             *         "description": "Permite leer información de clientes",
+             *         "isActive": true
+             *       },
+             *       {
+             *         "id": 2,
+             *         "name": "customers:update",
+             *         "description": "Permite modificar información de clientes",
+             *         "isActive": true
+             *       }
+             *     ]
+             */
+            permissions: components["schemas"]["PermissionSummaryDTO"][];
+            /**
+             * @description Cantidad total de permisos asignados
+             * @example 5
+             */
+            permissionsCount: number;
+            /**
+             * Format: date-time
+             * @description Fecha de creación
+             * @example 2024-01-15T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * @description Usuario que creó el rol
+             * @example admin@correo.com.py
+             */
+            createdBy: string;
+        };
         UpdateRoleRequestDTO: {
             /**
              * @description Nombre del rol (formato PascalCase)
@@ -2714,28 +2802,6 @@ export interface components {
              * @example true
              */
             isActive: boolean;
-        };
-        PermissionSummaryDTO: {
-            /**
-             * @description ID del permiso
-             * @example 1
-             */
-            id: number;
-            /**
-             * @description Nombre del permiso
-             * @example customers:read
-             */
-            name: string;
-            /**
-             * @description Nombre para mostrar del permiso
-             * @example Leer clientes
-             */
-            displayName: string;
-            /**
-             * @description Origen del permiso: "directo" o nombre del rol
-             * @example directo
-             */
-            source: string;
         };
         UserWithRolesResponseDTO: {
             /**
@@ -4829,10 +4895,6 @@ export interface components {
              */
             isAnonymous: boolean;
         };
-        RatingsListResponseDTO: {
-            /** @description Lista de calificaciones */
-            data: components["schemas"]["RatingDetailResponseDTO"][];
-        };
         TopRatedProfessionalResponseDTO: {
             /**
              * @description ID del profesional
@@ -6286,7 +6348,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RoleResponseDTO"];
+                    "application/json": components["schemas"]["RoleWithPermissionsResponseDTO"];
                 };
             };
             /** @description Rol no encontrado. */
@@ -9063,7 +9125,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };
@@ -9162,7 +9224,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };
@@ -9208,7 +9270,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };
@@ -9254,7 +9316,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };
@@ -9277,7 +9339,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };
@@ -9323,7 +9385,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RatingsListResponseDTO"];
+                    "application/json": components["schemas"]["RatingDetailResponseDTO"][];
                 };
             };
         };

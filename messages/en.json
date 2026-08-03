@@ -143,7 +143,30 @@
       "visibleLabel": "Visible in the client search",
       "submitCreate": "Create category"
     },
-    "newButton": "New category"
+    "newButton": "New category",
+    "status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    },
+    "detail": {
+      "back": "Back to categories",
+      "loadError": "Couldn't load this category's detail.",
+      "slugLabel": "Slug: {slug}",
+      "yes": "Yes",
+      "no": "No",
+      "visibleLabel": "visible in search",
+      "requiresVerificationLabel": "requires verification",
+      "sortOrderLabel": "Order: {order}",
+      "parentCategoryLabel": "Parent category: #{id}",
+      "statsLoadError": "Couldn't load the stats.",
+      "statsTitle": "Stats",
+      "professionalCount": "{count} professionals",
+      "serviceCount": "{count} services",
+      "averageRating": "⭐ {rating} average",
+      "createdAt": "Created on {date}",
+      "lastChangedAt": "Modified on {date}"
+    }
   },
   "pages": {
     "admin": {
@@ -155,22 +178,37 @@
         "title": "Users",
         "description": "Manage clients and professionals registered on the platform."
       },
+      "userDetail": {
+        "title": "User detail"
+      },
       "professionals": {
         "title": "Professionals",
         "description": "Verify and suspend professional profiles registered on the platform."
+      },
+      "professionalDetail": {
+        "title": "Professional detail"
       },
       "services": {
         "title": "Services",
         "description": "Monitor the services requested by clients on the platform."
       },
+      "serviceDetail": {
+        "title": "Service detail"
+      },
       "payments": {
         "title": "Payments",
         "description": "Monitor and manage payments: refunds and cancellations."
+      },
+      "paymentDetail": {
+        "title": "Payment detail"
       },
       "promotions": {
         "title": "Promotions",
         "description": "Manage the platform's promotions and discount coupons.",
         "newButton": "New promotion"
+      },
+      "promotionDetail": {
+        "title": "Promotion detail"
       },
       "ratings": {
         "title": "Ratings",
@@ -181,9 +219,15 @@
         "description": "Manage admin roles and the permissions they group.",
         "newButton": "New role"
       },
+      "roleDetail": {
+        "title": "Role detail"
+      },
       "categories": {
         "title": "Categories",
         "description": "Manage the catalog of professional service categories."
+      },
+      "categoryDetail": {
+        "title": "Category detail"
       },
       "locations": {
         "title": "Locations",
@@ -257,6 +301,10 @@
       "BLOCKED": "Blocked",
       "DELETED": "Deleted",
       "REFUSED": "Rejected"
+    },
+    "detail": {
+      "back": "Back to users",
+      "loadError": "Couldn't load the user."
     }
   },
   "professionals": {
@@ -291,6 +339,17 @@
       "title": "Verify professional",
       "verifiedLabel": "Mark as verified",
       "notes": "Notes"
+    },
+    "detail": {
+      "back": "Back to professionals",
+      "loadError": "Couldn't load this professional's profile.",
+      "rating": "⭐ {rating} ({count} reviews)",
+      "hourlyRate": "Hourly rate: {rate}",
+      "experience": "{years} years of experience",
+      "totalServices": "{count} completed services",
+      "availableLabel": "available now",
+      "certifications": "Certifications",
+      "memberSince": "Member since {date}"
     }
   },
   "services": {
@@ -303,6 +362,7 @@
       "status": "Status",
       "amount": "Amount",
       "date": "Date",
+      "actions": "Actions",
       "empty": "No services to show",
       "loadError": "Couldn't load the services list. Try reloading the page."
     },
@@ -316,6 +376,29 @@
     "filter": {
       "label": "Filter by status",
       "all": "All statuses"
+    },
+    "detail": {
+      "back": "Back to services",
+      "loadError": "Couldn't load the service.",
+      "urgent": "Urgent",
+      "client": "Client",
+      "professional": "Professional",
+      "unassigned": "Unassigned",
+      "estimatedHours": "{hours} estimated hours",
+      "actualHours": "{hours} actual hours",
+      "hourlyRate": "Hourly rate: {rate}",
+      "fixedPrice": "Fixed price: {price}",
+      "totalAmount": "Total amount: {amount}",
+      "finalAmount": "Final amount: {amount}",
+      "address": "Address",
+      "additionalNotes": "Additional notes",
+      "images": "Images",
+      "cancellationReason": "Cancellation reason: {reason}",
+      "scheduledAt": "Scheduled: {date}",
+      "startedAt": "Started: {date}",
+      "completedAt": "Completed: {date}",
+      "cancelledAt": "Cancelled: {date}",
+      "createdAt": "Created: {date}"
     }
   },
   "rolesPermission": {
@@ -337,6 +420,13 @@
       "name": "Name",
       "description": "Description",
       "permissions": "Permissions"
+    },
+    "detail": {
+      "back": "Back to roles & permissions",
+      "loadError": "Couldn't load the role.",
+      "permissionsCount": "{count} permissions",
+      "permissionsTitle": "Assigned permissions",
+      "createdBy": "Created by {user}"
     }
   },
   "payments": {
@@ -390,6 +480,29 @@
         "technical_issue": "Technical issue",
         "other": "Other"
       }
+    },
+    "detail": {
+      "back": "Back to payments",
+      "loadError": "Couldn't load this payment's detail.",
+      "title": "Payment {reference}",
+      "userLabel": "User",
+      "professionalLabel": "Professional",
+      "serviceLabel": "Service",
+      "recurring": "Recurring",
+      "amountLabel": "Amount",
+      "feeLabel": "Fee",
+      "taxLabel": "Tax",
+      "totalLabel": "Total",
+      "platformFeeLabel": "Platform fee",
+      "professionalNetAmountLabel": "Professional net amount",
+      "transactionIdLabel": "Transaction ID",
+      "externalTransactionIdLabel": "External transaction ID",
+      "createdAtLabel": "Created",
+      "processedAtLabel": "Processed",
+      "paidAtLabel": "Paid",
+      "failedAtLabel": "Failed",
+      "failureReasonLabel": "Failure reason",
+      "refundDetailsLabel": "Refund details"
     }
   },
   "promotions": {
@@ -439,6 +552,21 @@
       "isProfessionalOnly": "Professionals only",
       "isClientOnly": "Clients only",
       "submitCreate": "Create promotion"
+    },
+    "detail": {
+      "back": "Back to promotions",
+      "loadError": "Couldn't load this promotion's detail.",
+      "editButton": "Edit",
+      "discount": "Discount: {value}",
+      "minimumAmount": "Minimum amount: {amount}",
+      "maximumDiscount": "Maximum discount: {amount}",
+      "usageUnlimited": "{current} uses (unlimited)",
+      "usage": "{current} / {max} uses",
+      "maxUsagePerUser": "Max {count} per user",
+      "validity": "Valid from {from} until {until}",
+      "allowedUserTypes": "Allowed user types",
+      "specificUsers": "Restricted to {count} specific users",
+      "createdAt": "Created on {date}"
     }
   },
   "ratings": {

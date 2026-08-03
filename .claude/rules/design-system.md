@@ -24,7 +24,7 @@ duplica la definición de marca, se agrega un output nuevo al mismo `build.mjs`.
 
 **Rebrand 2026-08-02**: `primary` pasó de índigo/violeta a **verde TekoApp** (`#28A745`, manual de
 marca) y `accent` pasó de coral a **teal TekoApp** (`#17BEBB`, manual de marca) — ver
-`.claude/documentation/brand/` para el manual completo y los assets fuente. La escala `neutral`
+`brand/` (raíz del repo) para el manual completo y los assets fuente. La escala `neutral`
 (fondo dark mode, bordes, texto secundario) ahora ancla en el navy exacto de marca (`#0D1B2A`) y en
 el gris claro de marca (`#F5F7FA`). La regla de dominancia 80/20 en sí NO cambió, solo qué colores
 ocupan cada rol:

@@ -3,6 +3,7 @@ import type {
   CreateRoleRequest,
   Role,
   RoleListResponse,
+  RoleWithPermissions,
   UpdateRoleRequest,
 } from '@/features/roles-permission/api';
 
@@ -44,6 +45,31 @@ export const fakeRolesListResponse: RoleListResponse = {
   inactive: fakeRoles.filter((role) => !role.isActive).length,
 };
 
+export function buildRoleWithPermissions(
+  overrides: Partial<RoleWithPermissions> = {},
+): RoleWithPermissions {
+  return {
+    id: 1,
+    name: 'MerchantAdmin',
+    displayName: 'Administrador de comercio',
+    description: 'Administrador del comercio con acceso completo',
+    isActive: true,
+    permissions: [
+      {
+        id: 1,
+        name: 'customers:read',
+        displayName: 'Leer clientes',
+        description: 'Permite leer información de clientes',
+        isActive: true,
+      },
+    ],
+    permissionsCount: 1,
+    createdAt: '2024-01-15T10:30:00Z',
+    createdBy: 'admin@correo.com.py',
+    ...overrides,
+  };
+}
+
 export const rolesHandlers = [
   http.get('/api/backend/roles', () =>
     HttpResponse.json(fakeRolesListResponse),
@@ -59,6 +85,13 @@ export const rolesHandlers = [
       }),
       { status: 201 },
     );
+  }),
+
+  http.get('/api/backend/roles/:id', ({ params }) => {
+    if (Number(params.id) !== 1) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(buildRoleWithPermissions());
   }),
 
   http.put('/api/backend/roles/:id', async ({ request, params }) => {

@@ -1,9 +1,11 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -55,6 +57,7 @@ const PAGE_SIZE = 10;
 
 export function ServicesTable() {
   const t = useTranslations('services');
+  const tCommon = useTranslations('common');
   const locale = useAppLocale();
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<ServiceStatus | undefined>(undefined);
@@ -125,6 +128,22 @@ export function ServicesTable() {
       accessorKey: 'createdAt',
       header: t('table.date'),
       cell: ({ row }) => formatDate(row.original.createdAt, locale),
+    },
+    {
+      id: 'actions',
+      header: t('table.actions'),
+      cell: ({ row }) => (
+        <Button
+          variant="outline"
+          size="sm"
+          nativeButton={false}
+          render={
+            <Link href={`/admin/services/${row.original.id}`}>
+              {tCommon('actions.view')}
+            </Link>
+          }
+        />
+      ),
     },
   ];
 

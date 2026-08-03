@@ -32,6 +32,15 @@ export function getProfessionals(
   );
 }
 
+// GET /professionals/reference/{referenceId} (ProfessionalsController_findOneByReference) — el
+// mismo endpoint público que consume `features/browse-professionals`, con su propia función acá
+// para no acoplar el feature admin al de browse.
+export function getProfessionalByReference(
+  referenceId: string,
+): Promise<Professional> {
+  return apiFetch<Professional>(`professionals/reference/${referenceId}`);
+}
+
 export function verifyProfessional(
   id: number,
   dto: VerifyProfessionalRequest,

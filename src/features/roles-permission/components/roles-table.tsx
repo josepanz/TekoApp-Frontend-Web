@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,14 +45,26 @@ export function RolesTable() {
       header: t('table.actions'),
       // No existe DELETE /roles/{id} en types.generated.ts -- solo se ofrece "Editar".
       cell: ({ row }) => (
-        <RoleFormDialog
-          role={row.original}
-          trigger={
-            <Button variant="outline" size="sm">
-              {tCommon('actions.edit')}
-            </Button>
-          }
-        />
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link href={`/admin/roles-permission/${row.original.id}`}>
+                {tCommon('actions.view')}
+              </Link>
+            }
+          />
+          <RoleFormDialog
+            role={row.original}
+            trigger={
+              <Button variant="outline" size="sm">
+                {tCommon('actions.edit')}
+              </Button>
+            }
+          />
+        </div>
       ),
     },
   ];

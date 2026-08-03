@@ -113,4 +113,17 @@ export const professionalsHandlers = [
       buildProfessional({ ...professional, status: 'SUSPENDED' }),
     );
   }),
+
+  http.get(
+    '/api/backend/professionals/reference/:referenceId',
+    ({ params }) => {
+      const professional = fakeProfessionalsPage1.data.find(
+        (item) => item.referenceId === params.referenceId,
+      );
+      if (!professional) {
+        return new HttpResponse(null, { status: 404 });
+      }
+      return HttpResponse.json(professional);
+    },
+  ),
 ];

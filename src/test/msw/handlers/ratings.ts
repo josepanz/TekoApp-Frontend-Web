@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { Rating, RatingsListResponse } from '@/features/ratings/api';
+import type { Rating } from '@/features/ratings/api';
 
 export function buildRating(overrides: Partial<Rating> = {}): Rating {
   return {
@@ -21,30 +21,32 @@ export function buildRating(overrides: Partial<Rating> = {}): Rating {
   };
 }
 
-export const fakeRatings: RatingsListResponse = {
-  data: [
-    buildRating(),
-    buildRating({
-      id: 'b1c2d3e4-f5a6-7890-abcd-ef1234567891',
-      userId: 2,
-      professionalId: 20,
-      type: 'PROFESSIONAL_TO_CLIENT',
-      rating: 2,
-      review:
-        'El cliente fue grosero y no respetó el horario acordado, tuve que esperar más de una hora sin ninguna explicación previa.',
-      isReported: true,
-      reportReason: 'Lenguaje ofensivo',
-    }),
-    buildRating({
-      id: 'c1d2e3f4-a5b6-7890-abcd-ef1234567892',
-      userId: 3,
-      professionalId: 30,
-      type: 'CLIENT_TO_PROFESSIONAL',
-      rating: 5,
-      review: null,
-    }),
-  ],
-};
+// GET /ratings devuelve un array plano — nunca envolver en `{data: [...]}` acá (ver el comentario
+// en `features/ratings/api.ts`: un `RatingsListResponseDTO` con ese wrapper existió en el Swagger
+// del backend pero nunca coincidió con la respuesta real, y este mock replicaba el mismo error,
+// dejando el bug invisible en los tests unitarios).
+export const fakeRatings: Rating[] = [
+  buildRating(),
+  buildRating({
+    id: 'b1c2d3e4-f5a6-7890-abcd-ef1234567891',
+    userId: 2,
+    professionalId: 20,
+    type: 'PROFESSIONAL_TO_CLIENT',
+    rating: 2,
+    review:
+      'El cliente fue grosero y no respetó el horario acordado, tuve que esperar más de una hora sin ninguna explicación previa.',
+    isReported: true,
+    reportReason: 'Lenguaje ofensivo',
+  }),
+  buildRating({
+    id: 'c1d2e3f4-a5b6-7890-abcd-ef1234567892',
+    userId: 3,
+    professionalId: 30,
+    type: 'CLIENT_TO_PROFESSIONAL',
+    rating: 5,
+    review: null,
+  }),
+];
 
 export const ratingsHandlers = [
   http.get('/api/backend/ratings', () => {

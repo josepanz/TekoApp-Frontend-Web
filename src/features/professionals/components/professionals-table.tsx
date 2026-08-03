@@ -1,9 +1,11 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
 import { useProfessionalsQuery } from '../hooks';
@@ -35,6 +37,7 @@ const PAGE_SIZE = 10;
 
 export function ProfessionalsTable() {
   const t = useTranslations('professionals');
+  const tCommon = useTranslations('common');
   const [page, setPage] = useState(1);
   const { data, isPending, isError } = useProfessionalsQuery({
     page,
@@ -100,6 +103,16 @@ export function ProfessionalsTable() {
       header: t('table.actions'),
       cell: ({ row }) => (
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link href={`/admin/professionals/${row.original.referenceId}`}>
+                {tCommon('actions.view')}
+              </Link>
+            }
+          />
           {row.original.verificationStatus !== 'verified' && (
             <VerifyProfessionalDialog professional={row.original} />
           )}

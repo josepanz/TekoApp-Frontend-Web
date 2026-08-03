@@ -5,6 +5,8 @@ import {
   createCategory,
   deleteCategory,
   getCategories,
+  getCategoryById,
+  getCategoryStats,
   toggleCategoryVisibility,
   updateCategory,
   type CreateCategoryDto,
@@ -21,6 +23,22 @@ export function useCategoriesQuery() {
   return useQuery({
     queryKey: CATEGORIES_QUERY_KEY,
     queryFn: getCategories,
+  });
+}
+
+export function useCategoryDetailQuery(id: number) {
+  return useQuery({
+    queryKey: ['categories', 'detail', id],
+    queryFn: () => getCategoryById(id),
+  });
+}
+
+// Enriquecimiento opcional de la página de detalle — se consulta aparte de
+// `useCategoryDetailQuery` para no bloquear el render principal si las stats tardan o fallan.
+export function useCategoryStatsQuery(id: number) {
+  return useQuery({
+    queryKey: ['categories', 'detail', id, 'stats'],
+    queryFn: () => getCategoryStats(id),
   });
 }
 

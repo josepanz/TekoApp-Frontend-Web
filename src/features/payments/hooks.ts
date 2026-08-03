@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
   cancelPayment,
+  getPaymentById,
   getPayments,
   refundPayment,
   type GetPaymentsParams,
@@ -19,6 +20,13 @@ export function usePaymentsQuery(params: GetPaymentsParams = {}) {
   return useQuery({
     queryKey: [PAYMENTS_QUERY_KEY, params],
     queryFn: () => getPayments(params),
+  });
+}
+
+export function usePaymentDetailQuery(id: string) {
+  return useQuery({
+    queryKey: [PAYMENTS_QUERY_KEY, 'detail', id],
+    queryFn: () => getPaymentById(id),
   });
 }
 
