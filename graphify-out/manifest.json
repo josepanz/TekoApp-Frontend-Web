@@ -1,1437 +1,1942 @@
 {
-  "C:\\workspace\\TekoApp-Frontend-Web\\.releaserc.json": {
-    "mtime": 1784581377.9391675,
-    "ast_hash": "b0ff588bbeace5eb1cb6615208dfb45d",
-    "semantic_hash": "b0ff588bbeace5eb1cb6615208dfb45d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\components.json": {
-    "mtime": 1784578091.8912916,
-    "ast_hash": "fc5c9e9a7b93eeb2f7b4e1ce0959e4a6",
-    "semantic_hash": "fc5c9e9a7b93eeb2f7b4e1ce0959e4a6"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\e2e\\admin-categories.spec.ts": {
-    "mtime": 1784654705.284585,
-    "ast_hash": "8ff1578b9ffdb66cd2b462acd40710b4",
-    "semantic_hash": "8ff1578b9ffdb66cd2b462acd40710b4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\e2e\\client-solicitar.spec.ts": {
-    "mtime": 1784672346.4849708,
-    "ast_hash": "2972ab3d6f0a2301041f1b4dbe57d9f0",
-    "semantic_hash": "2972ab3d6f0a2301041f1b4dbe57d9f0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\e2e\\fake-backend\\server.mjs": {
-    "mtime": 1784676794.8516588,
-    "ast_hash": "14b084d3f9dfd1acde8d189c8f0b7603",
-    "semantic_hash": "14b084d3f9dfd1acde8d189c8f0b7603"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\e2e\\login.spec.ts": {
-    "mtime": 1784651516.5618427,
-    "ast_hash": "7d02c76abea005167ccfc12781e10abd",
-    "semantic_hash": "7d02c76abea005167ccfc12781e10abd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\e2e\\smoke.spec.ts": {
-    "mtime": 1784640547.5689826,
-    "ast_hash": "23d2afedd12776a096f9196885aa219f",
-    "semantic_hash": "23d2afedd12776a096f9196885aa219f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\eslint.config.mjs": {
-    "mtime": 1784597079.2707922,
-    "ast_hash": "2cc810465652949316c745cbbf703fac",
-    "semantic_hash": "2cc810465652949316c745cbbf703fac"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\next.config.ts": {
-    "mtime": 1784640547.664809,
-    "ast_hash": "c95e058d0651faf5864a851d1afe10da",
-    "semantic_hash": "c95e058d0651faf5864a851d1afe10da"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\package.json": {
-    "mtime": 1784679694.7162383,
-    "ast_hash": "5773ffaa2e0cb5387a7013c480779621",
-    "semantic_hash": "5773ffaa2e0cb5387a7013c480779621"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\playwright.config.ts": {
-    "mtime": 1784640547.6730604,
-    "ast_hash": "450e65a1e042a2bc274a95abfd09b90c",
-    "semantic_hash": "450e65a1e042a2bc274a95abfd09b90c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\postcss.config.mjs": {
-    "mtime": 1784577332.2437174,
-    "ast_hash": "239f3ebf717465dc636818a1a619398d",
-    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\scripts\\deploy.sh": {
-    "mtime": 1784581323.6364927,
-    "ast_hash": "868494265f153001b4edf3e1b34d3624",
-    "semantic_hash": "868494265f153001b4edf3e1b34d3624"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\scripts\\generate-api-types.mjs": {
-    "mtime": 1784640547.6563275,
-    "ast_hash": "724a0d29310df9cc618acdea4fec4b5b",
-    "semantic_hash": "724a0d29310df9cc618acdea4fec4b5b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\scripts\\prepare-standalone.mjs": {
-    "mtime": 1784640547.6603396,
-    "ast_hash": "613874d33f984f88c57e3aaf87edbf0a",
-    "semantic_hash": "613874d33f984f88c57e3aaf87edbf0a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\scripts\\replace-version.sh": {
-    "mtime": 1784581323.6064112,
-    "ast_hash": "7e0d7258d0a084dec227246e03cae7b3",
-    "semantic_hash": "7e0d7258d0a084dec227246e03cae7b3"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(auth)\\login\\page.tsx": {
-    "mtime": 1784638096.3644521,
-    "ast_hash": "bef3a299f95ad224d662cddb7e3be970",
-    "semantic_hash": "bef3a299f95ad224d662cddb7e3be970"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\layout.tsx": {
-    "mtime": 1784672135.8245685,
-    "ast_hash": "9db9b7f3b8ea22943e5288ae145a6a51",
-    "semantic_hash": "9db9b7f3b8ea22943e5288ae145a6a51"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\mis-servicios\\page.tsx": {
-    "mtime": 1784671619.6031299,
-    "ast_hash": "9ace01c3437c52f5f6d6ec8050c957e9",
-    "semantic_hash": "9ace01c3437c52f5f6d6ec8050c957e9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\page.tsx": {
-    "mtime": 1784671220.3000784,
-    "ast_hash": "371d3c676a0ce9cd14506d44bcbd59e4",
-    "semantic_hash": "371d3c676a0ce9cd14506d44bcbd59e4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\profesionales\\[referenceId]\\page.tsx": {
-    "mtime": 1784671689.8081799,
-    "ast_hash": "00cbf583a30140d76be562b5ea87eb7c",
-    "semantic_hash": "00cbf583a30140d76be562b5ea87eb7c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\profesionales\\page.tsx": {
-    "mtime": 1784671684.422054,
-    "ast_hash": "0e1e5e69698b94988a1cf3625c4d2bbc",
-    "semantic_hash": "0e1e5e69698b94988a1cf3625c4d2bbc"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\(client)\\solicitar\\page.tsx": {
-    "mtime": 1784671317.1474354,
-    "ast_hash": "427a2b38477994aa23a218014c6f1e9e",
-    "semantic_hash": "427a2b38477994aa23a218014c6f1e9e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\categories\\page.tsx": {
-    "mtime": 1784653389.3254633,
-    "ast_hash": "0804defcfc5c2d792a4f61366d230f7a",
-    "semantic_hash": "0804defcfc5c2d792a4f61366d230f7a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\layout.tsx": {
-    "mtime": 1784651453.2895865,
-    "ast_hash": "776b6ba33ebaca179c35c8dc8e272e4d",
-    "semantic_hash": "776b6ba33ebaca179c35c8dc8e272e4d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\locations\\page.tsx": {
-    "mtime": 1784653237.5967543,
-    "ast_hash": "2446e484a5e62f36e0c07ad82c12bdbf",
-    "semantic_hash": "2446e484a5e62f36e0c07ad82c12bdbf"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\notifications\\page.tsx": {
-    "mtime": 1784653316.9603758,
-    "ast_hash": "d89ff3d47110323cc956c0ccb0157ab0",
-    "semantic_hash": "d89ff3d47110323cc956c0ccb0157ab0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\page.tsx": {
-    "mtime": 1784638021.230658,
-    "ast_hash": "0c969b9b89c89f46e3ca37808ab84345",
-    "semantic_hash": "0c969b9b89c89f46e3ca37808ab84345"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\payments\\page.tsx": {
-    "mtime": 1784653269.6363883,
-    "ast_hash": "789c61616b0bccd81fc8f4c0f22bfed5",
-    "semantic_hash": "789c61616b0bccd81fc8f4c0f22bfed5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\professionals\\page.tsx": {
-    "mtime": 1784653171.2796113,
-    "ast_hash": "97df2cfa1a6b88e00d9bc8378b9e4cd9",
-    "semantic_hash": "97df2cfa1a6b88e00d9bc8378b9e4cd9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\promotions\\page.tsx": {
-    "mtime": 1784653355.7595315,
-    "ast_hash": "fc478c7401957c2ccb57df24abc14bed",
-    "semantic_hash": "fc478c7401957c2ccb57df24abc14bed"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\ratings\\page.tsx": {
-    "mtime": 1784653204.0667408,
-    "ast_hash": "1b2f6e484875e184b0e3d3a30dc752be",
-    "semantic_hash": "1b2f6e484875e184b0e3d3a30dc752be"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\roles-permission\\page.tsx": {
-    "mtime": 1784653370.8126793,
-    "ast_hash": "20b0f2cc2e0e484286d297216d7409ce",
-    "semantic_hash": "20b0f2cc2e0e484286d297216d7409ce"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\services\\page.tsx": {
-    "mtime": 1784653121.2213283,
-    "ast_hash": "cc4fd956d29afd0cf85746daca2bc298",
-    "semantic_hash": "cc4fd956d29afd0cf85746daca2bc298"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\admin\\users\\page.tsx": {
-    "mtime": 1784638021.2370255,
-    "ast_hash": "b6a55909d343417925262920177078fd",
-    "semantic_hash": "b6a55909d343417925262920177078fd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\api\\auth\\login\\route.ts": {
-    "mtime": 1784596198.6683452,
-    "ast_hash": "38d45e07772dbc7c5a54737c4090fd7f",
-    "semantic_hash": "38d45e07772dbc7c5a54737c4090fd7f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\api\\auth\\logout\\route.ts": {
-    "mtime": 1784596198.678347,
-    "ast_hash": "700a67d099591762dc4f0e6401cafa03",
-    "semantic_hash": "700a67d099591762dc4f0e6401cafa03"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\api\\backend\\[...path]\\route.ts": {
-    "mtime": 1784596198.689871,
-    "ast_hash": "e5bf4bdf89d393a245c32ed6bbd7c2cb",
-    "semantic_hash": "e5bf4bdf89d393a245c32ed6bbd7c2cb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\api\\health\\route.ts": {
-    "mtime": 1784583184.0095088,
-    "ast_hash": "9512f5fecdd7670d7a8750b10600fbdd",
-    "semantic_hash": "9512f5fecdd7670d7a8750b10600fbdd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\api\\realtime\\ticket\\route.ts": {
-    "mtime": 1784596198.7279131,
-    "ast_hash": "70246d340d59435eb22d979b93951ce8",
-    "semantic_hash": "70246d340d59435eb22d979b93951ce8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\layout.tsx": {
-    "mtime": 1784652596.5276842,
-    "ast_hash": "4623609167dcf4138581b6f0e8ed4116",
-    "semantic_hash": "4623609167dcf4138581b6f0e8ed4116"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\calificaciones\\page.tsx": {
-    "mtime": 1784668493.668028,
-    "ast_hash": "0c67f6f464a5124e58c550046184fbaa",
-    "semantic_hash": "0c67f6f464a5124e58c550046184fbaa"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\layout.tsx": {
-    "mtime": 1784672121.681965,
-    "ast_hash": "b4950eb5b35e80cc6a266b4147701049",
-    "semantic_hash": "b4950eb5b35e80cc6a266b4147701049"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\page.tsx": {
-    "mtime": 1784679523.5223403,
-    "ast_hash": "535c866a33ea1ba648b45986866b7347",
-    "semantic_hash": "535c866a33ea1ba648b45986866b7347"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\perfil\\page.tsx": {
-    "mtime": 1784668499.395088,
-    "ast_hash": "4a01257d6c6783f6be8eeeb34de14f4b",
-    "semantic_hash": "4a01257d6c6783f6be8eeeb34de14f4b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\servicios\\page.tsx": {
-    "mtime": 1784668488.4281826,
-    "ast_hash": "72ded603cf8a077b18cc147a332d00a4",
-    "semantic_hash": "72ded603cf8a077b18cc147a332d00a4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\app\\pro\\solicitudes\\page.tsx": {
-    "mtime": 1784668482.063157,
-    "ast_hash": "fcfa6c2613b5e11ae735d91c077f48a0",
-    "semantic_hash": "fcfa6c2613b5e11ae735d91c077f48a0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\app-sidebar.tsx": {
-    "mtime": 1784679991.814797,
-    "ast_hash": "977619b549ed7821923926975e61e567",
-    "semantic_hash": "977619b549ed7821923926975e61e567"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\client-nav-items.ts": {
-    "mtime": 1784671180.584049,
-    "ast_hash": "b8e1ab35e6861812657740f364abf5fd",
-    "semantic_hash": "b8e1ab35e6861812657740f364abf5fd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\data-table.tsx": {
-    "mtime": 1784638021.5572083,
-    "ast_hash": "b2aab3e1ba292170e29006e4d13e6947",
-    "semantic_hash": "b2aab3e1ba292170e29006e4d13e6947"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\mode-switcher.tsx": {
-    "mtime": 1784679840.9293413,
-    "ast_hash": "3d9935611802a90a36efc2ab1cc25512",
-    "semantic_hash": "3d9935611802a90a36efc2ab1cc25512"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\nav-items.ts": {
-    "mtime": 1784651462.501237,
-    "ast_hash": "b6c2c508ab7c3769d5c895cc30e396e1",
-    "semantic_hash": "b6c2c508ab7c3769d5c895cc30e396e1"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\pro-nav-items.ts": {
-    "mtime": 1784668310.3130124,
-    "ast_hash": "f6f4ab2ec95b23cafef7a1198ce82b9f",
-    "semantic_hash": "f6f4ab2ec95b23cafef7a1198ce82b9f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\theme-toggle.tsx": {
-    "mtime": 1784675400.6819253,
-    "ast_hash": "f9c68f8a2ed98635d40e3acdf60749f4",
-    "semantic_hash": "f9c68f8a2ed98635d40e3acdf60749f4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\topbar.tsx": {
-    "mtime": 1784679982.6984117,
-    "ast_hash": "ab399ac1b624d0655d2bd7eccad28901",
-    "semantic_hash": "ab399ac1b624d0655d2bd7eccad28901"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\user-menu.test.tsx": {
-    "mtime": 1784640547.1826203,
-    "ast_hash": "d2d8feab84860710e8a4896ed07b1d4f",
-    "semantic_hash": "d2d8feab84860710e8a4896ed07b1d4f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\layout\\user-menu.tsx": {
-    "mtime": 1784675387.3981657,
-    "ast_hash": "bf7d4cad17042d7d4914dd7eff8127fd",
-    "semantic_hash": "bf7d4cad17042d7d4914dd7eff8127fd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\alert-dialog.tsx": {
-    "mtime": 1784652546.5315845,
-    "ast_hash": "4f3e711a6b5df14e88f6fc243b57599b",
-    "semantic_hash": "4f3e711a6b5df14e88f6fc243b57599b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\alert.tsx": {
-    "mtime": 1784638021.6109028,
-    "ast_hash": "5af8490d57a5e5e06e3a710ec496a0b0",
-    "semantic_hash": "5af8490d57a5e5e06e3a710ec496a0b0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\avatar.tsx": {
-    "mtime": 1784597497.9144409,
-    "ast_hash": "0f16ed6c26fd9b260c69db6340c1fa2a",
-    "semantic_hash": "0f16ed6c26fd9b260c69db6340c1fa2a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\badge.tsx": {
-    "mtime": 1784597497.9214437,
-    "ast_hash": "eb6f331ed2a2a709b5582ce828f52996",
-    "semantic_hash": "eb6f331ed2a2a709b5582ce828f52996"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\button.tsx": {
-    "mtime": 1784652546.2247906,
-    "ast_hash": "e04ce5251d6b0dd04020988126c905e9",
-    "semantic_hash": "e04ce5251d6b0dd04020988126c905e9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\card.tsx": {
-    "mtime": 1784638021.6413984,
-    "ast_hash": "5087bbd694359b30b6ae56c3d0da549e",
-    "semantic_hash": "5087bbd694359b30b6ae56c3d0da549e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\checkbox.tsx": {
-    "mtime": 1784638021.6469197,
-    "ast_hash": "56a9cc3548822080243300c2613bc2cc",
-    "semantic_hash": "56a9cc3548822080243300c2613bc2cc"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\dialog.tsx": {
-    "mtime": 1784652546.3563924,
-    "ast_hash": "d9618a63d34473ec512321cc12d43692",
-    "semantic_hash": "d9618a63d34473ec512321cc12d43692"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\dropdown-menu.tsx": {
-    "mtime": 1784597497.9540515,
-    "ast_hash": "cba25c54008b110918268ca317c371e6",
-    "semantic_hash": "cba25c54008b110918268ca317c371e6"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\input.tsx": {
-    "mtime": 1784597497.9605687,
-    "ast_hash": "fd281c19a2b35361d7d3a52ca69b695b",
-    "semantic_hash": "fd281c19a2b35361d7d3a52ca69b695b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\label.tsx": {
-    "mtime": 1784638021.6747804,
-    "ast_hash": "0994773dbdc494ca28a6b37c31b0ca9b",
-    "semantic_hash": "0994773dbdc494ca28a6b37c31b0ca9b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\pagination.tsx": {
-    "mtime": 1784638021.685328,
-    "ast_hash": "b374ff88d4d1335da15c49ad936dc4ab",
-    "semantic_hash": "b374ff88d4d1335da15c49ad936dc4ab"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\password-input.tsx": {
-    "mtime": 1784679601.058899,
-    "ast_hash": "29783ef4e4d109721934c13bab608283",
-    "semantic_hash": "29783ef4e4d109721934c13bab608283"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\select.tsx": {
-    "mtime": 1784638021.7020693,
-    "ast_hash": "495e7c817a87dc82df7fdb644abf9bd5",
-    "semantic_hash": "495e7c817a87dc82df7fdb644abf9bd5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\separator.tsx": {
-    "mtime": 1784597497.9655633,
-    "ast_hash": "d483e29807cf12d04ed304fb3ee1b8b7",
-    "semantic_hash": "d483e29807cf12d04ed304fb3ee1b8b7"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\sheet.tsx": {
-    "mtime": 1784597497.9795754,
-    "ast_hash": "f80dc67a276302c56a836f3fe0e46803",
-    "semantic_hash": "f80dc67a276302c56a836f3fe0e46803"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\sidebar.tsx": {
-    "mtime": 1784679971.0887604,
-    "ast_hash": "ecb206bfda1e9c33e4e6d0ddd5f8db66",
-    "semantic_hash": "ecb206bfda1e9c33e4e6d0ddd5f8db66"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\skeleton.tsx": {
-    "mtime": 1784597498.04191,
-    "ast_hash": "c4cbf5ca0b6c2d859b86434239dd5279",
-    "semantic_hash": "c4cbf5ca0b6c2d859b86434239dd5279"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\sonner.tsx": {
-    "mtime": 1784638021.7624972,
-    "ast_hash": "9364bbfc37992afafb7aa78078dd68c6",
-    "semantic_hash": "9364bbfc37992afafb7aa78078dd68c6"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\switch.tsx": {
-    "mtime": 1784652504.1758916,
-    "ast_hash": "049ff4b9c939a42157e99d6bbdeaaaec",
-    "semantic_hash": "049ff4b9c939a42157e99d6bbdeaaaec"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\table.tsx": {
-    "mtime": 1784638021.769643,
-    "ast_hash": "73353b1e7a608045b6afa01e04a1ebe9",
-    "semantic_hash": "73353b1e7a608045b6afa01e04a1ebe9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\textarea.tsx": {
-    "mtime": 1784652503.9780843,
-    "ast_hash": "d448d2a90e48542e51b93a1189127bf2",
-    "semantic_hash": "d448d2a90e48542e51b93a1189127bf2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\components\\ui\\tooltip.tsx": {
-    "mtime": 1784597498.052415,
-    "ast_hash": "76ebd6b1471bbd7a7f26aa5fe4ecd093",
-    "semantic_hash": "76ebd6b1471bbd7a7f26aa5fe4ecd093"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\backend-paths.ts": {
-    "mtime": 1784596198.8311696,
-    "ast_hash": "dd5c1f41fef044c47bbf8487c2e201a9",
-    "semantic_hash": "dd5c1f41fef044c47bbf8487c2e201a9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\backend-proxy.ts": {
-    "mtime": 1784596198.8506763,
-    "ast_hash": "0311e5a50f6b9713a1ffa9cf3ffb085b",
-    "semantic_hash": "0311e5a50f6b9713a1ffa9cf3ffb085b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\client.test.ts": {
-    "mtime": 1784678205.18267,
-    "ast_hash": "809fe70c3f0d3457fb1e1864339ef1da",
-    "semantic_hash": "809fe70c3f0d3457fb1e1864339ef1da"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\client.ts": {
-    "mtime": 1784676687.136106,
-    "ast_hash": "fc7557efca19e75f92e1503e55d5ddf5",
-    "semantic_hash": "fc7557efca19e75f92e1503e55d5ddf5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\errors.ts": {
-    "mtime": 1784596198.874695,
-    "ast_hash": "63c7157da8f7d90e5ad37a3777955ea2",
-    "semantic_hash": "63c7157da8f7d90e5ad37a3777955ea2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\api-client\\types.generated.ts": {
-    "mtime": 1784677995.23413,
-    "ast_hash": "a64bb9cdf0ba7fab856544d232910e78",
-    "semantic_hash": "a64bb9cdf0ba7fab856544d232910e78"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\auth\\hooks.ts": {
-    "mtime": 1784679815.3375597,
-    "ast_hash": "7c22f6e207fcd56456b8a853cdad93de",
-    "semantic_hash": "7c22f6e207fcd56456b8a853cdad93de"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\auth\\permissions.ts": {
-    "mtime": 1784651445.1720257,
-    "ast_hash": "980c26d132d30d8d2013a83958287c78",
-    "semantic_hash": "980c26d132d30d8d2013a83958287c78"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\auth\\rsa-encrypt.test.ts": {
-    "mtime": 1784596198.9218838,
-    "ast_hash": "5fb171e99259f26749e13164390298c9",
-    "semantic_hash": "5fb171e99259f26749e13164390298c9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\auth\\rsa-encrypt.ts": {
-    "mtime": 1784596198.9313977,
-    "ast_hash": "7fdbfe9f64e2b97e50a202e685bcffc3",
-    "semantic_hash": "7fdbfe9f64e2b97e50a202e685bcffc3"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\auth\\session.ts": {
-    "mtime": 1784676759.7807567,
-    "ast_hash": "48bf5398e7e7a09355386c60d942b6b2",
-    "semantic_hash": "48bf5398e7e7a09355386c60d942b6b2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\config\\env.ts": {
-    "mtime": 1784596198.954911,
-    "ast_hash": "aca0e59f2a52a8017029bd15958a4c9c",
-    "semantic_hash": "aca0e59f2a52a8017029bd15958a4c9c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\providers\\query-provider.tsx": {
-    "mtime": 1784597498.1219451,
-    "ast_hash": "a21d34187d1751e30bdc5e11c2a97514",
-    "semantic_hash": "a21d34187d1751e30bdc5e11c2a97514"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\core\\providers\\theme-provider.tsx": {
-    "mtime": 1784597498.1249454,
-    "ast_hash": "61dc5e69d4ae9942b4aadaa763e09b88",
-    "semantic_hash": "61dc5e69d4ae9942b4aadaa763e09b88"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\design-system\\tokens\\build.mjs": {
-    "mtime": 1784579063.3677084,
-    "ast_hash": "a49132d1a344a2e0e110f708b931074b",
-    "semantic_hash": "a49132d1a344a2e0e110f708b931074b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\analytics\\api.ts": {
-    "mtime": 1784638021.834796,
-    "ast_hash": "b4b02dc01768e59d171c8420eae365fb",
-    "semantic_hash": "b4b02dc01768e59d171c8420eae365fb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\analytics\\components\\overview.test.tsx": {
-    "mtime": 1784638310.445376,
-    "ast_hash": "8ab6670591086b3f50ae9d2ef42a483f",
-    "semantic_hash": "8ab6670591086b3f50ae9d2ef42a483f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\analytics\\components\\overview.tsx": {
-    "mtime": 1784638021.8403175,
-    "ast_hash": "838624fc6721edb5e0226b177f1e6931",
-    "semantic_hash": "838624fc6721edb5e0226b177f1e6931"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\analytics\\components\\stat-card.tsx": {
-    "mtime": 1784638021.846136,
-    "ast_hash": "97b417cedd34445c306cefb57262bc54",
-    "semantic_hash": "97b417cedd34445c306cefb57262bc54"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\analytics\\hooks.ts": {
-    "mtime": 1784638021.8521411,
-    "ast_hash": "845cc4c8482e8e4556457ec5ba6088df",
-    "semantic_hash": "845cc4c8482e8e4556457ec5ba6088df"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\auth\\api.ts": {
-    "mtime": 1784676699.6359434,
-    "ast_hash": "d0d2b9fd04b87b1743830f5c9cc66ead",
-    "semantic_hash": "d0d2b9fd04b87b1743830f5c9cc66ead"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\auth\\components\\login-form.test.tsx": {
-    "mtime": 1784638310.4742694,
-    "ast_hash": "cec17d55510e86f1f33ea81163b880e2",
-    "semantic_hash": "cec17d55510e86f1f33ea81163b880e2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\auth\\components\\login-form.tsx": {
-    "mtime": 1784679620.9226024,
-    "ast_hash": "497869e6d69d1c52afd109775fb299d8",
-    "semantic_hash": "497869e6d69d1c52afd109775fb299d8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\auth\\hooks.ts": {
-    "mtime": 1784638021.877777,
-    "ast_hash": "7787c29695bc192ae0eac25a7c6604ec",
-    "semantic_hash": "7787c29695bc192ae0eac25a7c6604ec"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\auth\\schemas.ts": {
-    "mtime": 1784638021.8837767,
-    "ast_hash": "48699a78a8eed7ac257029017e4a7ab2",
-    "semantic_hash": "48699a78a8eed7ac257029017e4a7ab2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\browse-professionals\\api.ts": {
-    "mtime": 1784671634.4051876,
-    "ast_hash": "4d2b21801f0ea97d328e1d017cc62e70",
-    "semantic_hash": "4d2b21801f0ea97d328e1d017cc62e70"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\browse-professionals\\components\\browse-professionals-list.test.tsx": {
-    "mtime": 1784671807.0020003,
-    "ast_hash": "454a59fafd26f896751c003a72a5731b",
-    "semantic_hash": "454a59fafd26f896751c003a72a5731b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\browse-professionals\\components\\browse-professionals-list.tsx": {
-    "mtime": 1784671656.0979054,
-    "ast_hash": "f6f2a441c490a5cbf8d1d610ab89903f",
-    "semantic_hash": "f6f2a441c490a5cbf8d1d610ab89903f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\browse-professionals\\components\\professional-detail-card.tsx": {
-    "mtime": 1784671678.9463787,
-    "ast_hash": "34e6d7a4f572ff2de421ffabecf39d83",
-    "semantic_hash": "34e6d7a4f572ff2de421ffabecf39d83"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\browse-professionals\\hooks.ts": {
-    "mtime": 1784671640.248471,
-    "ast_hash": "86bf98be1313bb0bcc3a690af1a4d10c",
-    "semantic_hash": "86bf98be1313bb0bcc3a690af1a4d10c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\api.ts": {
-    "mtime": 1784653274.9283476,
-    "ast_hash": "e11b9c0f1f29367322b73ad00b517068",
-    "semantic_hash": "e11b9c0f1f29367322b73ad00b517068"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\components\\categories-table.test.tsx": {
-    "mtime": 1784653502.4477797,
-    "ast_hash": "b2616651530fdc4a0f5610b65758c6bf",
-    "semantic_hash": "b2616651530fdc4a0f5610b65758c6bf"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\components\\categories-table.tsx": {
-    "mtime": 1784653369.9683635,
-    "ast_hash": "2ded59f4277f67f3831ad8d199f635fd",
-    "semantic_hash": "2ded59f4277f67f3831ad8d199f635fd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\components\\category-form-dialog.test.tsx": {
-    "mtime": 1784654279.452961,
-    "ast_hash": "758a150abb2b557dc98467767478e195",
-    "semantic_hash": "758a150abb2b557dc98467767478e195"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\components\\category-form-dialog.tsx": {
-    "mtime": 1784654176.0839965,
-    "ast_hash": "566f9f48bf9fa8bb4be00b73c9cbb4b2",
-    "semantic_hash": "566f9f48bf9fa8bb4be00b73c9cbb4b2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\components\\new-category-button.tsx": {
-    "mtime": 1784653379.0383945,
-    "ast_hash": "e4b253d99d043aa41235e1491a2f6e1f",
-    "semantic_hash": "e4b253d99d043aa41235e1491a2f6e1f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\hooks.ts": {
-    "mtime": 1784653297.6537118,
-    "ast_hash": "7f71b9fea56560c9b42467e7025553a6",
-    "semantic_hash": "7f71b9fea56560c9b42467e7025553a6"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\categories\\schemas.ts": {
-    "mtime": 1784654272.2491775,
-    "ast_hash": "3b59d42ebcc5756b4d2f789a970acfa7",
-    "semantic_hash": "3b59d42ebcc5756b4d2f789a970acfa7"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\api.ts": {
-    "mtime": 1784653152.9750113,
-    "ast_hash": "4ebe9a124793fa23960db4d1c536c5fb",
-    "semantic_hash": "4ebe9a124793fa23960db4d1c536c5fb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\locations-explorer.test.tsx": {
-    "mtime": 1784653317.5298588,
-    "ast_hash": "c742850280f6deee6f464c86bf15c286",
-    "semantic_hash": "c742850280f6deee6f464c86bf15c286"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\locations-explorer.tsx": {
-    "mtime": 1784653229.36643,
-    "ast_hash": "c98bd5941fcdb5a9c67a0325b8cd22d3",
-    "semantic_hash": "c98bd5941fcdb5a9c67a0325b8cd22d3"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\locations-map.test.tsx": {
-    "mtime": 1784653269.635384,
-    "ast_hash": "61844cb749656b33bca0481ef78bdf39",
-    "semantic_hash": "61844cb749656b33bca0481ef78bdf39"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\locations-map.tsx": {
-    "mtime": 1784653201.1545532,
-    "ast_hash": "5a617607e9122648b6f93feea1f09258",
-    "semantic_hash": "5a617607e9122648b6f93feea1f09258"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\nearby-search-form.test.tsx": {
-    "mtime": 1784654500.07678,
-    "ast_hash": "2449e260d9d85d5973219eb2373980e5",
-    "semantic_hash": "2449e260d9d85d5973219eb2373980e5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\nearby-search-form.tsx": {
-    "mtime": 1784653399.3676145,
-    "ast_hash": "ea742d10cc92b97c00b4c6d2b511801d",
-    "semantic_hash": "ea742d10cc92b97c00b4c6d2b511801d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\online-professionals-stat.test.tsx": {
-    "mtime": 1784653296.430746,
-    "ast_hash": "aeea12af3e9aff6cf0f0d0cfc7493afb",
-    "semantic_hash": "aeea12af3e9aff6cf0f0d0cfc7493afb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\components\\online-professionals-stat.tsx": {
-    "mtime": 1784653220.7209346,
-    "ast_hash": "b82cbbe94e4e1cf9e23d22b866337145",
-    "semantic_hash": "b82cbbe94e4e1cf9e23d22b866337145"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\hooks.ts": {
-    "mtime": 1784653168.8952117,
-    "ast_hash": "11bd9c6ae2c6551c1424d61b6831094d",
-    "semantic_hash": "11bd9c6ae2c6551c1424d61b6831094d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\locations\\schemas.ts": {
-    "mtime": 1784653386.4402344,
-    "ast_hash": "94816c2a20f78f7613d871430f63f128",
-    "semantic_hash": "94816c2a20f78f7613d871430f63f128"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\my-services\\api.ts": {
-    "mtime": 1784671527.5889575,
-    "ast_hash": "ec08709e5aea5089c5dbfff582c4981b",
-    "semantic_hash": "ec08709e5aea5089c5dbfff582c4981b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\my-services\\components\\cancel-service-dialog.tsx": {
-    "mtime": 1784671600.217995,
-    "ast_hash": "da87ca5b81c77ec7fca556b081cae3aa",
-    "semantic_hash": "da87ca5b81c77ec7fca556b081cae3aa"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\my-services\\components\\my-client-services-table.test.tsx": {
-    "mtime": 1784671800.105905,
-    "ast_hash": "f59eeedacf82a779501154a8a2a5fc38",
-    "semantic_hash": "f59eeedacf82a779501154a8a2a5fc38"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\my-services\\components\\my-client-services-table.tsx": {
-    "mtime": 1784671611.9859715,
-    "ast_hash": "852f375b8e9cedeb1003f85c3a9ad59c",
-    "semantic_hash": "852f375b8e9cedeb1003f85c3a9ad59c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\my-services\\hooks.ts": {
-    "mtime": 1784671541.8945816,
-    "ast_hash": "d1dd87e3cebe7c764ef45274354f0f35",
-    "semantic_hash": "d1dd87e3cebe7c764ef45274354f0f35"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\api.ts": {
-    "mtime": 1784653253.478789,
-    "ast_hash": "cf705936c50b551dddec1e1d6b920923",
-    "semantic_hash": "cf705936c50b551dddec1e1d6b920923"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\components\\new-notification-dialog.test.tsx": {
-    "mtime": 1784653384.4869857,
-    "ast_hash": "7361d150e9e2fa6f894e37fe6e0d4e17",
-    "semantic_hash": "7361d150e9e2fa6f894e37fe6e0d4e17"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\components\\new-notification-dialog.tsx": {
-    "mtime": 1784653305.6274037,
-    "ast_hash": "e67a3510a0cc225cc5c493873f2690ce",
-    "semantic_hash": "e67a3510a0cc225cc5c493873f2690ce"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\components\\notifications-table.test.tsx": {
-    "mtime": 1784653779.1590588,
-    "ast_hash": "2d54f966d9c3370d89e991e96cbfc892",
-    "semantic_hash": "2d54f966d9c3370d89e991e96cbfc892"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\components\\notifications-table.tsx": {
-    "mtime": 1784653288.6482563,
-    "ast_hash": "96100ce8d41321964e1e9c7f199ee95e",
-    "semantic_hash": "96100ce8d41321964e1e9c7f199ee95e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\hooks.ts": {
-    "mtime": 1784653260.771891,
-    "ast_hash": "f49c92f108a3cddf656216f3c4eeb9a1",
-    "semantic_hash": "f49c92f108a3cddf656216f3c4eeb9a1"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\notifications\\schemas.ts": {
-    "mtime": 1784653273.8777351,
-    "ast_hash": "278c0f2b78b793840167b2448ba1e01f",
-    "semantic_hash": "278c0f2b78b793840167b2448ba1e01f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\api.ts": {
-    "mtime": 1784653141.2115061,
-    "ast_hash": "a16b092c2ddae1ec4351de77eddfbdab",
-    "semantic_hash": "a16b092c2ddae1ec4351de77eddfbdab"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\components\\cancel-payment-dialog.tsx": {
-    "mtime": 1784653241.946359,
-    "ast_hash": "2a9f42650b168b8e6353300e710dfef8",
-    "semantic_hash": "2a9f42650b168b8e6353300e710dfef8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\components\\payments-table.test.tsx": {
-    "mtime": 1784653347.1316338,
-    "ast_hash": "1937e23928d5138701fb8be699a9d7b4",
-    "semantic_hash": "1937e23928d5138701fb8be699a9d7b4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\components\\payments-table.tsx": {
-    "mtime": 1784653502.862749,
-    "ast_hash": "ad65f0cb6ccb84766c5963da82d88135",
-    "semantic_hash": "ad65f0cb6ccb84766c5963da82d88135"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\components\\refund-payment-dialog.tsx": {
-    "mtime": 1784653496.7114487,
-    "ast_hash": "d2df31d78424e4b049d2d78540d4eac5",
-    "semantic_hash": "d2df31d78424e4b049d2d78540d4eac5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\hooks.ts": {
-    "mtime": 1784653149.6947525,
-    "ast_hash": "80a8ae4515057e71eec2f2a63332b542",
-    "semantic_hash": "80a8ae4515057e71eec2f2a63332b542"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\payments\\schemas.ts": {
-    "mtime": 1784653491.4470792,
-    "ast_hash": "b4099365d8573a70b754547d61541b3c",
-    "semantic_hash": "b4099365d8573a70b754547d61541b3c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\api.ts": {
-    "mtime": 1784668319.0729783,
-    "ast_hash": "92d07db30a201e6583590af70f6761fa",
-    "semantic_hash": "92d07db30a201e6583590af70f6761fa"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\availability-toggle.tsx": {
-    "mtime": 1784668348.9469507,
-    "ast_hash": "f147c61c187cfa097368d42e42f1813c",
-    "semantic_hash": "f147c61c187cfa097368d42e42f1813c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\pro-mode-link.tsx": {
-    "mtime": 1784668508.0236702,
-    "ast_hash": "43b5114863c7f54fd4518c69417df5fb",
-    "semantic_hash": "43b5114863c7f54fd4518c69417df5fb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\professional-gate.test.tsx": {
-    "mtime": 1784668661.7192569,
-    "ast_hash": "2162d40f22a816823970e43521d7dde7",
-    "semantic_hash": "2162d40f22a816823970e43521d7dde7"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\professional-gate.tsx": {
-    "mtime": 1784668343.2505078,
-    "ast_hash": "bfeb1c7ae722b2296cdc00527344c221",
-    "semantic_hash": "bfeb1c7ae722b2296cdc00527344c221"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\professional-profile-form.test.tsx": {
-    "mtime": 1784668706.6355357,
-    "ast_hash": "a8b1db85432557a6c874c823fc54d924",
-    "semantic_hash": "a8b1db85432557a6c874c823fc54d924"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\components\\professional-profile-form.tsx": {
-    "mtime": 1784668363.2947016,
-    "ast_hash": "e4c0dea1fdff3b8ae5d3c978b40fc484",
-    "semantic_hash": "e4c0dea1fdff3b8ae5d3c978b40fc484"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\hooks.ts": {
-    "mtime": 1784668327.899167,
-    "ast_hash": "4ce41bcc2ce9bfdb1a1e5c3a9f04a913",
-    "semantic_hash": "4ce41bcc2ce9bfdb1a1e5c3a9f04a913"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-profile\\schemas.ts": {
-    "mtime": 1784668333.507593,
-    "ast_hash": "a7adbbcb0a391582fff81100752b7019",
-    "semantic_hash": "a7adbbcb0a391582fff81100752b7019"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-ratings\\api.ts": {
-    "mtime": 1784668409.956641,
-    "ast_hash": "f8b23a548db177a096717cf6e567d126",
-    "semantic_hash": "f8b23a548db177a096717cf6e567d126"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-ratings\\components\\rate-client-dialog.tsx": {
-    "mtime": 1784668543.4651904,
-    "ast_hash": "6c73a450c3025a9028f72855712577d9",
-    "semantic_hash": "6c73a450c3025a9028f72855712577d9"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-ratings\\components\\reviews-table.tsx": {
-    "mtime": 1784668451.2810533,
-    "ast_hash": "a4d7788eb8c9cea45fc2e05f2608fa13",
-    "semantic_hash": "a4d7788eb8c9cea45fc2e05f2608fa13"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-ratings\\hooks.ts": {
-    "mtime": 1784668421.546396,
-    "ast_hash": "8704b2775a95b493eb36e0a35af18339",
-    "semantic_hash": "8704b2775a95b493eb36e0a35af18339"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-ratings\\schemas.ts": {
-    "mtime": 1784668414.6241112,
-    "ast_hash": "8a9574d08ca1a1539df8b856fa57a08c",
-    "semantic_hash": "8a9574d08ca1a1539df8b856fa57a08c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-requests\\api.ts": {
-    "mtime": 1784668371.0118203,
-    "ast_hash": "ebfb91d8b6e6248eef5c6cff043375ba",
-    "semantic_hash": "ebfb91d8b6e6248eef5c6cff043375ba"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-requests\\components\\pending-services-table.test.tsx": {
-    "mtime": 1784668688.8909712,
-    "ast_hash": "47d9e1de8b0db18f08115ae139e16e9c",
-    "semantic_hash": "47d9e1de8b0db18f08115ae139e16e9c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-requests\\components\\pending-services-table.tsx": {
-    "mtime": 1784668388.014512,
-    "ast_hash": "895181444d7a4383cf7be8492da0b8f5",
-    "semantic_hash": "895181444d7a4383cf7be8492da0b8f5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-requests\\hooks.ts": {
-    "mtime": 1784668377.243224,
-    "ast_hash": "8ab58b980be3f52771698bad6ad0255b",
-    "semantic_hash": "8ab58b980be3f52771698bad6ad0255b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-services\\api.ts": {
-    "mtime": 1784668394.8459249,
-    "ast_hash": "07f8807788f73ba487d52514dfbbee2c",
-    "semantic_hash": "07f8807788f73ba487d52514dfbbee2c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-services\\components\\my-services-table.test.tsx": {
-    "mtime": 1784668773.89722,
-    "ast_hash": "3ecd9d213689a0a6905ea56211a814e2",
-    "semantic_hash": "3ecd9d213689a0a6905ea56211a814e2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-services\\components\\my-services-table.tsx": {
-    "mtime": 1784668463.9026248,
-    "ast_hash": "98cc6077fa626f32847da59159df62ce",
-    "semantic_hash": "98cc6077fa626f32847da59159df62ce"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professional-services\\hooks.ts": {
-    "mtime": 1784668402.2262108,
-    "ast_hash": "4ecbfd7f44c2878d3f33d09a290bb236",
-    "semantic_hash": "4ecbfd7f44c2878d3f33d09a290bb236"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\api.ts": {
-    "mtime": 1784653112.5960588,
-    "ast_hash": "d41973cdb240c1d7827912409c5428d3",
-    "semantic_hash": "d41973cdb240c1d7827912409c5428d3"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\professionals-table.test.tsx": {
-    "mtime": 1784653966.4541893,
-    "ast_hash": "138e96d005128d083fb9ba59da9806f5",
-    "semantic_hash": "138e96d005128d083fb9ba59da9806f5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\professionals-table.tsx": {
-    "mtime": 1784679581.7693164,
-    "ast_hash": "f229f18b43e9f5594e59c94932697e1b",
-    "semantic_hash": "f229f18b43e9f5594e59c94932697e1b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\suspend-professional-dialog.test.tsx": {
-    "mtime": 1784653876.4954617,
-    "ast_hash": "f64f4cbb2aa143d79bbf722545c8622f",
-    "semantic_hash": "f64f4cbb2aa143d79bbf722545c8622f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\suspend-professional-dialog.tsx": {
-    "mtime": 1784653151.30941,
-    "ast_hash": "b24d5e98e7865501b2c3e5a6d42b5a43",
-    "semantic_hash": "b24d5e98e7865501b2c3e5a6d42b5a43"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\verify-professional-dialog.test.tsx": {
-    "mtime": 1784653848.340356,
-    "ast_hash": "d4d5e88b48feb19afe700904f71e9e16",
-    "semantic_hash": "d4d5e88b48feb19afe700904f71e9e16"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\components\\verify-professional-dialog.tsx": {
-    "mtime": 1784653138.0066564,
-    "ast_hash": "0d8daef3be11aeca6f73e948a9797358",
-    "semantic_hash": "0d8daef3be11aeca6f73e948a9797358"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\hooks.ts": {
-    "mtime": 1784653126.7475188,
-    "ast_hash": "e95d278031f7842d0a0ae55b80f88dfb",
-    "semantic_hash": "e95d278031f7842d0a0ae55b80f88dfb"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\professionals\\schemas.ts": {
-    "mtime": 1784653119.204965,
-    "ast_hash": "00cb1aa6ff9a1415b1b5258e13b8db9b",
-    "semantic_hash": "00cb1aa6ff9a1415b1b5258e13b8db9b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\api.ts": {
-    "mtime": 1784653242.1204085,
-    "ast_hash": "e10324574868d9a50704c7d82879ce1c",
-    "semantic_hash": "e10324574868d9a50704c7d82879ce1c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\components\\promotion-form-dialog.test.tsx": {
-    "mtime": 1784653490.9343796,
-    "ast_hash": "cae754e87a07b750c1fe8d4539a860e8",
-    "semantic_hash": "cae754e87a07b750c1fe8d4539a860e8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\components\\promotion-form-dialog.tsx": {
-    "mtime": 1784654206.1264546,
-    "ast_hash": "ffe6c05ed5979bc4d887a040ce2843cd",
-    "semantic_hash": "ffe6c05ed5979bc4d887a040ce2843cd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\components\\promotions-table.test.tsx": {
-    "mtime": 1784653454.081303,
-    "ast_hash": "22d4cc648da9a2b8398386380fe8ab32",
-    "semantic_hash": "22d4cc648da9a2b8398386380fe8ab32"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\components\\promotions-table.tsx": {
-    "mtime": 1784654133.7304764,
-    "ast_hash": "fc8367f37697725d74da53ded77bbe79",
-    "semantic_hash": "fc8367f37697725d74da53ded77bbe79"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\hooks.ts": {
-    "mtime": 1784653291.8421166,
-    "ast_hash": "f4bd065d4d2494ee17c070fec6e264c8",
-    "semantic_hash": "f4bd065d4d2494ee17c070fec6e264c8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\promotions\\schemas.ts": {
-    "mtime": 1784653807.6878521,
-    "ast_hash": "c14aa92310115267261de1b62102343e",
-    "semantic_hash": "c14aa92310115267261de1b62102343e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\rate-professional\\api.ts": {
-    "mtime": 1784671547.3875496,
-    "ast_hash": "6c4649d2fbcf86e8eef17029b5bca649",
-    "semantic_hash": "6c4649d2fbcf86e8eef17029b5bca649"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\rate-professional\\components\\rate-professional-dialog.tsx": {
-    "mtime": 1784671571.0062394,
-    "ast_hash": "ff557f07c26c214b7ed8349c83ba8b4a",
-    "semantic_hash": "ff557f07c26c214b7ed8349c83ba8b4a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\rate-professional\\hooks.ts": {
-    "mtime": 1784671557.6979344,
-    "ast_hash": "ec06d69d28c49c79dd5445e1acd438a7",
-    "semantic_hash": "ec06d69d28c49c79dd5445e1acd438a7"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\rate-professional\\schemas.ts": {
-    "mtime": 1784671552.2942388,
-    "ast_hash": "492111b27ca05078131bbbe1a4da201d",
-    "semantic_hash": "492111b27ca05078131bbbe1a4da201d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\ratings\\api.ts": {
-    "mtime": 1784653179.9571836,
-    "ast_hash": "bad46a9b17c0744904bf6b51ceb87d50",
-    "semantic_hash": "bad46a9b17c0744904bf6b51ceb87d50"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\ratings\\components\\ratings-table.test.tsx": {
-    "mtime": 1784653540.298629,
-    "ast_hash": "cf975af428f5f6f31ce00661f82f507c",
-    "semantic_hash": "cf975af428f5f6f31ce00661f82f507c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\ratings\\components\\ratings-table.tsx": {
-    "mtime": 1784653199.3810453,
-    "ast_hash": "fca104408f4dd864b12e5d20fb1d994d",
-    "semantic_hash": "fca104408f4dd864b12e5d20fb1d994d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\ratings\\hooks.ts": {
-    "mtime": 1784653185.5084336,
-    "ast_hash": "13fd6caf53e1dc18a2caa5d84d124eb3",
-    "semantic_hash": "13fd6caf53e1dc18a2caa5d84d124eb3"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\api.ts": {
-    "mtime": 1784671261.569099,
-    "ast_hash": "bf1f01e3ea4a8f9ddba2cca66f1216db",
-    "semantic_hash": "bf1f01e3ea4a8f9ddba2cca66f1216db"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\components\\location-picker-map.tsx": {
-    "mtime": 1784680124.9724128,
-    "ast_hash": "3d8ab165a6a291ebe60886cc701276b4",
-    "semantic_hash": "3d8ab165a6a291ebe60886cc701276b4"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\components\\request-service-form.test.tsx": {
-    "mtime": 1784679787.2299993,
-    "ast_hash": "ded64ccde1ef92bc538cd0c35f3ed588",
-    "semantic_hash": "ded64ccde1ef92bc538cd0c35f3ed588"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\components\\request-service-form.tsx": {
-    "mtime": 1784679770.0726411,
-    "ast_hash": "d9077213b1b1e3e0183c052644542fd5",
-    "semantic_hash": "d9077213b1b1e3e0183c052644542fd5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\hooks.ts": {
-    "mtime": 1784671274.3566554,
-    "ast_hash": "55450322085d6f5d148d351d5da6cb7d",
-    "semantic_hash": "55450322085d6f5d148d351d5da6cb7d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\request-service\\schemas.ts": {
-    "mtime": 1784671267.807221,
-    "ast_hash": "45e6e145cb410c17294e5f78299bf15b",
-    "semantic_hash": "45e6e145cb410c17294e5f78299bf15b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\api.ts": {
-    "mtime": 1784653303.3284333,
-    "ast_hash": "47f74229328658bd6c84015c2df34120",
-    "semantic_hash": "47f74229328658bd6c84015c2df34120"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\permissions-picker.test.tsx": {
-    "mtime": 1784653822.1916337,
-    "ast_hash": "6a47d661e2495a4558e0cc8d1cdc308a",
-    "semantic_hash": "6a47d661e2495a4558e0cc8d1cdc308a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\permissions-picker.tsx": {
-    "mtime": 1784653325.1941402,
-    "ast_hash": "7891cf29cdd1041f9ac4af622e529a33",
-    "semantic_hash": "7891cf29cdd1041f9ac4af622e529a33"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\role-form-dialog.test.tsx": {
-    "mtime": 1784653828.0227902,
-    "ast_hash": "074d9a39baeebf8bffd3b35b1972817f",
-    "semantic_hash": "074d9a39baeebf8bffd3b35b1972817f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\role-form-dialog.tsx": {
-    "mtime": 1784653343.471462,
-    "ast_hash": "ce8a89cdbe9fd6a9f54b8c097fbf4f69",
-    "semantic_hash": "ce8a89cdbe9fd6a9f54b8c097fbf4f69"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\roles-table.test.tsx": {
-    "mtime": 1784653392.0610876,
-    "ast_hash": "e841786b674d0e0c32628450f5de0772",
-    "semantic_hash": "e841786b674d0e0c32628450f5de0772"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\components\\roles-table.tsx": {
-    "mtime": 1784653355.63261,
-    "ast_hash": "cd98a828bb446550d486ed25f0a5b7dd",
-    "semantic_hash": "cd98a828bb446550d486ed25f0a5b7dd"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\hooks.ts": {
-    "mtime": 1784653310.6805885,
-    "ast_hash": "2010c1b4659a5a722dcd13348892508c",
-    "semantic_hash": "2010c1b4659a5a722dcd13348892508c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\roles-permission\\schemas.ts": {
-    "mtime": 1784653306.4174182,
-    "ast_hash": "3822150d77033f6416fc7cbfe3c79713",
-    "semantic_hash": "3822150d77033f6416fc7cbfe3c79713"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\services\\api.ts": {
-    "mtime": 1784653059.2112584,
-    "ast_hash": "512f5b5a7f7973b803bfc63716a90458",
-    "semantic_hash": "512f5b5a7f7973b803bfc63716a90458"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\services\\components\\services-table.test.tsx": {
-    "mtime": 1784653753.9563758,
-    "ast_hash": "78845af5b25c0a34b8775e4921823e6e",
-    "semantic_hash": "78845af5b25c0a34b8775e4921823e6e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\services\\components\\services-table.tsx": {
-    "mtime": 1784653102.9808547,
-    "ast_hash": "783ca3324fa236f42b1ffcb32c5586af",
-    "semantic_hash": "783ca3324fa236f42b1ffcb32c5586af"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\services\\hooks.ts": {
-    "mtime": 1784653063.2243109,
-    "ast_hash": "5960f8fcfc64d182b88acee8dbd58794",
-    "semantic_hash": "5960f8fcfc64d182b88acee8dbd58794"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\users\\api.ts": {
-    "mtime": 1784638021.8903947,
-    "ast_hash": "f266ea32f03e85c9ae024b6cb4bc0b12",
-    "semantic_hash": "f266ea32f03e85c9ae024b6cb4bc0b12"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\users\\components\\users-table.test.tsx": {
-    "mtime": 1784638310.5096352,
-    "ast_hash": "1e662819295f3e2afd7e7623ff1a4b1c",
-    "semantic_hash": "1e662819295f3e2afd7e7623ff1a4b1c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\users\\components\\users-table.tsx": {
-    "mtime": 1784638021.900926,
-    "ast_hash": "ece4559f27645c3e21568b9dc9824c61",
-    "semantic_hash": "ece4559f27645c3e21568b9dc9824c61"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\features\\users\\hooks.ts": {
-    "mtime": 1784638021.9054291,
-    "ast_hash": "03916e0574d2c3446fbc22b1b58dfb7b",
-    "semantic_hash": "03916e0574d2c3446fbc22b1b58dfb7b"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\hooks\\use-mobile.ts": {
-    "mtime": 1784597540.0027285,
-    "ast_hash": "1f96127bb2425437500dcbaf212cfb71",
-    "semantic_hash": "1f96127bb2425437500dcbaf212cfb71"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\lib\\formatters.test.ts": {
-    "mtime": 1784638021.91591,
-    "ast_hash": "06c8fcac41f9eb2782f7ca5e1efd4b20",
-    "semantic_hash": "06c8fcac41f9eb2782f7ca5e1efd4b20"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\lib\\formatters.ts": {
-    "mtime": 1784638021.9227195,
-    "ast_hash": "4d015f06711a868e7d764f00ae76295d",
-    "semantic_hash": "4d015f06711a868e7d764f00ae76295d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\lib\\utils.test.ts": {
-    "mtime": 1784583184.0970643,
-    "ast_hash": "3160baca4b70bfd81a506a39ee9e6d0d",
-    "semantic_hash": "3160baca4b70bfd81a506a39ee9e6d0d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\lib\\utils.ts": {
-    "mtime": 1784583184.1020687,
-    "ast_hash": "8595c2f874aa1ff8c7cc28df2999f354",
-    "semantic_hash": "8595c2f874aa1ff8c7cc28df2999f354"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\proxy.ts": {
-    "mtime": 1784596198.9847412,
-    "ast_hash": "c25436196b128e52bd88fee07dba3a16",
-    "semantic_hash": "c25436196b128e52bd88fee07dba3a16"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\empty-module.ts": {
-    "mtime": 1784596077.9579222,
-    "ast_hash": "3035e76db7ca2910d90821025b0600ea",
-    "semantic_hash": "3035e76db7ca2910d90821025b0600ea"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers.ts": {
-    "mtime": 1784654417.8027325,
-    "ast_hash": "e8181bc2487c9cc08a6a0e619f49644a",
-    "semantic_hash": "e8181bc2487c9cc08a6a0e619f49644a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\analytics.ts": {
-    "mtime": 1784638310.5640647,
-    "ast_hash": "388fef1b0ad31fc9e3588a2082f55a76",
-    "semantic_hash": "388fef1b0ad31fc9e3588a2082f55a76"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\auth.ts": {
-    "mtime": 1784638310.5700965,
-    "ast_hash": "ee3cd06662772e8a40ec9d0c3a159fac",
-    "semantic_hash": "ee3cd06662772e8a40ec9d0c3a159fac"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\categories.ts": {
-    "mtime": 1784653310.1047802,
-    "ast_hash": "4811740b12f30373dec4044f58878ddf",
-    "semantic_hash": "4811740b12f30373dec4044f58878ddf"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\client-mode.ts": {
-    "mtime": 1784671782.1957924,
-    "ast_hash": "80b1b9e30be4c17f50f0cc3865a89c39",
-    "semantic_hash": "80b1b9e30be4c17f50f0cc3865a89c39"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\locations.ts": {
-    "mtime": 1784653255.3384583,
-    "ast_hash": "b29146c56be699fd99b461fc309df0ef",
-    "semantic_hash": "b29146c56be699fd99b461fc309df0ef"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\notifications.ts": {
-    "mtime": 1784653761.658825,
-    "ast_hash": "5bad5fa2e4ad07fa234c4f96574be7bc",
-    "semantic_hash": "5bad5fa2e4ad07fa234c4f96574be7bc"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\payments.ts": {
-    "mtime": 1784653160.3119018,
-    "ast_hash": "4cebd8ce7a487128341fd523838b3157",
-    "semantic_hash": "4cebd8ce7a487128341fd523838b3157"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\professional-mode.ts": {
-    "mtime": 1784668721.4808667,
-    "ast_hash": "c588ce6d39993247c1d772183226517c",
-    "semantic_hash": "c588ce6d39993247c1d772183226517c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\professionals.ts": {
-    "mtime": 1784653183.6006143,
-    "ast_hash": "c1c59bda92659b3bf6a45bc81945f997",
-    "semantic_hash": "c1c59bda92659b3bf6a45bc81945f997"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\promotions.ts": {
-    "mtime": 1784653371.0820048,
-    "ast_hash": "b7f187aa0fec477c00d54463d1152f5a",
-    "semantic_hash": "b7f187aa0fec477c00d54463d1152f5a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\ratings.ts": {
-    "mtime": 1784653212.9027963,
-    "ast_hash": "7eaffb7492b174af6ba80c6723c08559",
-    "semantic_hash": "7eaffb7492b174af6ba80c6723c08559"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\roles.ts": {
-    "mtime": 1784653380.963952,
-    "ast_hash": "86e642ab2f3eb689e668acf0b12dee5c",
-    "semantic_hash": "86e642ab2f3eb689e668acf0b12dee5c"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\services.ts": {
-    "mtime": 1784668562.666448,
-    "ast_hash": "7c11836991775a91ada5dae5d6a2dcd0",
-    "semantic_hash": "7c11836991775a91ada5dae5d6a2dcd0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\handlers\\users.ts": {
-    "mtime": 1784638310.576102,
-    "ast_hash": "ea7e0a03f438e996458eadbb0414cb83",
-    "semantic_hash": "ea7e0a03f438e996458eadbb0414cb83"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\msw\\server.ts": {
-    "mtime": 1784583184.12761,
-    "ast_hash": "4847d8f1f53222aed3e5c07206ea3f60",
-    "semantic_hash": "4847d8f1f53222aed3e5c07206ea3f60"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\query-client.ts": {
-    "mtime": 1784638310.5831015,
-    "ast_hash": "a3c726ce2b979750cdd830bda4afa5f7",
-    "semantic_hash": "a3c726ce2b979750cdd830bda4afa5f7"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\src\\test\\setup.ts": {
-    "mtime": 1784640306.4365175,
-    "ast_hash": "da09e89cfe470de742320676fb85b9a5",
-    "semantic_hash": "da09e89cfe470de742320676fb85b9a5"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\tsconfig.json": {
-    "mtime": 1784577332.2447157,
-    "ast_hash": "ee17fd1c97c735e9f3564e3f5251f125",
-    "semantic_hash": "ee17fd1c97c735e9f3564e3f5251f125"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\vitest.config.ts": {
-    "mtime": 1784640547.676765,
-    "ast_hash": "72d4dc85f075f2b30fee1aa5037ea69d",
-    "semantic_hash": "72d4dc85f075f2b30fee1aa5037ea69d"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\CLAUDE.md": {
-    "mtime": 1784579409.8598616,
-    "ast_hash": "eddc1969807bba98a458e886aff30560",
-    "semantic_hash": "eddc1969807bba98a458e886aff30560"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\agents\\code-reviewer.md": {
-    "mtime": 1784579739.432502,
-    "ast_hash": "9cd996cc7248ec6078c913fe29fc861f",
-    "semantic_hash": "9cd996cc7248ec6078c913fe29fc861f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\agents\\design-system-agent.md": {
-    "mtime": 1784579787.7924237,
-    "ast_hash": "8de06cb32a71a89cf0876055f2d574de",
-    "semantic_hash": "8de06cb32a71a89cf0876055f2d574de"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\agents\\tdd-refactor.md": {
-    "mtime": 1784579772.4974828,
-    "ast_hash": "30be5ca3f9635d3c9a6fffcae77ec307",
-    "semantic_hash": "30be5ca3f9635d3c9a6fffcae77ec307"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\agents\\testing-agent.md": {
-    "mtime": 1784579753.7003088,
-    "ast_hash": "394b0067e05ab69b8bee98b94ec204a8",
-    "semantic_hash": "394b0067e05ab69b8bee98b94ec204a8"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\documentation\\architecture.md": {
-    "mtime": 1784598032.6359086,
-    "ast_hash": "2e7388871643f42f185abd264f258ac1",
-    "semantic_hash": "2e7388871643f42f185abd264f258ac1"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\documentation\\context.md": {
-    "mtime": 1784679168.1067908,
-    "ast_hash": "9f76b488f4ad42d2981f113bc599af24",
-    "semantic_hash": "9f76b488f4ad42d2981f113bc599af24"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\memory\\memory.md": {
-    "mtime": 1784579807.0025668,
-    "ast_hash": "39b8300235ae599b90ca04221feee854",
-    "semantic_hash": "39b8300235ae599b90ca04221feee854"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\memory\\sessions\\session_1_scaffold_bff_appshell.md": {
-    "mtime": 1784640780.293819,
-    "ast_hash": "48567f2f8d668e00cfb0002eb630962a",
-    "semantic_hash": "48567f2f8d668e00cfb0002eb630962a"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\rules\\design-system.md": {
-    "mtime": 1784640221.6224873,
-    "ast_hash": "8977e14912feed1dc480ef3066b61ae0",
-    "semantic_hash": "8977e14912feed1dc480ef3066b61ae0"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\rules\\infra.md": {
-    "mtime": 1784579723.4120705,
-    "ast_hash": "9e8f5c7207ce5de2a9c7bec002078c68",
-    "semantic_hash": "9e8f5c7207ce5de2a9c7bec002078c68"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\rules\\test.md": {
-    "mtime": 1784579684.8775702,
-    "ast_hash": "7ee719a767f5394791bae58a1165cbf2",
-    "semantic_hash": "7ee719a767f5394791bae58a1165cbf2"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\rules\\typescript.md": {
-    "mtime": 1784680389.6983514,
-    "ast_hash": "3d6d047f1c8bb15a6946bf333cf2e505",
-    "semantic_hash": "3d6d047f1c8bb15a6946bf333cf2e505"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\SKILL.md": {
-    "mtime": 1784680652.6023169,
-    "ast_hash": "57aea5ab7bad5cad3d310f8791469315",
-    "semantic_hash": "57aea5ab7bad5cad3d310f8791469315"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\add-watch.md": {
-    "mtime": 1784680652.6028554,
-    "ast_hash": "e10311cd2f69de7d62674eff2b87420f",
-    "semantic_hash": "e10311cd2f69de7d62674eff2b87420f"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\exports.md": {
-    "mtime": 1784680652.6033819,
-    "ast_hash": "4b1c094b3077da6b95ec99694612327e",
-    "semantic_hash": "4b1c094b3077da6b95ec99694612327e"
-  },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\extraction-spec.md": {
-    "mtime": 1784680652.6033819,
+  ".releaserc.json": {
+    "mtime": 1785771055.3062227,
+    "ast_hash": "c39d717046e96351a025ccd6c309930d",
+    "semantic_hash": ""
+  },
+  "components.json": {
+    "mtime": 1785771055.3347292,
+    "ast_hash": "519f93133ded707d8847caceca85dbac",
+    "semantic_hash": ""
+  },
+  "e2e/admin-categories.spec.ts": {
+    "mtime": 1785771055.335728,
+    "ast_hash": "ebced34cdd47bd18630f7f4abf4c88d1",
+    "semantic_hash": ""
+  },
+  "e2e/client-solicitar.spec.ts": {
+    "mtime": 1785771055.335728,
+    "ast_hash": "7bf0dd78cbae14efaa19cb090b1f6560",
+    "semantic_hash": ""
+  },
+  "e2e/fake-backend/server.mjs": {
+    "mtime": 1785771055.336733,
+    "ast_hash": "97191a83ca22dceaca6abd5b605afd98",
+    "semantic_hash": ""
+  },
+  "e2e/login.spec.ts": {
+    "mtime": 1785771055.336733,
+    "ast_hash": "997c12d1b55fa964fe91e89e1f76132e",
+    "semantic_hash": ""
+  },
+  "e2e/smoke.spec.ts": {
+    "mtime": 1785771055.336733,
+    "ast_hash": "664cc3dc13d8c37337e005752f035a51",
+    "semantic_hash": ""
+  },
+  "eslint.config.mjs": {
+    "mtime": 1785771055.3377328,
+    "ast_hash": "e698399d5ed76607b4fa1c1aeaf94311",
+    "semantic_hash": ""
+  },
+  "next.config.ts": {
+    "mtime": 1785771055.3612404,
+    "ast_hash": "5854ac75d639333651597e2db9bf0a33",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1785771055.3622403,
+    "ast_hash": "de11f50c575459070a116671514ba4e6",
+    "semantic_hash": ""
+  },
+  "playwright.config.ts": {
+    "mtime": 1785771055.3622403,
+    "ast_hash": "1de218a158835a1e70e1561107353fcd",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1785771055.3652399,
+    "ast_hash": "481fac0fdecd70e1821cc30b86030c1a",
+    "semantic_hash": ""
+  },
+  "scripts/deploy.sh": {
+    "mtime": 1785771055.3727517,
+    "ast_hash": "09e1d63d8dc4eac6b741b953d40d3f2e",
+    "semantic_hash": ""
+  },
+  "scripts/generate-api-types.mjs": {
+    "mtime": 1785771055.3727517,
+    "ast_hash": "74ef034f3fa7e34d4372c8375e2ca5ab",
+    "semantic_hash": ""
+  },
+  "scripts/prepare-standalone.mjs": {
+    "mtime": 1785771055.3737507,
+    "ast_hash": "75a9dc2082d369e0a256f778597f3533",
+    "semantic_hash": ""
+  },
+  "scripts/replace-version.sh": {
+    "mtime": 1785771055.3737507,
+    "ast_hash": "5ecdd25a70e37ec6f0ef11bfdf31b9ec",
+    "semantic_hash": ""
+  },
+  "src/app/(auth)/login/page.tsx": {
+    "mtime": 1785771055.3747501,
+    "ast_hash": "49464b6dc0fdf1e76f7ea4e3861df74d",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/layout.tsx": {
+    "mtime": 1785771055.3747501,
+    "ast_hash": "b3a973ad7b01802f3be1a996ed4e3ba0",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/mis-servicios/page.tsx": {
+    "mtime": 1785771055.3757503,
+    "ast_hash": "22992ea47e2165d299fedb1ecabb18e1",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/page.tsx": {
+    "mtime": 1785771055.3757503,
+    "ast_hash": "07e9570acc0b423e82739891ac71b146",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/profesionales/[referenceId]/page.tsx": {
+    "mtime": 1785771055.3767498,
+    "ast_hash": "1f12a9ba953d5c88e51953a12318372c",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/profesionales/page.tsx": {
+    "mtime": 1785771055.3767498,
+    "ast_hash": "efae09a00c21a09210edae92a9b21a4b",
+    "semantic_hash": ""
+  },
+  "src/app/(client)/solicitar/page.tsx": {
+    "mtime": 1785771055.3767498,
+    "ast_hash": "611c8b12ba3af4bf603b1c0591561a0b",
+    "semantic_hash": ""
+  },
+  "src/app/admin/categories/page.tsx": {
+    "mtime": 1785771055.37775,
+    "ast_hash": "e07df88fc150bb855ea19dfde9d94164",
+    "semantic_hash": ""
+  },
+  "src/app/admin/layout.tsx": {
+    "mtime": 1785771055.37775,
+    "ast_hash": "189d69edc106d0d15bed6254a1d90e0a",
+    "semantic_hash": ""
+  },
+  "src/app/admin/locations/page.tsx": {
+    "mtime": 1785771055.3787496,
+    "ast_hash": "24505b2228cd3e269cf114824c5430df",
+    "semantic_hash": ""
+  },
+  "src/app/admin/notifications/page.tsx": {
+    "mtime": 1785771055.3787496,
+    "ast_hash": "e89261c1234559e217cc7cead49a47e8",
+    "semantic_hash": ""
+  },
+  "src/app/admin/page.tsx": {
+    "mtime": 1785771055.3787496,
+    "ast_hash": "68afce3e83e17743463fe3eb5b05f55a",
+    "semantic_hash": ""
+  },
+  "src/app/admin/payments/page.tsx": {
+    "mtime": 1785771055.3801148,
+    "ast_hash": "a979dc44bf5adaeefb03b442c4e9e4bd",
+    "semantic_hash": ""
+  },
+  "src/app/admin/professionals/page.tsx": {
+    "mtime": 1785771055.3811107,
+    "ast_hash": "06c69b621296150374ddb8dda2853726",
+    "semantic_hash": ""
+  },
+  "src/app/admin/promotions/page.tsx": {
+    "mtime": 1785771055.382111,
+    "ast_hash": "e51c2b1c60efad23b5c1cd49d5ef7bd3",
+    "semantic_hash": ""
+  },
+  "src/app/admin/ratings/page.tsx": {
+    "mtime": 1785771055.382111,
+    "ast_hash": "3d3dd5da29ff9e6335c7c77c86c3a990",
+    "semantic_hash": ""
+  },
+  "src/app/admin/roles-permission/page.tsx": {
+    "mtime": 1785771055.3831108,
+    "ast_hash": "8cc5f2a964be7d4170f0e15933e6aa72",
+    "semantic_hash": ""
+  },
+  "src/app/admin/services/page.tsx": {
+    "mtime": 1785771055.3831108,
+    "ast_hash": "1eba8e87f48206d5d1d592b005b64278",
+    "semantic_hash": ""
+  },
+  "src/app/admin/users/page.tsx": {
+    "mtime": 1785771055.3841105,
+    "ast_hash": "1f8a24a0d5abea5d87a20913994bcbf5",
+    "semantic_hash": ""
+  },
+  "src/app/api/auth/login/route.ts": {
+    "mtime": 1785771055.3851101,
+    "ast_hash": "a6cc6778aaa7db3410a5d5b6ff059cca",
+    "semantic_hash": ""
+  },
+  "src/app/api/auth/logout/route.ts": {
+    "mtime": 1785771055.3851101,
+    "ast_hash": "581e24450fd15021e7ee3fc50cd1a304",
+    "semantic_hash": ""
+  },
+  "src/app/api/backend/[...path]/route.ts": {
+    "mtime": 1785771055.3861094,
+    "ast_hash": "e0942500b33640864cdda1581e2cf570",
+    "semantic_hash": ""
+  },
+  "src/app/api/health/route.ts": {
+    "mtime": 1785771055.3861094,
+    "ast_hash": "c47286b949b1afc7ab2b2f257133542c",
+    "semantic_hash": ""
+  },
+  "src/app/api/realtime/ticket/route.ts": {
+    "mtime": 1785771055.3861094,
+    "ast_hash": "1b157b3692f6bf36fb464f4a91360fd6",
+    "semantic_hash": ""
+  },
+  "src/app/layout.tsx": {
+    "mtime": 1785771055.388113,
+    "ast_hash": "179b1876eeb7325cec0b3008262ab516",
+    "semantic_hash": ""
+  },
+  "src/app/pro/calificaciones/page.tsx": {
+    "mtime": 1785771055.388113,
+    "ast_hash": "327a36f1db97cf6062b86434bf20a3fd",
+    "semantic_hash": ""
+  },
+  "src/app/pro/layout.tsx": {
+    "mtime": 1785771055.3891125,
+    "ast_hash": "0b31ae8b11502682dcbc7d7da61f07fd",
+    "semantic_hash": ""
+  },
+  "src/app/pro/page.tsx": {
+    "mtime": 1785771055.3891125,
+    "ast_hash": "6ac1904a5cdfe70d6d78411b18a84b3c",
+    "semantic_hash": ""
+  },
+  "src/app/pro/perfil/page.tsx": {
+    "mtime": 1785771055.3891125,
+    "ast_hash": "cbe0676876645b74f9aab711cbd99f99",
+    "semantic_hash": ""
+  },
+  "src/app/pro/servicios/page.tsx": {
+    "mtime": 1785771055.390113,
+    "ast_hash": "c51b8063c9bfd00c493b65a10bf2221d",
+    "semantic_hash": ""
+  },
+  "src/app/pro/solicitudes/page.tsx": {
+    "mtime": 1785771055.390113,
+    "ast_hash": "405f9f368b8ab358c2d2e25b167a9872",
+    "semantic_hash": ""
+  },
+  "src/components/layout/app-sidebar.tsx": {
+    "mtime": 1785771055.391114,
+    "ast_hash": "b56a359def260bfeeb95ea54bd14792d",
+    "semantic_hash": ""
+  },
+  "src/components/layout/client-nav-items.ts": {
+    "mtime": 1785771055.391114,
+    "ast_hash": "d6b9a71aff3d5d6da193ff1e8ba672ac",
+    "semantic_hash": ""
+  },
+  "src/components/layout/data-table.tsx": {
+    "mtime": 1785771055.392114,
+    "ast_hash": "168ed072fda3a4d3f2aa86b256e29df7",
+    "semantic_hash": ""
+  },
+  "src/components/layout/mode-switcher.tsx": {
+    "mtime": 1785771055.3931139,
+    "ast_hash": "68475476c21860fbb1b787b0fc4adc93",
+    "semantic_hash": ""
+  },
+  "src/components/layout/nav-items.ts": {
+    "mtime": 1785771055.394114,
+    "ast_hash": "007fdd05fe1c1a9cab6e97c3a4f30227",
+    "semantic_hash": ""
+  },
+  "src/components/layout/pro-nav-items.ts": {
+    "mtime": 1785771055.394114,
+    "ast_hash": "1bc8a5174e621acabea7ec3d27b3d64d",
+    "semantic_hash": ""
+  },
+  "src/components/layout/theme-toggle.tsx": {
+    "mtime": 1785771055.394114,
+    "ast_hash": "53e396aa9aeb9a1c3c508d81ce919216",
+    "semantic_hash": ""
+  },
+  "src/components/layout/topbar.tsx": {
+    "mtime": 1785771055.3951147,
+    "ast_hash": "ae5634f5692dfd27bf8a5690f3453937",
+    "semantic_hash": ""
+  },
+  "src/components/layout/user-menu.test.tsx": {
+    "mtime": 1785771055.3951147,
+    "ast_hash": "6092bdd683eb0a40f021087e4a7e1e0e",
+    "semantic_hash": ""
+  },
+  "src/components/layout/user-menu.tsx": {
+    "mtime": 1785771055.396115,
+    "ast_hash": "acfceebcb88e483590e749052161a0f9",
+    "semantic_hash": ""
+  },
+  "src/components/ui/alert-dialog.tsx": {
+    "mtime": 1785771055.397114,
+    "ast_hash": "8545cd1d7b8fc51a256836358be55e2a",
+    "semantic_hash": ""
+  },
+  "src/components/ui/alert.tsx": {
+    "mtime": 1785771055.397114,
+    "ast_hash": "24a67b41ccce3893447183bf3bfb184a",
+    "semantic_hash": ""
+  },
+  "src/components/ui/avatar.tsx": {
+    "mtime": 1785771055.398114,
+    "ast_hash": "3d698c4fdbcfa1e37c2ac2f41ea21d7f",
+    "semantic_hash": ""
+  },
+  "src/components/ui/badge.tsx": {
+    "mtime": 1785771055.398114,
+    "ast_hash": "edde1cdbda0de19dc65f25a5266a2821",
+    "semantic_hash": ""
+  },
+  "src/components/ui/button.tsx": {
+    "mtime": 1785771055.3991141,
+    "ast_hash": "cd1679dde99bd34cb957e90a54bab49c",
+    "semantic_hash": ""
+  },
+  "src/components/ui/card.tsx": {
+    "mtime": 1785771055.4001143,
+    "ast_hash": "6dd4f4357d7da3349e7fc76781206612",
+    "semantic_hash": ""
+  },
+  "src/components/ui/checkbox.tsx": {
+    "mtime": 1785771055.4001143,
+    "ast_hash": "fea59f2893d57135afc160cddb296c3d",
+    "semantic_hash": ""
+  },
+  "src/components/ui/dialog.tsx": {
+    "mtime": 1785771055.4011137,
+    "ast_hash": "8fc56fd51cc1ca966813eaf78b2d0889",
+    "semantic_hash": ""
+  },
+  "src/components/ui/dropdown-menu.tsx": {
+    "mtime": 1785771055.4016182,
+    "ast_hash": "0e4eea807e60826ed6208402c8558b9a",
+    "semantic_hash": ""
+  },
+  "src/components/ui/input.tsx": {
+    "mtime": 1785771055.4016182,
+    "ast_hash": "40226b4d9e4fc096f417acf47c5085c4",
+    "semantic_hash": ""
+  },
+  "src/components/ui/label.tsx": {
+    "mtime": 1785771055.4026237,
+    "ast_hash": "de9b33a9f87f43f8096e4d8246c40a70",
+    "semantic_hash": ""
+  },
+  "src/components/ui/pagination.tsx": {
+    "mtime": 1785771055.4026237,
+    "ast_hash": "b090710b38a6d5647ec27f1a6efa4f75",
+    "semantic_hash": ""
+  },
+  "src/components/ui/password-input.tsx": {
+    "mtime": 1785771055.4036236,
+    "ast_hash": "750b146da4c842f3f5739c0c490d29e7",
+    "semantic_hash": ""
+  },
+  "src/components/ui/select.tsx": {
+    "mtime": 1785771055.4036236,
+    "ast_hash": "a10f313c3b9aef0739e92088f3c40696",
+    "semantic_hash": ""
+  },
+  "src/components/ui/separator.tsx": {
+    "mtime": 1785771055.4046237,
+    "ast_hash": "9a6ba10c25ff95a49d3d784edc225d15",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sheet.tsx": {
+    "mtime": 1785771055.4046237,
+    "ast_hash": "3d8aaf6d1c81b4c0b782edcc098aa271",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sidebar.tsx": {
+    "mtime": 1785771055.405624,
+    "ast_hash": "44d826cadf9a6f9208710adf750d69fe",
+    "semantic_hash": ""
+  },
+  "src/components/ui/skeleton.tsx": {
+    "mtime": 1785771055.4066226,
+    "ast_hash": "cc4e9f731c2ab35b4367c9a5ef48b949",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sonner.tsx": {
+    "mtime": 1785771055.4066226,
+    "ast_hash": "ccd6c350501d8ca3ea58625138b7cb29",
+    "semantic_hash": ""
+  },
+  "src/components/ui/switch.tsx": {
+    "mtime": 1785771055.4076233,
+    "ast_hash": "2d33a669489a9ed9ea60be06b141a06b",
+    "semantic_hash": ""
+  },
+  "src/components/ui/table.tsx": {
+    "mtime": 1785771055.4076233,
+    "ast_hash": "9336dc0a4437fc033eb783df9b709918",
+    "semantic_hash": ""
+  },
+  "src/components/ui/textarea.tsx": {
+    "mtime": 1785771055.4086232,
+    "ast_hash": "bd02b4d8a80b4226b542ea0d745dbfff",
+    "semantic_hash": ""
+  },
+  "src/components/ui/tooltip.tsx": {
+    "mtime": 1785771055.4086232,
+    "ast_hash": "8ef238a43e57b44aab2380fb8021803a",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/backend-paths.ts": {
+    "mtime": 1785771055.4096231,
+    "ast_hash": "46ff8b362331bcf9ed2f59afc3bbba7d",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/backend-proxy.ts": {
+    "mtime": 1785771055.4096231,
+    "ast_hash": "4982bccec683fc93bff8ae03805614b5",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/client.test.ts": {
+    "mtime": 1785771055.4106233,
+    "ast_hash": "2cb63b247661448f095ea7cce7b8525f",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/client.ts": {
+    "mtime": 1785771055.4106233,
+    "ast_hash": "fcab56ddc46b41e84d12856218bd836c",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/errors.ts": {
+    "mtime": 1785771055.4106233,
+    "ast_hash": "2efbb4e6550f75fa470026ec45d146f2",
+    "semantic_hash": ""
+  },
+  "src/core/api-client/types.generated.ts": {
+    "mtime": 1785771055.4116342,
+    "ast_hash": "cf4eaf9b35b5ec459b1639e836243f41",
+    "semantic_hash": ""
+  },
+  "src/core/auth/hooks.ts": {
+    "mtime": 1785771055.412624,
+    "ast_hash": "8f25d8ea925a0c8e03b4949ad56eeaa9",
+    "semantic_hash": ""
+  },
+  "src/core/auth/permissions.ts": {
+    "mtime": 1785771055.412624,
+    "ast_hash": "016fc89c9f4dcf21495d4b2b68063fd3",
+    "semantic_hash": ""
+  },
+  "src/core/auth/rsa-encrypt.test.ts": {
+    "mtime": 1785771055.412624,
+    "ast_hash": "d0b7ab91bb5c58aca7b477228aeda1cc",
+    "semantic_hash": ""
+  },
+  "src/core/auth/rsa-encrypt.ts": {
+    "mtime": 1785771055.4136233,
+    "ast_hash": "adec00e8ba6ea8b64c28ebe1019b8086",
+    "semantic_hash": ""
+  },
+  "src/core/auth/session.ts": {
+    "mtime": 1785771055.4136233,
+    "ast_hash": "a0c59dbf120201a462e8e6a7d4e688b4",
+    "semantic_hash": ""
+  },
+  "src/core/config/env.ts": {
+    "mtime": 1785771055.4146235,
+    "ast_hash": "2d75e1f007360bcd1a0a2b27ec15189b",
+    "semantic_hash": ""
+  },
+  "src/core/providers/query-provider.tsx": {
+    "mtime": 1785771055.4181516,
+    "ast_hash": "d9fbf09f6a1c9e88f6503d6d28ce50cf",
+    "semantic_hash": ""
+  },
+  "src/core/providers/theme-provider.tsx": {
+    "mtime": 1785771055.4181516,
+    "ast_hash": "8c55d9444ee8c1da60a9abc7caeed321",
+    "semantic_hash": ""
+  },
+  "src/design-system/tokens/build.mjs": {
+    "mtime": 1785771055.4191566,
+    "ast_hash": "c18b75aa291d15e2021d3e09b1a3f10e",
+    "semantic_hash": ""
+  },
+  "src/features/analytics/api.ts": {
+    "mtime": 1785771055.4211555,
+    "ast_hash": "82c2ba2fe0881025cb3fb426b04ddc19",
+    "semantic_hash": ""
+  },
+  "src/features/analytics/components/overview.test.tsx": {
+    "mtime": 1785771055.4211555,
+    "ast_hash": "05df29e428258928712e6dfb5a9b2459",
+    "semantic_hash": ""
+  },
+  "src/features/analytics/components/overview.tsx": {
+    "mtime": 1785771055.4211555,
+    "ast_hash": "03d23a43a2452e48259d4c66ba3ea71e",
+    "semantic_hash": ""
+  },
+  "src/features/analytics/components/stat-card.tsx": {
+    "mtime": 1785771055.4221556,
+    "ast_hash": "e8ee66c934268cc5b16e2cf1f5dd2768",
+    "semantic_hash": ""
+  },
+  "src/features/analytics/hooks.ts": {
+    "mtime": 1785771055.4221556,
+    "ast_hash": "98bfbd4a9e7d5f3f07019e14eb0bb6b7",
+    "semantic_hash": ""
+  },
+  "src/features/auth/api.ts": {
+    "mtime": 1785771055.4221556,
+    "ast_hash": "a1b40bbf3fe3c21ce1090b145fac4cfa",
+    "semantic_hash": ""
+  },
+  "src/features/auth/components/login-form.test.tsx": {
+    "mtime": 1785771055.4221556,
+    "ast_hash": "d93fc2cf54d46496ce588d18f91c3432",
+    "semantic_hash": ""
+  },
+  "src/features/auth/components/login-form.tsx": {
+    "mtime": 1785771055.4231553,
+    "ast_hash": "882fc2f4640a1b11a5990193ee534816",
+    "semantic_hash": ""
+  },
+  "src/features/auth/hooks.ts": {
+    "mtime": 1785771055.4231553,
+    "ast_hash": "50414339cd48942fcf1a9a65c21beb53",
+    "semantic_hash": ""
+  },
+  "src/features/auth/schemas.ts": {
+    "mtime": 1785771055.4231553,
+    "ast_hash": "14915fe3dc501bdb958c4e9275766fc7",
+    "semantic_hash": ""
+  },
+  "src/features/browse-professionals/api.ts": {
+    "mtime": 1785771055.4241562,
+    "ast_hash": "29c2503eb122628a9dc7aef21671219c",
+    "semantic_hash": ""
+  },
+  "src/features/browse-professionals/components/browse-professionals-list.test.tsx": {
+    "mtime": 1785771055.4241562,
+    "ast_hash": "70dde86e264c4edc1f00ed6deed893e4",
+    "semantic_hash": ""
+  },
+  "src/features/browse-professionals/components/browse-professionals-list.tsx": {
+    "mtime": 1785771055.4241562,
+    "ast_hash": "a03a675313de6d0f10ee2314a638a2f3",
+    "semantic_hash": ""
+  },
+  "src/features/browse-professionals/components/professional-detail-card.tsx": {
+    "mtime": 1785771055.425156,
+    "ast_hash": "191b149d3076812daca4938a037c2b98",
+    "semantic_hash": ""
+  },
+  "src/features/browse-professionals/hooks.ts": {
+    "mtime": 1785771055.425156,
+    "ast_hash": "5639c29b7801ade188a0f652305c3d41",
+    "semantic_hash": ""
+  },
+  "src/features/categories/api.ts": {
+    "mtime": 1785771055.425156,
+    "ast_hash": "2cfe76a33096b7fd8db370e3387bfc90",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/categories-table.test.tsx": {
+    "mtime": 1785771055.4261553,
+    "ast_hash": "243b383638140aaa925bbaba4b43f76b",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/categories-table.tsx": {
+    "mtime": 1785771055.4261553,
+    "ast_hash": "aa38fb37ffbb06e7b0be6be9ed5bb963",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/category-form-dialog.test.tsx": {
+    "mtime": 1785771055.4271555,
+    "ast_hash": "9cca0f21404a8b430c58637a2de2a89f",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/category-form-dialog.tsx": {
+    "mtime": 1785771055.4271555,
+    "ast_hash": "c71a292684b5b05fc9559710755a2c2f",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/new-category-button.tsx": {
+    "mtime": 1785771055.4281566,
+    "ast_hash": "f3ee94d92174c44058448e99437bffaf",
+    "semantic_hash": ""
+  },
+  "src/features/categories/hooks.ts": {
+    "mtime": 1785771055.4281566,
+    "ast_hash": "27c8b476576936b0d35f768b25926fe9",
+    "semantic_hash": ""
+  },
+  "src/features/categories/schemas.ts": {
+    "mtime": 1785771055.4281566,
+    "ast_hash": "f3b760fc7cfcd593b2b60bd56999a316",
+    "semantic_hash": ""
+  },
+  "src/features/locations/api.ts": {
+    "mtime": 1785771055.4291568,
+    "ast_hash": "66e382bc3e90a1e126815175c611ab16",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/locations-explorer.test.tsx": {
+    "mtime": 1785771055.4291568,
+    "ast_hash": "7e3f977bb0ed498494a464a88ee7735d",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/locations-explorer.tsx": {
+    "mtime": 1785771055.4291568,
+    "ast_hash": "f334c7fd599e255c60fcbc5252ff0323",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/locations-map.test.tsx": {
+    "mtime": 1785771055.430156,
+    "ast_hash": "d759cb0dee7c963075bfef97cb35b7cb",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/locations-map.tsx": {
+    "mtime": 1785771055.430156,
+    "ast_hash": "4e9e0524fda32d4aeaa6a6faeb1ded41",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/nearby-search-form.test.tsx": {
+    "mtime": 1785771055.430156,
+    "ast_hash": "547c2e6defe45334e045973f1676d0f2",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/nearby-search-form.tsx": {
+    "mtime": 1785771055.4311564,
+    "ast_hash": "0a9301aaac856b4746fc029889e83da6",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/online-professionals-stat.test.tsx": {
+    "mtime": 1785771055.4311564,
+    "ast_hash": "76ae310fcbd9ef005e0ac94db3a5e5a5",
+    "semantic_hash": ""
+  },
+  "src/features/locations/components/online-professionals-stat.tsx": {
+    "mtime": 1785771055.4311564,
+    "ast_hash": "85b4d1e393c6fda1c11f01a6357656dd",
+    "semantic_hash": ""
+  },
+  "src/features/locations/hooks.ts": {
+    "mtime": 1785771055.4311564,
+    "ast_hash": "6c839b670ea0d636fb6bb3db3b7ad692",
+    "semantic_hash": ""
+  },
+  "src/features/locations/schemas.ts": {
+    "mtime": 1785771055.432156,
+    "ast_hash": "73d37e23cd278986ec71e71de8e64bb1",
+    "semantic_hash": ""
+  },
+  "src/features/my-services/api.ts": {
+    "mtime": 1785771055.4341564,
+    "ast_hash": "aa90bd38962c15ad746d0ecf980a0e15",
+    "semantic_hash": ""
+  },
+  "src/features/my-services/components/cancel-service-dialog.tsx": {
+    "mtime": 1785771055.4341564,
+    "ast_hash": "3cb68093d1cb40bc4de9f6828da5fc23",
+    "semantic_hash": ""
+  },
+  "src/features/my-services/components/my-client-services-table.test.tsx": {
+    "mtime": 1785771055.4351554,
+    "ast_hash": "bafbff9f5d4cdd1d179c32f2c397c118",
+    "semantic_hash": ""
+  },
+  "src/features/my-services/components/my-client-services-table.tsx": {
+    "mtime": 1785771055.4361727,
+    "ast_hash": "068b16be1e494ca0e7c6e311a0fd8156",
+    "semantic_hash": ""
+  },
+  "src/features/my-services/hooks.ts": {
+    "mtime": 1785771055.4361727,
+    "ast_hash": "82df48f5748881c94bf4340a7caef0bf",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/api.ts": {
+    "mtime": 1785771055.4361727,
+    "ast_hash": "67d70cbbe5a3461caf668a9a61695402",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/new-notification-dialog.test.tsx": {
+    "mtime": 1785771055.4371593,
+    "ast_hash": "3dd838c63d1e4f452417fb8b446d6005",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/new-notification-dialog.tsx": {
+    "mtime": 1785771055.4371593,
+    "ast_hash": "a6343016255450e744b2cc641343b48e",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/notifications-table.test.tsx": {
+    "mtime": 1785771055.438159,
+    "ast_hash": "fe86563e69d057184a5536d20883c01d",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/notifications-table.tsx": {
+    "mtime": 1785771055.438159,
+    "ast_hash": "fe19fafd338945a1f8e34c05de9b2a68",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/hooks.ts": {
+    "mtime": 1785771055.4391599,
+    "ast_hash": "230082c9e78656478408b905afb93989",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/schemas.ts": {
+    "mtime": 1785771055.4401608,
+    "ast_hash": "2ad7fb78393053593deff908047b5361",
+    "semantic_hash": ""
+  },
+  "src/features/payments/api.ts": {
+    "mtime": 1785771055.4401608,
+    "ast_hash": "8fb61a6b0b3aee9dec31ec5e2c925724",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/cancel-payment-dialog.tsx": {
+    "mtime": 1785771055.44116,
+    "ast_hash": "633e38918b98bc541f6ce3a72fa1c820",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/payments-table.test.tsx": {
+    "mtime": 1785771055.4421616,
+    "ast_hash": "0aeaca9af1a268d335f128bb445c8abf",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/payments-table.tsx": {
+    "mtime": 1785771055.4421616,
+    "ast_hash": "5909a4168fe57be03f4236f5544b32b7",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/refund-payment-dialog.tsx": {
+    "mtime": 1785771055.4421616,
+    "ast_hash": "20b563b9985142723cdd1a94e33834b4",
+    "semantic_hash": ""
+  },
+  "src/features/payments/hooks.ts": {
+    "mtime": 1785771055.443161,
+    "ast_hash": "5c2b9d78047791d60881545ceacb6cf2",
+    "semantic_hash": ""
+  },
+  "src/features/payments/schemas.ts": {
+    "mtime": 1785771055.443161,
+    "ast_hash": "7fe3e0e5b2144e3bdd24c5463e2bbd13",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/api.ts": {
+    "mtime": 1785771055.443161,
+    "ast_hash": "e72446987611ce930d1d36ff6a987a21",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/availability-toggle.tsx": {
+    "mtime": 1785771055.4441605,
+    "ast_hash": "8b20f97a72cf10fcaa276de7a75bec3a",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/pro-mode-link.tsx": {
+    "mtime": 1785771055.4441605,
+    "ast_hash": "618f013c858b3b58c1157acdd85e21db",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/professional-gate.test.tsx": {
+    "mtime": 1785771055.4451602,
+    "ast_hash": "f37ed74f7602b3f4140299d2d1f22e3d",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/professional-gate.tsx": {
+    "mtime": 1785771055.4451602,
+    "ast_hash": "f645aa375780cee299daa981ce4933b1",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/professional-profile-form.test.tsx": {
+    "mtime": 1785771055.4451602,
+    "ast_hash": "db5fe95bbae3c02a74b32937b32c44fd",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/components/professional-profile-form.tsx": {
+    "mtime": 1785771055.4461613,
+    "ast_hash": "b44d455018e0094d503f1ecd941f0823",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/hooks.ts": {
+    "mtime": 1785771055.4461613,
+    "ast_hash": "77b4dc306946ee8e25d187e58515ac58",
+    "semantic_hash": ""
+  },
+  "src/features/professional-profile/schemas.ts": {
+    "mtime": 1785771055.4461613,
+    "ast_hash": "93ee325dd31cfe3451e1ecdfb003f890",
+    "semantic_hash": ""
+  },
+  "src/features/professional-ratings/api.ts": {
+    "mtime": 1785771055.4471605,
+    "ast_hash": "fcee32effbf5f2f02f443f16c2cdbb93",
+    "semantic_hash": ""
+  },
+  "src/features/professional-ratings/components/rate-client-dialog.tsx": {
+    "mtime": 1785771055.4471605,
+    "ast_hash": "83929d12a6f366eb359dffdc82a82d0c",
+    "semantic_hash": ""
+  },
+  "src/features/professional-ratings/components/reviews-table.tsx": {
+    "mtime": 1785771055.4481604,
+    "ast_hash": "0b0548f9bbcb955aaa64bd3fa7b53f19",
+    "semantic_hash": ""
+  },
+  "src/features/professional-ratings/hooks.ts": {
+    "mtime": 1785771055.4481604,
+    "ast_hash": "c676fc08e136c077bfaf1391115324f4",
+    "semantic_hash": ""
+  },
+  "src/features/professional-ratings/schemas.ts": {
+    "mtime": 1785771055.4481604,
+    "ast_hash": "b8301e0e51c8c88af53aa51b89e091a4",
+    "semantic_hash": ""
+  },
+  "src/features/professional-requests/api.ts": {
+    "mtime": 1785771055.449161,
+    "ast_hash": "b393d89d4b0433499302864533dc287b",
+    "semantic_hash": ""
+  },
+  "src/features/professional-requests/components/pending-services-table.test.tsx": {
+    "mtime": 1785771055.449161,
+    "ast_hash": "ef7a771d7d57a305447a49bc54e61e88",
+    "semantic_hash": ""
+  },
+  "src/features/professional-requests/components/pending-services-table.tsx": {
+    "mtime": 1785771055.4501603,
+    "ast_hash": "9e747fc63ff37ccdfa1f6e8714877cd5",
+    "semantic_hash": ""
+  },
+  "src/features/professional-requests/hooks.ts": {
+    "mtime": 1785771055.4501603,
+    "ast_hash": "43201eb2851303a781f8a09020ba8975",
+    "semantic_hash": ""
+  },
+  "src/features/professional-services/api.ts": {
+    "mtime": 1785771055.4501603,
+    "ast_hash": "ecc3bc01ddee0dc1631983083aae952c",
+    "semantic_hash": ""
+  },
+  "src/features/professional-services/components/my-services-table.test.tsx": {
+    "mtime": 1785771055.4511595,
+    "ast_hash": "52412fffe057bda43fccf7fb335afbf6",
+    "semantic_hash": ""
+  },
+  "src/features/professional-services/components/my-services-table.tsx": {
+    "mtime": 1785771055.4511595,
+    "ast_hash": "090963816abd324f19598c9576f36c05",
+    "semantic_hash": ""
+  },
+  "src/features/professional-services/hooks.ts": {
+    "mtime": 1785771055.4511595,
+    "ast_hash": "e0e70426161151f8ca9d2692fc967ad1",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/api.ts": {
+    "mtime": 1785771055.4522033,
+    "ast_hash": "a7c311497cfcebb1304b7961e84d0872",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/professionals-table.test.tsx": {
+    "mtime": 1785771055.4532046,
+    "ast_hash": "8cb694e22e6c812ee2bff7a36591b15d",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/professionals-table.tsx": {
+    "mtime": 1785771055.4532046,
+    "ast_hash": "fc9659ea34257b20044bec9f19f45ea6",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/suspend-professional-dialog.test.tsx": {
+    "mtime": 1785771055.4542036,
+    "ast_hash": "4f288f2a84f785bd74ea0ffd3bc7d54b",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/suspend-professional-dialog.tsx": {
+    "mtime": 1785771055.4542036,
+    "ast_hash": "d145eda892debbff92cbe28690295c2a",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/verify-professional-dialog.test.tsx": {
+    "mtime": 1785771055.4542036,
+    "ast_hash": "0cf2bc2b072272003b539e1f07ae6a53",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/verify-professional-dialog.tsx": {
+    "mtime": 1785771055.4542036,
+    "ast_hash": "e083a3df24fb133f157eb085b71a6cc6",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/hooks.ts": {
+    "mtime": 1785771055.455614,
+    "ast_hash": "8eb8fb5ca2ff661b1a347639bdddb41a",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/schemas.ts": {
+    "mtime": 1785771055.455614,
+    "ast_hash": "9b777248a8f017dee1f22067696941c4",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/api.ts": {
+    "mtime": 1785771055.455614,
+    "ast_hash": "1c924a7ed6c150b77854306f573441fe",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotion-form-dialog.test.tsx": {
+    "mtime": 1785771055.457618,
+    "ast_hash": "9302d6ba5a14edd0ee65031522d539a3",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotion-form-dialog.tsx": {
+    "mtime": 1785771055.457618,
+    "ast_hash": "073166b5bd66944bc3d48c68e7322d50",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotions-table.test.tsx": {
+    "mtime": 1785771055.457618,
+    "ast_hash": "52018f5083ebf6b37a9753004724cc2b",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotions-table.tsx": {
+    "mtime": 1785771055.4586184,
+    "ast_hash": "d5c3c78bce3104f1eca9bfe7dc823442",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/hooks.ts": {
+    "mtime": 1785771055.4586184,
+    "ast_hash": "49d3909c47b82bee22353c83ff89730e",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/schemas.ts": {
+    "mtime": 1785771055.4586184,
+    "ast_hash": "3c984ae8d5609593062d0f390eb2175d",
+    "semantic_hash": ""
+  },
+  "src/features/rate-professional/api.ts": {
+    "mtime": 1785771055.4596183,
+    "ast_hash": "77a8a62404f304443d7c516d433c7574",
+    "semantic_hash": ""
+  },
+  "src/features/rate-professional/components/rate-professional-dialog.tsx": {
+    "mtime": 1785771055.4596183,
+    "ast_hash": "13b9ca3ec33359af16b1f3bef7323813",
+    "semantic_hash": ""
+  },
+  "src/features/rate-professional/hooks.ts": {
+    "mtime": 1785771055.4596183,
+    "ast_hash": "ec1c524f7c0a766bdd11e62f0a3a07b3",
+    "semantic_hash": ""
+  },
+  "src/features/rate-professional/schemas.ts": {
+    "mtime": 1785771055.4606192,
+    "ast_hash": "e50d8b99bd7c72f2da380f9bb5d9f212",
+    "semantic_hash": ""
+  },
+  "src/features/ratings/api.ts": {
+    "mtime": 1785771055.4606192,
+    "ast_hash": "608ac33f38f165af27cd7a2df14d0fff",
+    "semantic_hash": ""
+  },
+  "src/features/ratings/components/ratings-table.test.tsx": {
+    "mtime": 1785771055.461619,
+    "ast_hash": "e695126b84d9b7d0de610568523492ab",
+    "semantic_hash": ""
+  },
+  "src/features/ratings/components/ratings-table.tsx": {
+    "mtime": 1785771055.461619,
+    "ast_hash": "89c5d8f0ce45a1a1035bbe291e2242a1",
+    "semantic_hash": ""
+  },
+  "src/features/ratings/hooks.ts": {
+    "mtime": 1785771055.461619,
+    "ast_hash": "aaf2f5194f7e6860ce53bf32381dc5c0",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/api.ts": {
+    "mtime": 1785771055.4626205,
+    "ast_hash": "44b53d0cce76d4bae99f97ddbe191518",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/components/location-picker-map.tsx": {
+    "mtime": 1785771055.4626205,
+    "ast_hash": "1935fbfc2257468272dad42036f2c81c",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/components/request-service-form.test.tsx": {
+    "mtime": 1785771055.4636197,
+    "ast_hash": "c2789dfe5f73e48c8472e78347d26cd7",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/components/request-service-form.tsx": {
+    "mtime": 1785771055.4636197,
+    "ast_hash": "b32dd16c8dd1355ec470cabf67562393",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/hooks.ts": {
+    "mtime": 1785771055.464619,
+    "ast_hash": "d38f5689e8c52208e608065f7b270660",
+    "semantic_hash": ""
+  },
+  "src/features/request-service/schemas.ts": {
+    "mtime": 1785771055.4651222,
+    "ast_hash": "0cf7e84a9298cc89fd84fe33079cc5e1",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/api.ts": {
+    "mtime": 1785771055.4651222,
+    "ast_hash": "26c0a9b51947289d59e8d62e1d424bec",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/permissions-picker.test.tsx": {
+    "mtime": 1785771055.4651222,
+    "ast_hash": "1bef294a4b8178d931973e3e734f502c",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/permissions-picker.tsx": {
+    "mtime": 1785771055.466127,
+    "ast_hash": "314ace54b54dd26697a27955ec6219a4",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/role-form-dialog.test.tsx": {
+    "mtime": 1785771055.4671278,
+    "ast_hash": "2a8620c5fcbf87806c848de867380d09",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/role-form-dialog.tsx": {
+    "mtime": 1785771055.4671278,
+    "ast_hash": "7d424a5f4f536644cb76b0473acb565a",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/roles-table.test.tsx": {
+    "mtime": 1785771055.4671278,
+    "ast_hash": "084cea2ef55294da99b6695cbbe3c908",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/roles-table.tsx": {
+    "mtime": 1785771055.4681263,
+    "ast_hash": "5dce3f8abea2f2db29c4b0ff15c12f2a",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/hooks.ts": {
+    "mtime": 1785771055.4681263,
+    "ast_hash": "a4b8d3f228476217a5901b19c526c6f1",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/schemas.ts": {
+    "mtime": 1785771055.4681263,
+    "ast_hash": "a5a7568e8af34f8f54e4d5111e28c3d2",
+    "semantic_hash": ""
+  },
+  "src/features/services/api.ts": {
+    "mtime": 1785771055.469127,
+    "ast_hash": "fd800f9630cc8bb07c3b4a7351461a9a",
+    "semantic_hash": ""
+  },
+  "src/features/services/components/services-table.test.tsx": {
+    "mtime": 1785771055.4701273,
+    "ast_hash": "70e5bc2a34688a15332cf9cfdeb5311b",
+    "semantic_hash": ""
+  },
+  "src/features/services/components/services-table.tsx": {
+    "mtime": 1785771055.4701273,
+    "ast_hash": "488919a42f5ff09ace82c373e8ff361f",
+    "semantic_hash": ""
+  },
+  "src/features/services/hooks.ts": {
+    "mtime": 1785771055.4701273,
+    "ast_hash": "4b05fdb95f7bbd030c2fa814e7eda6f8",
+    "semantic_hash": ""
+  },
+  "src/features/users/api.ts": {
+    "mtime": 1785771055.4711275,
+    "ast_hash": "2b62eff2a084674f9b5049c5d29b640f",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/users-table.test.tsx": {
+    "mtime": 1785771055.4731276,
+    "ast_hash": "87f33593e37188506189725c6634ab9b",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/users-table.tsx": {
+    "mtime": 1785771055.4731276,
+    "ast_hash": "d0aa8032e6b959d7342879b2ed6f9eaa",
+    "semantic_hash": ""
+  },
+  "src/features/users/hooks.ts": {
+    "mtime": 1785771055.4731276,
+    "ast_hash": "3791d5ca8e3374b36ce1ef37adf02f23",
+    "semantic_hash": ""
+  },
+  "src/hooks/use-mobile.ts": {
+    "mtime": 1785771055.4741268,
+    "ast_hash": "464a4079306d55b369d8f67b7cfbad0f",
+    "semantic_hash": ""
+  },
+  "src/lib/formatters.test.ts": {
+    "mtime": 1785771055.476127,
+    "ast_hash": "d1fad16d3901cb9d3c6e7095313c066c",
+    "semantic_hash": ""
+  },
+  "src/lib/formatters.ts": {
+    "mtime": 1785771055.476127,
+    "ast_hash": "e8b6a8a0c4f3e32d897c38c848ae4acd",
+    "semantic_hash": ""
+  },
+  "src/lib/utils.test.ts": {
+    "mtime": 1785771055.476127,
+    "ast_hash": "c694e3e16385f1af4cd827d18e6daf9c",
+    "semantic_hash": ""
+  },
+  "src/lib/utils.ts": {
+    "mtime": 1785771055.476127,
+    "ast_hash": "0a3d688a6c4a897d87fc887b5e421c60",
+    "semantic_hash": ""
+  },
+  "src/proxy.ts": {
+    "mtime": 1785771055.4771276,
+    "ast_hash": "092c9947e42a18c2220ba1d45ef6ee03",
+    "semantic_hash": ""
+  },
+  "src/test/empty-module.ts": {
+    "mtime": 1785771055.4771276,
+    "ast_hash": "ad9e711cecc8d68477ce30527af94f12",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers.ts": {
+    "mtime": 1785771055.4786317,
+    "ast_hash": "97e84e0ae2c2f7ebfb77a8b2c9ecee8b",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/analytics.ts": {
+    "mtime": 1785771055.4786317,
+    "ast_hash": "4f9bffc9acd9a29cfc633e784c20a037",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/auth.ts": {
+    "mtime": 1785771055.4786317,
+    "ast_hash": "e5b5536c7101d12d0299d00943bf21f2",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/categories.ts": {
+    "mtime": 1785771055.4796374,
+    "ast_hash": "88dcd2e1145d8b1dee6a053a3c1efdf5",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/client-mode.ts": {
+    "mtime": 1785771055.4796374,
+    "ast_hash": "5c6c5af409628d7c84a7df2436399919",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/locations.ts": {
+    "mtime": 1785771055.4806378,
+    "ast_hash": "99db115243f17b4be0eae678b480081b",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/notifications.ts": {
+    "mtime": 1785771055.4806378,
+    "ast_hash": "58f65d44d6f095316a64f5805407ced1",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/payments.ts": {
+    "mtime": 1785771055.4806378,
+    "ast_hash": "f9b568bdad8ba02c261f71e222d63719",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/professional-mode.ts": {
+    "mtime": 1785771055.481638,
+    "ast_hash": "02c50eb63e1dd78d13e6b4638be20008",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/professionals.ts": {
+    "mtime": 1785771055.481638,
+    "ast_hash": "fec975b88538635b3c327a6f845155d5",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/promotions.ts": {
+    "mtime": 1785771055.481638,
+    "ast_hash": "aed9f5b3afb03a3031a66f9bf8f635c7",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/ratings.ts": {
+    "mtime": 1785771055.482637,
+    "ast_hash": "a4b91751859e193e0c519dd0102ad883",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/roles.ts": {
+    "mtime": 1785771055.482637,
+    "ast_hash": "31961b6b2ca01e1397ed2fb5cf099e39",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/services.ts": {
+    "mtime": 1785771055.482637,
+    "ast_hash": "0340ada509ff56c91d7a71ddbace3ec7",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/users.ts": {
+    "mtime": 1785771055.483637,
+    "ast_hash": "ab17f48f9a141403131fe1bdc20b939f",
+    "semantic_hash": ""
+  },
+  "src/test/msw/server.ts": {
+    "mtime": 1785771055.483637,
+    "ast_hash": "010cb9e7a00ba88434974b47f047d3fc",
+    "semantic_hash": ""
+  },
+  "src/test/query-client.ts": {
+    "mtime": 1785771055.483637,
+    "ast_hash": "3ca6bf6be3462259be6a4b84d617e58d",
+    "semantic_hash": ""
+  },
+  "src/test/setup.ts": {
+    "mtime": 1785771055.4846377,
+    "ast_hash": "50d37b9f54abb9829efe3b59df324b71",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1785771055.485637,
+    "ast_hash": "0a2f4ed9289b65cd3feb4fb4ab3a4fcd",
+    "semantic_hash": ""
+  },
+  "vitest.config.ts": {
+    "mtime": 1785771055.485637,
+    "ast_hash": "eacf358c664c5a98bcc4382e8bf02315",
+    "semantic_hash": ""
+  },
+  ".claude/CLAUDE.md": {
+    "mtime": 1785771055.2927146,
+    "ast_hash": "f031d2772738298a596f45b2d9964a5b",
+    "semantic_hash": ""
+  },
+  ".claude/agents/code-reviewer.md": {
+    "mtime": 1785771055.2937138,
+    "ast_hash": "4459b0eea410fd18e3f67e5e660fc412",
+    "semantic_hash": ""
+  },
+  ".claude/agents/design-system-agent.md": {
+    "mtime": 1785771055.2937138,
+    "ast_hash": "dd8d31fd7d912c6ed4ae1bb6f5e6c07b",
+    "semantic_hash": ""
+  },
+  ".claude/agents/tdd-refactor.md": {
+    "mtime": 1785771055.2937138,
+    "ast_hash": "00f4ec8a491b925a00573c93805e2c3e",
+    "semantic_hash": ""
+  },
+  ".claude/agents/testing-agent.md": {
+    "mtime": 1785771055.2947137,
+    "ast_hash": "9355078255cc188720183a36a611a937",
+    "semantic_hash": ""
+  },
+  ".claude/documentation/architecture.md": {
+    "mtime": 1785771055.2947137,
+    "ast_hash": "396e60f389fe4be3bf4f686d5f08a6b7",
+    "semantic_hash": ""
+  },
+  ".claude/documentation/context.md": {
+    "mtime": 1785771055.2947137,
+    "ast_hash": "171515a67041efdde7bf20e446181eb3",
+    "semantic_hash": ""
+  },
+  ".claude/memory/memory.md": {
+    "mtime": 1785771055.2957137,
+    "ast_hash": "3f239dc0af12360fbf84f0a8be314918",
+    "semantic_hash": ""
+  },
+  ".claude/memory/sessions/session_1_scaffold_bff_appshell.md": {
+    "mtime": 1785771055.2967145,
+    "ast_hash": "8dc8d2843b21cad500dc02606117d1d2",
+    "semantic_hash": ""
+  },
+  ".claude/rules/design-system.md": {
+    "mtime": 1785771055.297714,
+    "ast_hash": "dd65164ee1aa6d6737e72049c289f7da",
+    "semantic_hash": ""
+  },
+  ".claude/rules/infra.md": {
+    "mtime": 1785771055.297714,
+    "ast_hash": "33f7ee4d62b911a36b0567e787d78ea1",
+    "semantic_hash": ""
+  },
+  ".claude/rules/test.md": {
+    "mtime": 1785771055.2987137,
+    "ast_hash": "c8a03c31bc0a0e017f01c10ad523bd21",
+    "semantic_hash": ""
+  },
+  ".claude/rules/typescript.md": {
+    "mtime": 1785771055.2987137,
+    "ast_hash": "5da8e21a1cf599015c8b23dc2b1c4f2e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/SKILL.md": {
+    "mtime": 1785771055.2997139,
+    "ast_hash": "1142dcf65d481cd033260d4a559398f9",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/add-watch.md": {
+    "mtime": 1785771055.2997139,
+    "ast_hash": "1d5c80491d0a41227d28df93eb0489aa",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/exports.md": {
+    "mtime": 1785771055.3012173,
+    "ast_hash": "e9945193d8d64be2e49ab744f023a730",
+    "semantic_hash": ""
+  },
+  ".claude/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1785771055.3012173,
     "ast_hash": "a50d4409dbac381356a25ca0905d833c",
     "semantic_hash": "a50d4409dbac381356a25ca0905d833c"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\github-and-merge.md": {
-    "mtime": 1784680652.6033819,
-    "ast_hash": "aa0e7ef186392cad062e60483ca7dbbf",
-    "semantic_hash": "aa0e7ef186392cad062e60483ca7dbbf"
+  ".claude/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1785771055.3012173,
+    "ast_hash": "ae9de43373a6df2957032bde8b2bfa3c",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\hooks.md": {
-    "mtime": 1784680652.60439,
+  ".claude/skills/graphify/references/hooks.md": {
+    "mtime": 1785771055.3012173,
     "ast_hash": "0045c2f12c69bff3a641a8908a1ac057",
     "semantic_hash": "0045c2f12c69bff3a641a8908a1ac057"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\query.md": {
-    "mtime": 1784680652.60439,
-    "ast_hash": "82efbb856d6a3e15e7d78743b34a63c1",
-    "semantic_hash": "82efbb856d6a3e15e7d78743b34a63c1"
+  ".claude/skills/graphify/references/query.md": {
+    "mtime": 1785771055.3022215,
+    "ast_hash": "0887d740446c1ccb6553b95356ac5a7a",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\transcribe.md": {
-    "mtime": 1784680652.60439,
-    "ast_hash": "cf217decf113af55483edfa042f22db5",
-    "semantic_hash": "cf217decf113af55483edfa042f22db5"
+  ".claude/skills/graphify/references/transcribe.md": {
+    "mtime": 1785771055.3022215,
+    "ast_hash": "7d6574c7f34c9be6bf37fce3e5290654",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.claude\\skills\\graphify\\references\\update.md": {
-    "mtime": 1784680652.6053927,
-    "ast_hash": "d9a58cbd4846113826f18de077d77f2b",
-    "semantic_hash": "d9a58cbd4846113826f18de077d77f2b"
+  ".claude/skills/graphify/references/update.md": {
+    "mtime": 1785771055.3022215,
+    "ast_hash": "7777f64d89686653528cb34381412d4e",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\.github\\workflows\\pipeline.yml": {
-    "mtime": 1784581365.7437453,
-    "ast_hash": "786bee80d7100e16d96a40c0be0f36f5",
-    "semantic_hash": "786bee80d7100e16d96a40c0be0f36f5"
+  ".github/workflows/pipeline.yml": {
+    "mtime": 1785771055.3032227,
+    "ast_hash": "c33d003c66a7422de258933f3357879a",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\AGENTS.md": {
-    "mtime": 1784577332.1473446,
-    "ast_hash": "9e09241799026ac05be315a2f0b50055",
-    "semantic_hash": "9e09241799026ac05be315a2f0b50055"
+  "AGENTS.md": {
+    "mtime": 1785771055.3062227,
+    "ast_hash": "102d55bd6ab4d620d13d77a2f7b8ae8f",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\README.md": {
-    "mtime": 1784580017.594414,
-    "ast_hash": "ae726682ee3296e65c036b379c6dcbc2",
-    "semantic_hash": "ae726682ee3296e65c036b379c6dcbc2"
+  "README.md": {
+    "mtime": 1785771055.3072221,
+    "ast_hash": "7a8f9aef06318a785503fd66323b7fbe",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\develop\\1_deployment.yml": {
-    "mtime": 1784580478.9979622,
-    "ast_hash": "0c0eea9faefca782d2a0da8b091d66e2",
-    "semantic_hash": "0c0eea9faefca782d2a0da8b091d66e2"
+  "ci/develop/1_deployment.yml": {
+    "mtime": 1785771055.3297298,
+    "ast_hash": "29cf73d3aa02060483b40cf2bc8db75f",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\develop\\2_service.yml": {
-    "mtime": 1784580479.0254843,
-    "ast_hash": "73b251cee1d03091fa31e4d9ff1f0911",
-    "semantic_hash": "73b251cee1d03091fa31e4d9ff1f0911"
+  "ci/develop/2_service.yml": {
+    "mtime": 1785771055.3297298,
+    "ast_hash": "17fbcabb8a3ef245f0f8b3fb17368aef",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\develop\\3_ingress.yml": {
-    "mtime": 1784580479.058021,
-    "ast_hash": "155618748fc06feb6427ab1418676791",
-    "semantic_hash": "155618748fc06feb6427ab1418676791"
+  "ci/develop/3_ingress.yml": {
+    "mtime": 1785771055.33073,
+    "ast_hash": "8d04f17455fa3a01c66251bff5267b38",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\develop\\4_hpa.yml": {
-    "mtime": 1784580479.110575,
-    "ast_hash": "a878ba12a74af1f9c97c5657ca7fca48",
-    "semantic_hash": "a878ba12a74af1f9c97c5657ca7fca48"
+  "ci/develop/4_hpa.yml": {
+    "mtime": 1785771055.33073,
+    "ast_hash": "a022286e89f6a32f32f689a9c20ebee1",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\master\\1_deployment.yml": {
-    "mtime": 1784580479.3624392,
-    "ast_hash": "c7bc88221c166ca615a659715dc04697",
-    "semantic_hash": "c7bc88221c166ca615a659715dc04697"
+  "ci/master/1_deployment.yml": {
+    "mtime": 1785771055.331728,
+    "ast_hash": "0322b2b44c5d03b05696ea599d791016",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\master\\2_service.yml": {
-    "mtime": 1784580479.3809469,
-    "ast_hash": "73b251cee1d03091fa31e4d9ff1f0911",
-    "semantic_hash": "73b251cee1d03091fa31e4d9ff1f0911"
+  "ci/master/2_service.yml": {
+    "mtime": 1785771055.331728,
+    "ast_hash": "17fbcabb8a3ef245f0f8b3fb17368aef",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\master\\3_ingress.yml": {
-    "mtime": 1784590469.9457207,
-    "ast_hash": "d7d2a635a566acee4ec810b8bb4b2131",
-    "semantic_hash": "d7d2a635a566acee4ec810b8bb4b2131"
+  "ci/master/3_ingress.yml": {
+    "mtime": 1785771055.3327281,
+    "ast_hash": "175c58db2757f8f581847b71b91ec48f",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\master\\4_hpa.yml": {
-    "mtime": 1784580479.431488,
-    "ast_hash": "a878ba12a74af1f9c97c5657ca7fca48",
-    "semantic_hash": "a878ba12a74af1f9c97c5657ca7fca48"
+  "ci/master/4_hpa.yml": {
+    "mtime": 1785771055.3327281,
+    "ast_hash": "a022286e89f6a32f32f689a9c20ebee1",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\qa\\1_deployment.yml": {
-    "mtime": 1784580479.2101812,
-    "ast_hash": "583de315b99a8b1e949840f39719b1ca",
-    "semantic_hash": "583de315b99a8b1e949840f39719b1ca"
+  "ci/qa/1_deployment.yml": {
+    "mtime": 1785771055.3337278,
+    "ast_hash": "b52d3e00f31645b5138ef3fd667f23ef",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\qa\\2_service.yml": {
-    "mtime": 1784580479.2422266,
-    "ast_hash": "73b251cee1d03091fa31e4d9ff1f0911",
-    "semantic_hash": "73b251cee1d03091fa31e4d9ff1f0911"
+  "ci/qa/2_service.yml": {
+    "mtime": 1785771055.3337278,
+    "ast_hash": "17fbcabb8a3ef245f0f8b3fb17368aef",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\qa\\3_ingress.yml": {
-    "mtime": 1784580479.2654076,
-    "ast_hash": "9de619500a591562cc93bbd8a7a36567",
-    "semantic_hash": "9de619500a591562cc93bbd8a7a36567"
+  "ci/qa/3_ingress.yml": {
+    "mtime": 1785771055.3337278,
+    "ast_hash": "64d97cc9bd8e9ee21908c9575b4175cf",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\ci\\qa\\4_hpa.yml": {
-    "mtime": 1784580479.2859461,
-    "ast_hash": "a878ba12a74af1f9c97c5657ca7fca48",
-    "semantic_hash": "a878ba12a74af1f9c97c5657ca7fca48"
+  "ci/qa/4_hpa.yml": {
+    "mtime": 1785771055.3347292,
+    "ast_hash": "a022286e89f6a32f32f689a9c20ebee1",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\pnpm-workspace.yaml": {
-    "mtime": 1784577332.2447157,
-    "ast_hash": "b6e0a9c1a7b488c11a1c5812b4ed319b",
-    "semantic_hash": "b6e0a9c1a7b488c11a1c5812b4ed319b"
+  "pnpm-workspace.yaml": {
+    "mtime": 1785771055.3652399,
+    "ast_hash": "64e6e4b1d97d3252ca8e663662d8eb85",
+    "semantic_hash": ""
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\public\\file.svg": {
-    "mtime": 1784577332.220083,
+  "public/file.svg": {
+    "mtime": 1785771055.3702407,
     "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
     "semantic_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\public\\globe.svg": {
-    "mtime": 1784577332.1980782,
+  "public/globe.svg": {
+    "mtime": 1785771055.3702407,
     "ast_hash": "2aaafa6a49b6563925fe440891e32717",
     "semantic_hash": "2aaafa6a49b6563925fe440891e32717"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\public\\next.svg": {
-    "mtime": 1784577332.2310815,
+  "public/next.svg": {
+    "mtime": 1785771055.371745,
     "ast_hash": "8e061864f388b47f33a1c3780831193e",
     "semantic_hash": "8e061864f388b47f33a1c3780831193e"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\public\\vercel.svg": {
-    "mtime": 1784577332.208077,
+  "public/vercel.svg": {
+    "mtime": 1785771055.371745,
     "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
     "semantic_hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
   },
-  "C:\\workspace\\TekoApp-Frontend-Web\\public\\window.svg": {
-    "mtime": 1784577332.2427168,
+  "public/window.svg": {
+    "mtime": 1785771055.3727517,
     "ast_hash": "a2760511c65806022ad20adf74370ff3",
     "semantic_hash": "a2760511c65806022ad20adf74370ff3"
+  },
+  ".claude/settings.json": {
+    "mtime": 1785771055.2987137,
+    "ast_hash": "494c180bd681232407fa431bbe0d3a1b",
+    "semantic_hash": ""
+  },
+  ".storybook/main.ts": {
+    "mtime": 1785771055.3062227,
+    "ast_hash": "c8f4a4d0e23fb2a382c00868e58c09a7",
+    "semantic_hash": ""
+  },
+  ".storybook/preview.ts": {
+    "mtime": 1785771055.3062227,
+    "ast_hash": "8c43d36b50b319c0e5a99af5862ab982",
+    "semantic_hash": ""
+  },
+  "messages/en.json": {
+    "mtime": 1785771055.3612404,
+    "ast_hash": "cece533506b33fdb37ae75d5a388a8d7",
+    "semantic_hash": ""
+  },
+  "messages/es.json": {
+    "mtime": 1785771055.3612404,
+    "ast_hash": "c94fbc15d043605a2168e73504bb07e3",
+    "semantic_hash": ""
+  },
+  "public/sw.js": {
+    "mtime": 1785771055.371745,
+    "ast_hash": "b178959da43ccd45d79bf78a233ac058",
+    "semantic_hash": ""
+  },
+  "scripts/generate-feature.mjs": {
+    "mtime": 1785771055.3737507,
+    "ast_hash": "7919e17a455ced21ff3f62a5bf3ec3a8",
+    "semantic_hash": ""
+  },
+  "src/app/admin/categories/[id]/page.tsx": {
+    "mtime": 1785771055.37775,
+    "ast_hash": "7fba00845ce084b9821ff27006a93dac",
+    "semantic_hash": ""
+  },
+  "src/app/admin/payments/[id]/page.tsx": {
+    "mtime": 1785771055.3801148,
+    "ast_hash": "3920284f93f9af2db9dc9609488c89c2",
+    "semantic_hash": ""
+  },
+  "src/app/admin/professionals/[referenceId]/page.tsx": {
+    "mtime": 1785771055.3811107,
+    "ast_hash": "dbad0bfe480bfc6fb106c8987584353f",
+    "semantic_hash": ""
+  },
+  "src/app/admin/promotions/[id]/page.tsx": {
+    "mtime": 1785771055.3811107,
+    "ast_hash": "b8c7d4f4d63fcb1673c4d980ee0e728e",
+    "semantic_hash": ""
+  },
+  "src/app/admin/roles-permission/[id]/page.tsx": {
+    "mtime": 1785771055.382111,
+    "ast_hash": "144f18809ff1ceb384fa41052fe81fa4",
+    "semantic_hash": ""
+  },
+  "src/app/admin/services/[id]/page.tsx": {
+    "mtime": 1785771055.3831108,
+    "ast_hash": "1bd518452183f49e97430e9fa32919d7",
+    "semantic_hash": ""
+  },
+  "src/app/admin/users/[referenceId]/page.tsx": {
+    "mtime": 1785771055.3841105,
+    "ast_hash": "e33fc0b6e24b494dc3d202b369f7fb4c",
+    "semantic_hash": ""
+  },
+  "src/app/error.tsx": {
+    "mtime": 1785771055.387113,
+    "ast_hash": "32be38fc672759c009fb3c298fefffb4",
+    "semantic_hash": ""
+  },
+  "src/app/perfil/page.tsx": {
+    "mtime": 1785771055.388113,
+    "ast_hash": "84dae9bc2de86c0305c76618b63de2b3",
+    "semantic_hash": ""
+  },
+  "src/components/layout/app-sidebar.stories.tsx": {
+    "mtime": 1785771055.391114,
+    "ast_hash": "73e1f63f663baadb6fb5ca60a89752bc",
+    "semantic_hash": ""
+  },
+  "src/components/layout/data-table.stories.tsx": {
+    "mtime": 1785771055.392114,
+    "ast_hash": "0a6b61926caf543dee98f9e1cd18be24",
+    "semantic_hash": ""
+  },
+  "src/components/layout/language-switcher.stories.tsx": {
+    "mtime": 1785771055.392114,
+    "ast_hash": "9547268a02e6a8f9ac07488340fbcfdb",
+    "semantic_hash": ""
+  },
+  "src/components/layout/language-switcher.test.tsx": {
+    "mtime": 1785771055.392114,
+    "ast_hash": "7fc3adfaeff24400572c1979195267d7",
+    "semantic_hash": ""
+  },
+  "src/components/layout/language-switcher.tsx": {
+    "mtime": 1785771055.3931139,
+    "ast_hash": "1cdf923b2c1d3cc2a4c48896e3f8ff3f",
+    "semantic_hash": ""
+  },
+  "src/components/layout/mode-switcher.stories.tsx": {
+    "mtime": 1785771055.3931139,
+    "ast_hash": "dd4c89fd1cd88cf32f32818406913835",
+    "semantic_hash": ""
+  },
+  "src/components/layout/theme-toggle.stories.tsx": {
+    "mtime": 1785771055.394114,
+    "ast_hash": "bbea79c670e571dfad1d2258801d99fd",
+    "semantic_hash": ""
+  },
+  "src/components/layout/topbar.stories.tsx": {
+    "mtime": 1785771055.3951147,
+    "ast_hash": "0d9692c32265543480638d6f2705164a",
+    "semantic_hash": ""
+  },
+  "src/components/layout/user-menu.stories.tsx": {
+    "mtime": 1785771055.3951147,
+    "ast_hash": "07425e39118c455b785e8c00f782a46c",
+    "semantic_hash": ""
+  },
+  "src/components/ui/alert-dialog.stories.tsx": {
+    "mtime": 1785771055.396115,
+    "ast_hash": "ade195a841c818e4cdffeb7bc22f6441",
+    "semantic_hash": ""
+  },
+  "src/components/ui/alert.stories.tsx": {
+    "mtime": 1785771055.397114,
+    "ast_hash": "01e78633f3d45f816d83ee11d1744787",
+    "semantic_hash": ""
+  },
+  "src/components/ui/avatar.stories.tsx": {
+    "mtime": 1785771055.398114,
+    "ast_hash": "dd72e26be0d3cadcd828de58fecefe56",
+    "semantic_hash": ""
+  },
+  "src/components/ui/badge.stories.tsx": {
+    "mtime": 1785771055.398114,
+    "ast_hash": "c3f04d501b59095ac628b19281f511f5",
+    "semantic_hash": ""
+  },
+  "src/components/ui/button.stories.tsx": {
+    "mtime": 1785771055.3991141,
+    "ast_hash": "e2f5b725073cd6fd5b0061b3057a9c2b",
+    "semantic_hash": ""
+  },
+  "src/components/ui/card.stories.tsx": {
+    "mtime": 1785771055.3991141,
+    "ast_hash": "e31bf98f2eec225a6f2eb64ab7855695",
+    "semantic_hash": ""
+  },
+  "src/components/ui/checkbox.stories.tsx": {
+    "mtime": 1785771055.4001143,
+    "ast_hash": "df3a3e5059325130bd335a6306242dd8",
+    "semantic_hash": ""
+  },
+  "src/components/ui/dialog.stories.tsx": {
+    "mtime": 1785771055.4001143,
+    "ast_hash": "e25a878a483fec25e643a0f166ab135a",
+    "semantic_hash": ""
+  },
+  "src/components/ui/dropdown-menu.stories.tsx": {
+    "mtime": 1785771055.4011137,
+    "ast_hash": "5468ce9b56ad971ddee83df30ff96e93",
+    "semantic_hash": ""
+  },
+  "src/components/ui/input.stories.tsx": {
+    "mtime": 1785771055.4016182,
+    "ast_hash": "3cbd2d454c4bb5f0df328a994abef2a4",
+    "semantic_hash": ""
+  },
+  "src/components/ui/label.stories.tsx": {
+    "mtime": 1785771055.4016182,
+    "ast_hash": "40fef85efdd67b92939d651ac13da701",
+    "semantic_hash": ""
+  },
+  "src/components/ui/pagination.stories.tsx": {
+    "mtime": 1785771055.4026237,
+    "ast_hash": "75d587e4f3369a360362cb6b078a98a1",
+    "semantic_hash": ""
+  },
+  "src/components/ui/password-input.stories.tsx": {
+    "mtime": 1785771055.4026237,
+    "ast_hash": "be53d6f84a3683c47732767d0c183640",
+    "semantic_hash": ""
+  },
+  "src/components/ui/select.stories.tsx": {
+    "mtime": 1785771055.4036236,
+    "ast_hash": "4eeea62a30394db46046602bce395264",
+    "semantic_hash": ""
+  },
+  "src/components/ui/separator.stories.tsx": {
+    "mtime": 1785771055.4036236,
+    "ast_hash": "0f07180f919709491e9fba45cbb02eba",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sheet.stories.tsx": {
+    "mtime": 1785771055.4046237,
+    "ast_hash": "e5ba592669f93a0aea63e169fec03a20",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sidebar.stories.tsx": {
+    "mtime": 1785771055.405624,
+    "ast_hash": "edb1312efad089c6c906d273ecd86106",
+    "semantic_hash": ""
+  },
+  "src/components/ui/skeleton.stories.tsx": {
+    "mtime": 1785771055.405624,
+    "ast_hash": "64a1de570d1c94c77ce3eef98fa029c3",
+    "semantic_hash": ""
+  },
+  "src/components/ui/sonner.stories.tsx": {
+    "mtime": 1785771055.4066226,
+    "ast_hash": "28169e823bf1dfe6ccfc24d862651915",
+    "semantic_hash": ""
+  },
+  "src/components/ui/switch.stories.tsx": {
+    "mtime": 1785771055.4066226,
+    "ast_hash": "a3e0d2528c0c06c0ba7d590f4b2d80fb",
+    "semantic_hash": ""
+  },
+  "src/components/ui/table.stories.tsx": {
+    "mtime": 1785771055.4076233,
+    "ast_hash": "b23e453d25b57ea6ec21e697bc859410",
+    "semantic_hash": ""
+  },
+  "src/components/ui/textarea.stories.tsx": {
+    "mtime": 1785771055.4076233,
+    "ast_hash": "204bf67766b42cd523a120407765ff4b",
+    "semantic_hash": ""
+  },
+  "src/components/ui/tooltip.stories.tsx": {
+    "mtime": 1785771055.4086232,
+    "ast_hash": "2f79ea27f8d340293123e76a3ac91b55",
+    "semantic_hash": ""
+  },
+  "src/core/auth/session.test.ts": {
+    "mtime": 1785771055.4136233,
+    "ast_hash": "cec0747cc14aed9f793f9e404612f52f",
+    "semantic_hash": ""
+  },
+  "src/core/logging/logger.test.ts": {
+    "mtime": 1785771055.4146235,
+    "ast_hash": "3c1e1905ba03d0fd55ba00fd6a90575b",
+    "semantic_hash": ""
+  },
+  "src/core/logging/logger.ts": {
+    "mtime": 1785771055.4146235,
+    "ast_hash": "c82fc0b96830f681517cb6aec4a2d79d",
+    "semantic_hash": ""
+  },
+  "src/core/logging/redact.test.ts": {
+    "mtime": 1785771055.4156234,
+    "ast_hash": "84ef9d98c13f5ac39bbc6f6a9eb16d0b",
+    "semantic_hash": ""
+  },
+  "src/core/logging/redact.ts": {
+    "mtime": 1785771055.4156234,
+    "ast_hash": "d2e9b75267681d7772f38e0741221243",
+    "semantic_hash": ""
+  },
+  "src/core/logging/request-context.test.ts": {
+    "mtime": 1785771055.4166443,
+    "ast_hash": "c3407c937695497541fabb7d979d2b14",
+    "semantic_hash": ""
+  },
+  "src/core/logging/request-context.ts": {
+    "mtime": 1785771055.4166443,
+    "ast_hash": "30d615bc4e4d302b5c2fff33be9b324f",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/category-detail-view.test.tsx": {
+    "mtime": 1785771055.4261553,
+    "ast_hash": "4b57a12d91cd2ef3ee8d81aa38a99263",
+    "semantic_hash": ""
+  },
+  "src/features/categories/components/category-detail-view.tsx": {
+    "mtime": 1785771055.4271555,
+    "ast_hash": "cd7970bb50eb29187263b98c13ec5b4d",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/api.ts": {
+    "mtime": 1785771055.432156,
+    "ast_hash": "88076e12168f24cd9a0acee93d5d8b4c",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/components/avatar-upload.test.tsx": {
+    "mtime": 1785771055.432156,
+    "ast_hash": "dcc27dc4d9248c3173d6c8b4c79c387f",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/components/avatar-upload.tsx": {
+    "mtime": 1785771055.4331555,
+    "ast_hash": "db79523a64f937c2ab2c40b1abbbe628",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/components/profile-form.test.tsx": {
+    "mtime": 1785771055.4331555,
+    "ast_hash": "2b1b55dcc5a1d2e186ebcbc1dfb91dd3",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/components/profile-form.tsx": {
+    "mtime": 1785771055.4331555,
+    "ast_hash": "e71fc983d93bcc82ec027121516920b7",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/hooks.ts": {
+    "mtime": 1785771055.4331555,
+    "ast_hash": "41bc738196f246cbb380b9d327a8757a",
+    "semantic_hash": ""
+  },
+  "src/features/my-profile/schemas.ts": {
+    "mtime": 1785771055.4341564,
+    "ast_hash": "b41e8e0cd212b8466d6941ae092b9417",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/notification-bell.test.tsx": {
+    "mtime": 1785771055.4371593,
+    "ast_hash": "29d92c8bf828b39023c549d6b952d89b",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/notification-bell.tsx": {
+    "mtime": 1785771055.438159,
+    "ast_hash": "dd0cf607920200eae79f12ed9bb72476",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/push-subscription-toggle.test.tsx": {
+    "mtime": 1785771055.4391599,
+    "ast_hash": "4a5478a51cc0dcd92639d40eaab75844",
+    "semantic_hash": ""
+  },
+  "src/features/notifications/components/push-subscription-toggle.tsx": {
+    "mtime": 1785771055.4391599,
+    "ast_hash": "8f1dfa3ea1337a342b0c20d8af47e10b",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/payment-detail-view.test.tsx": {
+    "mtime": 1785771055.44116,
+    "ast_hash": "e00280221fa76ef7de76a4031e0ae55b",
+    "semantic_hash": ""
+  },
+  "src/features/payments/components/payment-detail-view.tsx": {
+    "mtime": 1785771055.44116,
+    "ast_hash": "e1f64dce4d698059fcc42277da5a2f38",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/professional-detail-view.test.tsx": {
+    "mtime": 1785771055.4522033,
+    "ast_hash": "dafb61b16ae70298499517b7299ccf51",
+    "semantic_hash": ""
+  },
+  "src/features/professionals/components/professional-detail-view.tsx": {
+    "mtime": 1785771055.4522033,
+    "ast_hash": "4e0f79247a92a257ea50f7c55d4cad25",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotion-detail-view.test.tsx": {
+    "mtime": 1785771055.4566185,
+    "ast_hash": "a6bad5738e28a9a79c8c15618e75835d",
+    "semantic_hash": ""
+  },
+  "src/features/promotions/components/promotion-detail-view.tsx": {
+    "mtime": 1785771055.4566185,
+    "ast_hash": "1e6003d4571ad34df3c50615ee2d7bc6",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/role-detail-view.test.tsx": {
+    "mtime": 1785771055.466127,
+    "ast_hash": "fbe0e4b48dd10968e0bbe752b4a7a1a1",
+    "semantic_hash": ""
+  },
+  "src/features/roles-permission/components/role-detail-view.tsx": {
+    "mtime": 1785771055.4671278,
+    "ast_hash": "3e6ff4ac0ad0e42d8e09c28ef9cac1d0",
+    "semantic_hash": ""
+  },
+  "src/features/services/components/service-detail-view.test.tsx": {
+    "mtime": 1785771055.469127,
+    "ast_hash": "1a737df6dc9c0c6dd5c8fb1da48e2aa4",
+    "semantic_hash": ""
+  },
+  "src/features/services/components/service-detail-view.tsx": {
+    "mtime": 1785771055.469127,
+    "ast_hash": "f0dbac8af41dd49defec4292c92b4abe",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/user-detail-dialog.test.tsx": {
+    "mtime": 1785771055.4711275,
+    "ast_hash": "04bd81458fed27d979955021351ce292",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/user-detail-dialog.tsx": {
+    "mtime": 1785771055.4721267,
+    "ast_hash": "bfab0791d1d5700f4866f56e8c55eb77",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/user-detail-view.test.tsx": {
+    "mtime": 1785771055.4721267,
+    "ast_hash": "647ef3003449a2fd371495c297150c33",
+    "semantic_hash": ""
+  },
+  "src/features/users/components/user-detail-view.tsx": {
+    "mtime": 1785771055.4721267,
+    "ast_hash": "d6887f15d8a0b8106a4ece4335e3ccb7",
+    "semantic_hash": ""
+  },
+  "src/features/users/schemas.ts": {
+    "mtime": 1785771055.4741268,
+    "ast_hash": "35c7c9f0d7fea4e3cd68fa774fa5ca9a",
+    "semantic_hash": ""
+  },
+  "src/i18n/config.ts": {
+    "mtime": 1785771055.4741268,
+    "ast_hash": "5e75cb5388d93965526b8d20e9c994de",
+    "semantic_hash": ""
+  },
+  "src/i18n/request.ts": {
+    "mtime": 1785771055.4751275,
+    "ast_hash": "e519d927b389e7d4fad7e015ff425261",
+    "semantic_hash": ""
+  },
+  "src/i18n/set-locale-action.ts": {
+    "mtime": 1785771055.4751275,
+    "ast_hash": "eff0d3383e1b97275b976fc656a42da0",
+    "semantic_hash": ""
+  },
+  "src/i18n/use-app-locale.ts": {
+    "mtime": 1785771055.4751275,
+    "ast_hash": "8723392278449c01a522b727b49d022e",
+    "semantic_hash": ""
+  },
+  "src/lib/web-push.test.ts": {
+    "mtime": 1785771055.4771276,
+    "ast_hash": "ed1032919dae2fced715422f58bc27af",
+    "semantic_hash": ""
+  },
+  "src/lib/web-push.ts": {
+    "mtime": 1785771055.4771276,
+    "ast_hash": "040805f9e6187863bc9bf9a5ee169edf",
+    "semantic_hash": ""
+  },
+  "src/test/msw/handlers/my-profile.ts": {
+    "mtime": 1785771055.4806378,
+    "ast_hash": "b6595bc8ee1915ffe33bb1a4448e5222",
+    "semantic_hash": ""
+  },
+  "src/test/render.tsx": {
+    "mtime": 1785771055.483637,
+    "ast_hash": "9b7bc3a237c56f1545b5dedddd909d9f",
+    "semantic_hash": ""
+  },
+  "src/types/next-intl.d.ts": {
+    "mtime": 1785771055.4846377,
+    "ast_hash": "c36f5d3fae94cc7226f2055757fe9f80",
+    "semantic_hash": ""
+  },
+  ".claude/documentation/how-to-contribute.md": {
+    "mtime": 1785771055.2957137,
+    "ast_hash": "2cba885595f5310066ee4fc199b633cc",
+    "semantic_hash": ""
+  },
+  ".claude/rules/accessibility.md": {
+    "mtime": 1785771055.2967145,
+    "ast_hash": "b30b8cbeff238a28bfdc6c96b35bbd2d",
+    "semantic_hash": ""
+  },
+  ".claude/rules/auth.md": {
+    "mtime": 1785771055.297714,
+    "ast_hash": "1bea28fbce78f719227ad87d285ab07d",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1785771055.3072221,
+    "ast_hash": "a3862e401631a8d0b96ae69a8b8b441a",
+    "semantic_hash": ""
+  },
+  "brand/banner.png": {
+    "mtime": 1785771055.3132231,
+    "ast_hash": "c78b952be6e60fe2800ba2ea4595471f",
+    "semantic_hash": ""
+  },
+  "brand/logo.png": {
+    "mtime": 1785771055.3142223,
+    "ast_hash": "61c1647d545cea6ea086b514b2d4187a",
+    "semantic_hash": ""
+  },
+  "brand/manual-de-marca.png": {
+    "mtime": 1785771055.3277261,
+    "ast_hash": "95a8374507903ac5bce039340b7881da",
+    "semantic_hash": ""
+  },
+  "public/brand/banner.png": {
+    "mtime": 1785771055.3702407,
+    "ast_hash": "c78b952be6e60fe2800ba2ea4595471f",
+    "semantic_hash": ""
+  },
+  "public/brand/logo.png": {
+    "mtime": 1785771055.3702407,
+    "ast_hash": "61c1647d545cea6ea086b514b2d4187a",
+    "semantic_hash": ""
   }
 }
