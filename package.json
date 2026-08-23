@@ -1,6 +1,6 @@
 {
   "name": "tekoapp-frontend-web",
-  "version": "1.0.0-qa.2",
+  "version": "1.0.1",
   "description": "Portal web de administración de TekoApp - Plataforma de Servicios Profesionales",
   "author": "José Panza",
   "private": true,
