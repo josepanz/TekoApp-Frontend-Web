@@ -1,3 +1,4 @@
+import { aiDisclosuresHandlers } from './handlers/ai-disclosures';
 import { analyticsHandlers } from './handlers/analytics';
 import { authHandlers } from './handlers/auth';
 import { categoriesHandlers } from './handlers/categories';
@@ -28,4 +29,5 @@ export const handlers = [
   ...categoriesHandlers,
   ...notificationsHandlers,
   ...myProfileHandlers,
+  ...aiDisclosuresHandlers,
 ];

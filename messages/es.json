@@ -44,7 +44,8 @@
         "rolesPermission": "Roles y permisos",
         "categories": "Categorías",
         "locations": "Ubicaciones",
-        "notifications": "Notificaciones"
+        "notifications": "Notificaciones",
+        "aiDisclosures": "Disclosure de IA"
       },
       "client": {
         "home": "Inicio",
@@ -236,6 +237,10 @@
       "notifications": {
         "title": "Notificaciones",
         "description": "Log de notificaciones del sistema y envío de notificaciones manuales."
+      },
+      "aiDisclosures": {
+        "title": "Disclosure de IA",
+        "description": "Auditoría de contenido marcado como asistido por IA, de plataforma o autodeclarado por usuarios."
       }
     },
     "client": {
@@ -634,6 +639,35 @@
       "channelsLabel": "Canales",
       "pending": "Enviando...",
       "submit": "Enviar notificación"
+    }
+  },
+  "aiDisclosures": {
+    "entityType": {
+      "SERVICE_DESCRIPTION": "Descripción de servicio",
+      "BUDGET_OPTION": "Opción de presupuesto",
+      "PROGRESS_NOTE": "Nota de bitácora",
+      "PROFESSIONAL_DESCRIPTION": "Descripción de profesional",
+      "IMAGE": "Imagen",
+      "OTHER": "Otro"
+    },
+    "source": {
+      "PLATFORM_AI": "IA de plataforma",
+      "USER_DECLARED_AI": "Autodeclarado por usuario"
+    },
+    "filter": {
+      "entityTypeLabel": "Tipo de contenido",
+      "sourceLabel": "Origen",
+      "all": "Todos"
+    },
+    "table": {
+      "entityType": "Tipo de contenido",
+      "source": "Origen",
+      "note": "Nota",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "detailUnavailable": "Ver detalle no disponible",
+      "empty": "No hay disclosures de IA para mostrar",
+      "loadError": "No se pudo cargar el listado de disclosures de IA."
     }
   },
   "locations": {

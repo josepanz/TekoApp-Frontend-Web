@@ -44,7 +44,8 @@
         "rolesPermission": "Roles & permissions",
         "categories": "Categories",
         "locations": "Locations",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "aiDisclosures": "AI disclosure"
       },
       "client": {
         "home": "Home",
@@ -236,6 +237,10 @@
       "notifications": {
         "title": "Notifications",
         "description": "System notification log and manual notification sending."
+      },
+      "aiDisclosures": {
+        "title": "AI disclosure",
+        "description": "Audit of content flagged as AI-assisted, either platform-generated or self-declared by users."
       }
     },
     "client": {
@@ -634,6 +639,35 @@
       "channelsLabel": "Channels",
       "pending": "Sending...",
       "submit": "Send notification"
+    }
+  },
+  "aiDisclosures": {
+    "entityType": {
+      "SERVICE_DESCRIPTION": "Service description",
+      "BUDGET_OPTION": "Budget option",
+      "PROGRESS_NOTE": "Progress note",
+      "PROFESSIONAL_DESCRIPTION": "Professional description",
+      "IMAGE": "Image",
+      "OTHER": "Other"
+    },
+    "source": {
+      "PLATFORM_AI": "Platform AI",
+      "USER_DECLARED_AI": "User-declared"
+    },
+    "filter": {
+      "entityTypeLabel": "Content type",
+      "sourceLabel": "Source",
+      "all": "All"
+    },
+    "table": {
+      "entityType": "Content type",
+      "source": "Source",
+      "note": "Note",
+      "date": "Date",
+      "actions": "Actions",
+      "detailUnavailable": "Detail unavailable",
+      "empty": "No AI disclosures to show",
+      "loadError": "Could not load the AI disclosures list."
     }
   },
   "locations": {

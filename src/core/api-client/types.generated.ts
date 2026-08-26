@@ -137,6 +137,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/v1/auth/public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Clave pública RSA para cifrar el login (pre-login).
+         * @description Devuelve la clave pública (PEM) usada para cifrar {password, nonce} con OAEP-SHA256 antes de POST /auth/login. Pensado para clientes sin servidor propio (ej. mobile) que no pueden llevar la clave hardcodeada.
+         */
+        get: operations["AuthApiController_publicKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/v1/auth/me": {
         parameters: {
             query?: never;
@@ -1110,6 +1130,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/locations/online": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Cambiar el estado online del profesional autenticado
+         * @description true = empieza a poder emitir ubicación en vivo; false = deja de estar disponible para el mapa de cercanos.
+         */
+        patch: operations["LocationsController_setOnlineStatus"];
+        trace?: never;
+    };
     "/tekoapp-backend/api/locations/nearby": {
         parameters: {
             query?: never;
@@ -1250,6 +1290,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/payments/methods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener los métodos de pago propios */
+        get: operations["PaymentController_findMethods"];
+        put?: never;
+        /** Crear un método de pago */
+        post: operations["PaymentController_createMethod"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/payments/{id}": {
         parameters: {
             query?: never;
@@ -1296,23 +1354,6 @@ export interface paths {
         put?: never;
         /** Reembolsar un pago */
         post: operations["PaymentController_refund"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/payments/methods": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Crear un método de pago */
-        post: operations["PaymentController_createMethod"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2219,6 +2260,223 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/legal/consents/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Documentos legales pendientes de aceptar
+         * @description Versiones activas que el usuario autenticado todavía no aceptó.
+         */
+        get: operations["LegalConsentsController_getPending"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/legal/consents/{versionReferenceId}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Aceptar una versión de documento legal
+         * @description Crea el registro de aceptación con IP/user-agent capturados server-side.
+         */
+        post: operations["LegalConsentsController_accept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/users/me/data-consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial propio de consentimientos
+         * @description Aceptaciones de documentos legales + consentimientos de uso de contenido propio.
+         */
+        get: operations["LegalConsentsController_getMyDataConsents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/users/me/content/{contentReferenceId}/consent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revocar el consentimiento de uso de un contenido propio
+         * @description Oculta el contenido a nivel de aplicación, salvo retención legal obligatoria.
+         */
+        delete: operations["LegalConsentsController_revokeContentConsent"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/legal/document-versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** [Staff] Listar versiones de documentos legales */
+        get: operations["AdminLegalConsentsController_getDocumentVersions"];
+        put?: never;
+        /** [Staff] Crear versión de documento legal */
+        post: operations["AdminLegalConsentsController_createDocumentVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/legal/document-versions/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** [Staff] Actualizar versión de documento legal */
+        patch: operations["AdminLegalConsentsController_updateDocumentVersion"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/legal/retention-policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** [Staff] Listar políticas de retención */
+        get: operations["AdminLegalConsentsController_getRetentionPolicies"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * [Staff] Crear/actualizar política de retención
+         * @description Upsert por (país, tipo de contenido).
+         */
+        patch: operations["AdminLegalConsentsController_upsertRetentionPolicy"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/legal/consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * [Staff] Auditoría de consentimientos
+         * @description Quién aceptó qué, cuándo, con qué IP — paginado.
+         */
+        get: operations["AdminLegalConsentsController_getConsentsAudit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/ai-disclosures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Declarar contenido propio como asistido por IA
+         * @description Upsert por (entityType, entityReferenceId) — idempotente.
+         */
+        put: operations["AiDisclosuresController_declare"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/ai-disclosures/{entityType}/{entityReferenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar el disclosure de IA de un contenido puntual
+         * @description Devuelve null si el contenido no tiene disclosure.
+         */
+        get: operations["AiDisclosuresController_getByEntity"];
+        put?: never;
+        post?: never;
+        /** Retirar la propia autodeclaración de IA */
+        delete: operations["AiDisclosuresController_retract"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/ai-disclosures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * [Staff] Listado agregado de disclosures de IA
+         * @description Paginado, filtrable por entityType/source.
+         */
+        get: operations["AdminAiDisclosuresController_getAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2350,6 +2608,15 @@ export interface components {
              * @example a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
              */
             nonce: string;
+        };
+        PublicKeyResponseDTO: {
+            /**
+             * @description Clave pública RSA en formato PEM.
+             * @example -----BEGIN PUBLIC KEY-----
+             *     MIIBIjAN...
+             *     -----END PUBLIC KEY-----
+             */
+            publicKeyPem: string;
         };
         MeResponseDTO: {
             /**
@@ -3830,6 +4097,70 @@ export interface components {
              */
             heading?: number;
         };
+        SetOnlineStatusRequestDTO: {
+            /**
+             * @description Nuevo estado online del profesional autenticado
+             * @example true
+             */
+            isOnline: boolean;
+        };
+        NearbyProfessionalResponseDTO: {
+            /**
+             * @description ID interno — solo para ordenamiento
+             * @example 5
+             */
+            id: number;
+            /**
+             * @description UUID público del profesional
+             * @example e2c1a6b0-4c2f-4b7a-9c1d-3f6a9b2e7d10
+             */
+            referenceId: string;
+            /**
+             * @description ID de categoría del profesional
+             * @example 3
+             */
+            categoryId: number;
+            /**
+             * @description Descripción del profesional
+             * @example Plomero
+             */
+            description: string;
+            /**
+             * @description Tarifa por hora
+             * @example 50000
+             */
+            hourlyRate: number;
+            /**
+             * @description Latitud actual
+             * @example -25.2637
+             */
+            latitude: number;
+            /**
+             * @description Longitud actual
+             * @example -57.5759
+             */
+            longitude: number;
+            /**
+             * @description Distancia al punto de búsqueda en km
+             * @example 2.34
+             */
+            distanceKm: number;
+            /**
+             * @description Disponible para tomar servicios
+             * @example true
+             */
+            isAvailable: boolean;
+            /**
+             * @description Conectado en tiempo real
+             * @example true
+             */
+            isOnline: boolean;
+            /**
+             * @description Calificación promedio
+             * @example 4.5
+             */
+            averageRating: number;
+        };
         ProfessionalLocationResponseDTO: {
             /**
              * @description Latitud geográfica registrada
@@ -4104,6 +4435,46 @@ export interface components {
              */
             days: number;
         };
+        PaymentMethodDetailResponseDTO: {
+            /** @example f47ac10b-58cc-4372-a567-0e02b2c3d479 */
+            id: string;
+            /** @example 1 */
+            userId: number;
+            /**
+             * @example CREDIT_CARD
+             * @enum {string}
+             */
+            type: "CASH" | "CREDIT_CARD" | "DEBIT_CARD" | "PREPAID_CARD" | "QR" | "LINK" | "TRANSFER" | "WALLET" | "MOBILE_WALLET" | "CRYPTO";
+            /**
+             * @example STRIPE
+             * @enum {string}
+             */
+            provider: "STRIPE" | "BANCARD" | "INFONET" | "PAYPAL" | "MERCADO_PAGO" | "RAPIPAGO" | "PAGOFACIL" | "CASH" | "DINELCO" | "BEPSA";
+            /** @example Visa terminada en 4242 */
+            name: string;
+            /** @example true */
+            isDefault: boolean;
+            /** @example true */
+            isActive: boolean;
+            /**
+             * @example {
+             *       "last4": "4242",
+             *       "brand": "visa"
+             *     }
+             */
+            details: Record<string, never>;
+            /** @example pm_stripe_xyz */
+            externalId?: string;
+            metadata?: Record<string, never>;
+            /** Format: date-time */
+            lastUsedAt?: string;
+            /** Format: date-time */
+            expiresAt?: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
         UpdatePaymentDto: {
             /**
              * @description Monto del pago (sin comisiones ni impuestos)
@@ -4215,46 +4586,6 @@ export interface components {
             details?: Record<string, never>;
             /** @description ID externo del proveedor (token de Stripe, etc.) */
             externalId?: string;
-        };
-        PaymentMethodDetailResponseDTO: {
-            /** @example f47ac10b-58cc-4372-a567-0e02b2c3d479 */
-            id: string;
-            /** @example 1 */
-            userId: number;
-            /**
-             * @example CREDIT_CARD
-             * @enum {string}
-             */
-            type: "CASH" | "CREDIT_CARD" | "DEBIT_CARD" | "PREPAID_CARD" | "QR" | "LINK" | "TRANSFER" | "WALLET" | "MOBILE_WALLET" | "CRYPTO";
-            /**
-             * @example STRIPE
-             * @enum {string}
-             */
-            provider: "STRIPE" | "BANCARD" | "INFONET" | "PAYPAL" | "MERCADO_PAGO" | "RAPIPAGO" | "PAGOFACIL" | "CASH" | "DINELCO" | "BEPSA";
-            /** @example Visa terminada en 4242 */
-            name: string;
-            /** @example true */
-            isDefault: boolean;
-            /** @example true */
-            isActive: boolean;
-            /**
-             * @example {
-             *       "last4": "4242",
-             *       "brand": "visa"
-             *     }
-             */
-            details: Record<string, never>;
-            /** @example pm_stripe_xyz */
-            externalId?: string;
-            metadata?: Record<string, never>;
-            /** Format: date-time */
-            lastUsedAt?: string;
-            /** Format: date-time */
-            expiresAt?: string;
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            updatedAt: string;
         };
         UpdatePaymentMethodDto: {
             /**
@@ -5479,6 +5810,149 @@ export interface components {
              */
             isActive: boolean;
         };
+        LegalDocumentVersionResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+            /** @description País — null si es internacional/paraguas */
+            countryId?: number;
+            version: string;
+            contentUrl: string;
+            /** Format: date-time */
+            publishedAt: string;
+            isActive: boolean;
+        };
+        UserConsentResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** Format: date-time */
+            acceptedAt: string;
+            legalDocumentVersion: components["schemas"]["LegalDocumentVersionResponseDTO"];
+        };
+        ContentConsentGrantResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            contentType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            contentReferenceId: string;
+            /** @enum {string} */
+            usageScope: "APP_INTERNAL_ONLY" | "PUBLIC_PROFILE_DISPLAY" | "MARKETING";
+            /** Format: date-time */
+            grantedAt: string;
+            /** Format: date-time */
+            revokedAt?: string;
+        };
+        DataConsentsHistoryResponseDTO: {
+            consents: components["schemas"]["UserConsentResponseDTO"][];
+            contentGrants: components["schemas"]["ContentConsentGrantResponseDTO"][];
+        };
+        CreateLegalDocumentVersionRequestDTO: {
+            /**
+             * @description Tipo de documento legal
+             * @example TERMS_OF_SERVICE
+             * @enum {string}
+             */
+            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+            /**
+             * @description País al que aplica esta versión — omitir para una versión internacional/paraguas
+             * @example 1
+             */
+            countryId?: number;
+            /**
+             * @description Etiqueta de versión
+             * @example 1.0.0
+             */
+            version: string;
+            /**
+             * @description URL del texto legal real (fuera de alcance de esta feature)
+             * @example https://tekoapp.com.py/legal/tos-1.0.0
+             */
+            contentUrl: string;
+            /**
+             * @description Fecha de publicación
+             * @example 2026-08-25T00:00:00.000Z
+             */
+            publishedAt: string;
+            /**
+             * @description Si la versión está activa (default true)
+             * @default true
+             */
+            isActive: boolean;
+        };
+        UpdateLegalDocumentVersionRequestDTO: {
+            /**
+             * @description Etiqueta de versión
+             * @example 1.0.1
+             */
+            version?: string;
+            /**
+             * @description URL del texto legal real
+             * @example https://tekoapp.com.py/legal/tos-1.0.1
+             */
+            contentUrl?: string;
+            /** @description Fecha de publicación */
+            publishedAt?: string;
+            /** @description Si la versión está activa */
+            isActive?: boolean;
+        };
+        RetentionPolicyResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @description País — null si es política internacional */
+            countryId?: number;
+            /** @enum {string} */
+            contentType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            retentionDays?: number;
+            allowsUserDeletion: boolean;
+            requiresLegalHold: boolean;
+        };
+        UpsertRetentionPolicyRequestDTO: {
+            /** @description País — omitir para política internacional */
+            countryId?: number;
+            /** @enum {string} */
+            contentType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            /** @description Días de retención — omitir/null para retención indefinida */
+            retentionDays?: number;
+            /** @default true */
+            allowsUserDeletion: boolean;
+            /** @default false */
+            requiresLegalHold: boolean;
+        };
+        LegalConsentsAuditListResponseDTO: {
+            data: components["schemas"]["UserConsentResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        DeclareAiDisclosureRequestDTO: {
+            /** @enum {string} */
+            entityType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            /**
+             * @description referenceId (UUID) del contenido propio que se declara asistido por IA
+             * @example a3f1c2e4-1234-4a5b-8c9d-abcdef123456
+             */
+            entityReferenceId: string;
+            /** @description Nota opcional sobre el uso de IA */
+            note?: string;
+        };
+        AiDisclosureResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            entityType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            /** @description referenceId (UUID) del contenido referenciado */
+            entityReferenceId: string;
+            /** @enum {string} */
+            source: "PLATFORM_AI" | "USER_DECLARED_AI";
+            aiProvider?: string;
+            declaredByUserId?: number;
+            note?: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        AiDisclosuresAdminListResponseDTO: {
+            data: components["schemas"]["AiDisclosureResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
     };
     responses: never;
     parameters: never;
@@ -5757,6 +6231,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["NonceResponseDTO"];
+                };
+            };
+        };
+    };
+    AuthApiController_publicKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Clave pública obtenida correctamente. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicKeyResponseDTO"];
                 };
             };
         };
@@ -8102,6 +8596,28 @@ export interface operations {
             };
         };
     };
+    LocationsController_setOnlineStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetOnlineStatusRequestDTO"];
+            };
+        };
+        responses: {
+            /** @description Estado online actualizado. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     LocationsController_findNearbyProfessionals: {
         parameters: {
             query: {
@@ -8131,7 +8647,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["NearbyProfessionalResponseDTO"][];
+                };
             };
         };
     };
@@ -8338,6 +8856,50 @@ export interface operations {
             };
         };
     };
+    PaymentController_findMethods: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de métodos de pago activos del usuario autenticado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethodDetailResponseDTO"][];
+                };
+            };
+        };
+    };
+    PaymentController_createMethod: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePaymentMethodRequestDTO"];
+            };
+        };
+        responses: {
+            /** @description Método de pago creado */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentMethodDetailResponseDTO"];
+                };
+            };
+        };
+    };
     PaymentController_findOne: {
         parameters: {
             query?: never;
@@ -8463,30 +9025,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-        };
-    };
-    PaymentController_createMethod: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePaymentMethodRequestDTO"];
-            };
-        };
-        responses: {
-            /** @description Método de pago creado */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaymentMethodDetailResponseDTO"];
-                };
             };
         };
     };
@@ -10153,6 +10691,407 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    LegalConsentsController_getPending: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentVersionResponseDTO"][];
+                };
+            };
+        };
+    };
+    LegalConsentsController_accept: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la versión del documento legal a aceptar */
+                versionReferenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserConsentResponseDTO"];
+                };
+            };
+            /** @description Versión inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Ya aceptada por este usuario. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    LegalConsentsController_getMyDataConsents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataConsentsHistoryResponseDTO"];
+                };
+            };
+        };
+    };
+    LegalConsentsController_revokeContentConsent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del contenido cuyo consentimiento de uso se revoca */
+                contentReferenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Revocado. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sin consentimiento vigente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description LEGAL_HOLD_ACTIVE — retención legal obligatoria. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminLegalConsentsController_getDocumentVersions: {
+        parameters: {
+            query?: {
+                documentType?: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+                /** @description Filtrar por país (id interno) */
+                countryId?: number;
+                /** @description Filtrar por versiones activas/inactivas */
+                isActive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentVersionResponseDTO"][];
+                };
+            };
+        };
+    };
+    AdminLegalConsentsController_createDocumentVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLegalDocumentVersionRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentVersionResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminLegalConsentsController_updateDocumentVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la versión */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLegalDocumentVersionRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentVersionResponseDTO"];
+                };
+            };
+            /** @description Versión inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminLegalConsentsController_getRetentionPolicies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RetentionPolicyResponseDTO"][];
+                };
+            };
+        };
+    };
+    AdminLegalConsentsController_upsertRetentionPolicy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertRetentionPolicyRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RetentionPolicyResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminLegalConsentsController_getConsentsAudit: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalConsentsAuditListResponseDTO"];
+                };
+            };
+        };
+    };
+    AiDisclosuresController_declare: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeclareAiDisclosureRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiDisclosureResponseDTO"];
+                };
+            };
+            /** @description entityType no admite autodeclaración. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No sos el dueño del contenido. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Contenido inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AiDisclosuresController_getByEntity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entityType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+                /** @description referenceId (UUID) del contenido referenciado */
+                entityReferenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiDisclosureResponseDTO"];
+                };
+            };
+        };
+    };
+    AiDisclosuresController_retract: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entityType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+                /** @description referenceId (UUID) del contenido referenciado */
+                entityReferenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Retirada. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No sos el dueño de la declaración. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sin declaración vigente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminAiDisclosuresController_getAll: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                entityType?: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+                source?: "PLATFORM_AI" | "USER_DECLARED_AI";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiDisclosuresAdminListResponseDTO"];
+                };
             };
         };
     };

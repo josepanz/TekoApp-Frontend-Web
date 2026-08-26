@@ -42,6 +42,13 @@ export const PERMISSIONS = {
     UNASSIGN_USER: 'user.permission.unassignment:delete',
     UNASSIGN_ROLE: 'role.permission.unassignment:delete',
   },
+  LEGAL: {
+    CONFIG_MANAGE: 'legal.config:manage',
+    CONSENT_AUDIT_VIEW: 'legal.consent-audit:read',
+  },
+  AI_DISCLOSURE: {
+    AUDIT_VIEW: 'ai-disclosure.audit:read',
+  },
 } as const;
 
 /** Todos los valores string posibles dentro de PERMISSIONS, aplanados (para el tipo de `user.permissions: string[]`). */

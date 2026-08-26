@@ -6,6 +6,7 @@ import {
   MapPin,
   Percent,
   ShieldCheck,
+  Sparkles,
   Star,
   UserCog,
   Users,
@@ -79,5 +80,10 @@ export const NAV_ITEMS: NavItem[] = [
     titleKey: 'layout.nav.admin.notifications',
     href: '/admin/notifications',
     icon: Bell,
+  },
+  {
+    titleKey: 'layout.nav.admin.aiDisclosures',
+    href: '/admin/ai-disclosures',
+    icon: Sparkles,
   },
 ];
