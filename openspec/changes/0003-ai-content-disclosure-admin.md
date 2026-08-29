@@ -12,16 +12,18 @@ Implementar el panel de auditoría de solo lectura de `openspec/specs/ai-content
 
 ## Tareas
 
-- [ ] `pnpm generate:api-types` una vez el backend exponga el endpoint de listado.
-- [ ] `src/features/ai-disclosures/` + `src/app/admin/ai-disclosures/page.tsx` — tabla paginada,
+- [x] `pnpm generate:api-types` una vez el backend exponga el endpoint de listado.
+- [x] `src/features/ai-disclosures/` + `src/app/admin/ai-disclosures/page.tsx` — tabla paginada,
       filtros por `entityType`/`source`.
-- [ ] Resolución de enlaces a la entidad marcada, con fallback para tipos sin ruta de admin
+- [x] Resolución de enlaces a la entidad marcada, con fallback para tipos sin ruta de admin
       correspondiente todavía.
-- [ ] Permiso `AI_DISCLOSURE_AUDIT_VIEW` en `core/auth/permissions.ts`.
-- [ ] Tests (Vitest + Testing Library) + MSW handler correspondiente.
-- [ ] `pnpm lint`, `pnpm check:types`, `pnpm test` en 0 errores/warnings.
+- [x] Permiso `AI_DISCLOSURE_AUDIT_VIEW` en `core/auth/permissions.ts`.
+- [x] Tests (Vitest + Testing Library) + MSW handler correspondiente.
+- [x] `pnpm lint`, `pnpm check:types`, `pnpm test` en 0 errores/warnings.
 
 ## Checkpoint de salida
 
-- [ ] Un disclosure auto-declarado desde mobile aparece en el listado de staff con el enlace
-      correcto a la entidad marcada.
+- [x] Un disclosure auto-declarado desde mobile aparece en el listado de staff con el enlace
+      correcto a la entidad marcada — verificado con el DTO real generado desde el backend
+      (`AiDisclosureResponseDTO`), resolución de enlace `/admin/services/:id` /
+      `/admin/professionals/:referenceId`.

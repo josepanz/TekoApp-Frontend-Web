@@ -3,7 +3,8 @@ import type { Service, ServicesListResponse } from '@/features/services/api';
 
 export function buildService(overrides: Partial<Service> = {}): Service {
   return {
-    id: 'a63b5212-db5e-4ef5-9614-726614174000',
+    id: 1,
+    referenceId: 'a63b5212-db5e-4ef5-9614-726614174000',
     userId: 1,
     professionalId: 2,
     categoryId: 3,
@@ -41,7 +42,8 @@ export const fakeServicesPage1: ServicesListResponse = {
   data: [
     buildService(),
     buildService({
-      id: 'b74c6323-ec6f-5fg6-a725-837725285111',
+      id: 2,
+      referenceId: 'b74c6323-ec6f-5fg6-a725-837725285111',
       professionalId: undefined,
       title: 'Instalación eléctrica',
       description: 'Instalación de tablero eléctrico nuevo',
@@ -61,7 +63,8 @@ export const fakeServicesPage1: ServicesListResponse = {
       },
     }),
     buildService({
-      id: 'c85d7434-fd7g-6gh7-b836-948836396222',
+      id: 3,
+      referenceId: 'c85d7434-fd7g-6gh7-b836-948836396222',
       professionalId: 8,
       title: 'Corte de césped',
       description: 'Mantenimiento de jardín',
@@ -102,7 +105,7 @@ export const servicesHandlers = [
 
   http.get('/api/backend/services/:id', ({ params }) => {
     const service = fakeServicesPage1.data.find(
-      (item) => item.id === params.id,
+      (item) => item.referenceId === params.id,
     );
     if (!service) {
       return new HttpResponse(null, { status: 404 });

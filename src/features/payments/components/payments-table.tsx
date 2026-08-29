@@ -15,6 +15,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { HandCoins } from 'lucide-react';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { usePaymentsQuery } from '../hooks';
@@ -68,8 +74,36 @@ export function PaymentsTable() {
       // Se respeta el `currencyCode` que manda el backend por pago (default PYG en
       // `formatCurrency`): hoy todos los pagos son en guaraníes, pero forzar PYG sobre un monto
       // en otra moneda mostraría un importe incorrecto, no solo otro símbolo.
-      cell: ({ row }) =>
-        formatCurrency(row.original.totalAmount, row.original.currencyCode),
+      cell: ({ row }) => {
+        const { tip } = row.original;
+        return (
+          <div className="flex items-center gap-1.5">
+            {formatCurrency(
+              row.original.totalAmount,
+              row.original.currencyCode,
+            )}
+            {tip && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <span>
+                      <HandCoins
+                        className="text-muted-foreground size-4"
+                        role="img"
+                        aria-label={`${t('table.tip')}: ${formatCurrency(tip.amount, tip.currencyCode)}`}
+                      />
+                    </span>
+                  }
+                />
+                <TooltipContent>
+                  {t('table.tip')}:{' '}
+                  {formatCurrency(tip.amount, tip.currencyCode)}
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        );
+      },
     },
     {
       accessorKey: 'status',
@@ -107,19 +141,19 @@ export function PaymentsTable() {
               size="sm"
               nativeButton={false}
               render={
-                <Link href={`/admin/payments/${payment.id}`}>
+                <Link href={`/admin/payments/${payment.referenceId}`}>
                   {tCommon('actions.view')}
                 </Link>
               }
             />
             {REFUNDABLE_STATUSES.includes(payment.status) && (
               <RefundPaymentDialog
-                paymentId={payment.id}
+                paymentId={payment.referenceId}
                 amount={payment.totalAmount}
               />
             )}
             {CANCELLABLE_STATUSES.includes(payment.status) && (
-              <CancelPaymentDialog paymentId={payment.id} />
+              <CancelPaymentDialog paymentId={payment.referenceId} />
             )}
           </div>
         );

@@ -3,9 +3,10 @@ import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { paymentsHandlers } from '@/test/msw/handlers/payments';
+import { buildPayment, paymentsHandlers } from '@/test/msw/handlers/payments';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
+import { formatCurrency } from '@/lib/formatters';
 import { PaymentsTable } from './payments-table';
 
 // El agregador central `src/test/msw/handlers.ts` todavía no incluye este dominio (lo integra
@@ -168,5 +169,35 @@ describe('PaymentsTable', () => {
         '2b1c1e2a-58cc-4372-a567-0e02b2c3d001',
       );
     });
+  });
+
+  it('muestra el ícono de propina cuando el pago tiene una', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/payments', () =>
+        HttpResponse.json([
+          buildPayment({
+            tip: {
+              referenceId: 'tip-uuid-1',
+              mode: 'PERCENTAGE',
+              percentage: 10,
+              amount: 15000,
+              currencyCode: 'PYG',
+              createdAt: '2026-06-17T14:00:00Z',
+            },
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderPaymentsTable();
+
+    // Assert
+    expect(
+      await screen.findByRole('img', {
+        name: `Propina: ${formatCurrency(15000, 'PYG')}`,
+      }),
+    ).toBeInTheDocument();
   });
 });
