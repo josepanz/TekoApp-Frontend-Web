@@ -17,6 +17,11 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     css: true,
+    // Default (5s) empezó a producir timeouts intermitentes en tests de interacción con varios
+    // pasos async (selects + submit) a medida que la suite creció y corre con más contención de
+    // CPU en paralelo — no es un bug de los componentes, se confirmó corriendo cada test fallido
+    // en aislamiento (siempre verde). Subido acá en vez de parchear cada test nuevo que lo pise.
+    testTimeout: 10000,
     exclude: ['**/node_modules/**', '**/.next/**', 'e2e/**'],
     coverage: {
       provider: 'v8',

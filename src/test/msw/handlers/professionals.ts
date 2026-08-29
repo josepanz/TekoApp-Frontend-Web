@@ -23,6 +23,7 @@ export function buildProfessional(
     isAvailable: true,
     isOnline: false,
     verificationStatus: 'verified',
+    requiredDocumentsVerified: true,
     totalServices: 42,
     averageRating: 4.8,
     totalRatings: 35,

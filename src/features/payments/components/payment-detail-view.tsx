@@ -75,12 +75,12 @@ export function PaymentDetailView({ id }: { id: string }) {
           <div className="flex gap-2">
             {REFUNDABLE_STATUSES.includes(payment.status) && (
               <RefundPaymentDialog
-                paymentId={payment.id}
+                paymentId={payment.referenceId}
                 amount={payment.totalAmount}
               />
             )}
             {CANCELLABLE_STATUSES.includes(payment.status) && (
-              <CancelPaymentDialog paymentId={payment.id} />
+              <CancelPaymentDialog paymentId={payment.referenceId} />
             )}
           </div>
         </CardHeader>
@@ -111,6 +111,12 @@ export function PaymentDetailView({ id }: { id: string }) {
               {t('detail.totalLabel')}:{' '}
               {formatCurrency(payment.totalAmount, payment.currencyCode)}
             </span>
+            {payment.tip && (
+              <span>
+                {t('detail.tipLabel')}:{' '}
+                {formatCurrency(payment.tip.amount, payment.tip.currencyCode)}
+              </span>
+            )}
             <span>
               {t('detail.platformFeeLabel')}:{' '}
               {formatCurrency(payment.platformFee, payment.currencyCode)}

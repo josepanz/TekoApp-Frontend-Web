@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
 import { getSession } from '@/core/auth/session';
 import { isStaffUser } from '@/core/auth/permissions';
+import { MyRatingStatsCard } from '@/features/my-ratings/components/my-rating-stats-card';
 import { ProModeLink } from '@/features/professional-profile/components/pro-mode-link';
 import { getTranslations } from 'next-intl/server';
 
@@ -12,12 +14,12 @@ export default async function ClientHomePage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
+      <BrandGradientBackground className="rounded-xl p-6 text-white">
         <h1 className="font-heading text-2xl font-semibold tracking-tight">
           {t('greeting', { name: session?.firstName ?? '' })}
         </h1>
-        <p className="text-muted-foreground">{t('description')}</p>
-      </div>
+        <p className="text-white/80">{t('description')}</p>
+      </BrandGradientBackground>
 
       <div className="flex flex-wrap gap-3">
         <Link
@@ -42,6 +44,8 @@ export default async function ClientHomePage() {
           </Link>
         )}
       </div>
+
+      <MyRatingStatsCard />
     </div>
   );
 }
