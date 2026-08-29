@@ -37,6 +37,7 @@ function buildDefaultValues(category?: Category): CategoryFormValues {
     color: category?.color ?? '',
     isVisible: category?.isVisible ?? true,
     parentCategoryId: category?.parentCategoryId ?? undefined,
+    maxBudgetOptionsPerRequest: category?.maxBudgetOptionsPerRequest ?? 3,
   };
 }
 
@@ -60,6 +61,7 @@ function buildPayload(
     isVisible: values.isVisible,
     requiresVerification: category?.requiresVerification ?? false,
     parentCategoryId: values.parentCategoryId,
+    maxBudgetOptionsPerRequest: values.maxBudgetOptionsPerRequest,
   };
 }
 
@@ -208,6 +210,26 @@ export function CategoryFormDialog({
             {errors.parentCategoryId && (
               <p className="text-destructive text-sm">
                 {errors.parentCategoryId.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="maxBudgetOptionsPerRequest">
+              {t('maxBudgetOptionsPerRequest')}
+            </Label>
+            <Input
+              id="maxBudgetOptionsPerRequest"
+              type="number"
+              min={1}
+              aria-invalid={!!errors.maxBudgetOptionsPerRequest}
+              {...register('maxBudgetOptionsPerRequest', {
+                valueAsNumber: true,
+              })}
+            />
+            {errors.maxBudgetOptionsPerRequest && (
+              <p className="text-destructive text-sm">
+                {errors.maxBudgetOptionsPerRequest.message}
               </p>
             )}
           </div>
