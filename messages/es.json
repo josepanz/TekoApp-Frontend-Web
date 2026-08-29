@@ -22,15 +22,17 @@
     "states": {
       "loading": "Cargando...",
       "saving": "Guardando...",
-      "deleting": "Eliminando..."
+      "deleting": "Eliminando...",
+      "yes": "Sí",
+      "no": "No"
     },
     "unexpectedError": "Ocurrió un error inesperado. Intentá de nuevo."
   },
   "layout": {
     "brand": {
-      "admin": "TekoApp",
-      "pro": "TekoApp Pro",
-      "client": "TekoApp"
+      "admin": "{brand}",
+      "pro": "{brand} Pro",
+      "client": "{brand}"
     },
     "nav": {
       "admin": {
@@ -45,13 +47,20 @@
         "categories": "Categorías",
         "locations": "Ubicaciones",
         "notifications": "Notificaciones",
-        "aiDisclosures": "Disclosure de IA"
+        "aiDisclosures": "Disclosure de IA",
+        "professionalDocumentTypes": "Tipos de documento",
+        "professionalDocuments": "Revisión de documentos",
+        "legalDocumentVersions": "Documentos legales",
+        "dataRetentionPolicies": "Políticas de retención",
+        "consentAudit": "Auditoría de consentimiento",
+        "materialCatalog": "Catálogo de materiales"
       },
       "client": {
         "home": "Inicio",
         "request": "Solicitar",
         "myServices": "Mis servicios",
-        "professionals": "Profesionales"
+        "professionals": "Profesionales",
+        "myPayments": "Mis pagos"
       },
       "pro": {
         "requests": "Solicitudes",
@@ -103,7 +112,7 @@
   },
   "auth": {
     "login": {
-      "pageTitle": "TekoApp",
+      "pageTitle": "{brand}",
       "pageSubtitle": "Portal de administración — iniciá sesión para continuar.",
       "email": "Email",
       "password": "Contraseña",
@@ -141,6 +150,7 @@
       "icon": "Ícono",
       "color": "Color",
       "parentId": "ID de categoría padre (opcional)",
+      "maxBudgetOptionsPerRequest": "Máximo de opciones de presupuesto por propuesta",
       "visibleLabel": "Visible en el buscador de clientes",
       "submitCreate": "Crear categoría"
     },
@@ -241,6 +251,30 @@
       "aiDisclosures": {
         "title": "Disclosure de IA",
         "description": "Auditoría de contenido marcado como asistido por IA, de plataforma o autodeclarado por usuarios."
+      },
+      "professionalDocumentTypes": {
+        "title": "Tipos de documento",
+        "description": "Catálogo de antecedentes, títulos y certificados que pueden pedirse a los profesionales."
+      },
+      "professionalDocuments": {
+        "title": "Revisión de documentos",
+        "description": "Cola de documentos cargados por profesionales pendientes de aprobar o rechazar."
+      },
+      "legalDocumentVersions": {
+        "title": "Documentos legales",
+        "description": "Catálogo versionado de términos, política de privacidad y consentimientos por país."
+      },
+      "dataRetentionPolicies": {
+        "title": "Políticas de retención",
+        "description": "Cuánto tiempo se retiene cada tipo de contenido y si el usuario puede pedir su baja."
+      },
+      "consentAudit": {
+        "title": "Auditoría de consentimiento",
+        "description": "Quién aceptó qué documento legal y qué contenido se subió con qué alcance de uso."
+      },
+      "materialCatalog": {
+        "title": "Catálogo de materiales",
+        "description": "Materiales y calidades sugeridos que los profesionales usan para armar presupuestos."
       }
     },
     "client": {
@@ -265,6 +299,13 @@
       "request": {
         "title": "Solicitar un profesional",
         "description": "Contanos qué necesitás y un profesional disponible lo aceptará."
+      },
+      "myPayments": {
+        "title": "Mis pagos",
+        "description": "Seguimiento de los pagos que realizaste."
+      },
+      "myPaymentDetail": {
+        "title": "Detalle del pago"
       }
     },
     "pro": {
@@ -354,7 +395,284 @@
       "totalServices": "{count} servicios completados",
       "availableLabel": "disponible ahora",
       "certifications": "Certificaciones",
-      "memberSince": "Miembro desde {date}"
+      "memberSince": "Miembro desde {date}",
+      "requiredDocumentsVerified": "Documentos obligatorios verificados",
+      "requiredDocumentsNotVerified": "Documentos obligatorios sin verificar",
+      "tabs": {
+        "profile": "Perfil",
+        "documents": "Documentos"
+      }
+    }
+  },
+  "professionalDocumentTypes": {
+    "newButton": "Nuevo tipo de documento",
+    "categoryOptions": {
+      "BACKGROUND_CHECK": "Antecedentes",
+      "QUALIFICATION": "Habilitación",
+      "PORTFOLIO": "Portafolio"
+    },
+    "table": {
+      "name": "Nombre",
+      "code": "Código",
+      "category": "Categoría",
+      "required": "Obligatorio",
+      "validity": "Vigencia",
+      "validityDays": "{days} días",
+      "noExpiration": "Sin vencimiento",
+      "active": "Activo",
+      "activate": "Activar {name}",
+      "deactivate": "Desactivar {name}",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar el catálogo.",
+      "empty": "Todavía no hay tipos de documento configurados."
+    },
+    "form": {
+      "createTitle": "Nuevo tipo de documento",
+      "createDescription": "Definí un nuevo documento de habilitación o antecedente.",
+      "editTitle": "Editar tipo de documento",
+      "editDescription": "Actualizá los datos de este tipo de documento.",
+      "code": "Código",
+      "name": "Nombre",
+      "description": "Descripción",
+      "category": "Categoría",
+      "categoryOptions": {
+        "BACKGROUND_CHECK": "Antecedentes",
+        "QUALIFICATION": "Habilitación",
+        "PORTFOLIO": "Portafolio"
+      },
+      "professionalCategoryId": "Categoría de servicio",
+      "anyCategory": "Todas las categorías",
+      "validityDays": "Vigencia (días)",
+      "validityDaysPlaceholder": "Vacío = sin vencimiento",
+      "sortOrder": "Orden",
+      "isRequiredLabel": "Obligatorio",
+      "requiresStaffReviewLabel": "Requiere revisión de staff",
+      "isVisibleToClientLabel": "Visible para el cliente",
+      "submitCreate": "Crear"
+    }
+  },
+  "professionalDocuments": {
+    "categoryOptions": {
+      "BACKGROUND_CHECK": "Antecedentes",
+      "QUALIFICATION": "Habilitación",
+      "PORTFOLIO": "Portafolio"
+    },
+    "statusOptions": {
+      "PENDING": "Pendiente",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "EXPIRED": "Vencido"
+    },
+    "filter": {
+      "all": "Todos",
+      "statusLabel": "Estado",
+      "categoryLabel": "Categoría"
+    },
+    "table": {
+      "professional": "Profesional",
+      "documentType": "Documento",
+      "category": "Categoría",
+      "status": "Estado",
+      "uploadedAt": "Cargado",
+      "actions": "Acciones",
+      "reviewButton": "Revisar",
+      "loadError": "No se pudo cargar la cola de revisión.",
+      "empty": "No hay documentos que coincidan con los filtros."
+    },
+    "review": {
+      "professionalLabel": "Profesional: {name}",
+      "viewFileButton": "Ver archivo",
+      "issuedAt": "Fecha de emisión: {date}",
+      "rejectionReasonLabel": "Motivo de rechazo",
+      "approveButton": "Aprobar",
+      "rejectButton": "Rechazar",
+      "confirmRejectButton": "Confirmar rechazo"
+    },
+    "history": {
+      "loadError": "No se pudo cargar el historial de documentos.",
+      "empty": "Este profesional todavía no cargó ningún documento.",
+      "rejectionReason": "Motivo: {reason}"
+    }
+  },
+  "legalDocumentVersions": {
+    "newButton": "Nueva versión",
+    "documentTypeOptions": {
+      "TERMS_OF_SERVICE": "Términos de servicio",
+      "PRIVACY_POLICY": "Política de privacidad",
+      "DATA_PROCESSING_CONSENT": "Consentimiento de procesamiento de datos",
+      "IMAGE_USAGE_CONSENT": "Consentimiento de uso de imagen",
+      "SERVICE_CONTRACT_TERMS": "Términos de contrato de servicio",
+      "USER_CONTENT_LIABILITY_DISCLAIMER": "Deslinde de responsabilidad por contenido de usuario"
+    },
+    "table": {
+      "documentType": "Documento",
+      "country": "País",
+      "international": "Internacional",
+      "version": "Versión",
+      "contentUrl": "URL",
+      "viewLink": "Ver texto",
+      "publishedAt": "Publicado",
+      "active": "Activo",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar el catálogo.",
+      "empty": "Todavía no hay versiones cargadas."
+    },
+    "form": {
+      "createTitle": "Nueva versión",
+      "createDescription": "Cargá una nueva versión de un documento legal.",
+      "editTitle": "Editar versión",
+      "editDescription": "Actualizá los datos de esta versión.",
+      "documentType": "Tipo de documento",
+      "documentTypeOptions": {
+        "TERMS_OF_SERVICE": "Términos de servicio",
+        "PRIVACY_POLICY": "Política de privacidad",
+        "DATA_PROCESSING_CONSENT": "Consentimiento de procesamiento de datos",
+        "IMAGE_USAGE_CONSENT": "Consentimiento de uso de imagen",
+        "SERVICE_CONTRACT_TERMS": "Términos de contrato de servicio",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Deslinde de responsabilidad por contenido de usuario"
+      },
+      "countryId": "País (id interno)",
+      "countryIdPlaceholder": "Vacío = internacional",
+      "version": "Versión",
+      "contentUrl": "URL del texto legal",
+      "publishedAt": "Fecha de publicación",
+      "isActiveLabel": "Activa",
+      "submitCreate": "Crear"
+    }
+  },
+  "dataRetentionPolicies": {
+    "newButton": "Nueva política",
+    "contentTypeOptions": {
+      "SERVICE_DESCRIPTION": "Descripción de servicio",
+      "BUDGET_OPTION": "Opción de presupuesto",
+      "PROGRESS_NOTE": "Nota de avance",
+      "PROFESSIONAL_DESCRIPTION": "Descripción de profesional",
+      "IMAGE": "Imagen",
+      "OTHER": "Otro"
+    },
+    "table": {
+      "country": "País",
+      "international": "Internacional",
+      "contentType": "Tipo de contenido",
+      "retentionDays": "Retención",
+      "days": "{days} días",
+      "indefinite": "Indefinida",
+      "allowsUserDeletion": "Permite baja del usuario",
+      "requiresLegalHold": "Retención legal obligatoria",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar las políticas.",
+      "empty": "Todavía no hay políticas configuradas."
+    },
+    "form": {
+      "createTitle": "Nueva política de retención",
+      "createDescription": "Configurá la retención para un país y tipo de contenido.",
+      "editTitle": "Editar política de retención",
+      "editDescription": "Actualizá los datos de esta política.",
+      "countryId": "País (id interno)",
+      "countryIdPlaceholder": "Vacío = internacional",
+      "contentType": "Tipo de contenido",
+      "contentTypeOptions": {
+        "SERVICE_DESCRIPTION": "Descripción de servicio",
+        "BUDGET_OPTION": "Opción de presupuesto",
+        "PROGRESS_NOTE": "Nota de avance",
+        "PROFESSIONAL_DESCRIPTION": "Descripción de profesional",
+        "IMAGE": "Imagen",
+        "OTHER": "Otro"
+      },
+      "retentionDays": "Días de retención",
+      "retentionDaysPlaceholder": "Vacío = indefinida",
+      "allowsUserDeletionLabel": "Permite baja por el usuario",
+      "requiresLegalHoldLabel": "Requiere retención legal obligatoria"
+    }
+  },
+  "consentAudit": {
+    "tabs": {
+      "userConsents": "Aceptaciones de términos",
+      "contentConsents": "Consentimiento de contenido"
+    },
+    "userConsents": {
+      "filter": {
+        "all": "Todos",
+        "documentTypeLabel": "Tipo de documento",
+        "countryIdLabel": "País (id interno)",
+        "userReferenceIdLabel": "Usuario (referenceId)"
+      },
+      "table": {
+        "user": "Usuario",
+        "documentType": "Documento",
+        "version": "Versión",
+        "acceptedAt": "Aceptado",
+        "ipAddress": "IP",
+        "acceptanceHash": "Hash",
+        "loadError": "No se pudo cargar la auditoría.",
+        "empty": "No hay aceptaciones que coincidan con los filtros."
+      }
+    },
+    "contentConsents": {
+      "usageScopeOptions": {
+        "APP_INTERNAL_ONLY": "Solo uso interno de la app",
+        "PUBLIC_PROFILE_DISPLAY": "Visible en perfil público",
+        "MARKETING": "Marketing"
+      },
+      "filter": {
+        "all": "Todos",
+        "contentTypeLabel": "Tipo de contenido",
+        "statusLabel": "Estado",
+        "usageScopeLabel": "Alcance de uso",
+        "uploaderReferenceIdLabel": "Subido por (referenceId)"
+      },
+      "table": {
+        "uploader": "Subido por",
+        "contentType": "Tipo de contenido",
+        "usageScope": "Alcance de uso",
+        "grantedAt": "Otorgado",
+        "status": "Estado",
+        "active": "Vigente",
+        "revoked": "Revocado",
+        "loadError": "No se pudo cargar la auditoría.",
+        "empty": "No hay consentimientos que coincidan con los filtros."
+      }
+    }
+  },
+  "materialCatalog": {
+    "newButton": "Nuevo ítem",
+    "qualityTierOptions": {
+      "BASIC": "Básica",
+      "STANDARD": "Estándar",
+      "PREMIUM": "Premium"
+    },
+    "filter": {
+      "all": "Todas",
+      "categoryLabel": "Categoría",
+      "qualityTierLabel": "Calidad"
+    },
+    "table": {
+      "name": "Nombre",
+      "category": "Categoría",
+      "qualityTier": "Calidad",
+      "unit": "Unidad",
+      "defaultPrice": "Precio sugerido",
+      "active": "Activo",
+      "activate": "Activar {name}",
+      "deactivate": "Desactivar {name}",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar el catálogo.",
+      "empty": "Todavía no hay materiales configurados."
+    },
+    "form": {
+      "createTitle": "Nuevo ítem de catálogo",
+      "editTitle": "Editar ítem de catálogo",
+      "suggestedPriceNotice": "El precio es solo una sugerencia para el profesional, no un precio oficial ni regulado.",
+      "category": "Categoría",
+      "categoryPlaceholder": "Elegí una categoría",
+      "qualityTier": "Calidad",
+      "name": "Nombre",
+      "unit": "Unidad",
+      "countryId": "País (id interno)",
+      "countryIdPlaceholder": "Vacío = todos los países",
+      "defaultPrice": "Precio sugerido",
+      "isActiveLabel": "Activo",
+      "submitCreate": "Crear"
     }
   },
   "services": {
@@ -403,7 +721,13 @@
       "startedAt": "Iniciado: {date}",
       "completedAt": "Completado: {date}",
       "cancelledAt": "Cancelado: {date}",
-      "createdAt": "Creado: {date}"
+      "createdAt": "Creado: {date}",
+      "progressLog": {
+        "title": "Bitácora de avance",
+        "empty": "Todavía no hay avances registrados",
+        "loadError": "No se pudo cargar la bitácora",
+        "photoAlt": "Foto de avance"
+      }
     }
   },
   "rolesPermission": {
@@ -452,6 +776,7 @@
     "table": {
       "reference": "Referencia",
       "amount": "Monto",
+      "tip": "Propina",
       "status": "Estado",
       "user": "Usuario",
       "professional": "Profesional",
@@ -495,6 +820,7 @@
       "serviceLabel": "Servicio",
       "recurring": "Recurrente",
       "amountLabel": "Monto",
+      "tipLabel": "Propina",
       "feeLabel": "Comisión",
       "taxLabel": "Impuesto",
       "totalLabel": "Total",
@@ -508,6 +834,47 @@
       "failedAtLabel": "Fallido",
       "failureReasonLabel": "Motivo de falla",
       "refundDetailsLabel": "Detalles del reembolso"
+    }
+  },
+  "myPayments": {
+    "status": {
+      "PENDING": "Pendiente",
+      "PROCESSING": "Procesando",
+      "PAID": "Pagado",
+      "COMPLETED": "Completado",
+      "REFUNDED": "Reembolsado",
+      "PARTIAL_REFUNDED": "Reembolso parcial",
+      "FAILED": "Fallido",
+      "CANCELLED": "Cancelado"
+    },
+    "table": {
+      "reference": "Referencia",
+      "amount": "Monto",
+      "tip": "Propina",
+      "status": "Estado",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "empty": "Todavía no tenés pagos",
+      "loadError": "No se pudo cargar tus pagos. Intentá recargar la página."
+    },
+    "detail": {
+      "back": "Volver a mis pagos",
+      "loadError": "No se pudo cargar el detalle de este pago.",
+      "title": "Pago {reference}",
+      "amountLabel": "Monto",
+      "tipLabel": "Propina",
+      "totalLabel": "Total",
+      "createdAtLabel": "Creado",
+      "paidAtLabel": "Pagado",
+      "failureReasonLabel": "Motivo de falla"
+    },
+    "tip": {
+      "trigger": "Dejar propina",
+      "title": "Dejar propina",
+      "description": "Elegí un porcentaje sugerido o ingresá un monto libre.",
+      "customAmountLabel": "Monto libre",
+      "submitting": "Enviando...",
+      "submit": "Confirmar propina"
     }
   },
   "promotions": {
@@ -607,7 +974,8 @@
       "payment_received": "Pago recibido",
       "rating_received": "Calificación recibida",
       "promotion": "Promoción",
-      "system": "Sistema"
+      "system": "Sistema",
+      "document_expired": "Documento vencido"
     },
     "channel": {
       "in_app": "In-app",
@@ -796,6 +1164,13 @@
       "skills": "Habilidades (separadas por coma)"
     }
   },
+  "myRatings": {
+    "givenLabel": "Calificaciones que diste",
+    "receivedLabel": "Calificaciones que recibiste",
+    "averageGivenLabel": "Promedio que diste",
+    "averageReceivedLabel": "Promedio que recibiste",
+    "loadError": "No se pudieron cargar tus calificaciones."
+  },
   "professionalRatings": {
     "table": {
       "client": "Cliente",
@@ -814,6 +1189,14 @@
       "commentLabel": "Comentario (opcional)",
       "submitting": "Enviando...",
       "submit": "Enviar calificación"
+    },
+    "stats": {
+      "averageLabel": "Promedio general",
+      "totalLabel": "{count, plural, one {# calificación} other {# calificaciones}}",
+      "distributionLabel": "Distribución",
+      "criteriaLabel": "Promedio por criterio",
+      "empty": "Todavía no recibiste ninguna calificación",
+      "loadError": "No se pudieron cargar tus estadísticas."
     }
   },
   "professionalRequests": {

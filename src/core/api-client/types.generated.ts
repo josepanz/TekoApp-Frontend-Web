@@ -2416,6 +2416,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/admin/legal/content-consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * [Staff] Auditoría de consentimiento de uso de contenido
+         * @description Quién subió qué contenido, con qué alcance de uso, vigente o revocado — paginado.
+         */
+        get: operations["AdminLegalConsentsController_getContentConsentGrantsAudit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/ai-disclosures": {
         parameters: {
             query?: never;
@@ -2475,6 +2495,291 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/services/{id}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar la bitácora de un servicio
+         * @description Cliente dueño, profesional asignado, o staff con permiso de auditoría.
+         */
+        get: operations["ServiceProgressController_list"];
+        put?: never;
+        /**
+         * Agregar una entrada de bitácora de avance
+         * @description Solo el profesional asignado, y solo mientras el servicio está ACCEPTED/IN_PROGRESS.
+         */
+        post: operations["ServiceProgressController_createEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/services/{id}/progress/{entryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Eliminar (soft-delete) una entrada propia dentro de la ventana de corrección */
+        delete: operations["ServiceProgressController_deleteEntry"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/professional-document-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catálogo de tipos de documento profesional
+         * @description Antecedentes, certificados, portafolio — filtrable por país/categoría de servicio.
+         */
+        get: operations["ProfessionalDocumentTypesController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-document-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear un tipo de documento profesional (staff) */
+        post: operations["AdminProfessionalDocumentTypesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-document-types/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Editar un tipo de documento profesional (staff) */
+        patch: operations["AdminProfessionalDocumentTypesController_update"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/professionals/me/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Estado de mis documentos
+         * @description Cada tipo aplicable a mi categoría, con mi documento más reciente si existe.
+         */
+        get: operations["ProfessionalDocumentsController_myDocuments"];
+        put?: never;
+        /** Cargar un documento de habilitación/antecedente */
+        post: operations["ProfessionalDocumentsController_upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/professionals/{referenceId}/documents/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Documentos aprobados y visibles de un profesional (perfil público) */
+        get: operations["ProfessionalDocumentsController_publicDocuments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cola de revisión — todos los profesionales, paginada
+         * @description Filtrable por status/category. Ver openspec/decisions.md.
+         */
+        get: operations["AdminProfessionalDocumentsController_queue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professionals/{referenceId}/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Todos los documentos de un profesional (staff) */
+        get: operations["AdminProfessionalDocumentsController_byProfessional"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-documents/{referenceId}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Aprobar o rechazar un documento (staff) */
+        patch: operations["AdminProfessionalDocumentsController_review"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/material-catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catálogo de materiales/calidades para presupuestos
+         * @description Filtrable por categoría/país/calidad — paginado. Precios sugeridos, no regulados.
+         */
+        get: operations["MaterialCatalogController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/material-catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** [Staff] Crear un ítem de catálogo */
+        post: operations["AdminMaterialCatalogController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/material-catalog/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** [Staff] Editar un ítem de catálogo */
+        patch: operations["AdminMaterialCatalogController_update"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar las opciones de presupuesto de una propuesta
+         * @description Cliente dueño del servicio o profesional autor de la propuesta.
+         */
+        get: operations["BudgetsController_list"];
+        /**
+         * Reemplazar el set de opciones de presupuesto de una propuesta
+         * @description Solo el profesional autor, mientras la solicitud sigue pendiente. totalPrice/subtotal se recalculan server-side.
+         */
+        put: operations["BudgetsController_replace"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options/{optionReferenceId}/select": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Elegir una opción de presupuesto
+         * @description Acepta la propuesta con esa opción — mismo efecto que aceptar una ServiceRequests (competidoras auto-rechazadas).
+         */
+        patch: operations["BudgetsController_select"];
         trace?: never;
     };
 }
@@ -3672,6 +3977,11 @@ export interface components {
             isOnline: boolean;
             /** @example verified */
             verificationStatus: string;
+            /**
+             * @description Derivado automáticamente: todos los documentos obligatorios (antecedentes/habilitación) están aprobados y sin vencer. Distinto de verificationStatus (aprobación manual de staff sobre la cuenta) — ver openspec/specs/professional-documents.md.
+             * @example true
+             */
+            requiredDocumentsVerified: boolean;
             /** @example -25.2637 */
             currentLatitude?: number;
             /** @example -57.5759 */
@@ -3903,8 +4213,16 @@ export interface components {
             color?: string;
         };
         ServiceDetailResponseDTO: {
+            /**
+             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28): el backend ahora
+             * expone `id` (Int interno, solo orden) y `referenceId` (UUID público) por separado. Regenerar
+             * con `pnpm generate:api-types` contra el backend real reemplaza este comentario y confirma la
+             * forma exacta — hasta entonces, no editar más este bloque a mano salvo este mismo cambio.
+             * @example 42
+             */
+            id: number;
             /** @example a63b5212-db5e-4ef5-9614-726614174000 */
-            id: string;
+            referenceId: string;
             /** @example 1 */
             userId: number;
             /** @example 2 */
@@ -4031,8 +4349,14 @@ export interface components {
             message?: string;
         };
         ServiceRequestDetailResponseDTO: {
+            /**
+             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
+             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
+             * @example 7
+             */
+            id: number;
             /** @example b72c6323-ec6f-5fg6-a725-837725285111 */
-            id: string;
+            referenceId: string;
             /** @example a63b5212-db5e-4ef5-9614-726614174000 */
             serviceId: string;
             /** @example 2 */
@@ -4330,9 +4654,50 @@ export interface components {
              */
             metadata?: Record<string, never>;
         };
+        /**
+         * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — no existe todavía en el Swagger real,
+         * `pnpm generate:api-types` lo reemplaza cuando se regenere contra un backend con la feature.
+         */
+        TipResponseDTO: {
+            /** @example a63b5212-db5e-4ef5-9614-726614174000 */
+            referenceId: string;
+            /**
+             * @example PERCENTAGE
+             * @enum {string}
+             */
+            mode: "PERCENTAGE" | "FIXED" | "FREE";
+            /** @example 10 */
+            percentage?: number | null;
+            /** @example 15000 */
+            amount: number;
+            /** @example PYG */
+            currencyCode: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        /**
+         * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — no existe todavía en el Swagger real,
+         * `pnpm generate:api-types` lo reemplaza cuando se regenere contra un backend con la feature.
+         */
+        TipConfigResponseDTO: {
+            /** @example true */
+            isEnabled: boolean;
+            /** @example false */
+            isMandatory: boolean;
+            /** @example [10, 15, 20] */
+            suggestedPercentages: number[];
+            /** @example true */
+            allowFreeAmount: boolean;
+        };
         PaymentDetailResponseDTO: {
+            /**
+             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
+             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
+             * @example 15
+             */
+            id: number;
             /** @example f47ac10b-58cc-4372-a567-0e02b2c3d479 */
-            id: string;
+            referenceId: string;
             /** @example 1 */
             userId: number;
             /** @example 5 */
@@ -4344,6 +4709,10 @@ export interface components {
             serviceId: string;
             /** @example 150000 */
             amount: number;
+            /**
+             * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — nunca fusionada a `totalAmount`.
+             */
+            tip?: components["schemas"]["TipResponseDTO"] | null;
             /** @example PYG */
             currencyCode: string;
             /** @example 4350 */
@@ -4634,7 +5003,7 @@ export interface components {
              * @example service_request
              * @enum {string}
              */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system";
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
             /**
              * @description Objeto con datos dinámicos requeridos por el cliente (Payload útil)
              * @example {
@@ -4689,7 +5058,7 @@ export interface components {
              * @example payment_received
              * @enum {string}
              */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system";
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
             /**
              * @example read
              * @enum {string}
@@ -5134,10 +5503,17 @@ export interface components {
         };
         RatingDetailResponseDTO: {
             /**
-             * @description ID único de la calificación
+             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
+             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
+             * @description ID interno (Int, solo orden)
+             * @example 8
+             */
+            id: number;
+            /**
+             * @description ID único (UUID) de la calificación
              * @example a63b5212-db5e-4ef5-9614-726614174000
              */
-            id: string;
+            referenceId: string;
             /**
              * @description ID del usuario que calificó
              * @example 1
@@ -5431,6 +5807,12 @@ export interface components {
              *     }
              */
             metadata?: Record<string, never>;
+            /**
+             * @description Cuántas opciones de presupuesto puede armar un profesional por propuesta en esta categoría
+             * @default 3
+             * @example 3
+             */
+            maxBudgetOptionsPerRequest: number;
         };
         CategoryDetailResponseDTO: {
             /**
@@ -5489,6 +5871,11 @@ export interface components {
              * @example false
              */
             requiresVerification: boolean;
+            /**
+             * @description Cuántas opciones de presupuesto puede armar un profesional por propuesta en esta categoría
+             * @example 3
+             */
+            maxBudgetOptionsPerRequest: number;
             /**
              * @description Metadata dinámica JSONb
              * @example {
@@ -5596,6 +5983,12 @@ export interface components {
              *     }
              */
             metadata?: Record<string, never>;
+            /**
+             * @description Cuántas opciones de presupuesto puede armar un profesional por propuesta en esta categoría
+             * @default 3
+             * @example 3
+             */
+            maxBudgetOptionsPerRequest: number;
         };
         UserStatsDTO: {
             /** @example 1500 */
@@ -5813,8 +6206,13 @@ export interface components {
         LegalDocumentVersionResponseDTO: {
             /** @description referenceId (UUID) público */
             referenceId: string;
-            /** @enum {string} */
-            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+            /**
+             * EDITADO A MANO: `SERVICE_CONTRACT_TERMS` (Fase 0004-contratos, nunca reflejado acá) y
+             * `USER_CONTENT_LIABILITY_DISCLAIMER` (backlog post-Fase 0004 punto 5, 2026-08-28) agregados
+             * a mano — `pnpm generate:api-types` los reemplaza cuando se regenere contra el backend real.
+             * @enum {string}
+             */
+            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT" | "SERVICE_CONTRACT_TERMS" | "USER_CONTENT_LIABILITY_DISCLAIMER";
             /** @description País — null si es internacional/paraguas */
             countryId?: number;
             version: string;
@@ -5853,7 +6251,7 @@ export interface components {
              * @example TERMS_OF_SERVICE
              * @enum {string}
              */
-            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+            documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT" | "SERVICE_CONTRACT_TERMS" | "USER_CONTENT_LIABILITY_DISCLAIMER";
             /**
              * @description País al que aplica esta versión — omitir para una versión internacional/paraguas
              * @example 1
@@ -5919,8 +6317,42 @@ export interface components {
             /** @default false */
             requiresLegalHold: boolean;
         };
+        LegalConsentUserSummaryResponseDTO: {
+            referenceId: string;
+            firstName: string;
+            lastName: string;
+        };
+        UserConsentAuditResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** Format: date-time */
+            acceptedAt: string;
+            legalDocumentVersion: components["schemas"]["LegalDocumentVersionResponseDTO"];
+            user: components["schemas"]["LegalConsentUserSummaryResponseDTO"];
+            ipAddress?: string;
+            userAgent?: string;
+            acceptanceHash: string;
+        };
         LegalConsentsAuditListResponseDTO: {
-            data: components["schemas"]["UserConsentResponseDTO"][];
+            data: components["schemas"]["UserConsentAuditResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        ContentConsentGrantAuditResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            contentType: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+            contentReferenceId: string;
+            /** @enum {string} */
+            usageScope: "APP_INTERNAL_ONLY" | "PUBLIC_PROFILE_DISPLAY" | "MARKETING";
+            /** Format: date-time */
+            grantedAt: string;
+            /** Format: date-time */
+            revokedAt?: string;
+            uploader: components["schemas"]["LegalConsentUserSummaryResponseDTO"];
+        };
+        ContentConsentGrantsAuditListResponseDTO: {
+            data: components["schemas"]["ContentConsentGrantAuditResponseDTO"][];
             pagination: components["schemas"]["PaginationResponseDTO"];
         };
         DeclareAiDisclosureRequestDTO: {
@@ -5952,6 +6384,268 @@ export interface components {
         AiDisclosuresAdminListResponseDTO: {
             data: components["schemas"]["AiDisclosureResponseDTO"][];
             pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        CreateServiceProgressEntryRequestDTO: {
+            /** @description Nota sobre el avance */
+            note?: string;
+            /** @description Keys de S3 de las fotos, ya subidas vía POST /uploads/image — mismo patrón que Services.images. El máximo real por entrada lo valida el service contra APP_CONFIG.progressLog.maxImagesPerEntry (configurable, no hardcodeado acá). */
+            images?: string[];
+        };
+        ServiceProgressEntryResponseDTO: {
+            /** @description referenceId (UUID) público de la entrada */
+            referenceId: string;
+            note?: string;
+            images: string[];
+            /** @description Orden de la entrada dentro del servicio */
+            entryOrder: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** @description true si ya venció la ventana de corrección (no se puede eliminar) — calculado contra la hora del servidor al momento de la respuesta, no persistido. */
+            editWindowExpired: boolean;
+        };
+        ServiceProgressListResponseDTO: {
+            data: components["schemas"]["ServiceProgressEntryResponseDTO"][];
+        };
+        ProfessionalDocumentTypeResponseDTO: {
+            referenceId: string;
+            code: string;
+            name: string;
+            description?: string;
+            /** @enum {string} */
+            category: "BACKGROUND_CHECK" | "QUALIFICATION" | "PORTFOLIO";
+            countryId?: number;
+            professionalCategoryId?: number;
+            isRequired: boolean;
+            /** @description null = no vence */
+            validityDays?: number;
+            requiresStaffReview: boolean;
+            isVisibleToClient: boolean;
+            sortOrder: number;
+            isActive: boolean;
+        };
+        ProfessionalDocumentTypesListResponseDTO: {
+            data: components["schemas"]["ProfessionalDocumentTypeResponseDTO"][];
+        };
+        CreateProfessionalDocumentTypeRequestDTO: {
+            /** @example BG_CHECK_CRIMINAL_PY */
+            code: string;
+            name: string;
+            description?: string;
+            /** @enum {string} */
+            category: "BACKGROUND_CHECK" | "QUALIFICATION" | "PORTFOLIO";
+            /** @description null = aplica a todos los países (hoy es siempre el caso real) */
+            countryId?: number;
+            /** @description null = aplica a todas las categorías de servicio */
+            professionalCategoryId?: number;
+            /** @default false */
+            isRequired: boolean;
+            /** @description null = no vence */
+            validityDays?: number;
+            /** @default true */
+            requiresStaffReview: boolean;
+            /** @default false */
+            isVisibleToClient: boolean;
+            /** @default 0 */
+            sortOrder: number;
+        };
+        UpdateProfessionalDocumentTypeRequestDTO: {
+            /** @example BG_CHECK_CRIMINAL_PY */
+            code?: string;
+            name?: string;
+            description?: string;
+            /** @enum {string} */
+            category?: "BACKGROUND_CHECK" | "QUALIFICATION" | "PORTFOLIO";
+            /** @description null = aplica a todos los países (hoy es siempre el caso real) */
+            countryId?: number;
+            /** @description null = aplica a todas las categorías de servicio */
+            professionalCategoryId?: number;
+            /** @default false */
+            isRequired: boolean;
+            /** @description null = no vence */
+            validityDays?: number;
+            /** @default true */
+            requiresStaffReview: boolean;
+            /** @default false */
+            isVisibleToClient: boolean;
+            /** @default 0 */
+            sortOrder: number;
+            /** @description Desactiva el tipo sin borrarlo — deja de aplicarse a profesionales nuevos */
+            isActive?: boolean;
+        };
+        CreateProfessionalDocumentRequestDTO: {
+            /** @description referenceId (UUID) del ProfessionalDocumentTypes del catálogo — nunca el id interno, ver .claude/rules/database-conventions.md */
+            professionalDocumentTypeReferenceId: string;
+            /** @description Fecha de emisión declarada del documento */
+            issuedAt?: string;
+        };
+        ProfessionalDocumentResponseDTO: {
+            referenceId: string;
+            professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
+            fileKey: string;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
+            /** Format: date-time */
+            issuedAt?: string;
+            /** Format: date-time */
+            expiresAt?: string;
+            /** Format: date-time */
+            reviewedAt?: string;
+            rejectionReason?: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        MyDocumentStatusResponseDTO: {
+            documentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
+            document?: components["schemas"]["ProfessionalDocumentResponseDTO"];
+        };
+        MyDocumentsListResponseDTO: {
+            data: components["schemas"]["MyDocumentStatusResponseDTO"][];
+        };
+        ProfessionalDocumentsListResponseDTO: {
+            data: components["schemas"]["ProfessionalDocumentResponseDTO"][];
+        };
+        AdminQueueProfessionalSummaryResponseDTO: {
+            referenceId: string;
+            firstName: string;
+            lastName: string;
+        };
+        AdminProfessionalDocumentResponseDTO: {
+            referenceId: string;
+            professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
+            fileKey: string;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
+            /** Format: date-time */
+            issuedAt?: string;
+            /** Format: date-time */
+            expiresAt?: string;
+            /** Format: date-time */
+            reviewedAt?: string;
+            rejectionReason?: string;
+            /** Format: date-time */
+            createdAt: string;
+            professional: components["schemas"]["AdminQueueProfessionalSummaryResponseDTO"];
+        };
+        AdminProfessionalDocumentsListResponseDTO: {
+            data: components["schemas"]["AdminProfessionalDocumentResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        ReviewProfessionalDocumentRequestDTO: {
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+            /** @description Obligatorio cuando status=REJECTED */
+            rejectionReason?: string;
+        };
+        MaterialCatalogItemResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            categoryId: number;
+            /** @description País — null si aplica a todos */
+            countryId?: number;
+            name: string;
+            unit: string;
+            /** @enum {string} */
+            qualityTier: "BASIC" | "STANDARD" | "PREMIUM";
+            /** @description Precio sugerido, no regulado */
+            defaultPrice: number;
+            isActive: boolean;
+        };
+        MaterialCatalogListResponseDTO: {
+            data: components["schemas"]["MaterialCatalogItemResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        CreateMaterialCatalogItemRequestDTO: {
+            /** @description Categoría de servicio a la que aplica */
+            categoryId: number;
+            /** @description País — omitir para que aplique a todos los países */
+            countryId?: number;
+            /** @example Cerámica esmaltada 30x30 */
+            name: string;
+            /** @example m2 */
+            unit: string;
+            /** @enum {string} */
+            qualityTier: "BASIC" | "STANDARD" | "PREMIUM";
+            /**
+             * @description Precio SUGERIDO — no es un precio regulado ni fijo
+             * @example 45000
+             */
+            defaultPrice: number;
+            /** @default true */
+            isActive: boolean;
+        };
+        UpdateMaterialCatalogItemRequestDTO: {
+            /** @description Categoría de servicio a la que aplica */
+            categoryId?: number;
+            /** @description País — omitir para que aplique a todos los países */
+            countryId?: number;
+            /** @example Cerámica esmaltada 30x30 */
+            name?: string;
+            /** @example m2 */
+            unit?: string;
+            /** @enum {string} */
+            qualityTier?: "BASIC" | "STANDARD" | "PREMIUM";
+            /**
+             * @description Precio SUGERIDO — no es un precio regulado ni fijo
+             * @example 45000
+             */
+            defaultPrice?: number;
+            /** @default true */
+            isActive: boolean;
+        };
+        BudgetLineItemInputDTO: {
+            /** @enum {string} */
+            itemType: "MATERIAL" | "LABOR" | "OTHER";
+            /** @description referenceId de MaterialCatalog — omitir si es un ítem libre */
+            catalogItemReferenceId?: string;
+            /** @example Cerámica esmaltada 30x30 */
+            description: string;
+            /** @example 12 */
+            quantity: number;
+            /**
+             * @description Precio unitario — puede diferir del defaultPrice del catálogo (es solo sugerido)
+             * @example 45000
+             */
+            unitPrice: number;
+        };
+        BudgetOptionInputDTO: {
+            /** @example Estándar */
+            label: string;
+            description?: string;
+            /** @example 8 */
+            estimatedHours?: number;
+            lineItems: components["schemas"]["BudgetLineItemInputDTO"][];
+        };
+        ReplaceBudgetOptionsRequestDTO: {
+            options: components["schemas"]["BudgetOptionInputDTO"][];
+        };
+        BudgetLineItemResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            itemType: "MATERIAL" | "LABOR" | "OTHER";
+            /** @description null si es un ítem libre */
+            catalogItemReferenceId?: string;
+            description: string;
+            quantity: number;
+            unitPrice: number;
+            /** @description quantity * unitPrice, recalculado server-side */
+            subtotal: number;
+        };
+        BudgetOptionResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            label: string;
+            description?: string;
+            /** @description Suma de los subtotales, recalculada server-side */
+            totalPrice: number;
+            estimatedHours?: number;
+            isSelected: boolean;
+            lineItems: components["schemas"]["BudgetLineItemResponseDTO"][];
+        };
+        BudgetOptionsListResponseDTO: {
+            data: components["schemas"]["BudgetOptionResponseDTO"][];
         };
     };
     responses: never;
@@ -10806,7 +11500,7 @@ export interface operations {
     AdminLegalConsentsController_getDocumentVersions: {
         parameters: {
             query?: {
-                documentType?: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT";
+                documentType?: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT" | "SERVICE_CONTRACT_TERMS" | "USER_CONTENT_LIABILITY_DISCLAIMER";
                 /** @description Filtrar por país (id interno) */
                 countryId?: number;
                 /** @description Filtrar por versiones activas/inactivas */
@@ -10941,6 +11635,11 @@ export interface operations {
                 endDate?: string;
                 /** @description Código/s de sucursal/es especifica hasta 10 */
                 branches?: string;
+                documentType?: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT" | "SERVICE_CONTRACT_TERMS" | "USER_CONTENT_LIABILITY_DISCLAIMER";
+                /** @description Filtrar por país (id interno) */
+                countryId?: number;
+                /** @description Filtrar por usuario (referenceId) */
+                userReferenceId?: string;
             };
             header?: never;
             path?: never;
@@ -10954,6 +11653,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LegalConsentsAuditListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminLegalConsentsController_getContentConsentGrantsAudit: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                contentType?: "SERVICE_DESCRIPTION" | "BUDGET_OPTION" | "PROGRESS_NOTE" | "PROFESSIONAL_DESCRIPTION" | "IMAGE" | "OTHER";
+                usageScope?: "APP_INTERNAL_ONLY" | "PUBLIC_PROFILE_DISPLAY" | "MARKETING";
+                /** @description true = vigente (sin revocar), false = revocado */
+                revoked?: boolean;
+                /** @description Filtrar por quien lo subió (referenceId) */
+                uploaderReferenceId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContentConsentGrantsAuditListResponseDTO"];
                 };
             };
         };
@@ -11092,6 +11829,589 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["AiDisclosuresAdminListResponseDTO"];
                 };
+            };
+        };
+    };
+    ServiceProgressController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del servicio */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServiceProgressListResponseDTO"];
+                };
+            };
+            /** @description Sin permiso para ver esta bitácora. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Servicio inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ServiceProgressController_createEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del servicio */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateServiceProgressEntryRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServiceProgressEntryResponseDTO"];
+                };
+            };
+            /** @description Falta nota/foto obligatoria, o excede el máximo de fotos. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No sos el profesional asignado. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Servicio inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description El servicio no está ACCEPTED/IN_PROGRESS. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ServiceProgressController_deleteEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del servicio */
+                id: string;
+                /** @description referenceId (UUID) de la entrada de bitácora */
+                entryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Eliminada. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No sos el autor de la entrada. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Entrada inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Venció la ventana de corrección. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProfessionalDocumentTypesController_list: {
+        parameters: {
+            query?: {
+                /** @description Filtrar por país — hoy siempre devuelve solo catálogo global (countryId null) */
+                countryId?: number;
+                /** @description Filtrar por categoría de servicio del profesional */
+                professionalCategoryId?: number;
+                category?: "BACKGROUND_CHECK" | "QUALIFICATION" | "PORTFOLIO";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentTypesListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalDocumentTypesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProfessionalDocumentTypeRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalDocumentTypesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del tipo de documento */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProfessionalDocumentTypeRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
+                };
+            };
+            /** @description Tipo inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProfessionalDocumentsController_myDocuments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyDocumentsListResponseDTO"];
+                };
+            };
+        };
+    };
+    ProfessionalDocumentsController_upload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateProfessionalDocumentRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentResponseDTO"];
+                };
+            };
+            /** @description Falta consentimiento vigente (CONSENT_REQUIRED). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description El tipo de documento no existe o no aplica a tu categoría. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProfessionalDocumentsController_publicDocuments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del profesional */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalDocumentsController_queue: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                status?: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
+                category?: "BACKGROUND_CHECK" | "QUALIFICATION" | "PORTFOLIO";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProfessionalDocumentsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalDocumentsController_byProfessional: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del profesional */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalDocumentsController_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del documento cargado */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewProfessionalDocumentRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDocumentResponseDTO"];
+                };
+            };
+            /** @description Documento inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description El documento ya fue revisado. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    MaterialCatalogController_list: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Filtrar por categoría de servicio */
+                categoryId?: number;
+                /** @description Filtrar por país (id interno) */
+                countryId?: number;
+                qualityTier?: "BASIC" | "STANDARD" | "PREMIUM";
+                /** @description Omitir = todos (activos e inactivos) */
+                isActive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialCatalogListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminMaterialCatalogController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMaterialCatalogItemRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialCatalogItemResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminMaterialCatalogController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del ítem de catálogo */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateMaterialCatalogItemRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialCatalogItemResponseDTO"];
+                };
+            };
+            /** @description Ítem inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BudgetsController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del servicio */
+                id: string;
+                /** @description ID UUID de la solicitud */
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BudgetOptionsListResponseDTO"];
+                };
+            };
+        };
+    };
+    BudgetsController_replace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del servicio */
+                id: string;
+                /** @description ID UUID de la solicitud */
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceBudgetOptionsRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BudgetOptionsListResponseDTO"];
+                };
+            };
+            /** @description Máximo de opciones excedido o ítem de catálogo inexistente. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No es el autor de la propuesta. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BudgetsController_select: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del servicio */
+                id: string;
+                /** @description ID UUID de la solicitud */
+                requestId: string;
+                /** @description referenceId (UUID) de la opción elegida */
+                optionReferenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BudgetOptionResponseDTO"];
+                };
+            };
+            /** @description El servicio ya no acepta propuestas. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
