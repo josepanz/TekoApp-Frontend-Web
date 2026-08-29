@@ -1,7 +1,8 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@/test/render';
+import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { paymentsHandlers } from '@/test/msw/handlers/payments';
+import { buildPayment, paymentsHandlers } from '@/test/msw/handlers/payments';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import { PaymentDetailView } from './payment-detail-view';
@@ -46,6 +47,34 @@ describe('PaymentDetailView', () => {
         {},
         { timeout: 3000 },
       ),
+    ).toBeInTheDocument();
+  });
+
+  it('muestra el monto de la propina cuando el pago tiene una', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/payments/:id', () =>
+        HttpResponse.json(
+          buildPayment({
+            tip: {
+              referenceId: 'tip-uuid-1',
+              mode: 'PERCENTAGE',
+              percentage: 10,
+              amount: 15000,
+              currencyCode: 'PYG',
+              createdAt: '2026-06-17T14:00:00Z',
+            },
+          }),
+        ),
+      ),
+    );
+
+    // Act
+    renderDetailView('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+
+    // Assert
+    expect(
+      await screen.findByText('Propina:', { exact: false }),
     ).toBeInTheDocument();
   });
 });

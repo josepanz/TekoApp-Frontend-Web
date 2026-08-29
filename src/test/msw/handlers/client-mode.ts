@@ -9,9 +9,9 @@ export const fakeActiveCategories = [
 export const fakeServiceTypes = [{ id: 4, name: 'Instalación' }];
 
 export const fakeClientServices = [
-  buildService({ id: 'client-svc-pending', status: 'PENDING' }),
+  buildService({ referenceId: 'client-svc-pending', status: 'PENDING' }),
   buildService({
-    id: 'client-svc-completed',
+    referenceId: 'client-svc-completed',
     status: 'COMPLETED',
     professional: {
       id: fakeMyProfessionalProfile.id,
@@ -67,7 +67,9 @@ export const clientModeHandlers = [
     HttpResponse.json(fakeServiceTypes),
   ),
   http.post('/api/backend/services', () =>
-    HttpResponse.json(buildService({ id: 'new-svc-001' }), { status: 201 }),
+    HttpResponse.json(buildService({ referenceId: 'new-svc-001' }), {
+      status: 201,
+    }),
   ),
   http.get('/api/backend/services/my-services', () =>
     HttpResponse.json(fakeClientServices),

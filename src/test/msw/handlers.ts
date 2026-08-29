@@ -10,6 +10,7 @@ import { professionalsHandlers } from './handlers/professionals';
 import { promotionsHandlers } from './handlers/promotions';
 import { ratingsHandlers } from './handlers/ratings';
 import { rolesHandlers } from './handlers/roles';
+import { serviceProgressHandlers } from './handlers/service-progress';
 import { servicesHandlers } from './handlers/services';
 import { usersHandlers } from './handlers/users';
 
@@ -30,4 +31,5 @@ export const handlers = [
   ...notificationsHandlers,
   ...myProfileHandlers,
   ...aiDisclosuresHandlers,
+  ...serviceProgressHandlers,
 ];
