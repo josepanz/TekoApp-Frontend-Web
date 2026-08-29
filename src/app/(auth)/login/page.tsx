@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 import { LoginForm } from '@/features/auth/components/login-form';
+import { BRAND_NAME } from '@/design-system/tokens/brand';
 
 export default async function LoginPage() {
   const t = await getTranslations('auth.login');
@@ -16,7 +17,7 @@ export default async function LoginPage() {
       </div>
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="font-heading text-3xl font-semibold tracking-tight">
-          {t('pageTitle')}
+          {t('pageTitle', { brand: BRAND_NAME })}
         </h1>
         <p className="text-white/80">{t('pageSubtitle')}</p>
       </div>
