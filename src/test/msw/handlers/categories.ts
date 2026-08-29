@@ -14,6 +14,7 @@ export function buildCategory(overrides: Partial<Category> = {}): Category {
     status: 'ACTIVE',
     isVisible: true,
     requiresVerification: false,
+    maxBudgetOptionsPerRequest: 3,
     metadata: null,
     parentCategoryId: null,
     createdAt: '2026-05-01T10:00:00Z',

@@ -16,6 +16,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import { BRAND_NAME } from '@/design-system/tokens/brand';
 import { NAV_ITEMS } from './nav-items';
 import { PRO_NAV_ITEMS } from './pro-nav-items';
 import { CLIENT_NAV_ITEMS } from './client-nav-items';
@@ -23,9 +24,10 @@ import { ModeSwitcher } from './mode-switcher';
 
 export type SidebarVariant = 'admin' | 'pro' | 'client';
 
-// `label` sale de `layout.brand.<variant>` y los títulos de item de `layout.nav.<variant>` —
-// la marca ("TekoApp") no se traduce, pero vive igual en los mensajes para no partir el label
-// entre dos fuentes distintas.
+// `label` sale de `layout.brand.<variant>` (plantilla con placeholder `{brand}`) y los títulos de
+// item de `layout.nav.<variant>` — el nombre de marca no se traduce (mismo string en es/en), pero
+// se interpola desde `BRAND_NAME` (`design-system/tokens/brand.ts`) en vez de vivir hardcodeado en
+// los 2 catálogos de mensajes.
 const VARIANT_CONFIG = {
   admin: { items: NAV_ITEMS },
   pro: { items: PRO_NAV_ITEMS },
@@ -47,7 +49,7 @@ export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
   // Translator raíz: los items de nav guardan la clave completa (`layout.nav.<área>.<item>`).
   const tRoot = useTranslations();
   const { items } = VARIANT_CONFIG[variant];
-  const label = t(`brand.${variant}`);
+  const label = t(`brand.${variant}`, { brand: BRAND_NAME });
 
   return (
     <Sidebar collapsible="icon">

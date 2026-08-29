@@ -4,6 +4,15 @@ import type { components } from '@/core/api-client/types.generated';
 export type Payment = components['schemas']['PaymentDetailResponseDTO'];
 export type PaymentStatus = Payment['status'];
 export type RefundPaymentDto = components['schemas']['RefundPaymentDto'];
+export type Tip = components['schemas']['TipResponseDTO'];
+export type TipMode = Tip['mode'];
+export type TipConfig = components['schemas']['TipConfigResponseDTO'];
+
+export interface CreateTipDto {
+  mode: TipMode;
+  percentage?: number;
+  amount?: number;
+}
 
 export interface GetPaymentsParams {
   userId?: number;
@@ -49,7 +58,26 @@ export function cancelPayment(id: string): Promise<Payment> {
 }
 
 // GET /payments/{id} (PaymentController_findOne) — mismo DTO plano que /payments (sin objetos
-// user/professional/service anidados, solo las FK sueltas).
+// user/professional/service anidados, solo las FK sueltas). El backend valida que el pago sea
+// del usuario autenticado (o que tenga payments.audit:read/admin:all) — ver
+// `getPaymentByIdForViewer` en TekoApp-Backend.
 export function getPaymentById(id: string): Promise<Payment> {
   return apiFetch<Payment>(`payments/${id}`);
+}
+
+// GET /payments/me — pagos propios del usuario autenticado, resuelto server-side desde el token
+// (nunca un userId de query param) — es lo que consume el modo cliente de este portal.
+export function getMyPayments(): Promise<Payment[]> {
+  return apiFetch<Payment[]>('payments/me');
+}
+
+export function getTipConfig(): Promise<TipConfig> {
+  return apiFetch<TipConfig>('tips/config');
+}
+
+export function createTip(paymentId: string, dto: CreateTipDto): Promise<Tip> {
+  return apiFetch<Tip>(`payments/${paymentId}/tip`, {
+    method: 'POST',
+    body: JSON.stringify(dto),
+  });
 }

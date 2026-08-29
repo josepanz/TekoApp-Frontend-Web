@@ -6,6 +6,16 @@ export type ReviewsListResponse =
 export type CreateProfessionalToClientRatingRequest =
   components['schemas']['CreateProfessionalToClientRatingRequestDTO'];
 export type Rating = components['schemas']['RatingDetailResponseDTO'];
+export type ProfessionalRatingStats =
+  components['schemas']['ProfessionalRatingStatsResponseDTO'];
+
+export function getMyProfessionalRatingStats(
+  professionalId: number,
+): Promise<ProfessionalRatingStats> {
+  return apiFetch<ProfessionalRatingStats>(
+    `ratings/professional/${professionalId}/average`,
+  );
+}
 
 export interface GetMyReviewsParams {
   page: number;

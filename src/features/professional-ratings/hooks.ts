@@ -6,7 +6,12 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ApiError } from '@/core/api-client/errors';
-import { getMyReviews, rateClient, type GetMyReviewsParams } from './api';
+import {
+  getMyProfessionalRatingStats,
+  getMyReviews,
+  rateClient,
+  type GetMyReviewsParams,
+} from './api';
 
 export function useMyReviewsQuery(
   professionalId: number | undefined,
@@ -17,6 +22,16 @@ export function useMyReviewsQuery(
     queryFn: () => getMyReviews(professionalId as number, params),
     enabled: professionalId !== undefined,
     placeholderData: keepPreviousData,
+  });
+}
+
+export function useMyProfessionalRatingStatsQuery(
+  professionalId: number | undefined,
+) {
+  return useQuery({
+    queryKey: ['professional-rating-stats', professionalId],
+    queryFn: () => getMyProfessionalRatingStats(professionalId as number),
+    enabled: professionalId !== undefined,
   });
 }
 

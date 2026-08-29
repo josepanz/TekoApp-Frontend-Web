@@ -17,6 +17,7 @@ export const fakeMyProfessionalProfile: Professional = {
   isAvailable: true,
   isOnline: false,
   verificationStatus: 'verified',
+  requiredDocumentsVerified: true,
   currentLatitude: undefined,
   currentLongitude: undefined,
   lastLocationUpdate: undefined,
@@ -38,15 +39,15 @@ export const fakeMyProfessionalProfile: Professional = {
 };
 
 export const fakePendingService = buildService({
-  id: 'pending-svc-001',
+  referenceId: 'pending-svc-001',
   status: 'PENDING',
   professionalId: undefined,
 });
 
 export const fakeMyServices = [
-  buildService({ id: 'accepted-svc-001', status: 'ACCEPTED' }),
-  buildService({ id: 'inprogress-svc-001', status: 'IN_PROGRESS' }),
-  buildService({ id: 'completed-svc-001', status: 'COMPLETED' }),
+  buildService({ referenceId: 'accepted-svc-001', status: 'ACCEPTED' }),
+  buildService({ referenceId: 'inprogress-svc-001', status: 'IN_PROGRESS' }),
+  buildService({ referenceId: 'completed-svc-001', status: 'COMPLETED' }),
 ];
 
 export const professionalModeHandlers = [
@@ -61,7 +62,7 @@ export const professionalModeHandlers = [
   ),
   http.post('/api/backend/services/:id/accept', ({ params }) =>
     HttpResponse.json(
-      buildService({ id: String(params.id), status: 'ACCEPTED' }),
+      buildService({ referenceId: String(params.id), status: 'ACCEPTED' }),
     ),
   ),
   http.get('/api/backend/services/my-services', () =>
@@ -69,12 +70,12 @@ export const professionalModeHandlers = [
   ),
   http.post('/api/backend/services/:id/start', ({ params }) =>
     HttpResponse.json(
-      buildService({ id: String(params.id), status: 'IN_PROGRESS' }),
+      buildService({ referenceId: String(params.id), status: 'IN_PROGRESS' }),
     ),
   ),
   http.post('/api/backend/services/:id/complete', ({ params }) =>
     HttpResponse.json(
-      buildService({ id: String(params.id), status: 'COMPLETED' }),
+      buildService({ referenceId: String(params.id), status: 'COMPLETED' }),
     ),
   ),
   http.get('/api/backend/professionals/:id/reviews', () =>

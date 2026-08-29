@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { ServiceProgressSection } from '@/features/service-progress/components/service-progress-section';
 import { useServiceDetailQuery } from '../hooks';
 import type { Service, ServiceStatus } from '../api';
 
@@ -220,6 +221,8 @@ export function ServiceDetailView({ id }: { id: string }) {
           </div>
         </CardContent>
       </Card>
+
+      <ServiceProgressSection serviceId={id} />
     </div>
   );
 }
