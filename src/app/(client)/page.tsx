@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
 import { getSession } from '@/core/auth/session';
 import { isStaffUser } from '@/core/auth/permissions';
+import { MyRatingStatsCard } from '@/features/my-ratings/components/my-rating-stats-card';
 import { ProModeLink } from '@/features/professional-profile/components/pro-mode-link';
 import { getTranslations } from 'next-intl/server';
 
@@ -43,6 +44,8 @@ export default async function ClientHomePage() {
           </Link>
         )}
       </div>
+
+      <MyRatingStatsCard />
     </div>
   );
 }
