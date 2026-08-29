@@ -1,3 +1,4 @@
+import { aiDisclosuresHandlers } from './handlers/ai-disclosures';
 import { analyticsHandlers } from './handlers/analytics';
 import { authHandlers } from './handlers/auth';
 import { categoriesHandlers } from './handlers/categories';
@@ -9,6 +10,7 @@ import { professionalsHandlers } from './handlers/professionals';
 import { promotionsHandlers } from './handlers/promotions';
 import { ratingsHandlers } from './handlers/ratings';
 import { rolesHandlers } from './handlers/roles';
+import { serviceProgressHandlers } from './handlers/service-progress';
 import { servicesHandlers } from './handlers/services';
 import { usersHandlers } from './handlers/users';
 
@@ -28,4 +30,6 @@ export const handlers = [
   ...categoriesHandlers,
   ...notificationsHandlers,
   ...myProfileHandlers,
+  ...aiDisclosuresHandlers,
+  ...serviceProgressHandlers,
 ];

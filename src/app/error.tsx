@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
 import { Button } from '@/components/ui/button';
 
 /**
@@ -24,12 +25,10 @@ export default function RootError({
   }, [error]);
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-4 px-4 text-center">
+    <BrandGradientBackground className="flex min-h-svh flex-col items-center justify-center gap-4 px-4 text-center text-white">
       <h1 className="font-heading text-2xl font-semibold">{t('title')}</h1>
-      <p className="text-muted-foreground max-w-md text-sm">
-        {t('description')}
-      </p>
+      <p className="max-w-md text-sm text-white/80">{t('description')}</p>
       <Button onClick={() => reset()}>{tCommon('actions.retry')}</Button>
-    </div>
+    </BrandGradientBackground>
   );
 }

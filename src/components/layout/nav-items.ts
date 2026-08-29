@@ -1,11 +1,16 @@
 import {
   Bell,
   CreditCard,
+  FileCheck,
+  FileText,
   FolderTree,
+  Hammer,
   LayoutDashboard,
   MapPin,
   Percent,
+  ScrollText,
   ShieldCheck,
+  Sparkles,
   Star,
   UserCog,
   Users,
@@ -79,5 +84,40 @@ export const NAV_ITEMS: NavItem[] = [
     titleKey: 'layout.nav.admin.notifications',
     href: '/admin/notifications',
     icon: Bell,
+  },
+  {
+    titleKey: 'layout.nav.admin.aiDisclosures',
+    href: '/admin/ai-disclosures',
+    icon: Sparkles,
+  },
+  {
+    titleKey: 'layout.nav.admin.professionalDocumentTypes',
+    href: '/admin/professional-document-types',
+    icon: FileCheck,
+  },
+  {
+    titleKey: 'layout.nav.admin.professionalDocuments',
+    href: '/admin/professional-documents',
+    icon: FileCheck,
+  },
+  {
+    titleKey: 'layout.nav.admin.legalDocumentVersions',
+    href: '/admin/legal/document-versions',
+    icon: FileText,
+  },
+  {
+    titleKey: 'layout.nav.admin.dataRetentionPolicies',
+    href: '/admin/legal/retention-policies',
+    icon: ScrollText,
+  },
+  {
+    titleKey: 'layout.nav.admin.consentAudit',
+    href: '/admin/legal/consent-audit',
+    icon: ShieldCheck,
+  },
+  {
+    titleKey: 'layout.nav.admin.materialCatalog',
+    href: '/admin/material-catalog',
+    icon: Hammer,
   },
 ];

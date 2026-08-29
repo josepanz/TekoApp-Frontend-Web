@@ -1,3 +1,4 @@
+import { ProfessionalRatingStatsCard } from '@/features/professional-ratings/components/professional-rating-stats-card';
 import { ReviewsTable } from '@/features/professional-ratings/components/reviews-table';
 import { getTranslations } from 'next-intl/server';
 
@@ -11,6 +12,7 @@ export default async function CalificacionesPage() {
         </h1>
         <p className="text-muted-foreground">{t('description')}</p>
       </div>
+      <ProfessionalRatingStatsCard />
       <ReviewsTable />
     </div>
   );

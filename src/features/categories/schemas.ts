@@ -38,6 +38,7 @@ export const categoryFormSchema = z.object({
       (value) => value === undefined || (Number.isInteger(value) && value > 0),
       { message: 'Debe ser un número entero positivo' },
     ),
+  maxBudgetOptionsPerRequest: z.number().int().min(1),
 });
 
 export type CategoryFormValues = z.infer<typeof categoryFormSchema>;

@@ -27,6 +27,7 @@ const TYPE_VARIANT: Record<
   rating_received: 'secondary',
   promotion: 'outline',
   system: 'outline',
+  document_expired: 'destructive',
 };
 
 const MESSAGE_TRUNCATE_LENGTH = 80;

@@ -65,6 +65,7 @@ describe('CategoryFormDialog', () => {
         status: 'ACTIVE',
         isVisible: true,
         requiresVerification: false,
+        maxBudgetOptionsPerRequest: 3,
       });
     });
   });

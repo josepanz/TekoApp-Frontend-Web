@@ -71,7 +71,7 @@ export function MyServicesTable() {
             <Button
               size="sm"
               disabled={startMutation.isPending}
-              onClick={() => startMutation.mutate(service.id)}
+              onClick={() => startMutation.mutate(service.referenceId)}
             >
               {t('table.start')}
             </Button>
@@ -82,7 +82,7 @@ export function MyServicesTable() {
             <Button
               size="sm"
               disabled={completeMutation.isPending}
-              onClick={() => completeMutation.mutate(service.id)}
+              onClick={() => completeMutation.mutate(service.referenceId)}
             >
               {t('table.complete')}
             </Button>
@@ -91,7 +91,7 @@ export function MyServicesTable() {
         if (service.status === 'COMPLETED') {
           return (
             <RateClientDialog
-              serviceId={service.id}
+              serviceId={service.referenceId}
               clientReferenceId={service.users.referenceId}
               clientName={`${service.users.firstName} ${service.users.lastName}`}
             />

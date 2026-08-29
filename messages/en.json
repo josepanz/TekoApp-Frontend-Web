@@ -22,15 +22,17 @@
     "states": {
       "loading": "Loading...",
       "saving": "Saving...",
-      "deleting": "Deleting..."
+      "deleting": "Deleting...",
+      "yes": "Yes",
+      "no": "No"
     },
     "unexpectedError": "Something went wrong. Please try again."
   },
   "layout": {
     "brand": {
-      "admin": "TekoApp",
-      "pro": "TekoApp Pro",
-      "client": "TekoApp"
+      "admin": "{brand}",
+      "pro": "{brand} Pro",
+      "client": "{brand}"
     },
     "nav": {
       "admin": {
@@ -44,13 +46,21 @@
         "rolesPermission": "Roles & permissions",
         "categories": "Categories",
         "locations": "Locations",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "aiDisclosures": "AI disclosure",
+        "professionalDocumentTypes": "Document types",
+        "professionalDocuments": "Document review",
+        "legalDocumentVersions": "Legal documents",
+        "dataRetentionPolicies": "Retention policies",
+        "consentAudit": "Consent audit",
+        "materialCatalog": "Material catalog"
       },
       "client": {
         "home": "Home",
         "request": "Request",
         "myServices": "My services",
-        "professionals": "Professionals"
+        "professionals": "Professionals",
+        "myPayments": "My payments"
       },
       "pro": {
         "requests": "Requests",
@@ -102,7 +112,7 @@
   },
   "auth": {
     "login": {
-      "pageTitle": "TekoApp",
+      "pageTitle": "{brand}",
       "pageSubtitle": "Admin portal — sign in to continue.",
       "email": "Email",
       "password": "Password",
@@ -140,6 +150,7 @@
       "icon": "Icon",
       "color": "Color",
       "parentId": "Parent category ID (optional)",
+      "maxBudgetOptionsPerRequest": "Max budget options per proposal",
       "visibleLabel": "Visible in the client search",
       "submitCreate": "Create category"
     },
@@ -236,6 +247,34 @@
       "notifications": {
         "title": "Notifications",
         "description": "System notification log and manual notification sending."
+      },
+      "aiDisclosures": {
+        "title": "AI disclosure",
+        "description": "Audit of content flagged as AI-assisted, either platform-generated or self-declared by users."
+      },
+      "professionalDocumentTypes": {
+        "title": "Document types",
+        "description": "Catalog of background checks, degrees and certificates that can be requested from professionals."
+      },
+      "professionalDocuments": {
+        "title": "Document review",
+        "description": "Queue of documents uploaded by professionals pending approval or rejection."
+      },
+      "legalDocumentVersions": {
+        "title": "Legal documents",
+        "description": "Versioned catalog of terms, privacy policy and consents per country."
+      },
+      "dataRetentionPolicies": {
+        "title": "Retention policies",
+        "description": "How long each content type is retained and whether users can request deletion."
+      },
+      "consentAudit": {
+        "title": "Consent audit",
+        "description": "Who accepted which legal document and what content was uploaded with what usage scope."
+      },
+      "materialCatalog": {
+        "title": "Material catalog",
+        "description": "Suggested materials and quality tiers professionals use to build budgets."
       }
     },
     "client": {
@@ -260,6 +299,13 @@
       "request": {
         "title": "Request a professional",
         "description": "Tell us what you need and an available professional will take it."
+      },
+      "myPayments": {
+        "title": "My payments",
+        "description": "Track the payments you've made."
+      },
+      "myPaymentDetail": {
+        "title": "Payment detail"
       }
     },
     "pro": {
@@ -349,7 +395,284 @@
       "totalServices": "{count} completed services",
       "availableLabel": "available now",
       "certifications": "Certifications",
-      "memberSince": "Member since {date}"
+      "memberSince": "Member since {date}",
+      "requiredDocumentsVerified": "Required documents verified",
+      "requiredDocumentsNotVerified": "Required documents not verified",
+      "tabs": {
+        "profile": "Profile",
+        "documents": "Documents"
+      }
+    }
+  },
+  "professionalDocumentTypes": {
+    "newButton": "New document type",
+    "categoryOptions": {
+      "BACKGROUND_CHECK": "Background checks",
+      "QUALIFICATION": "Qualifications",
+      "PORTFOLIO": "Portfolio"
+    },
+    "table": {
+      "name": "Name",
+      "code": "Code",
+      "category": "Category",
+      "required": "Required",
+      "validity": "Validity",
+      "validityDays": "{days} days",
+      "noExpiration": "No expiration",
+      "active": "Active",
+      "activate": "Activate {name}",
+      "deactivate": "Deactivate {name}",
+      "actions": "Actions",
+      "loadError": "Couldn't load the catalog.",
+      "empty": "No document types configured yet."
+    },
+    "form": {
+      "createTitle": "New document type",
+      "createDescription": "Define a new qualification or background-check document.",
+      "editTitle": "Edit document type",
+      "editDescription": "Update this document type's data.",
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "category": "Category",
+      "categoryOptions": {
+        "BACKGROUND_CHECK": "Background checks",
+        "QUALIFICATION": "Qualifications",
+        "PORTFOLIO": "Portfolio"
+      },
+      "professionalCategoryId": "Service category",
+      "anyCategory": "All categories",
+      "validityDays": "Validity (days)",
+      "validityDaysPlaceholder": "Empty = no expiration",
+      "sortOrder": "Sort order",
+      "isRequiredLabel": "Required",
+      "requiresStaffReviewLabel": "Requires staff review",
+      "isVisibleToClientLabel": "Visible to client",
+      "submitCreate": "Create"
+    }
+  },
+  "professionalDocuments": {
+    "categoryOptions": {
+      "BACKGROUND_CHECK": "Background checks",
+      "QUALIFICATION": "Qualifications",
+      "PORTFOLIO": "Portfolio"
+    },
+    "statusOptions": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "EXPIRED": "Expired"
+    },
+    "filter": {
+      "all": "All",
+      "statusLabel": "Status",
+      "categoryLabel": "Category"
+    },
+    "table": {
+      "professional": "Professional",
+      "documentType": "Document",
+      "category": "Category",
+      "status": "Status",
+      "uploadedAt": "Uploaded",
+      "actions": "Actions",
+      "reviewButton": "Review",
+      "loadError": "Couldn't load the review queue.",
+      "empty": "No documents match the current filters."
+    },
+    "review": {
+      "professionalLabel": "Professional: {name}",
+      "viewFileButton": "View file",
+      "issuedAt": "Issue date: {date}",
+      "rejectionReasonLabel": "Rejection reason",
+      "approveButton": "Approve",
+      "rejectButton": "Reject",
+      "confirmRejectButton": "Confirm rejection"
+    },
+    "history": {
+      "loadError": "Couldn't load the document history.",
+      "empty": "This professional hasn't uploaded any documents yet.",
+      "rejectionReason": "Reason: {reason}"
+    }
+  },
+  "legalDocumentVersions": {
+    "newButton": "New version",
+    "documentTypeOptions": {
+      "TERMS_OF_SERVICE": "Terms of service",
+      "PRIVACY_POLICY": "Privacy policy",
+      "DATA_PROCESSING_CONSENT": "Data processing consent",
+      "IMAGE_USAGE_CONSENT": "Image usage consent",
+      "SERVICE_CONTRACT_TERMS": "Service contract terms",
+      "USER_CONTENT_LIABILITY_DISCLAIMER": "User content liability disclaimer"
+    },
+    "table": {
+      "documentType": "Document",
+      "country": "Country",
+      "international": "International",
+      "version": "Version",
+      "contentUrl": "URL",
+      "viewLink": "View text",
+      "publishedAt": "Published",
+      "active": "Active",
+      "actions": "Actions",
+      "loadError": "Couldn't load the catalog.",
+      "empty": "No versions uploaded yet."
+    },
+    "form": {
+      "createTitle": "New version",
+      "createDescription": "Upload a new version of a legal document.",
+      "editTitle": "Edit version",
+      "editDescription": "Update this version's data.",
+      "documentType": "Document type",
+      "documentTypeOptions": {
+        "TERMS_OF_SERVICE": "Terms of service",
+        "PRIVACY_POLICY": "Privacy policy",
+        "DATA_PROCESSING_CONSENT": "Data processing consent",
+        "IMAGE_USAGE_CONSENT": "Image usage consent",
+        "SERVICE_CONTRACT_TERMS": "Service contract terms",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "User content liability disclaimer"
+      },
+      "countryId": "Country (internal id)",
+      "countryIdPlaceholder": "Empty = international",
+      "version": "Version",
+      "contentUrl": "Legal text URL",
+      "publishedAt": "Publication date",
+      "isActiveLabel": "Active",
+      "submitCreate": "Create"
+    }
+  },
+  "dataRetentionPolicies": {
+    "newButton": "New policy",
+    "contentTypeOptions": {
+      "SERVICE_DESCRIPTION": "Service description",
+      "BUDGET_OPTION": "Budget option",
+      "PROGRESS_NOTE": "Progress note",
+      "PROFESSIONAL_DESCRIPTION": "Professional description",
+      "IMAGE": "Image",
+      "OTHER": "Other"
+    },
+    "table": {
+      "country": "Country",
+      "international": "International",
+      "contentType": "Content type",
+      "retentionDays": "Retention",
+      "days": "{days} days",
+      "indefinite": "Indefinite",
+      "allowsUserDeletion": "Allows user deletion",
+      "requiresLegalHold": "Requires legal hold",
+      "actions": "Actions",
+      "loadError": "Couldn't load the policies.",
+      "empty": "No policies configured yet."
+    },
+    "form": {
+      "createTitle": "New retention policy",
+      "createDescription": "Configure retention for a country and content type.",
+      "editTitle": "Edit retention policy",
+      "editDescription": "Update this policy's data.",
+      "countryId": "Country (internal id)",
+      "countryIdPlaceholder": "Empty = international",
+      "contentType": "Content type",
+      "contentTypeOptions": {
+        "SERVICE_DESCRIPTION": "Service description",
+        "BUDGET_OPTION": "Budget option",
+        "PROGRESS_NOTE": "Progress note",
+        "PROFESSIONAL_DESCRIPTION": "Professional description",
+        "IMAGE": "Image",
+        "OTHER": "Other"
+      },
+      "retentionDays": "Retention days",
+      "retentionDaysPlaceholder": "Empty = indefinite",
+      "allowsUserDeletionLabel": "Allows user-requested deletion",
+      "requiresLegalHoldLabel": "Requires mandatory legal hold"
+    }
+  },
+  "consentAudit": {
+    "tabs": {
+      "userConsents": "Terms acceptances",
+      "contentConsents": "Content consent"
+    },
+    "userConsents": {
+      "filter": {
+        "all": "All",
+        "documentTypeLabel": "Document type",
+        "countryIdLabel": "Country (internal id)",
+        "userReferenceIdLabel": "User (referenceId)"
+      },
+      "table": {
+        "user": "User",
+        "documentType": "Document",
+        "version": "Version",
+        "acceptedAt": "Accepted",
+        "ipAddress": "IP",
+        "acceptanceHash": "Hash",
+        "loadError": "Couldn't load the audit log.",
+        "empty": "No acceptances match the current filters."
+      }
+    },
+    "contentConsents": {
+      "usageScopeOptions": {
+        "APP_INTERNAL_ONLY": "App-internal use only",
+        "PUBLIC_PROFILE_DISPLAY": "Visible on public profile",
+        "MARKETING": "Marketing"
+      },
+      "filter": {
+        "all": "All",
+        "contentTypeLabel": "Content type",
+        "statusLabel": "Status",
+        "usageScopeLabel": "Usage scope",
+        "uploaderReferenceIdLabel": "Uploaded by (referenceId)"
+      },
+      "table": {
+        "uploader": "Uploaded by",
+        "contentType": "Content type",
+        "usageScope": "Usage scope",
+        "grantedAt": "Granted",
+        "status": "Status",
+        "active": "Active",
+        "revoked": "Revoked",
+        "loadError": "Couldn't load the audit log.",
+        "empty": "No consents match the current filters."
+      }
+    }
+  },
+  "materialCatalog": {
+    "newButton": "New item",
+    "qualityTierOptions": {
+      "BASIC": "Basic",
+      "STANDARD": "Standard",
+      "PREMIUM": "Premium"
+    },
+    "filter": {
+      "all": "All",
+      "categoryLabel": "Category",
+      "qualityTierLabel": "Quality"
+    },
+    "table": {
+      "name": "Name",
+      "category": "Category",
+      "qualityTier": "Quality",
+      "unit": "Unit",
+      "defaultPrice": "Suggested price",
+      "active": "Active",
+      "activate": "Activate {name}",
+      "deactivate": "Deactivate {name}",
+      "actions": "Actions",
+      "loadError": "Couldn't load the catalog.",
+      "empty": "No materials configured yet."
+    },
+    "form": {
+      "createTitle": "New catalog item",
+      "editTitle": "Edit catalog item",
+      "suggestedPriceNotice": "The price is only a suggestion for the professional, not an official or regulated price.",
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "qualityTier": "Quality",
+      "name": "Name",
+      "unit": "Unit",
+      "countryId": "Country (internal id)",
+      "countryIdPlaceholder": "Empty = all countries",
+      "defaultPrice": "Suggested price",
+      "isActiveLabel": "Active",
+      "submitCreate": "Create"
     }
   },
   "services": {
@@ -398,7 +721,13 @@
       "startedAt": "Started: {date}",
       "completedAt": "Completed: {date}",
       "cancelledAt": "Cancelled: {date}",
-      "createdAt": "Created: {date}"
+      "createdAt": "Created: {date}",
+      "progressLog": {
+        "title": "Progress log",
+        "empty": "No progress entries yet",
+        "loadError": "Could not load the progress log",
+        "photoAlt": "Progress photo"
+      }
     }
   },
   "rolesPermission": {
@@ -447,6 +776,7 @@
     "table": {
       "reference": "Reference",
       "amount": "Amount",
+      "tip": "Tip",
       "status": "Status",
       "user": "User",
       "professional": "Professional",
@@ -490,6 +820,7 @@
       "serviceLabel": "Service",
       "recurring": "Recurring",
       "amountLabel": "Amount",
+      "tipLabel": "Tip",
       "feeLabel": "Fee",
       "taxLabel": "Tax",
       "totalLabel": "Total",
@@ -503,6 +834,47 @@
       "failedAtLabel": "Failed",
       "failureReasonLabel": "Failure reason",
       "refundDetailsLabel": "Refund details"
+    }
+  },
+  "myPayments": {
+    "status": {
+      "PENDING": "Pending",
+      "PROCESSING": "Processing",
+      "PAID": "Paid",
+      "COMPLETED": "Completed",
+      "REFUNDED": "Refunded",
+      "PARTIAL_REFUNDED": "Partially refunded",
+      "FAILED": "Failed",
+      "CANCELLED": "Cancelled"
+    },
+    "table": {
+      "reference": "Reference",
+      "amount": "Amount",
+      "tip": "Tip",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions",
+      "empty": "You don't have any payments yet",
+      "loadError": "We couldn't load your payments. Try reloading the page."
+    },
+    "detail": {
+      "back": "Back to my payments",
+      "loadError": "Couldn't load this payment's detail.",
+      "title": "Payment {reference}",
+      "amountLabel": "Amount",
+      "tipLabel": "Tip",
+      "totalLabel": "Total",
+      "createdAtLabel": "Created",
+      "paidAtLabel": "Paid",
+      "failureReasonLabel": "Failure reason"
+    },
+    "tip": {
+      "trigger": "Leave a tip",
+      "title": "Leave a tip",
+      "description": "Pick a suggested percentage or enter a custom amount.",
+      "customAmountLabel": "Custom amount",
+      "submitting": "Submitting...",
+      "submit": "Confirm tip"
     }
   },
   "promotions": {
@@ -602,7 +974,8 @@
       "payment_received": "Payment received",
       "rating_received": "Rating received",
       "promotion": "Promotion",
-      "system": "System"
+      "system": "System",
+      "document_expired": "Document expired"
     },
     "channel": {
       "in_app": "In-app",
@@ -634,6 +1007,35 @@
       "channelsLabel": "Channels",
       "pending": "Sending...",
       "submit": "Send notification"
+    }
+  },
+  "aiDisclosures": {
+    "entityType": {
+      "SERVICE_DESCRIPTION": "Service description",
+      "BUDGET_OPTION": "Budget option",
+      "PROGRESS_NOTE": "Progress note",
+      "PROFESSIONAL_DESCRIPTION": "Professional description",
+      "IMAGE": "Image",
+      "OTHER": "Other"
+    },
+    "source": {
+      "PLATFORM_AI": "Platform AI",
+      "USER_DECLARED_AI": "User-declared"
+    },
+    "filter": {
+      "entityTypeLabel": "Content type",
+      "sourceLabel": "Source",
+      "all": "All"
+    },
+    "table": {
+      "entityType": "Content type",
+      "source": "Source",
+      "note": "Note",
+      "date": "Date",
+      "actions": "Actions",
+      "detailUnavailable": "Detail unavailable",
+      "empty": "No AI disclosures to show",
+      "loadError": "Could not load the AI disclosures list."
     }
   },
   "locations": {
@@ -762,6 +1164,13 @@
       "skills": "Skills (comma separated)"
     }
   },
+  "myRatings": {
+    "givenLabel": "Ratings you gave",
+    "receivedLabel": "Ratings you received",
+    "averageGivenLabel": "Average you gave",
+    "averageReceivedLabel": "Average you received",
+    "loadError": "We couldn't load your ratings."
+  },
   "professionalRatings": {
     "table": {
       "client": "Client",
@@ -780,6 +1189,14 @@
       "commentLabel": "Comment (optional)",
       "submitting": "Sending...",
       "submit": "Send rating"
+    },
+    "stats": {
+      "averageLabel": "Overall average",
+      "totalLabel": "{count, plural, one {# rating} other {# ratings}}",
+      "distributionLabel": "Distribution",
+      "criteriaLabel": "Average by criteria",
+      "empty": "You haven't received any ratings yet",
+      "loadError": "We couldn't load your stats."
     }
   },
   "professionalRequests": {
