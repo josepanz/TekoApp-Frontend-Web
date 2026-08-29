@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { QueryProvider } from '@/core/providers/query-provider';
 import { ThemeProvider } from '@/core/providers/theme-provider';
+import { BRAND_NAME } from '@/design-system/tokens/brand';
 import './globals.css';
 
 // Tipografía única de marca (manual de marca) — Light/Regular/SemiBold/Bold, usada tanto para
@@ -22,9 +23,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'TekoApp',
-  description:
-    'Portal de TekoApp: solicitar y ofrecer servicios profesionales, y panel de administración.',
+  title: BRAND_NAME,
+  description: `Portal de ${BRAND_NAME}: solicitar y ofrecer servicios profesionales, y panel de administración.`,
 };
 
 export default async function RootLayout({

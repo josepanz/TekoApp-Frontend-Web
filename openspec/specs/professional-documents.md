@@ -12,7 +12,7 @@ categoría, y (2) una cola de revisión para aprobar/rechazar documentos cargado
 
 ## Alcance
 
-**Incluye**: CRUD del catálogo `DocumentTypes` (país, categoría de servicio, obligatorio/opcional,
+**Incluye**: CRUD del catálogo `ProfessionalDocumentTypes` (país, categoría de servicio, obligatorio/opcional,
 vigencia), cola de revisión con filtros (por país, categoría, estado, tipo), detalle de revisión
 (ver el archivo vía URL presignada, aprobar/rechazar con motivo obligatorio), vista de historial
 completo por profesional (incluye `REJECTED`/`EXPIRED`, no solo lo vigente).
@@ -22,13 +22,13 @@ decisión manual de staff.
 
 ## Modelo de dominio consumido
 
-`DocumentTypes`, `ProfessionalDocuments` — ver `TekoApp-Backend/openspec/specs/professional-documents.md`
+`ProfessionalDocumentTypes`, `ProfessionalDocuments` — ver `TekoApp-Backend/openspec/specs/professional-documents.md`
 para el detalle completo de campos.
 
 ## Pantallas / flujos
 
-- `src/features/document-types/` + `src/app/admin/document-types/page.tsx` — generado con
-  `pnpm generate:feature document-type document-types --paginated`, adaptado: form con select de
+- `src/features/professional-document-types/` + `src/app/admin/professional-document-types/page.tsx` — generado con
+  `pnpm generate:feature professional-document-type professional-document-types --paginated`, adaptado: form con select de
   país, select de categoría, toggles `isRequired`/`requiresStaffReview`/`isVisibleToClient`, input
   numérico `validityDays` (vacío = sin vencimiento).
 - `src/features/professional-documents/` — vista de cola:

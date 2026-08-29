@@ -50,7 +50,7 @@ function RatingActionsCell({ rating }: { rating: Rating }) {
             variant="destructive"
             disabled={deleteMutation.isPending}
             onClick={() =>
-              deleteMutation.mutate(rating.id, {
+              deleteMutation.mutate(rating.referenceId, {
                 onSuccess: () => setOpen(false),
               })
             }

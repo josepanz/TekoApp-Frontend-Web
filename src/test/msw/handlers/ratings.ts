@@ -3,7 +3,8 @@ import type { Rating } from '@/features/ratings/api';
 
 export function buildRating(overrides: Partial<Rating> = {}): Rating {
   return {
-    id: 'a63b5212-db5e-4ef5-9614-726614174000',
+    id: 1,
+    referenceId: 'a63b5212-db5e-4ef5-9614-726614174000',
     userId: 1,
     professionalId: 10,
     serviceId: 'b72c6323-ec6f-5fa6-a725-837725285111',
@@ -28,7 +29,8 @@ export function buildRating(overrides: Partial<Rating> = {}): Rating {
 export const fakeRatings: Rating[] = [
   buildRating(),
   buildRating({
-    id: 'b1c2d3e4-f5a6-7890-abcd-ef1234567891',
+    id: 2,
+    referenceId: 'b1c2d3e4-f5a6-7890-abcd-ef1234567891',
     userId: 2,
     professionalId: 20,
     type: 'PROFESSIONAL_TO_CLIENT',
@@ -39,7 +41,8 @@ export const fakeRatings: Rating[] = [
     reportReason: 'Lenguaje ofensivo',
   }),
   buildRating({
-    id: 'c1d2e3f4-a5b6-7890-abcd-ef1234567892',
+    id: 3,
+    referenceId: 'c1d2e3f4-a5b6-7890-abcd-ef1234567892',
     userId: 3,
     professionalId: 30,
     type: 'CLIENT_TO_PROFESSIONAL',

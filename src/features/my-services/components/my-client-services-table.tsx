@@ -65,12 +65,12 @@ export function MyClientServicesTable() {
       cell: ({ row }) => {
         const service = row.original;
         if (CANCELLABLE.has(service.status)) {
-          return <CancelServiceDialog serviceId={service.id} />;
+          return <CancelServiceDialog serviceId={service.referenceId} />;
         }
         if (service.status === 'COMPLETED' && service.professional) {
           return (
             <RateProfessionalDialog
-              serviceRequestId={service.id}
+              serviceRequestId={service.referenceId}
               professionalUserReferenceId={
                 service.professional.user.referenceId
               }

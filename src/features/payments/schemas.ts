@@ -17,3 +17,23 @@ export const refundPaymentSchema = z.object({
 });
 
 export type RefundPaymentFormValues = z.infer<typeof refundPaymentSchema>;
+
+// Espeja CreateTipRequestDTO (TekoApp-Backend): mode=PERCENTAGE exige percentage (1-100),
+// mode=FREE exige amount (>=0.01) — mismo ValidateIf condicional del backend, replicado acá para
+// dar feedback antes de pegarle a la API. `FIXED` no tiene UI todavía (sin config de montos
+// preestablecidos, ver decisions.md de Mobile), no se ofrece como opción en el dialog.
+export const createTipSchema = z
+  .object({
+    mode: z.enum(['PERCENTAGE', 'FREE']),
+    percentage: z.number().min(1).max(100).optional(),
+    amount: z.number().min(0.01).optional(),
+  })
+  .refine(
+    (value) =>
+      value.mode === 'PERCENTAGE'
+        ? value.percentage !== undefined
+        : value.amount !== undefined,
+    { message: 'Elegí un porcentaje o ingresá un monto', path: ['amount'] },
+  );
+
+export type CreateTipFormValues = z.infer<typeof createTipSchema>;

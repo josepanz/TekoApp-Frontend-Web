@@ -62,7 +62,7 @@ export function PendingServicesTable() {
         <Button
           size="sm"
           disabled={acceptMutation.isPending}
-          onClick={() => acceptMutation.mutate(row.original.id)}
+          onClick={() => acceptMutation.mutate(row.original.referenceId)}
         >
           {t('accept')}
         </Button>

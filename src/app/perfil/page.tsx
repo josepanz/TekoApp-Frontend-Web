@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getSession } from '@/core/auth/session';
 import { ProfileForm } from '@/features/my-profile/components/profile-form';
+import { BRAND_NAME } from '@/design-system/tokens/brand';
 
 export const metadata: Metadata = {
-  title: 'Mi perfil — TekoApp',
+  title: `Mi perfil — ${BRAND_NAME}`,
 };
 
 // Página standalone, fuera de los 3 shells de sidebar (admin/client/pro) — se accede desde el
