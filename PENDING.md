@@ -73,16 +73,9 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
   bien en el build de Vercel, que ignora el Dockerfile y usa el mismo build `standalone`?), algún
   error de build/runtime específico de esa ruta, o que la URL probada sea un preview desactualizado
   (de antes del merge del PR #17) — confirmar primero contra la URL de producción real.
-- **La app Mobile sigue sin conectarse al backend** — José confirmó 2026-08-30 que esto sigue
-  fallando pese al fix de CI de esta sesión (secrets `BASIC_AUTH_CLIENT_ID`/`SECRET` cableados en
-  `build.yml`/`release.yml`, PR #72 ya mergeado a `develop`). Hipótesis a revisar primero la
-  próxima sesión: (1) el APK que se está probando puede ser un build viejo, anterior al merge —
-  confirmar que se instaló un APK generado DESPUÉS del merge de PR #72 (`gh release list --repo
-josepanz/TekoApp-Frontend-Mobile`, ver si hay un release nuevo con esos secrets ya aplicados);
-  (2) si el release SÍ es nuevo y sigue fallando, revisar si `BASIC_AUTH_CLIENT_ID`/`SECRET`
-  llegaron con el valor correcto al build (secrets de GitHub no imprimen su valor en logs, así que
-  un typo en el nombre del secret fallaría en silencio) y si la credencial `tekoapp-mobile` en la
-  base de Supabase sigue activa. No investigado más a fondo todavía — solo queda anotado.
+- **La app Mobile sigue sin conectarse al backend** — reportado por José 2026-08-30. Detalle
+  completo (incluida la verificación de que el release `v1.0.0-develop.4` ya se generó con el fix
+  de CI de esta sesión) en `PENDING.md` de `TekoApp-Frontend-Mobile`, sección 5 — no duplicado acá.
 - **Íconos de categoría — falta consistencia fuera del módulo de Categorías**: José pidió que el
   ícono coloreado (`IconPicker`/`ColorPicker` agregados el 2026-08-29) se vea siempre que aparece
   el NOMBRE de una categoría, no solo en la columna dedicada de `/admin/categories`. Grep rápido
