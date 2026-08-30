@@ -50,8 +50,12 @@ describe('CategoryFormDialog', () => {
     // Act
     await user.type(screen.getByLabelText('Nombre'), 'Carpintería');
     await user.type(screen.getByLabelText('Slug'), 'carpinteria');
-    await user.type(screen.getByLabelText('Ícono'), 'hammer-outline');
-    await user.type(screen.getByLabelText('Color'), '#8e44ad');
+    await user.click(screen.getByLabelText('Ícono'));
+    await user.click(screen.getByRole('button', { name: 'hammer' }));
+    await user.click(screen.getByLabelText('Color'));
+    await user.click(
+      screen.getByRole('button', { name: 'Elegir color #8E44AD' }),
+    );
     await user.click(screen.getByRole('button', { name: 'Crear categoría' }));
 
     // Assert
@@ -59,8 +63,8 @@ describe('CategoryFormDialog', () => {
       expect(onRequest).toHaveBeenCalledWith({
         name: 'Carpintería',
         slug: 'carpinteria',
-        icon: 'hammer-outline',
-        color: '#8e44ad',
+        icon: 'hammer',
+        color: '#8E44AD',
         sortOrder: 0,
         status: 'ACTIVE',
         isVisible: true,
@@ -84,15 +88,16 @@ describe('CategoryFormDialog', () => {
     ).toBeInTheDocument();
   });
 
-  it('muestra un error de validación cuando el color no es un hexadecimal válido', async () => {
-    // Arrange
+  it('muestra un error de validación si una categoría existente trae un color heredado inválido', async () => {
+    // Arrange — el ColorPicker ya no permite tipear un valor inválido a mano; este caso cubre
+    // datos existentes cargados antes de que el campo tuviera este selector.
     const user = userEvent.setup();
-    renderDialog();
+    const category = buildCategory({ id: 3, color: 'no-es-un-color' });
+    renderDialog(category);
 
     // Act
-    await user.type(screen.getByLabelText('Nombre'), 'Carpintería');
-    await user.type(screen.getByLabelText('Color'), 'no-es-un-color');
-    await user.click(screen.getByRole('button', { name: 'Crear categoría' }));
+    await screen.findByLabelText('Nombre');
+    await user.click(screen.getByRole('button', { name: 'Guardar cambios' }));
 
     // Assert
     expect(
