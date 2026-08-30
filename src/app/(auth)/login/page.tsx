@@ -24,7 +24,7 @@ export default async function LoginPage() {
       {/* Card clara sobre el gradiente — los inputs/labels del form asumen un fondo claro
           (--foreground es texto oscuro), así que necesitan su propia superficie, no heredar el
           gradiente oscuro de la página. */}
-      <div className="bg-card w-full max-w-sm rounded-xl p-6 shadow-lg">
+      <div className="bg-card text-card-foreground w-full max-w-sm rounded-xl p-6 shadow-lg">
         {/* useSearchParams() en LoginForm exige un límite de Suspense (Next.js 16) */}
         <Suspense>
           <LoginForm />
