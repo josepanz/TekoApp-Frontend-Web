@@ -61,19 +61,28 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
 
 ## 6. Reportado por José 2026-08-30 — solo anotado, sin investigar/desarrollar todavía
 
-- **El deploy de Vercel sigue sin conectarse al backend**: probado contra
-  `https://teko-app-frontend-8u3s1qzi2-teko-app.vercel.app/login?from=%2Fregister` — José reporta
-  que `/register` no abre y que la app no conecta al backend en general. Intenté un chequeo e2e
-  automatizado (`WebFetch`) y esa URL específica redirige a `vercel.com/sso-api` (Vercel
-  Deployment Protection/SSO) — no se pudo verificar el contenido real de la página desde acá.
-  **Hipótesis más probable, sin confirmar**: el proyecto de Vercel no tiene cargadas las env vars
-  server-only que este repo necesita en runtime (`BACKEND_API_URL`, `BACKEND_CLIENT_ID`,
-  `BACKEND_CLIENT_SECRET`, `BACKEND_JWT_PUBLIC_KEY`, ver `.env.example`) — son variables de
-  entorno del proyecto de Vercel, **no** los GitHub Actions secrets que ya están cargados (esos
-  solo cubren el pipeline de CI/K3s, no el build/runtime que corre Vercel). Falta: (1) confirmar
-  si esa URL es la de producción o un preview de PR viejo, (2) revisar en el dashboard de Vercel
-  (Project Settings → Environment Variables) que las 4 variables de arriba estén cargadas para el
-  ambiente correspondiente, (3) recién ahí volver a probar `/register` con sesión real.
+- **`/register` no renderiza en el deploy de Vercel** (Web SÍ conecta al backend normalmente —
+  José confirmó esto explícitamente 2026-08-30, descartar la hipótesis de env vars faltantes de
+  una revisión anterior de esta nota). Probado contra
+  `https://teko-app-frontend-8u3s1qzi2-teko-app.vercel.app/login?from=%2Fregister`. No pude
+  verificar el contenido yo mismo vía `WebFetch` — esa URL de preview está detrás de Vercel
+  Deployment Protection/SSO (redirige a `vercel.com/sso-api`), y esto es esperado/normal para un
+  preview de Vercel, no el bug en sí — José sí pudo verlo logueado y confirmó que `/register`
+  específicamente no renderiza. Sin causa raíz identificada todavía — a investigar la próxima
+  sesión: candidatos a revisar primero son el route group `(auth)/register/page.tsx` (¿resuelve
+  bien en el build de Vercel, que ignora el Dockerfile y usa el mismo build `standalone`?), algún
+  error de build/runtime específico de esa ruta, o que la URL probada sea un preview desactualizado
+  (de antes del merge del PR #17) — confirmar primero contra la URL de producción real.
+- **La app Mobile sigue sin conectarse al backend** — José confirmó 2026-08-30 que esto sigue
+  fallando pese al fix de CI de esta sesión (secrets `BASIC_AUTH_CLIENT_ID`/`SECRET` cableados en
+  `build.yml`/`release.yml`, PR #72 ya mergeado a `develop`). Hipótesis a revisar primero la
+  próxima sesión: (1) el APK que se está probando puede ser un build viejo, anterior al merge —
+  confirmar que se instaló un APK generado DESPUÉS del merge de PR #72 (`gh release list --repo
+josepanz/TekoApp-Frontend-Mobile`, ver si hay un release nuevo con esos secrets ya aplicados);
+  (2) si el release SÍ es nuevo y sigue fallando, revisar si `BASIC_AUTH_CLIENT_ID`/`SECRET`
+  llegaron con el valor correcto al build (secrets de GitHub no imprimen su valor en logs, así que
+  un typo en el nombre del secret fallaría en silencio) y si la credencial `tekoapp-mobile` en la
+  base de Supabase sigue activa. No investigado más a fondo todavía — solo queda anotado.
 - **Íconos de categoría — falta consistencia fuera del módulo de Categorías**: José pidió que el
   ícono coloreado (`IconPicker`/`ColorPicker` agregados el 2026-08-29) se vea siempre que aparece
   el NOMBRE de una categoría, no solo en la columna dedicada de `/admin/categories`. Grep rápido
