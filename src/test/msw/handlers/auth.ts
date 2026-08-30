@@ -27,4 +27,24 @@ export const authHandlers = [
   http.post('/api/auth/logout', () => {
     return HttpResponse.json({ success: true });
   }),
+
+  http.post('/api/auth/register', async ({ request }) => {
+    const body = (await request.json()) as { email: string };
+
+    if (body.email === 'ya-existe@tekoapp.com.py') {
+      return HttpResponse.json(
+        { message: 'El email ya está registrado' },
+        { status: 409 },
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        referenceId: 'fake-reference-id',
+        email: body.email,
+        status: 'PENDING_VERIFICATION',
+      },
+      { status: 201 },
+    );
+  }),
 ];
