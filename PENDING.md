@@ -59,7 +59,34 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
   export job asíncrono + notificación push VAPID; Web genera el PDF client-side con
   `@react-pdf/renderer`) — ver `TekoApp-Backend/openspec/decisions.md`. Sin spec propia todavía.
 
-## 6. PR abierto, en pausa deliberada
+## 6. Reportado por José 2026-08-30 — solo anotado, sin investigar/desarrollar todavía
+
+- **El deploy de Vercel sigue sin conectarse al backend**: probado contra
+  `https://teko-app-frontend-8u3s1qzi2-teko-app.vercel.app/login?from=%2Fregister` — José reporta
+  que `/register` no abre y que la app no conecta al backend en general. Intenté un chequeo e2e
+  automatizado (`WebFetch`) y esa URL específica redirige a `vercel.com/sso-api` (Vercel
+  Deployment Protection/SSO) — no se pudo verificar el contenido real de la página desde acá.
+  **Hipótesis más probable, sin confirmar**: el proyecto de Vercel no tiene cargadas las env vars
+  server-only que este repo necesita en runtime (`BACKEND_API_URL`, `BACKEND_CLIENT_ID`,
+  `BACKEND_CLIENT_SECRET`, `BACKEND_JWT_PUBLIC_KEY`, ver `.env.example`) — son variables de
+  entorno del proyecto de Vercel, **no** los GitHub Actions secrets que ya están cargados (esos
+  solo cubren el pipeline de CI/K3s, no el build/runtime que corre Vercel). Falta: (1) confirmar
+  si esa URL es la de producción o un preview de PR viejo, (2) revisar en el dashboard de Vercel
+  (Project Settings → Environment Variables) que las 4 variables de arriba estén cargadas para el
+  ambiente correspondiente, (3) recién ahí volver a probar `/register` con sesión real.
+- **Íconos de categoría — falta consistencia fuera del módulo de Categorías**: José pidió que el
+  ícono coloreado (`IconPicker`/`ColorPicker` agregados el 2026-08-29) se vea siempre que aparece
+  el NOMBRE de una categoría, no solo en la columna dedicada de `/admin/categories`. Grep rápido
+  (2026-08-30) de dónde se muestra `category.name`/`categoryName` sin el ícono al lado:
+  `features/services/components/services-table.tsx`, `service-detail-view.tsx`,
+  `features/request-service/components/request-service-form.tsx` (selector de categoría al pedir
+  un servicio) son los candidatos reales. **Verificado 2026-08-30**: el backend YA expone
+  `category.icon`/`category.color` en `ServiceDetailResponseDTO` (usado tanto por `GET
+/services/:id` como por el listado, `ServicesListResponseDTO` reusa el mismo DTO por fila) — no
+  hace falta ningún cambio de backend, es puramente un gap de render en estos componentes de Web.
+  No implementado — solo queda anotado el alcance real para la próxima sesión.
+
+## 7. PR abierto, en pausa deliberada
 
 **PR #13** (`feature/consent-ai-disclosure-and-account-recovery-spec` → `develop`) — quedó abierto
 a propósito desde 2026-08-26 hasta cerrar el resto del roadmap en curso. **Ese roadmap ya cerró por
