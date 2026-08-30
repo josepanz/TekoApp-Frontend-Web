@@ -3,6 +3,7 @@
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { AlertCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -108,6 +109,13 @@ export function LoginForm() {
       <Button type="submit" disabled={loginMutation.isPending}>
         {loginMutation.isPending ? t('submitting') : t('submit')}
       </Button>
+
+      <p className="text-muted-foreground text-center text-sm">
+        {t('noAccount')}{' '}
+        <Link href="/register" className="text-primary underline">
+          {t('signUp')}
+        </Link>
+      </p>
     </form>
   );
 }

@@ -119,7 +119,25 @@
       "rememberMe": "Mantener la sesión iniciada",
       "submit": "Ingresar",
       "submitting": "Ingresando...",
-      "genericError": "No se pudo iniciar sesión. Intentá de nuevo."
+      "genericError": "No se pudo iniciar sesión. Intentá de nuevo.",
+      "noAccount": "¿No tenés cuenta?",
+      "signUp": "Registrate"
+    },
+    "register": {
+      "pageTitle": "{brand}",
+      "pageSubtitle": "Creá tu cuenta para empezar.",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Email",
+      "phoneNumber": "Teléfono",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "acceptTerms": "Acepto los términos y condiciones",
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta...",
+      "genericError": "No se pudo crear la cuenta. Intentá de nuevo.",
+      "hasAccount": "¿Ya tenés cuenta?",
+      "signIn": "Iniciá sesión"
     }
   },
   "categories": {
