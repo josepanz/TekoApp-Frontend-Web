@@ -11,6 +11,7 @@ import { formatDate } from '@/lib/formatters';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { useCategoryDetailQuery, useCategoryStatsQuery } from '../hooks';
 import type { Category } from '../api';
+import { CategoryIcon } from './category-label';
 
 const STATUS_VARIANT: Record<
   Category['status'],
@@ -78,13 +79,7 @@ export function CategoryDetailView({ id }: { id: string }) {
               {statusLabel[category.status]}
             </Badge>
             <Badge variant="outline" className="gap-1.5">
-              {category.color && (
-                <span
-                  className="size-3 shrink-0 rounded-full border border-border"
-                  style={{ backgroundColor: category.color }}
-                  aria-hidden="true"
-                />
-              )}
+              <CategoryIcon icon={category.icon} color={category.color} />
               {category.icon ?? '—'}
             </Badge>
             <Badge variant={category.isVisible ? 'default' : 'secondary'}>

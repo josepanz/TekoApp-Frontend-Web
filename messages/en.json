@@ -119,7 +119,25 @@
       "rememberMe": "Keep me signed in",
       "submit": "Sign in",
       "submitting": "Signing in...",
-      "genericError": "Couldn't sign in. Please try again."
+      "genericError": "Couldn't sign in. Please try again.",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "pageTitle": "{brand}",
+      "pageSubtitle": "Create your account to get started.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phoneNumber": "Phone",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "acceptTerms": "I accept the terms and conditions",
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "genericError": "Couldn't create the account. Please try again.",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
     }
   },
   "categories": {

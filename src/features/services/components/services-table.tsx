@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
+import { CategoryLabel } from '@/features/categories/components/category-label';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { useServicesQuery } from '../hooks';
@@ -89,9 +90,12 @@ export function ServicesTable() {
         <div className="flex flex-col">
           <span className="font-medium">{row.original.title}</span>
           {row.original.category && (
-            <span className="text-muted-foreground text-xs">
-              {row.original.category.name}
-            </span>
+            <CategoryLabel
+              name={row.original.category.name}
+              icon={row.original.category.icon}
+              color={row.original.category.color}
+              className="text-muted-foreground text-xs"
+            />
           )}
         </div>
       ),

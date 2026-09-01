@@ -19,6 +19,7 @@ import { DataTable } from '@/components/layout/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
 import type { Category } from '../api';
+import { CategoryIcon } from './category-label';
 import {
   useCategoriesQuery,
   useDeleteCategoryMutation,
@@ -54,13 +55,7 @@ export function CategoriesTable() {
       header: t('table.iconColor'),
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          {row.original.color && (
-            <span
-              className="size-4 shrink-0 rounded-full border border-border"
-              style={{ backgroundColor: row.original.color }}
-              aria-hidden="true"
-            />
-          )}
+          <CategoryIcon icon={row.original.icon} color={row.original.color} />
           <span className="text-muted-foreground">
             {row.original.icon ?? '—'}
           </span>
