@@ -20,7 +20,7 @@ import { BRAND_NAME } from '@/design-system/tokens/brand';
 import { NAV_ITEMS } from './nav-items';
 import { PRO_NAV_ITEMS } from './pro-nav-items';
 import { CLIENT_NAV_ITEMS } from './client-nav-items';
-import { ModeSwitcher } from './mode-switcher';
+import { ModeSwitcher, useOtherModes } from './mode-switcher';
 
 export type SidebarVariant = 'admin' | 'pro' | 'client';
 
@@ -50,6 +50,7 @@ export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
   const tRoot = useTranslations();
   const { items } = VARIANT_CONFIG[variant];
   const label = t(`brand.${variant}`, { brand: BRAND_NAME });
+  const otherModes = useOtherModes(variant);
 
   return (
     <Sidebar collapsible="icon">
@@ -85,15 +86,19 @@ export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>{t('modeSwitcher.groupLabel')}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <ModeSwitcher current={variant} />
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarFooter>
+      {otherModes.length > 0 && (
+        <SidebarFooter>
+          <SidebarSeparator />
+          <SidebarGroup>
+            <SidebarGroupLabel>
+              {t('modeSwitcher.groupLabel')}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <ModeSwitcher current={variant} />
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 }
