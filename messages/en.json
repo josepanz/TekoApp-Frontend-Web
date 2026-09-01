@@ -324,6 +324,10 @@
       },
       "myPaymentDetail": {
         "title": "Payment detail"
+      },
+      "applyAsProfessional": {
+        "title": "Apply as a professional",
+        "description": "Fill in your details to offer your services on the platform. An admin will review your application before you can receive requests."
       }
     },
     "pro": {
@@ -1180,6 +1184,22 @@
       "fixedRate": "Flat rate (optional)",
       "yearsOfExperience": "Years of experience",
       "skills": "Skills (comma separated)"
+    }
+  },
+  "professionalApplication": {
+    "form": {
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "description": "Description",
+      "hourlyRate": "Hourly rate",
+      "fixedRate": "Flat rate (optional)",
+      "yearsOfExperience": "Years of experience (optional)",
+      "skills": "Skills (comma separated, optional)",
+      "submit": "Submit application",
+      "submitting": "Submitting...",
+      "successTitle": "Application submitted!",
+      "successDescription": "Your professional profile was created and is pending approval. We'll let you know once an admin reviews it.",
+      "successCta": "Go to my professional profile"
     }
   },
   "myRatings": {
