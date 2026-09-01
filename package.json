@@ -5,6 +5,7 @@
   "author": "José Panza",
   "private": true,
   "license": "MIT",
+  "packageManager": "pnpm@10.18.0",
   "engines": {
     "node": ">=22"
   },
