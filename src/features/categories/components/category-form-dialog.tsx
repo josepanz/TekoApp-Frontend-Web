@@ -13,6 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { ColorPicker } from '@/components/ui/color-picker';
+import { IconPicker } from '@/components/ui/icon-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -175,20 +177,32 @@ export function CategoryFormDialog({
           <div className="flex gap-4">
             <div className="flex flex-1 flex-col gap-2">
               <Label htmlFor="icon">{t('icon')}</Label>
-              <Input
-                id="icon"
-                placeholder="wrench-outline"
-                {...register('icon')}
+              <Controller
+                control={control}
+                name="icon"
+                render={({ field }) => (
+                  <IconPicker
+                    id="icon"
+                    value={field.value || undefined}
+                    onChange={(value) => field.onChange(value ?? '')}
+                  />
+                )}
               />
             </div>
 
             <div className="flex flex-1 flex-col gap-2">
               <Label htmlFor="color">{t('color')}</Label>
-              <Input
-                id="color"
-                placeholder="#2ecc71"
-                aria-invalid={!!errors.color}
-                {...register('color')}
+              <Controller
+                control={control}
+                name="color"
+                render={({ field }) => (
+                  <ColorPicker
+                    id="color"
+                    value={field.value || undefined}
+                    onChange={(value) => field.onChange(value ?? '')}
+                    aria-invalid={!!errors.color}
+                  />
+                )}
               />
               {errors.color && (
                 <p className="text-destructive text-sm">

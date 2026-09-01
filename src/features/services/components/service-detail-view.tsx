@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { CategoryLabel } from '@/features/categories/components/category-label';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { ServiceProgressSection } from '@/features/service-progress/components/service-progress-section';
@@ -69,9 +70,12 @@ export function ServiceDetailView({ id }: { id: string }) {
         <CardHeader>
           <CardTitle>{service.title}</CardTitle>
           {service.category && (
-            <p className="text-muted-foreground text-sm">
-              {service.category.name}
-            </p>
+            <CategoryLabel
+              name={service.category.name}
+              icon={service.category.icon}
+              color={service.category.color}
+              className="text-muted-foreground text-sm"
+            />
           )}
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

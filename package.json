@@ -1,10 +1,11 @@
 {
   "name": "tekoapp-frontend-web",
-  "version": "1.1.0",
+  "version": "1.0.0-qa.4",
   "description": "Portal web de administración de TekoApp - Plataforma de Servicios Profesionales",
   "author": "José Panza",
   "private": true,
   "license": "MIT",
+  "packageManager": "pnpm@10.18.0",
   "engines": {
     "node": ">=22"
   },
@@ -99,5 +100,15 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "msw",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }

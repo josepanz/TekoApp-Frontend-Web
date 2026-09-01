@@ -14,7 +14,7 @@ import {
 // que los Server Components lo puedan leer) como a la response. OJO: el `matcher` de abajo excluye
 // `/api`, así que este middleware NO corre para los route handlers — cada uno bajo `app/api/**`
 // resuelve su propio request-id con `resolveRequestId` (ver core/logging/request-context.ts).
-const PUBLIC_PATHS = ['/login'];
+const PUBLIC_PATHS = ['/login', '/register'];
 
 export function proxy(request: NextRequest): NextResponse {
   const { pathname } = request.nextUrl;
