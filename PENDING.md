@@ -59,7 +59,31 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
   export job asíncrono + notificación push VAPID; Web genera el PDF client-side con
   `@react-pdf/renderer`) — ver `TekoApp-Backend/openspec/decisions.md`. Sin spec propia todavía.
 
-## 6. PR abierto, en pausa deliberada
+## 6. Reportado por José 2026-08-30 — solo anotado, sin investigar/desarrollar todavía
+
+- **RESUELTO 2026-09-01 — `/register` no renderizaba, en Vercel ni en local**: causa raíz real
+  encontrada y confirmada reproduciendo el bug local (curl contra el server `standalone`, sin
+  Vercel de por medio) — `PUBLIC_PATHS` en `src/proxy.ts` solo tenía `/login`, nunca se actualizó
+  al agregar `/register` (PR #17). Cualquier visita sin sesión rebotaba a
+  `/login?from=%2Fregister` antes de renderizar nada — exactamente la URL que reportó José. Fix de
+  una línea (agregar `/register` a `PUBLIC_PATHS`) + `src/proxy.test.ts` nuevo (reproduce el bug en
+  rojo antes del fix) en PR #19. No era ni Vercel ni env vars — se descarta esa hipótesis.
+- **La app Mobile sigue sin conectarse al backend** — reportado por José 2026-08-30. Detalle
+  completo (incluida la verificación de que el release `v1.0.0-develop.4` ya se generó con el fix
+  de CI de esta sesión) en `PENDING.md` de `TekoApp-Frontend-Mobile`, sección 5 — no duplicado acá.
+- **Íconos de categoría — falta consistencia fuera del módulo de Categorías**: José pidió que el
+  ícono coloreado (`IconPicker`/`ColorPicker` agregados el 2026-08-29) se vea siempre que aparece
+  el NOMBRE de una categoría, no solo en la columna dedicada de `/admin/categories`. Grep rápido
+  (2026-08-30) de dónde se muestra `category.name`/`categoryName` sin el ícono al lado:
+  `features/services/components/services-table.tsx`, `service-detail-view.tsx`,
+  `features/request-service/components/request-service-form.tsx` (selector de categoría al pedir
+  un servicio) son los candidatos reales. **Verificado 2026-08-30**: el backend YA expone
+  `category.icon`/`category.color` en `ServiceDetailResponseDTO` (usado tanto por `GET
+/services/:id` como por el listado, `ServicesListResponseDTO` reusa el mismo DTO por fila) — no
+  hace falta ningún cambio de backend, es puramente un gap de render en estos componentes de Web.
+  No implementado — solo queda anotado el alcance real para la próxima sesión.
+
+## 7. PR abierto, en pausa deliberada
 
 **PR #13** (`feature/consent-ai-disclosure-and-account-recovery-spec` → `develop`) — quedó abierto
 a propósito desde 2026-08-26 hasta cerrar el resto del roadmap en curso. **Ese roadmap ya cerró por
