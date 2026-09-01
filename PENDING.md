@@ -61,18 +61,13 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
 
 ## 6. Reportado por José 2026-08-30 — solo anotado, sin investigar/desarrollar todavía
 
-- **`/register` no renderiza en el deploy de Vercel** (Web SÍ conecta al backend normalmente —
-  José confirmó esto explícitamente 2026-08-30, descartar la hipótesis de env vars faltantes de
-  una revisión anterior de esta nota). Probado contra
-  `https://teko-app-frontend-8u3s1qzi2-teko-app.vercel.app/login?from=%2Fregister`. No pude
-  verificar el contenido yo mismo vía `WebFetch` — esa URL de preview está detrás de Vercel
-  Deployment Protection/SSO (redirige a `vercel.com/sso-api`), y esto es esperado/normal para un
-  preview de Vercel, no el bug en sí — José sí pudo verlo logueado y confirmó que `/register`
-  específicamente no renderiza. Sin causa raíz identificada todavía — a investigar la próxima
-  sesión: candidatos a revisar primero son el route group `(auth)/register/page.tsx` (¿resuelve
-  bien en el build de Vercel, que ignora el Dockerfile y usa el mismo build `standalone`?), algún
-  error de build/runtime específico de esa ruta, o que la URL probada sea un preview desactualizado
-  (de antes del merge del PR #17) — confirmar primero contra la URL de producción real.
+- **RESUELTO 2026-09-01 — `/register` no renderizaba, en Vercel ni en local**: causa raíz real
+  encontrada y confirmada reproduciendo el bug local (curl contra el server `standalone`, sin
+  Vercel de por medio) — `PUBLIC_PATHS` en `src/proxy.ts` solo tenía `/login`, nunca se actualizó
+  al agregar `/register` (PR #17). Cualquier visita sin sesión rebotaba a
+  `/login?from=%2Fregister` antes de renderizar nada — exactamente la URL que reportó José. Fix de
+  una línea (agregar `/register` a `PUBLIC_PATHS`) + `src/proxy.test.ts` nuevo (reproduce el bug en
+  rojo antes del fix) en PR #19. No era ni Vercel ni env vars — se descarta esa hipótesis.
 - **La app Mobile sigue sin conectarse al backend** — reportado por José 2026-08-30. Detalle
   completo (incluida la verificación de que el release `v1.0.0-develop.4` ya se generó con el fix
   de CI de esta sesión) en `PENDING.md` de `TekoApp-Frontend-Mobile`, sección 5 — no duplicado acá.
