@@ -59,29 +59,38 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
   export job asíncrono + notificación push VAPID; Web genera el PDF client-side con
   `@react-pdf/renderer`) — ver `TekoApp-Backend/openspec/decisions.md`. Sin spec propia todavía.
 
-## 6. Reportado por José 2026-08-30 — Íconos de categoría, consistencia en todo el repo
+## 6. Reportado por José 2026-08-30 — estado final, todo resuelto
 
-**RESUELTO 2026-09-01**: José pidió que el ícono coloreado de una categoría se vea siempre que
-aparece su NOMBRE, no solo en la columna dedicada de `/admin/categories`. **Hallazgo real al
-implementar**: ni siquiera esa columna dedicada renderizaba el ÍCONO real — `categories-table.tsx`/
-`category-detail-view.tsx` solo mostraban el nombre de texto plano del ícono (ej. `"hammer"`) junto
-a un swatch de color, nunca el glifo de Lucide en sí. Backend no necesitó ningún cambio —
-`category.icon`/`category.color` ya viajaban en `ServiceDetailResponseDTO` y en el DTO de
-categorías.
+- **RESUELTO — `/register` no renderizaba, en Vercel ni en local**: causa raíz real encontrada y
+  confirmada reproduciendo el bug local (curl contra el server `standalone`, sin Vercel de por
+  medio) — `PUBLIC_PATHS` en `src/proxy.ts` solo tenía `/login`, nunca se actualizó al agregar
+  `/register` (PR #17). Cualquier visita sin sesión rebotaba a `/login?from=%2Fregister` antes de
+  renderizar nada — exactamente la URL que reportó José. Fix de una línea (agregar `/register` a
+  `PUBLIC_PATHS`) + `src/proxy.test.ts` nuevo (reproduce el bug en rojo antes del fix) en PR #19.
+  No era ni Vercel ni env vars — se descarta esa hipótesis.
+- **La app Mobile sigue sin conectarse al backend** — reportado por José 2026-08-30. Detalle
+  completo (incluida la verificación de que el release `v1.0.0-develop.4` ya se generó con el fix
+  de CI de esta sesión, y el fix de timeout del cold start de Render en PR #74) en `PENDING.md` de
+  `TekoApp-Frontend-Mobile`, sección 5 — no duplicado acá.
+- **RESUELTO — Íconos de categoría, consistencia en todo el repo**: José pidió que el ícono
+  coloreado de una categoría se vea siempre que aparece su NOMBRE, no solo en la columna dedicada
+  de `/admin/categories`. Hallazgo real al implementar: ni siquiera esa columna dedicada
+  renderizaba el ÍCONO real — `categories-table.tsx`/`category-detail-view.tsx` solo mostraban el
+  nombre de texto plano del ícono (ej. `"hammer"`) junto a un swatch de color, nunca el glifo de
+  Lucide en sí. Backend no necesitó ningún cambio — `category.icon`/`category.color` ya viajaban
+  en `ServiceDetailResponseDTO` y en el DTO de categorías. Fix:
+  `src/features/categories/components/category-label.tsx` (nuevo) — `CategoryIcon`/
+  `CategoryLabel`, reusan el mismo catálogo `ICONS` de `components/ui/icon-picker.tsx` (exportado
+  para esto) con un ícono genérico (`Tag`) de fallback si el nombre guardado no está en el catálogo
+  actual. Aplicado en `categories-table.tsx`, `category-detail-view.tsx`,
+  `features/services/components/services-table.tsx`, `service-detail-view.tsx`, y el selector de
+  categoría de `features/request-service/components/request-service-form.tsx` (tanto en las
+  opciones del dropdown como en el valor ya seleccionado del trigger, vía el `children` función de
+  `Select.Value` de Base UI). Test nuevo (`category-label.test.tsx`). Gates en verde:
+  `check:types`/lint 0 errores + 71 archivos/222 tests. PR #20.
 
-Fix: `src/features/categories/components/category-label.tsx` (nuevo) — `CategoryIcon`/
-`CategoryLabel`, reusan el mismo catálogo `ICONS` de `components/ui/icon-picker.tsx` (exportado
-para esto) con un ícono genérico (`Tag`) de fallback si el nombre guardado no está en el catálogo
-actual. Aplicado en `categories-table.tsx`, `category-detail-view.tsx`,
-`features/services/components/services-table.tsx`, `service-detail-view.tsx`, y el selector de
-categoría de `features/request-service/components/request-service-form.tsx` (tanto en las opciones
-del dropdown como en el valor ya seleccionado del trigger, vía el `children` función de
-`Select.Value` de Base UI). Test nuevo (`category-label.test.tsx`). Gates en verde:
-`check:types`/lint 0 errores + 71 archivos/222 tests.
+## 7. PR viejo — ya mergeado, nota corregida
 
-## 7. PR abierto, en pausa deliberada
-
-**PR #13** (`feature/consent-ai-disclosure-and-account-recovery-spec` → `develop`) — quedó abierto
-a propósito desde 2026-08-26 hasta cerrar el resto del roadmap en curso. **Ese roadmap ya cerró por
-completo el 2026-08-28/29** — este PR es candidato a mergear ahora, confirmarlo explícitamente
-antes de hacerlo.
+La entrada anterior de esta sección ("PR #13, en pausa deliberada, candidato a mergear") estaba
+desactualizada: **PR #13 ya se mergeó a `develop` el 2026-08-29** — no queda ningún PR pendiente de
+esa naturaleza en este repo.
