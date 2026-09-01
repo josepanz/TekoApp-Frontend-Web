@@ -59,7 +59,27 @@ solo para que quede registrado que se verificó — no reabrir esta investigaci�
   export job asíncrono + notificación push VAPID; Web genera el PDF client-side con
   `@react-pdf/renderer`) — ver `TekoApp-Backend/openspec/decisions.md`. Sin spec propia todavía.
 
-## 6. PR abierto, en pausa deliberada
+## 6. Reportado por José 2026-08-30 — Íconos de categoría, consistencia en todo el repo
+
+**RESUELTO 2026-09-01**: José pidió que el ícono coloreado de una categoría se vea siempre que
+aparece su NOMBRE, no solo en la columna dedicada de `/admin/categories`. **Hallazgo real al
+implementar**: ni siquiera esa columna dedicada renderizaba el ÍCONO real — `categories-table.tsx`/
+`category-detail-view.tsx` solo mostraban el nombre de texto plano del ícono (ej. `"hammer"`) junto
+a un swatch de color, nunca el glifo de Lucide en sí. Backend no necesitó ningún cambio —
+`category.icon`/`category.color` ya viajaban en `ServiceDetailResponseDTO` y en el DTO de
+categorías.
+
+Fix: `src/features/categories/components/category-label.tsx` (nuevo) — `CategoryIcon`/
+`CategoryLabel`, reusan el mismo catálogo `ICONS` de `components/ui/icon-picker.tsx` (exportado
+para esto) con un ícono genérico (`Tag`) de fallback si el nombre guardado no está en el catálogo
+actual. Aplicado en `categories-table.tsx`, `category-detail-view.tsx`,
+`features/services/components/services-table.tsx`, `service-detail-view.tsx`, y el selector de
+categoría de `features/request-service/components/request-service-form.tsx` (tanto en las opciones
+del dropdown como en el valor ya seleccionado del trigger, vía el `children` función de
+`Select.Value` de Base UI). Test nuevo (`category-label.test.tsx`). Gates en verde:
+`check:types`/lint 0 errores + 71 archivos/222 tests.
+
+## 7. PR abierto, en pausa deliberada
 
 **PR #13** (`feature/consent-ai-disclosure-and-account-recovery-spec` → `develop`) — quedó abierto
 a propósito desde 2026-08-26 hasta cerrar el resto del roadmap en curso. **Ese roadmap ya cerró por

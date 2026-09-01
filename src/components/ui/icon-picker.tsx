@@ -57,7 +57,9 @@ import {
 // Set curado (no el registro completo de lucide-react, que son >1500 íconos e infla el bundle
 // sin necesidad) — cubre los rubros reales del marketplace. Mismo criterio de "no barrel exports"
 // de rules/typescript.md: imports explícitos, no `import * as icons`.
-const ICONS: Record<string, LucideIcon> = {
+// Exportado para que cualquier render de solo-lectura de una categoría (tabla, detalle, selector)
+// use el mismo catálogo que este picker — una sola fuente de verdad nombre-de-ícono → componente.
+export const ICONS: Record<string, LucideIcon> = {
   wrench: Wrench,
   hammer: Hammer,
   'paint-roller': PaintRoller,
