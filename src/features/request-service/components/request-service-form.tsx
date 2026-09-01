@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
+import { CategoryLabel } from '@/features/categories/components/category-label';
 import {
   useActiveCategoriesQuery,
   useCreateServiceRequestMutation,
@@ -111,12 +112,31 @@ export function RequestServiceForm() {
                 onValueChange={(value) => field.onChange(Number(value))}
               >
                 <SelectTrigger id="categoryId" aria-label={t('form.category')}>
-                  <SelectValue placeholder={t('form.categoryPlaceholder')} />
+                  <SelectValue placeholder={t('form.categoryPlaceholder')}>
+                    {(value: string | null) => {
+                      const selected = categories?.find(
+                        (category) => String(category.id) === value,
+                      );
+                      return selected ? (
+                        <CategoryLabel
+                          name={selected.name}
+                          icon={selected.icon}
+                          color={selected.color}
+                        />
+                      ) : (
+                        t('form.categoryPlaceholder')
+                      );
+                    }}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {categories?.map((category) => (
                     <SelectItem key={category.id} value={String(category.id)}>
-                      {category.name}
+                      <CategoryLabel
+                        name={category.name}
+                        icon={category.icon}
+                        color={category.color}
+                      />
                     </SelectItem>
                   ))}
                 </SelectContent>

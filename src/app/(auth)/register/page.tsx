@@ -1,17 +1,14 @@
 import { getTranslations } from 'next-intl/server';
-import { Suspense } from 'react';
 import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
-import { LoginForm } from '@/features/auth/components/login-form';
+import { RegisterForm } from '@/features/auth/components/register-form';
 import { BRAND_NAME } from '@/design-system/tokens/brand';
 
-export default async function LoginPage() {
-  const t = await getTranslations('auth.login');
+export default async function RegisterPage() {
+  const t = await getTranslations('auth.register');
 
   return (
     <BrandGradientBackground className="relative flex min-h-svh flex-col items-center justify-center gap-8 p-6 text-white">
-      {/* El Topbar (que normalmente contiene el selector) solo existe en las áreas autenticadas —
-          acá se expone suelto para poder elegir idioma antes de iniciar sesión. */}
       <div className="absolute top-4 right-4">
         <LanguageSwitcher />
       </div>
@@ -21,14 +18,8 @@ export default async function LoginPage() {
         </h1>
         <p className="text-white/80">{t('pageSubtitle')}</p>
       </div>
-      {/* Card clara sobre el gradiente — los inputs/labels del form asumen un fondo claro
-          (--foreground es texto oscuro), así que necesitan su propia superficie, no heredar el
-          gradiente oscuro de la página. */}
       <div className="bg-card text-card-foreground w-full max-w-sm rounded-xl p-6 shadow-lg">
-        {/* useSearchParams() en LoginForm exige un límite de Suspense (Next.js 16) */}
-        <Suspense>
-          <LoginForm />
-        </Suspense>
+        <RegisterForm />
       </div>
     </BrandGradientBackground>
   );
