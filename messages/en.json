@@ -50,6 +50,7 @@
         "aiDisclosures": "AI disclosure",
         "professionalDocumentTypes": "Document types",
         "professionalDocuments": "Document review",
+        "professionalPortfolio": "Portfolio review",
         "legalDocumentVersions": "Legal documents",
         "dataRetentionPolicies": "Retention policies",
         "consentAudit": "Consent audit",
@@ -65,6 +66,7 @@
       "pro": {
         "requests": "Requests",
         "myServices": "My services",
+        "portfolio": "My portfolio",
         "ratings": "Ratings",
         "profile": "Profile"
       }
@@ -278,6 +280,10 @@
         "title": "Document review",
         "description": "Queue of documents uploaded by professionals pending approval or rejection."
       },
+      "professionalPortfolio": {
+        "title": "Portfolio review",
+        "description": "Queue of work photos uploaded by professionals pending approval or rejection."
+      },
       "legalDocumentVersions": {
         "title": "Legal documents",
         "description": "Versioned catalog of terms, privacy policy and consents per country."
@@ -334,6 +340,10 @@
       "services": {
         "title": "My services",
         "description": "Accepted services, in progress, and history."
+      },
+      "portfolio": {
+        "title": "My portfolio",
+        "description": "Photos of past work that clients see on your public profile."
       },
       "ratings": {
         "title": "Ratings",
@@ -510,6 +520,51 @@
       "loadError": "Couldn't load the document history.",
       "empty": "This professional hasn't uploaded any documents yet.",
       "rejectionReason": "Reason: {reason}"
+    }
+  },
+  "professionalPortfolio": {
+    "uploadButton": "Upload photo",
+    "loadError": "Couldn't load your portfolio.",
+    "empty": "You haven't uploaded any photos of past work yet.",
+    "captionLabel": "Caption",
+    "captionPlaceholder": "Short caption (optional)",
+    "visibleLabel": "Visible",
+    "deleteButton": "Delete photo",
+    "deleteConfirmTitle": "Delete this photo?",
+    "deleteConfirmDescription": "This action cannot be undone.",
+    "deleteCancelButton": "Cancel",
+    "deleteConfirmButton": "Delete",
+    "rejectionReason": "Reason: {reason}",
+    "statusOptions": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "filter": {
+      "all": "All",
+      "statusLabel": "Status"
+    },
+    "table": {
+      "professional": "Professional",
+      "caption": "Caption",
+      "status": "Status",
+      "uploadedAt": "Uploaded",
+      "actions": "Actions",
+      "reviewButton": "Review",
+      "loadError": "Couldn't load the review queue.",
+      "empty": "No photos match the current filters."
+    },
+    "review": {
+      "title": "Review portfolio photo",
+      "professionalLabel": "Professional: {name}",
+      "viewFileButton": "View file",
+      "rejectionReasonLabel": "Rejection reason",
+      "approveButton": "Approve",
+      "rejectButton": "Reject",
+      "confirmRejectButton": "Confirm rejection"
+    },
+    "public": {
+      "title": "Past work"
     }
   },
   "legalDocumentVersions": {

@@ -70,10 +70,13 @@ export async function apiFetch<T>(
 export async function uploadFile<T>(
   path: string,
   file: File,
-  fieldName = 'file',
+  options?: { fieldName?: string; fields?: Record<string, string> },
 ): Promise<T> {
   const formData = new FormData();
-  formData.append(fieldName, file);
+  formData.append(options?.fieldName ?? 'file', file);
+  for (const [key, value] of Object.entries(options?.fields ?? {})) {
+    formData.append(key, value);
+  }
 
   const response = await fetch(`/api/backend/${path}`, {
     method: 'POST',

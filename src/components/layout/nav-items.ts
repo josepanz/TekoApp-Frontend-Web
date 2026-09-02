@@ -5,6 +5,7 @@ import {
   FileText,
   FolderTree,
   Hammer,
+  Images,
   LayoutDashboard,
   MapPin,
   Percent,
@@ -99,6 +100,11 @@ export const NAV_ITEMS: NavItem[] = [
     titleKey: 'layout.nav.admin.professionalDocuments',
     href: '/admin/professional-documents',
     icon: FileCheck,
+  },
+  {
+    titleKey: 'layout.nav.admin.professionalPortfolio',
+    href: '/admin/professional-portfolio',
+    icon: Images,
   },
   {
     titleKey: 'layout.nav.admin.legalDocumentVersions',

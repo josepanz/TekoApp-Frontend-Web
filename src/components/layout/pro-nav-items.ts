@@ -1,4 +1,4 @@
-import { ClipboardList, Star, User, Wrench } from 'lucide-react';
+import { ClipboardList, Images, Star, User, Wrench } from 'lucide-react';
 import type { NavItem } from './nav-items';
 
 // `titleKey` es relativo al namespace `layout.nav.pro` — ver NavItem en ./nav-items.
@@ -12,6 +12,11 @@ export const PRO_NAV_ITEMS: NavItem[] = [
     titleKey: 'layout.nav.pro.myServices',
     href: '/pro/servicios',
     icon: Wrench,
+  },
+  {
+    titleKey: 'layout.nav.pro.portfolio',
+    href: '/pro/portafolio',
+    icon: Images,
   },
   {
     titleKey: 'layout.nav.pro.ratings',
