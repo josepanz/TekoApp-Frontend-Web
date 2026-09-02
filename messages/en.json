@@ -1182,6 +1182,12 @@
       "skills": "Skills (comma separated)"
     }
   },
+  "professionalApplication": {
+    "recruitCta": {
+      "question": "Want to work with us?",
+      "link": "Apply as a professional"
+    }
+  },
   "myRatings": {
     "givenLabel": "Ratings you gave",
     "receivedLabel": "Ratings you received",

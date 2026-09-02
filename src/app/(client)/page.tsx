@@ -3,6 +3,7 @@ import { BrandGradientBackground } from '@/components/layout/brand-gradient-back
 import { getSession } from '@/core/auth/session';
 import { isStaffUser } from '@/core/auth/permissions';
 import { MyRatingStatsCard } from '@/features/my-ratings/components/my-rating-stats-card';
+import { RecruitProfessionalCta } from '@/features/professional-application/components/recruit-professional-cta';
 import { ProModeLink } from '@/features/professional-profile/components/pro-mode-link';
 import { getTranslations } from 'next-intl/server';
 
@@ -44,6 +45,8 @@ export default async function ClientHomePage() {
           </Link>
         )}
       </div>
+
+      <RecruitProfessionalCta />
 
       <MyRatingStatsCard />
     </div>

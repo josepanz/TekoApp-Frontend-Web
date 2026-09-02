@@ -1182,6 +1182,12 @@
       "skills": "Habilidades (separadas por coma)"
     }
   },
+  "professionalApplication": {
+    "recruitCta": {
+      "question": "¿Querés trabajar con nosotros?",
+      "link": "Postulate como profesional"
+    }
+  },
   "myRatings": {
     "givenLabel": "Calificaciones que diste",
     "receivedLabel": "Calificaciones que recibiste",
