@@ -66,7 +66,8 @@
         "requests": "Solicitudes",
         "myServices": "Mis servicios",
         "ratings": "Calificaciones",
-        "profile": "Perfil"
+        "profile": "Perfil",
+        "myDocuments": "Mis documentos"
       }
     },
     "modeSwitcher": {
@@ -324,6 +325,10 @@
       },
       "myPaymentDetail": {
         "title": "Detalle del pago"
+      },
+      "applyAsProfessional": {
+        "title": "Postularme como profesional",
+        "description": "Completá tus datos para ofrecer tus servicios en la plataforma. Un administrador revisará tu postulación antes de que puedas recibir solicitudes."
       }
     },
     "pro": {
@@ -342,6 +347,10 @@
       "profile": {
         "title": "Mi perfil",
         "description": "Editá tu descripción, tarifas y disponibilidad."
+      },
+      "myDocuments": {
+        "title": "Mis documentos",
+        "description": "Subí los documentos de habilitación/antecedentes que pide tu categoría."
       }
     },
     "error": {
@@ -510,6 +519,16 @@
       "loadError": "No se pudo cargar el historial de documentos.",
       "empty": "Este profesional todavía no cargó ningún documento.",
       "rejectionReason": "Motivo: {reason}"
+    },
+    "myDocuments": {
+      "loadError": "No pudimos cargar tus documentos.",
+      "required": "Obligatorio",
+      "optional": "Opcional",
+      "rejectionReason": "Motivo de rechazo: {reason}",
+      "upload": "Subir",
+      "replace": "Reemplazar",
+      "uploading": "Subiendo...",
+      "fileInputLabel": "Archivo para {name}"
     }
   },
   "legalDocumentVersions": {
@@ -1186,6 +1205,20 @@
     "recruitCta": {
       "question": "¿Querés trabajar con nosotros?",
       "link": "Postulate como profesional"
+    },
+    "form": {
+      "category": "Categoría",
+      "categoryPlaceholder": "Elegí una categoría",
+      "description": "Descripción",
+      "hourlyRate": "Tarifa por hora",
+      "fixedRate": "Tarifa fija (opcional)",
+      "yearsOfExperience": "Años de experiencia (opcional)",
+      "skills": "Habilidades (separadas por coma, opcional)",
+      "submit": "Enviar postulación",
+      "submitting": "Enviando...",
+      "successTitle": "¡Postulación enviada!",
+      "successDescription": "Tu perfil profesional fue creado y está pendiente de aprobación. Te avisaremos cuando un administrador lo revise.",
+      "successCta": "Ir a mi perfil profesional"
     }
   },
   "myRatings": {
