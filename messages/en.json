@@ -68,7 +68,8 @@
         "myServices": "My services",
         "portfolio": "My portfolio",
         "ratings": "Ratings",
-        "profile": "Profile"
+        "profile": "Profile",
+        "myDocuments": "My documents"
       }
     },
     "modeSwitcher": {
@@ -330,6 +331,10 @@
       },
       "myPaymentDetail": {
         "title": "Payment detail"
+      },
+      "applyAsProfessional": {
+        "title": "Apply as a professional",
+        "description": "Fill in your details to offer your services on the platform. An admin will review your application before you can receive requests."
       }
     },
     "pro": {
@@ -352,6 +357,10 @@
       "profile": {
         "title": "My profile",
         "description": "Edit your description, rates, and availability."
+      },
+      "myDocuments": {
+        "title": "My documents",
+        "description": "Upload the qualification/background-check documents your category requires."
       }
     },
     "error": {
@@ -520,6 +529,16 @@
       "loadError": "Couldn't load the document history.",
       "empty": "This professional hasn't uploaded any documents yet.",
       "rejectionReason": "Reason: {reason}"
+    },
+    "myDocuments": {
+      "loadError": "We couldn't load your documents.",
+      "required": "Required",
+      "optional": "Optional",
+      "rejectionReason": "Rejection reason: {reason}",
+      "upload": "Upload",
+      "replace": "Replace",
+      "uploading": "Uploading...",
+      "fileInputLabel": "File for {name}"
     }
   },
   "professionalPortfolio": {
@@ -1235,6 +1254,26 @@
       "fixedRate": "Flat rate (optional)",
       "yearsOfExperience": "Years of experience",
       "skills": "Skills (comma separated)"
+    }
+  },
+  "professionalApplication": {
+    "recruitCta": {
+      "question": "Want to work with us?",
+      "link": "Apply as a professional"
+    },
+    "form": {
+      "category": "Category",
+      "categoryPlaceholder": "Choose a category",
+      "description": "Description",
+      "hourlyRate": "Hourly rate",
+      "fixedRate": "Flat rate (optional)",
+      "yearsOfExperience": "Years of experience (optional)",
+      "skills": "Skills (comma separated, optional)",
+      "submit": "Submit application",
+      "submitting": "Submitting...",
+      "successTitle": "Application submitted!",
+      "successDescription": "Your professional profile was created and is pending approval. We'll let you know once an admin reviews it.",
+      "successCta": "Go to my professional profile"
     }
   },
   "myRatings": {

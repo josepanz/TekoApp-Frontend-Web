@@ -62,6 +62,13 @@ export async function apiFetch<T>(
   return (isBackendEnvelope<T>(body) ? body.data : body) as T;
 }
 
+interface UploadFileOptions {
+  /** Nombre del campo del archivo en el form — default `'file'` (convención de NestJS/Multer). */
+  fieldName?: string;
+  /** Campos adicionales del DTO que viajan junto al archivo (ej. `professionalDocumentTypeReferenceId`). */
+  fields?: Record<string, string>;
+}
+
 /**
  * Sube un archivo vía `multipart/form-data` (avatar, documentos, etc.). NUNCA reusar `apiFetch`
  * para esto — fuerza `Content-Type: application/json`, que rompe el multipart. Acá se deja que
@@ -70,11 +77,12 @@ export async function apiFetch<T>(
 export async function uploadFile<T>(
   path: string,
   file: File,
-  options?: { fieldName?: string; fields?: Record<string, string> },
+  options?: UploadFileOptions,
 ): Promise<T> {
+  const { fieldName = 'file', fields } = options ?? {};
   const formData = new FormData();
-  formData.append(options?.fieldName ?? 'file', file);
-  for (const [key, value] of Object.entries(options?.fields ?? {})) {
+  formData.append(fieldName, file);
+  for (const [key, value] of Object.entries(fields ?? {})) {
     formData.append(key, value);
   }
 
