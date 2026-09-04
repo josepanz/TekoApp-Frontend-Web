@@ -324,6 +324,10 @@
       },
       "myPaymentDetail": {
         "title": "Detalle del pago"
+      },
+      "applyAsProfessional": {
+        "title": "Postularme como profesional",
+        "description": "Completá tus datos para ofrecer tus servicios en la plataforma. Un administrador revisará tu postulación antes de que puedas recibir solicitudes."
       }
     },
     "pro": {
@@ -1180,6 +1184,22 @@
       "fixedRate": "Tarifa fija (opcional)",
       "yearsOfExperience": "Años de experiencia",
       "skills": "Habilidades (separadas por coma)"
+    }
+  },
+  "professionalApplication": {
+    "form": {
+      "category": "Categoría",
+      "categoryPlaceholder": "Elegí una categoría",
+      "description": "Descripción",
+      "hourlyRate": "Tarifa por hora",
+      "fixedRate": "Tarifa fija (opcional)",
+      "yearsOfExperience": "Años de experiencia (opcional)",
+      "skills": "Habilidades (separadas por coma, opcional)",
+      "submit": "Enviar postulación",
+      "submitting": "Enviando...",
+      "successTitle": "¡Postulación enviada!",
+      "successDescription": "Tu perfil profesional fue creado y está pendiente de aprobación. Te avisaremos cuando un administrador lo revise.",
+      "successCta": "Ir a mi perfil profesional"
     }
   },
   "myRatings": {
