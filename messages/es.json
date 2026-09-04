@@ -1202,6 +1202,10 @@
     }
   },
   "professionalApplication": {
+    "recruitCta": {
+      "question": "¿Querés trabajar con nosotros?",
+      "link": "Postulate como profesional"
+    },
     "form": {
       "category": "Categoría",
       "categoryPlaceholder": "Elegí una categoría",
