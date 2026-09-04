@@ -1308,6 +1308,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/payments/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener los pagos propios del usuario autenticado */
+        get: operations["PaymentController_findMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/payments/{id}": {
         parameters: {
             query?: never;
@@ -1389,6 +1406,26 @@ export interface paths {
         put?: never;
         /** Recibir webhook de proveedor de pagos */
         post: operations["PaymentController_handleWebhooks"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/tax/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener la configuración activa de impuestos (IVA) por país
+         * @description Paraguay-only por ahora — siempre resuelve el default global (sin país por Service/User todavía). Nunca falla: si no hay ninguna config cargada, devuelve un default seguro y deshabilitado (`isEnabled: false`, `rate: 0`) hasta contar con asesoría fiscal real.
+         */
+        get: operations["TaxConfigController_getConfig"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1800,6 +1837,26 @@ export interface paths {
         };
         /** Obtener estadísticas de calificaciones de un usuario */
         get: operations["RatingsController_getUserRatingStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/ratings/me/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener mis propias estadísticas de calificaciones (como cliente)
+         * @description Resuelve el userId desde el token — evita que el cliente necesite conocer su propio id interno, que `GET /auth/scope` nunca expone.
+         */
+        get: operations["RatingsController_getMyRatingStats"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2684,6 +2741,93 @@ export interface paths {
         patch: operations["AdminProfessionalDocumentsController_review"];
         trace?: never;
     };
+    "/tekoapp-backend/api/professionals/me/portfolio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener mi portafolio (todos los estados y visibilidad) */
+        get: operations["ProfessionalPortfolioController_myPortfolio"];
+        put?: never;
+        /** Subir una foto al portafolio de trabajos propio */
+        post: operations["ProfessionalPortfolioController_upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/professionals/me/portfolio/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Borrar una foto propia del portafolio */
+        delete: operations["ProfessionalPortfolioController_remove"];
+        options?: never;
+        head?: never;
+        /** Editar caption/orden/visibilidad de una foto propia */
+        patch: operations["ProfessionalPortfolioController_update"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/professionals/{referenceId}/portfolio/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Portafolio visible de un profesional (aprobado + visible) */
+        get: operations["ProfessionalPortfolioController_publicPortfolio"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-portfolio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Cola de revisión de fotos de portafolio (staff) */
+        get: operations["AdminProfessionalPortfolioController_queue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/professional-portfolio/{referenceId}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Aprobar o rechazar una foto de portafolio (staff) */
+        patch: operations["AdminProfessionalPortfolioController_review"];
+        trace?: never;
+    };
     "/tekoapp-backend/api/material-catalog": {
         parameters: {
             query?: never;
@@ -2780,6 +2924,167 @@ export interface paths {
          * @description Acepta la propuesta con esa opción — mismo efecto que aceptar una ServiceRequests (competidoras auto-rechazadas).
          */
         patch: operations["BudgetsController_select"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/contracts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar mis contratos
+         * @description Contratos donde el usuario autenticado es cliente o profesional.
+         */
+        get: operations["ContractsController_getMine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/contracts/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener un contrato
+         * @description Cliente o profesional del contrato.
+         */
+        get: operations["ContractsController_getOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/contracts/{referenceId}/sign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Firmar un contrato
+         * @description Cliente o profesional del contrato, según a quién le toca. No es una firma digital calificada — ver openspec/specs/service-contracts.md.
+         */
+        post: operations["ContractsController_sign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/contracts/{referenceId}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * URL presignada al PDF del contrato firmado
+         * @description Cliente, profesional o staff. Solo disponible si status = SIGNED.
+         */
+        get: operations["ContractsController_getPdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/budget-options/{referenceId}/generate-contract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generar un contrato a partir de una opción de presupuesto seleccionada
+         * @description Solo el cliente dueño del servicio, y solo si la opción ya fue seleccionada. Idempotente: si ya existe un contrato para esa opción, lo devuelve.
+         */
+        post: operations["BudgetOptionContractController_generate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/admin/contracts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listado completo de contratos (staff)
+         * @description Para soporte y disputas legales.
+         */
+        get: operations["AdminContractsController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/tips/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener la configuración activa de propinas
+         * @description Paraguay-only por ahora — siempre resuelve el default global (sin país por Service/User todavía). Nunca falla: si no hay ninguna config cargada, devuelve un default seguro (habilitadas, opcionales, sugeridas 10/15/20%).
+         */
+        get: operations["TipConfigController_getConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/payments/{id}/tip": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener la propina de un pago (si existe) */
+        get: operations["PaymentTipController_get"];
+        put?: never;
+        /**
+         * Dejar una propina para un pago ya resuelto
+         * @description Solo el cliente dueño del pago, una vez (`payment_id` es único en `tips`), y solo si el pago está PAID/COMPLETED. La propina nunca se fusiona a `Payment.totalAmount` ni entra en el cálculo de comisión de la plataforma — es 100% para el profesional.
+         */
+        post: operations["PaymentTipController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
 }
@@ -4214,10 +4519,7 @@ export interface components {
         };
         ServiceDetailResponseDTO: {
             /**
-             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28): el backend ahora
-             * expone `id` (Int interno, solo orden) y `referenceId` (UUID público) por separado. Regenerar
-             * con `pnpm generate:api-types` contra el backend real reemplaza este comentario y confirma la
-             * forma exacta — hasta entonces, no editar más este bloque a mano salvo este mismo cambio.
+             * @description ID interno secuencial — solo para ordenamiento, nunca para consultar/rutear
              * @example 42
              */
             id: number;
@@ -4350,9 +4652,8 @@ export interface components {
         };
         ServiceRequestDetailResponseDTO: {
             /**
-             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
-             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
-             * @example 7
+             * @description ID interno secuencial — solo para ordenamiento, nunca para consultar/rutear
+             * @example 42
              */
             id: number;
             /** @example b72c6323-ec6f-5fg6-a725-837725285111 */
@@ -4654,10 +4955,6 @@ export interface components {
              */
             metadata?: Record<string, never>;
         };
-        /**
-         * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — no existe todavía en el Swagger real,
-         * `pnpm generate:api-types` lo reemplaza cuando se regenere contra un backend con la feature.
-         */
         TipResponseDTO: {
             /** @example a63b5212-db5e-4ef5-9614-726614174000 */
             referenceId: string;
@@ -4666,34 +4963,25 @@ export interface components {
              * @enum {string}
              */
             mode: "PERCENTAGE" | "FIXED" | "FREE";
-            /** @example 10 */
+            /**
+             * @description Solo poblado cuando mode=PERCENTAGE.
+             * @example 10
+             */
             percentage?: number | null;
-            /** @example 15000 */
+            /**
+             * @description Monto final de la propina — 100% para el profesional, nunca entra en el cálculo de comisión de la plataforma.
+             * @example 15000
+             */
             amount: number;
             /** @example PYG */
             currencyCode: string;
             /** Format: date-time */
             createdAt: string;
         };
-        /**
-         * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — no existe todavía en el Swagger real,
-         * `pnpm generate:api-types` lo reemplaza cuando se regenere contra un backend con la feature.
-         */
-        TipConfigResponseDTO: {
-            /** @example true */
-            isEnabled: boolean;
-            /** @example false */
-            isMandatory: boolean;
-            /** @example [10, 15, 20] */
-            suggestedPercentages: number[];
-            /** @example true */
-            allowFreeAmount: boolean;
-        };
         PaymentDetailResponseDTO: {
             /**
-             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
-             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
-             * @example 15
+             * @description ID interno secuencial — solo para ordenamiento, nunca para consultar/rutear
+             * @example 42
              */
             id: number;
             /** @example f47ac10b-58cc-4372-a567-0e02b2c3d479 */
@@ -4709,9 +4997,7 @@ export interface components {
             serviceId: string;
             /** @example 150000 */
             amount: number;
-            /**
-             * EDITADO A MANO (Backend 0010-tips.md, 2026-08-28) — nunca fusionada a `totalAmount`.
-             */
+            /** @description Propina dejada para este pago, si existe — nunca fusionada a `totalAmount` ni a la comisión de la plataforma. Ver `GET/POST /payments/:id/tip`. */
             tip?: components["schemas"]["TipResponseDTO"] | null;
             /** @example PYG */
             currencyCode: string;
@@ -4805,8 +5091,13 @@ export interface components {
             days: number;
         };
         PaymentMethodDetailResponseDTO: {
+            /**
+             * @description ID interno secuencial — solo para ordenamiento, nunca para consultar/rutear
+             * @example 42
+             */
+            id: number;
             /** @example f47ac10b-58cc-4372-a567-0e02b2c3d479 */
-            id: string;
+            referenceId: string;
             /** @example 1 */
             userId: number;
             /**
@@ -4986,6 +5277,23 @@ export interface components {
             details?: Record<string, never>;
             /** @description ID externo del proveedor (token de Stripe, etc.) */
             externalId?: string;
+        };
+        TaxConfigResponseDTO: {
+            /**
+             * @description Placeholder técnico hasta contar con asesoría fiscal real por país — false por default (ver openspec/decisions.md, backlog post-Fase 0004 punto 5).
+             * @example false
+             */
+            isEnabled: boolean;
+            /**
+             * @description Nombre descriptivo del impuesto (ej. "IVA Paraguay").
+             * @example Sin configurar
+             */
+            name: string;
+            /**
+             * @description Tasa expresada como fracción (0.10 = 10%), no porcentaje entero.
+             * @example 0
+             */
+            rate: number;
         };
         CreateNotificationRequestDTO: {
             /**
@@ -5503,27 +5811,25 @@ export interface components {
         };
         RatingDetailResponseDTO: {
             /**
-             * EDITADO A MANO (Backend 0008-id-referenceid-standardization, 2026-08-28) — ver comentario en
-             * `ServiceDetailResponseDTO` más arriba, mismo cambio aplicado acá.
-             * @description ID interno (Int, solo orden)
-             * @example 8
+             * @description ID interno secuencial — solo para ordenamiento, nunca para consultar/rutear
+             * @example 42
              */
             id: number;
             /**
-             * @description ID único (UUID) de la calificación
+             * @description ID único (UUID público) de la calificación
              * @example a63b5212-db5e-4ef5-9614-726614174000
              */
             referenceId: string;
             /**
-             * @description ID del usuario que calificó
+             * @description ID del usuario involucrado (autor si type=CLIENT_TO_PROFESSIONAL, calificado si type=PROFESSIONAL_TO_CLIENT). null cuando isAnonymous=true y quien consulta no es el autor ni tiene permiso de auditoría — nunca null para admin/staff.
              * @example 1
              */
-            userId: number;
+            userId: number | null;
             /**
-             * @description ID del profesional calificado
+             * @description ID del profesional involucrado (calificado si type=CLIENT_TO_PROFESSIONAL, autor si type=PROFESSIONAL_TO_CLIENT). null cuando isAnonymous=true y quien consulta no es el autor ni tiene permiso de auditoría — nunca null para admin/staff.
              * @example 1
              */
-            professionalId: number;
+            professionalId: number | null;
             /**
              * @description ID de la solicitud de servicio asociada
              * @example b72c6323-ec6f-5fg6-a725-837725285111
@@ -6206,12 +6512,7 @@ export interface components {
         LegalDocumentVersionResponseDTO: {
             /** @description referenceId (UUID) público */
             referenceId: string;
-            /**
-             * EDITADO A MANO: `SERVICE_CONTRACT_TERMS` (Fase 0004-contratos, nunca reflejado acá) y
-             * `USER_CONTENT_LIABILITY_DISCLAIMER` (backlog post-Fase 0004 punto 5, 2026-08-28) agregados
-             * a mano — `pnpm generate:api-types` los reemplaza cuando se regenere contra el backend real.
-             * @enum {string}
-             */
+            /** @enum {string} */
             documentType: "TERMS_OF_SERVICE" | "PRIVACY_POLICY" | "DATA_PROCESSING_CONSENT" | "IMAGE_USAGE_CONSENT" | "SERVICE_CONTRACT_TERMS" | "USER_CONTENT_LIABILITY_DISCLAIMER";
             /** @description País — null si es internacional/paraguas */
             countryId?: number;
@@ -6538,6 +6839,62 @@ export interface components {
             /** @description Obligatorio cuando status=REJECTED */
             rejectionReason?: string;
         };
+        CreatePortfolioItemRequestDTO: {
+            /** @description Descripción breve de la foto/trabajo */
+            caption?: string;
+        };
+        PortfolioItemResponseDTO: {
+            referenceId: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que ProfessionalDocuments.fileKey. */
+            fileKey: string;
+            caption?: string;
+            sortOrder: number;
+            isVisible: boolean;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED";
+            /** Format: date-time */
+            reviewedAt?: string;
+            rejectionReason?: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        PortfolioItemsListResponseDTO: {
+            data: components["schemas"]["PortfolioItemResponseDTO"][];
+        };
+        UpdatePortfolioItemRequestDTO: {
+            /** @description Descripción breve de la foto/trabajo */
+            caption?: string;
+            /** @description Orden de aparición en la galería (menor = primero) */
+            sortOrder?: number;
+            /** @description Ocultado reactivo por el propio profesional — independiente del estado de revisión */
+            isVisible?: boolean;
+        };
+        AdminPortfolioItemResponseDTO: {
+            referenceId: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que ProfessionalDocuments.fileKey. */
+            fileKey: string;
+            caption?: string;
+            sortOrder: number;
+            isVisible: boolean;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED";
+            /** Format: date-time */
+            reviewedAt?: string;
+            rejectionReason?: string;
+            /** Format: date-time */
+            createdAt: string;
+            professional: components["schemas"]["AdminQueueProfessionalSummaryResponseDTO"];
+        };
+        AdminPortfolioItemsListResponseDTO: {
+            data: components["schemas"]["AdminPortfolioItemResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        ReviewPortfolioItemRequestDTO: {
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+            /** @description Obligatorio cuando status=REJECTED */
+            rejectionReason?: string;
+        };
         MaterialCatalogItemResponseDTO: {
             /** @description referenceId (UUID) público */
             referenceId: string;
@@ -6646,6 +7003,135 @@ export interface components {
         };
         BudgetOptionsListResponseDTO: {
             data: components["schemas"]["BudgetOptionResponseDTO"][];
+        };
+        MyContractSummaryResponseDTO: {
+            referenceId: string;
+            /** @enum {string} */
+            status: "DRAFT" | "PENDING_CLIENT_SIGNATURE" | "PENDING_PROFESSIONAL_SIGNATURE" | "SIGNED" | "CANCELLED";
+            serviceTitle: string;
+            /** Format: date-time */
+            createdAt: string;
+            pdfAvailable: boolean;
+        };
+        MyContractsListResponseDTO: {
+            data: components["schemas"]["MyContractSummaryResponseDTO"][];
+        };
+        ContractServiceSnapshotDTO: {
+            title: string;
+            description: string;
+            categoryName: string;
+        };
+        ContractBudgetOptionSnapshotDTO: {
+            label: string;
+            description?: string;
+            totalPrice: number;
+            estimatedHours?: number;
+        };
+        ContractLineItemSnapshotDTO: {
+            /** @enum {string} */
+            itemType: "MATERIAL" | "LABOR" | "OTHER";
+            /** @description null si era un ítem libre */
+            catalogItemName?: string;
+            description: string;
+            quantity: number;
+            unitPrice: number;
+            subtotal: number;
+        };
+        ContractContentSnapshotDTO: {
+            service: components["schemas"]["ContractServiceSnapshotDTO"];
+            budgetOption: components["schemas"]["ContractBudgetOptionSnapshotDTO"];
+            lineItems: components["schemas"]["ContractLineItemSnapshotDTO"][];
+        };
+        LegalTermsVersionSummaryDTO: {
+            referenceId: string;
+            version: string;
+            contentUrl: string;
+        };
+        ContractResponseDTO: {
+            /** @description referenceId (UUID) público */
+            referenceId: string;
+            /** @enum {string} */
+            status: "DRAFT" | "PENDING_CLIENT_SIGNATURE" | "PENDING_PROFESSIONAL_SIGNATURE" | "SIGNED" | "CANCELLED";
+            /**
+             * @description Rol de quien pide el contrato — permite a mobile/web mostrar "pendiente de tu firma" vs. "pendiente de la firma de la otra parte" sin exponer clientUserId/professionalId.
+             * @enum {string}
+             */
+            viewerRole: "CLIENT" | "PROFESSIONAL";
+            contentSnapshot: components["schemas"]["ContractContentSnapshotDTO"];
+            /** @description null si todavía no hay ninguna versión publicada de este tipo */
+            legalTermsVersion?: components["schemas"]["LegalTermsVersionSummaryDTO"];
+            /** Format: date-time */
+            clientSignedAt?: string;
+            /** Format: date-time */
+            professionalSignedAt?: string;
+            /** @description true solo cuando status = SIGNED */
+            pdfAvailable: boolean;
+        };
+        SignContractRequestDTO: {
+            /** @description Nombre completo tipeado por quien firma */
+            fullName: string;
+            /** @description Checkbox "Leí y acepto el contenido de este contrato" — debe venir en true */
+            accepted: boolean;
+        };
+        ContractPdfResponseDTO: {
+            /** @description URL presignada al PDF firmado, expira según S3_PRESIGNED_URL_EXPIRES_IN */
+            url: string;
+        };
+        ContractAuditResponseDTO: {
+            referenceId: string;
+            /** @enum {string} */
+            status: "DRAFT" | "PENDING_CLIENT_SIGNATURE" | "PENDING_PROFESSIONAL_SIGNATURE" | "SIGNED" | "CANCELLED";
+            serviceReferenceId: string;
+            clientReferenceId: string;
+            professionalReferenceId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            clientSignedAt?: string;
+            /** Format: date-time */
+            professionalSignedAt?: string;
+            pdfAvailable: boolean;
+        };
+        ContractsAuditListResponseDTO: {
+            data: components["schemas"]["ContractAuditResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        TipConfigResponseDTO: {
+            /** @example true */
+            isEnabled: boolean;
+            /**
+             * @description Informativo — el frontend debe mostrar el paso de propina como no salteable cuando es true. El backend no bloquea la creación del pago si el cliente no deja propina (ver decisions.md).
+             * @example false
+             */
+            isMandatory: boolean;
+            /**
+             * @example [
+             *       10,
+             *       15,
+             *       20
+             *     ]
+             */
+            suggestedPercentages: number[];
+            /** @example true */
+            allowFreeAmount: boolean;
+        };
+        CreateTipRequestDTO: {
+            /**
+             * @description PERCENTAGE calcula el monto server-side desde `percentage`. FIXED/FREE mandan `amount` directo — la distinción entre ambos es de UI/analítica (preset vs. monto libre), no cambia el cálculo.
+             * @example PERCENTAGE
+             * @enum {string}
+             */
+            mode: "PERCENTAGE" | "FIXED" | "FREE";
+            /**
+             * @description Requerido cuando mode=PERCENTAGE (1-100).
+             * @example 10
+             */
+            percentage?: number;
+            /**
+             * @description Requerido cuando mode=FIXED o mode=FREE.
+             * @example 15000
+             */
+            amount?: number;
         };
     };
     responses: never;
@@ -9594,6 +10080,26 @@ export interface operations {
             };
         };
     };
+    PaymentController_findMine: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista de pagos del usuario autenticado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentDetailResponseDTO"][];
+                };
+            };
+        };
+    };
     PaymentController_findOne: {
         parameters: {
             query?: never;
@@ -9802,6 +10308,25 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    TaxConfigController_getConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TaxConfigResponseDTO"];
+                };
             };
         };
     };
@@ -10520,6 +11045,26 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Estadísticas del usuario obtenidas exitosamente */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserRatingStatsResponseDTO"];
+                };
+            };
+        };
+    };
+    RatingsController_getMyRatingStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Estadísticas del usuario autenticado obtenidas exitosamente */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -12221,6 +12766,175 @@ export interface operations {
             };
         };
     };
+    ProfessionalPortfolioController_myPortfolio: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioItemsListResponseDTO"];
+                };
+            };
+        };
+    };
+    ProfessionalPortfolioController_upload: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePortfolioItemRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioItemResponseDTO"];
+                };
+            };
+        };
+    };
+    ProfessionalPortfolioController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la foto de portafolio */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProfessionalPortfolioController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la foto de portafolio */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePortfolioItemRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioItemResponseDTO"];
+                };
+            };
+        };
+    };
+    ProfessionalPortfolioController_publicPortfolio: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del profesional */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioItemsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalPortfolioController_queue: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                status?: "PENDING" | "APPROVED" | "REJECTED";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminPortfolioItemsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalPortfolioController_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la foto de portafolio */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewPortfolioItemRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PortfolioItemResponseDTO"];
+                };
+            };
+        };
+    };
     MaterialCatalogController_list: {
         parameters: {
             query?: {
@@ -12408,6 +13122,273 @@ export interface operations {
             };
             /** @description El servicio ya no acepta propuestas. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContractsController_getMine: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyContractsListResponseDTO"];
+                };
+            };
+        };
+    };
+    ContractsController_getOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del contrato */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContractResponseDTO"];
+                };
+            };
+        };
+    };
+    ContractsController_sign: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del contrato */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignContractRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContractResponseDTO"];
+                };
+            };
+            /** @description Firma duplicada o fuera de turno. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ContractsController_getPdf: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) del contrato */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContractPdfResponseDTO"];
+                };
+            };
+            /** @description El contrato todavía no está firmado por ambos. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    BudgetOptionContractController_generate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la opción de presupuesto elegida */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContractResponseDTO"];
+                };
+            };
+            /** @description La opción todavía no fue seleccionada. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No es el cliente dueño del servicio. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminContractsController_list: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                status?: "DRAFT" | "PENDING_CLIENT_SIGNATURE" | "PENDING_PROFESSIONAL_SIGNATURE" | "SIGNED" | "CANCELLED";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContractsAuditListResponseDTO"];
+                };
+            };
+        };
+    };
+    TipConfigController_getConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TipConfigResponseDTO"];
+                };
+            };
+        };
+    };
+    PaymentTipController_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TipResponseDTO"];
+                };
+            };
+            /** @description Pago no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PaymentTipController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTipRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TipResponseDTO"];
+                };
+            };
+            /** @description Pago no elegible o ya tiene propina */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No sos el cliente dueño del pago */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Pago no encontrado */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

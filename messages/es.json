@@ -50,6 +50,7 @@
         "aiDisclosures": "Disclosure de IA",
         "professionalDocumentTypes": "Tipos de documento",
         "professionalDocuments": "Revisión de documentos",
+        "professionalPortfolio": "Revisión de portafolio",
         "legalDocumentVersions": "Documentos legales",
         "dataRetentionPolicies": "Políticas de retención",
         "consentAudit": "Auditoría de consentimiento",
@@ -65,6 +66,7 @@
       "pro": {
         "requests": "Solicitudes",
         "myServices": "Mis servicios",
+        "portfolio": "Mi portafolio",
         "ratings": "Calificaciones",
         "profile": "Perfil",
         "myDocuments": "Mis documentos"
@@ -279,6 +281,10 @@
         "title": "Revisión de documentos",
         "description": "Cola de documentos cargados por profesionales pendientes de aprobar o rechazar."
       },
+      "professionalPortfolio": {
+        "title": "Revisión de portafolio",
+        "description": "Cola de fotos de trabajos cargadas por profesionales pendientes de aprobar o rechazar."
+      },
       "legalDocumentVersions": {
         "title": "Documentos legales",
         "description": "Catálogo versionado de términos, política de privacidad y consentimientos por país."
@@ -339,6 +345,10 @@
       "services": {
         "title": "Mis servicios",
         "description": "Servicios aceptados, en curso e historial."
+      },
+      "portfolio": {
+        "title": "Mi portafolio",
+        "description": "Fotos de trabajos anteriores que los clientes ven en tu perfil público."
       },
       "ratings": {
         "title": "Calificaciones",
@@ -529,6 +539,51 @@
       "replace": "Reemplazar",
       "uploading": "Subiendo...",
       "fileInputLabel": "Archivo para {name}"
+    }
+  },
+  "professionalPortfolio": {
+    "uploadButton": "Subir foto",
+    "loadError": "No se pudo cargar tu portafolio.",
+    "empty": "Todavía no subiste ninguna foto de trabajos anteriores.",
+    "captionLabel": "Descripción",
+    "captionPlaceholder": "Descripción breve (opcional)",
+    "visibleLabel": "Visible",
+    "deleteButton": "Eliminar foto",
+    "deleteConfirmTitle": "¿Eliminar esta foto?",
+    "deleteConfirmDescription": "Esta acción no se puede deshacer.",
+    "deleteCancelButton": "Cancelar",
+    "deleteConfirmButton": "Eliminar",
+    "rejectionReason": "Motivo: {reason}",
+    "statusOptions": {
+      "PENDING": "Pendiente",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado"
+    },
+    "filter": {
+      "all": "Todos",
+      "statusLabel": "Estado"
+    },
+    "table": {
+      "professional": "Profesional",
+      "caption": "Descripción",
+      "status": "Estado",
+      "uploadedAt": "Cargado",
+      "actions": "Acciones",
+      "reviewButton": "Revisar",
+      "loadError": "No se pudo cargar la cola de revisión.",
+      "empty": "No hay fotos que coincidan con los filtros."
+    },
+    "review": {
+      "title": "Revisar foto de portafolio",
+      "professionalLabel": "Profesional: {name}",
+      "viewFileButton": "Ver archivo",
+      "rejectionReasonLabel": "Motivo de rechazo",
+      "approveButton": "Aprobar",
+      "rejectButton": "Rechazar",
+      "confirmRejectButton": "Confirmar rechazo"
+    },
+    "public": {
+      "title": "Trabajos anteriores"
     }
   },
   "legalDocumentVersions": {

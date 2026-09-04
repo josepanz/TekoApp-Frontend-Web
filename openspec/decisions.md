@@ -431,3 +431,31 @@ trabajo aislado sobre ese endpoint ya listo.
 Verificado: `pnpm check:types` 0 errores, `pnpm lint` 0 warnings, `pnpm test` 69 archivos/215 tests
 en verde (sin tests nuevos — cambio puramente aditivo sobre un enum ya cubierto por los tests
 existentes del formulario/tabla).
+
+## Galería de portafolio de trabajos — implementado 2026-09-02 (Fase 5 de onboarding-and-portfolio)
+
+Ver `TekoApp-Backend/openspec/specs/professional-onboarding-and-portfolio.md`, Fase 4 (modelo
+`ProfessionalPortfolioItems`, revisión de staff) — este repo no tenía spec propia todavía para el
+tramo de onboarding (Fases 1-3 viven en PRs separados sin mergear); esta fase cierra el vertical
+completo del lado Web: autogestión del profesional + cola de revisión de staff + vista pública.
+Tipos generados (`pnpm generate:api-types`) contra el backend de esa fase corriendo local en su
+propia branch, mismo criterio que cualquier feature nueva de backend todavía no mergeada a develop.
+
+- `src/features/professional-portfolio/` nuevo, espejo de `professional-documents/`:
+  `api.ts`/`hooks.ts`/`schemas.ts` + `MyPortfolioManager` (grid propio: subir/editar
+  caption/visibilidad/borrar), `PublicPortfolioGallery` (solo lectura, embebida en
+  `ProfessionalDetailCard` del lado cliente), `PortfolioReviewQueueTable` +
+  `PortfolioReviewDialog` (cola de staff, mismo patrón que `ReviewQueueTable`/
+  `DocumentReviewDialog` de `professional-documents`).
+- `core/api-client/client.ts#uploadFile` extendido con `options?: {fieldName?, fields?}` (antes
+  solo aceptaba `fieldName`) para poder mandar `caption` en el mismo multipart que el archivo —
+  sin callers previos, cambio de firma seguro (mismo hallazgo ya hecho una vez en la Fase 2 de Web
+  de esta misma spec, en una branch distinta sin mergear todavía; se repite acá porque esta branch
+  partió de `develop`, que no tiene esa extensión).
+- Rutas nuevas: `/pro/portafolio` (nav `layout.nav.pro.portfolio`) y `/admin/professional-portfolio`
+  (nav `layout.nav.admin.professionalPortfolio`).
+- Sin `history`/cola por profesional para portafolio (a diferencia de documentos) — el backend no
+  expone ese endpoint para portafolio, solo la cola global paginada por estado.
+
+Verificado: `pnpm check:types` 0 errores, `pnpm lint` 0 warnings, `pnpm test` 76 archivos/237 tests
+en verde (7 archivos nuevos).
