@@ -24,6 +24,27 @@ export function isBackendEnvelope<T>(
 }
 
 /**
+ * Parsea el cuerpo de una respuesta no-ok en un `ApiError` — compartido por `apiFetch` y
+ * `uploadFile` para no duplicar el mismo try/parse en las dos.
+ */
+async function parseErrorResponse(
+  response: Response,
+  path: string,
+): Promise<ApiError> {
+  let body: unknown;
+  try {
+    body = await response.json();
+  } catch {
+    body = await response.text();
+  }
+  const message =
+    body && typeof body === 'object' && 'message' in body
+      ? String((body as { message: unknown }).message)
+      : `Error ${response.status} en ${path}`;
+  return new ApiError(response.status, message, body);
+}
+
+/**
  * Cliente de datos usado por `features/*\/api.ts` en Client Components (hooks de TanStack Query).
  * SIEMPRE pega a `/api/backend/*` (el proxy BFF) — nunca a la URL real del backend, que ni
  * siquiera está disponible en este contexto (solo vive en env vars server-only).
@@ -41,17 +62,7 @@ export async function apiFetch<T>(
   });
 
   if (!response.ok) {
-    let body: unknown;
-    try {
-      body = await response.json();
-    } catch {
-      body = await response.text();
-    }
-    const message =
-      body && typeof body === 'object' && 'message' in body
-        ? String((body as { message: unknown }).message)
-        : `Error ${response.status} en ${path}`;
-    throw new ApiError(response.status, message, body);
+    throw await parseErrorResponse(response, path);
   }
 
   if (response.status === 204) {
@@ -92,17 +103,7 @@ export async function uploadFile<T>(
   });
 
   if (!response.ok) {
-    let body: unknown;
-    try {
-      body = await response.json();
-    } catch {
-      body = await response.text();
-    }
-    const message =
-      body && typeof body === 'object' && 'message' in body
-        ? String((body as { message: unknown }).message)
-        : `Error ${response.status} en ${path}`;
-    throw new ApiError(response.status, message, body);
+    throw await parseErrorResponse(response, path);
   }
 
   const body: unknown = await response.json();
