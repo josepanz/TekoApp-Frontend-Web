@@ -63,6 +63,11 @@ export async function proxyToBackend(
       redirect: 'manual',
     });
   } catch (error) {
+    // No relanzar: Next lo convertiría en un 500 opaco sin cuerpo, indistinguible para el caller
+    // de un backend que respondió mal. Acá el backend directamente no respondió (caído, DNS,
+    // timeout) — se lo comunica como un 502 estructurado y parseable por `apiFetch`. El detalle
+    // real del error se mantiene en el log para el operador; el body que ve el cliente es genérico
+    // a propósito.
     logger.error('Fallo de conexión con el backend en el proxy', {
       requestId,
       sessionId,
@@ -71,7 +76,10 @@ export async function proxyToBackend(
       durationMs: Date.now() - start,
       err: error,
     });
-    throw error;
+    return Response.json(
+      { message: 'backend_unreachable' },
+      { status: 502, headers: { [REQUEST_ID_HEADER]: requestId } },
+    );
   }
 
   const responseHeaders = new Headers(backendResponse.headers);
