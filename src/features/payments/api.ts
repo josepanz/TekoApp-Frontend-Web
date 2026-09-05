@@ -59,8 +59,8 @@ export function cancelPayment(id: string): Promise<Payment> {
 
 // GET /payments/{id} (PaymentController_findOne) — mismo DTO plano que /payments (sin objetos
 // user/professional/service anidados, solo las FK sueltas). El backend valida que el pago sea
-// del usuario autenticado (o que tenga payments.audit:read/admin:all) — ver
-// `getPaymentByIdForViewer` en TekoApp-Backend.
+// del usuario autenticado (o que tenga PERMISSIONS.PAYMENTS.AUDIT_VIEW/PERMISSIONS.ADMIN.ALL) —
+// ver `getPaymentByIdForViewer` en TekoApp-Backend.
 export function getPaymentById(id: string): Promise<Payment> {
   return apiFetch<Payment>(`payments/${id}`);
 }
