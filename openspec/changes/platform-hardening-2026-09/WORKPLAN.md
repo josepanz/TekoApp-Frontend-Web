@@ -633,21 +633,21 @@ Si algún archivo citado acá no existe, verificá primero que estás en la rama
 
 ## 8. Tabla de seguimiento
 
-| ID   | Sev     | Estado | Commit | Notas                                             |
-| ---- | ------- | ------ | ------ | ------------------------------------------------- |
-| C-01 | CRÍTICO | [ ]    |        | Copiar los strings exactos del backend            |
-| C-02 | ALTO    | [ ]    |        | Requiere consultar asignación de roles en la base |
-| C-03 | MEDIO   | [ ]    |        | Hacer junto con C-04                              |
-| C-04 | ESTILO  | [ ]    |        | Hacer junto con C-03                              |
-| C-05 | BAJO    | [ ]    |        | Solo doc                                          |
-| E-01 | CRÍTICO | [ ]    |        | Hacer **antes** que G-01                          |
-| F-01 | CRÍTICO | [ ]    |        | Solo lectura, sin acciones sobre el contrato      |
-| G-01 | ALTO    | [ ]    |        | Después de E-01                                   |
-| G-02 | MEDIO   | [ ]    |        |                                                   |
-| G-03 | MEDIO   | [ ]    |        |                                                   |
-| G-04 | MEDIO   | [ ]    |        |                                                   |
-| G-05 | BAJO    | [ ]    |        | Opcional                                          |
-| G-06 | MEDIO   | [ ]    |        | Ojo con los ids null de calificaciones anónimas   |
-| I-01 | MEDIO   | [ ]    |        | 4 features, una spec cada una                     |
-| I-02 | MEDIO   | [ ]    |        | Bloqueada por backend                             |
-| I-03 | BAJO    | [ ]    |        | Corregir el doc primero                           |
+| ID   | Sev     | Estado | Commit  | Notas                                                                                                                                                                                                                                                                                                             |
+| ---- | ------- | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C-01 | CRÍTICO | [x]    | 6b1a782 | Copiar los strings exactos del backend                                                                                                                                                                                                                                                                            |
+| C-02 | ALTO    | [ ]    |         | No verificable — requiere acceso a DB/panel de roles, pendiente para José. Falta confirmar si `RATINGS.AUDIT_VIEW`, `PAYMENTS.AUDIT_VIEW` y `CONTRACTS.AUDIT_VIEW` están asignados a algún rol (sin psql ni panel admin corriendo; seeds del backend no los asignan pero eso no es autoritativo sobre la DB real) |
+| C-03 | MEDIO   | [ ]    |         | Hacer junto con C-04                                                                                                                                                                                                                                                                                              |
+| C-04 | ESTILO  | [ ]    |         | Hacer junto con C-03                                                                                                                                                                                                                                                                                              |
+| C-05 | BAJO    | [ ]    |         | Solo doc                                                                                                                                                                                                                                                                                                          |
+| E-01 | CRÍTICO | [ ]    |         | Hacer **antes** que G-01                                                                                                                                                                                                                                                                                          |
+| F-01 | CRÍTICO | [ ]    |         | Solo lectura, sin acciones sobre el contrato                                                                                                                                                                                                                                                                      |
+| G-01 | ALTO    | [ ]    |         | Después de E-01                                                                                                                                                                                                                                                                                                   |
+| G-02 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
+| G-03 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
+| G-04 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
+| G-05 | BAJO    | [ ]    |         | Opcional                                                                                                                                                                                                                                                                                                          |
+| G-06 | MEDIO   | [ ]    |         | Ojo con los ids null de calificaciones anónimas                                                                                                                                                                                                                                                                   |
+| I-01 | MEDIO   | [ ]    |         | 4 features, una spec cada una                                                                                                                                                                                                                                                                                     |
+| I-02 | MEDIO   | [ ]    |         | Bloqueada por backend                                                                                                                                                                                                                                                                                             |
+| I-03 | BAJO    | [ ]    |         | Corregir el doc primero                                                                                                                                                                                                                                                                                           |
