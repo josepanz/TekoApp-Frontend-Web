@@ -253,14 +253,38 @@ asignados a ningún rol, son pantallas que existen en la navegación y fallan co
 `service-progress-section.tsx` es hoy **el único** componente del repo que esconde UI por
 permiso.
 
-**Verificación previa obligatoria** — **esto no se resuelve leyendo código**: hay que consultar
-la base o el panel de roles y confirmar si esos 3 permisos (`RATINGS.AUDIT_VIEW`,
-`PAYMENTS.AUDIT_VIEW`, `CONTRACTS.AUDIT_VIEW`) están asignados a algún rol.
+**Verificación previa: YA HECHA (2026-09-06, consultando la base real).** No hace falta repetirla,
+pero si querés confirmar que nada cambió:
 
-- Si **están asignados**: no reproduce. Anotalo en §8 y seguí.
-- Si **no lo están**: aplicá el gate client-side.
+```sql
+SELECT r.name AS rol, p.name AS permiso
+FROM role_permissions rp
+JOIN roles r ON r.id = rp.role_id
+JOIN permissions p ON p.id = rp.permission_id
+ORDER BY r.name, p.name;
+```
 
-**Cambio (solo si aplica)**: replicar el patrón de `service-progress-section.tsx` — leer el
+**Resultado encontrado**:
+
+- Existe **un solo rol**: `ADMIN`.
+- El catálogo `permissions` tiene **una sola fila**: `admin:all` — asignada a `ADMIN`.
+- Los 5 permisos de auditoría (`ratings.audit:read`, `payments.audit:read`, `contracts.audit:read`,
+  `professional-portfolio.review:manage`, `professionals.verification:manage`) **no existen ni
+  siquiera como filas** en el catálogo, así que mucho menos están asignados.
+
+**Qué significa esto para la tarea — leelo antes de codear**:
+
+- **Hoy nadie queda afuera**, porque el único rol que existe es `ADMIN` y el gate del repo chequea
+  `hasAnyPermission([...], PERMISSIONS.ADMIN.ALL)`: un admin pasa cualquier compuerta. O sea que el
+  síntoma "pantalla condenada a 403 para todo el mundo" **no se manifiesta todavía**.
+- **Pero el gate igual hay que aplicarlo**, y no es trabajo especulativo: en cuanto exista un rol
+  que no sea `ADMIN` (staff de soporte, auditor, etc.), esas pantallas van a fallar con 403 sin que
+  nada lo anticipe. Aplicalo ahora, que es barato, en vez de esperar al incidente.
+- **Hallazgo colateral, NO lo arregles acá**: que el catálogo de permisos tenga una sola fila es un
+  problema del backend, no de Web — es la misma clase de gap que T-04 del WORKPLAN de
+  `TekoApp-Backend` (catálogos sin sembrar). Anotalo y seguí; no toques el seed desde este repo.
+
+**Cambio**: replicar el patrón de `service-progress-section.tsx` — leer el
 scope con `useSessionScopeQuery()`, chequear con `hasAnyPermission([...])` contra la constante
 y `PERMISSIONS.ADMIN.ALL`, y no renderizar si no hay permiso. Es un gate de UX (para no mostrar
 una pantalla condenada a 403), **no** un control de seguridad: el backend sigue siendo la
@@ -633,21 +657,21 @@ Si algún archivo citado acá no existe, verificá primero que estás en la rama
 
 ## 8. Tabla de seguimiento
 
-| ID   | Sev     | Estado | Commit  | Notas                                                                                                                                                                                                                                                                                                             |
-| ---- | ------- | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C-01 | CRÍTICO | [x]    | 6b1a782 | Copiar los strings exactos del backend                                                                                                                                                                                                                                                                            |
-| C-02 | ALTO    | [ ]    |         | No verificable — requiere acceso a DB/panel de roles, pendiente para José. Falta confirmar si `RATINGS.AUDIT_VIEW`, `PAYMENTS.AUDIT_VIEW` y `CONTRACTS.AUDIT_VIEW` están asignados a algún rol (sin psql ni panel admin corriendo; seeds del backend no los asignan pero eso no es autoritativo sobre la DB real) |
-| C-03 | MEDIO   | [x]    | 4c3dc8e | Hacer junto con C-04                                                                                                                                                                                                                                                                                              |
-| C-04 | ESTILO  | [x]    | e3da870 | Hacer junto con C-03                                                                                                                                                                                                                                                                                              |
-| C-05 | BAJO    | [x]    | 65af46b | Solo doc                                                                                                                                                                                                                                                                                                          |
-| E-01 | CRÍTICO | [ ]    |         | Hacer **antes** que G-01                                                                                                                                                                                                                                                                                          |
-| F-01 | CRÍTICO | [ ]    |         | Solo lectura, sin acciones sobre el contrato                                                                                                                                                                                                                                                                      |
-| G-01 | ALTO    | [ ]    |         | Después de E-01                                                                                                                                                                                                                                                                                                   |
-| G-02 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
-| G-03 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
-| G-04 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                                   |
-| G-05 | BAJO    | [ ]    |         | Opcional                                                                                                                                                                                                                                                                                                          |
-| G-06 | MEDIO   | [ ]    |         | Ojo con los ids null de calificaciones anónimas                                                                                                                                                                                                                                                                   |
-| I-01 | MEDIO   | [ ]    |         | 4 features, una spec cada una                                                                                                                                                                                                                                                                                     |
-| I-02 | MEDIO   | [ ]    |         | Bloqueada por backend                                                                                                                                                                                                                                                                                             |
-| I-03 | BAJO    | [ ]    |         | Corregir el doc primero                                                                                                                                                                                                                                                                                           |
+| ID   | Sev     | Estado | Commit  | Notas                                                                                                                                                                                                                                                                                                  |
+| ---- | ------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| C-01 | CRÍTICO | [x]    | 6b1a782 | Copiar los strings exactos del backend                                                                                                                                                                                                                                                                 |
+| C-02 | ALTO    | [ ]    |         | **Desbloqueada** (2026-09-06, verificado contra la base real): existe un solo rol (`ADMIN`) y el catálogo `permissions` tiene una sola fila (`admin:all`). Los 5 permisos de auditoría no existen. Hoy nadie queda afuera porque el gate acepta `ADMIN.ALL`, pero aplicar el gate igual — ver la tarea |
+| C-03 | MEDIO   | [x]    | 4c3dc8e | Hacer junto con C-04                                                                                                                                                                                                                                                                                   |
+| C-04 | ESTILO  | [x]    | e3da870 | Hacer junto con C-03                                                                                                                                                                                                                                                                                   |
+| C-05 | BAJO    | [x]    | 65af46b | Solo doc                                                                                                                                                                                                                                                                                               |
+| E-01 | CRÍTICO | [ ]    |         | Hacer **antes** que G-01                                                                                                                                                                                                                                                                               |
+| F-01 | CRÍTICO | [ ]    |         | Solo lectura, sin acciones sobre el contrato                                                                                                                                                                                                                                                           |
+| G-01 | ALTO    | [ ]    |         | Después de E-01                                                                                                                                                                                                                                                                                        |
+| G-02 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                        |
+| G-03 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                        |
+| G-04 | MEDIO   | [ ]    |         |                                                                                                                                                                                                                                                                                                        |
+| G-05 | BAJO    | [ ]    |         | Opcional                                                                                                                                                                                                                                                                                               |
+| G-06 | MEDIO   | [ ]    |         | Ojo con los ids null de calificaciones anónimas                                                                                                                                                                                                                                                        |
+| I-01 | MEDIO   | [ ]    |         | 4 features, una spec cada una                                                                                                                                                                                                                                                                          |
+| I-02 | MEDIO   | [ ]    |         | Bloqueada por backend                                                                                                                                                                                                                                                                                  |
+| I-03 | BAJO    | [ ]    |         | Corregir el doc primero                                                                                                                                                                                                                                                                                |
