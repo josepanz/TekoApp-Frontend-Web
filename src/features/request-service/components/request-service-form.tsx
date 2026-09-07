@@ -6,6 +6,13 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -74,215 +81,251 @@ export function RequestServiceForm() {
       className="flex max-w-xl flex-col gap-4"
       noValidate
     >
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="title">{t('form.title')}</Label>
-        <Input
-          id="title"
-          aria-invalid={!!errors.title}
-          {...register('title')}
-        />
-        {errors.title && (
-          <p className="text-destructive text-sm">{errors.title.message}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="description">{t('form.description')}</Label>
-        <Textarea
-          id="description"
-          aria-invalid={!!errors.description}
-          {...register('description')}
-        />
-        {errors.description && (
-          <p className="text-destructive text-sm">
-            {errors.description.message}
-          </p>
-        )}
-      </div>
-
-      <div className="flex gap-4">
-        <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="categoryId">{t('form.category')}</Label>
-          <Controller
-            control={control}
-            name="categoryId"
-            render={({ field }) => (
-              <Select
-                value={field.value ? String(field.value) : undefined}
-                onValueChange={(value) => field.onChange(Number(value))}
-              >
-                <SelectTrigger id="categoryId" aria-label={t('form.category')}>
-                  <SelectValue placeholder={t('form.categoryPlaceholder')}>
-                    {(value: string | null) => {
-                      const selected = categories?.find(
-                        (category) => String(category.id) === value,
-                      );
-                      return selected ? (
-                        <CategoryLabel
-                          name={selected.name}
-                          icon={selected.icon}
-                          color={selected.color}
-                        />
-                      ) : (
-                        t('form.categoryPlaceholder')
-                      );
-                    }}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {categories?.map((category) => (
-                    <SelectItem key={category.id} value={String(category.id)}>
-                      <CategoryLabel
-                        name={category.name}
-                        icon={category.icon}
-                        color={category.color}
-                      />
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.categoryId && (
-            <p className="text-destructive text-sm">
-              {errors.categoryId.message}
-            </p>
-          )}
-        </div>
-
-        <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="serviceTypeId">{t('form.serviceType')}</Label>
-          <Controller
-            control={control}
-            name="serviceTypeId"
-            render={({ field }) => (
-              <Select
-                value={field.value ? String(field.value) : undefined}
-                onValueChange={(value) => field.onChange(Number(value))}
-              >
-                <SelectTrigger
-                  id="serviceTypeId"
-                  aria-label={t('form.serviceType')}
-                >
-                  <SelectValue placeholder={t('form.serviceTypePlaceholder')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {serviceTypes?.map((type) => (
-                    <SelectItem key={type.id} value={String(type.id)}>
-                      {type.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.serviceTypeId && (
-            <p className="text-destructive text-sm">
-              {errors.serviceTypeId.message}
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="address">{t('form.address')}</Label>
-        <Input
-          id="address"
-          aria-invalid={!!errors.address}
-          {...register('address')}
-        />
-        {errors.address && (
-          <p className="text-destructive text-sm">{errors.address.message}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Label>{t('form.location')}</Label>
-        <p className="text-muted-foreground text-sm">
-          {t('form.locationHint')}
-        </p>
-        <Controller
-          control={control}
-          name="latitude"
-          render={({ field: latField }) => (
-            <Controller
-              control={control}
-              name="longitude"
-              render={({ field: lngField }) => (
-                <>
-                  <div className="flex gap-4">
-                    <div className="flex flex-1 flex-col gap-2">
-                      <Label htmlFor="latitude">{t('form.latitude')}</Label>
-                      <Input
-                        id="latitude"
-                        type="number"
-                        step="any"
-                        inputMode="decimal"
-                        aria-invalid={!!errors.latitude}
-                        value={latField.value}
-                        onChange={(event) =>
-                          latField.onChange(event.target.valueAsNumber)
-                        }
-                      />
-                      {errors.latitude && (
-                        <p className="text-destructive text-sm">
-                          {errors.latitude.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-1 flex-col gap-2">
-                      <Label htmlFor="longitude">{t('form.longitude')}</Label>
-                      <Input
-                        id="longitude"
-                        type="number"
-                        step="any"
-                        inputMode="decimal"
-                        aria-invalid={!!errors.longitude}
-                        value={lngField.value}
-                        onChange={(event) =>
-                          lngField.onChange(event.target.valueAsNumber)
-                        }
-                      />
-                      {errors.longitude && (
-                        <p className="text-destructive text-sm">
-                          {errors.longitude.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <LocationPickerMap
-                    latitude={latField.value}
-                    longitude={lngField.value}
-                    onChange={(lat, lng) => {
-                      latField.onChange(lat);
-                      lngField.onChange(lng);
-                    }}
-                  />
-                </>
-              )}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('form.sections.whatTitle')}</CardTitle>
+          <CardDescription>
+            {t('form.sections.whatDescription')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="title">{t('form.title')}</Label>
+            <Input
+              id="title"
+              aria-invalid={!!errors.title}
+              {...register('title')}
             />
-          )}
-        />
-      </div>
-
-      <Controller
-        control={control}
-        name="isUrgent"
-        render={({ field }) => (
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="isUrgent"
-              checked={field.value}
-              onCheckedChange={(checked) => field.onChange(checked === true)}
-            />
-            <Label htmlFor="isUrgent" className="font-normal">
-              {t('form.urgent')}
-            </Label>
+            {errors.title && (
+              <p className="text-destructive text-sm">{errors.title.message}</p>
+            )}
           </div>
-        )}
-      />
 
-      <Button type="submit" disabled={createMutation.isPending}>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="description">{t('form.description')}</Label>
+            <Textarea
+              id="description"
+              aria-invalid={!!errors.description}
+              {...register('description')}
+            />
+            {errors.description && (
+              <p className="text-destructive text-sm">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex gap-4">
+            <div className="flex flex-1 flex-col gap-2">
+              <Label htmlFor="categoryId">{t('form.category')}</Label>
+              <Controller
+                control={control}
+                name="categoryId"
+                render={({ field }) => (
+                  <Select
+                    value={field.value ? String(field.value) : undefined}
+                    onValueChange={(value) => field.onChange(Number(value))}
+                  >
+                    <SelectTrigger
+                      id="categoryId"
+                      aria-label={t('form.category')}
+                    >
+                      <SelectValue placeholder={t('form.categoryPlaceholder')}>
+                        {(value: string | null) => {
+                          const selected = categories?.find(
+                            (category) => String(category.id) === value,
+                          );
+                          return selected ? (
+                            <CategoryLabel
+                              name={selected.name}
+                              icon={selected.icon}
+                              color={selected.color}
+                            />
+                          ) : (
+                            t('form.categoryPlaceholder')
+                          );
+                        }}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories?.map((category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={String(category.id)}
+                        >
+                          <CategoryLabel
+                            name={category.name}
+                            icon={category.icon}
+                            color={category.color}
+                          />
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.categoryId && (
+                <p className="text-destructive text-sm">
+                  {errors.categoryId.message}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-1 flex-col gap-2">
+              <Label htmlFor="serviceTypeId">{t('form.serviceType')}</Label>
+              <Controller
+                control={control}
+                name="serviceTypeId"
+                render={({ field }) => (
+                  <Select
+                    value={field.value ? String(field.value) : undefined}
+                    onValueChange={(value) => field.onChange(Number(value))}
+                  >
+                    <SelectTrigger
+                      id="serviceTypeId"
+                      aria-label={t('form.serviceType')}
+                    >
+                      <SelectValue
+                        placeholder={t('form.serviceTypePlaceholder')}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {serviceTypes?.map((type) => (
+                        <SelectItem key={type.id} value={String(type.id)}>
+                          {type.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.serviceTypeId && (
+                <p className="text-destructive text-sm">
+                  {errors.serviceTypeId.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('form.sections.whereTitle')}</CardTitle>
+          <CardDescription>{t('form.locationHint')}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="address">{t('form.address')}</Label>
+            <Input
+              id="address"
+              aria-invalid={!!errors.address}
+              {...register('address')}
+            />
+            {errors.address && (
+              <p className="text-destructive text-sm">
+                {errors.address.message}
+              </p>
+            )}
+          </div>
+
+          <Controller
+            control={control}
+            name="latitude"
+            render={({ field: latField }) => (
+              <Controller
+                control={control}
+                name="longitude"
+                render={({ field: lngField }) => (
+                  <>
+                    <div className="flex gap-4">
+                      <div className="flex flex-1 flex-col gap-2">
+                        <Label htmlFor="latitude">{t('form.latitude')}</Label>
+                        <Input
+                          id="latitude"
+                          type="number"
+                          step="any"
+                          inputMode="decimal"
+                          aria-invalid={!!errors.latitude}
+                          value={latField.value}
+                          onChange={(event) =>
+                            latField.onChange(event.target.valueAsNumber)
+                          }
+                        />
+                        {errors.latitude && (
+                          <p className="text-destructive text-sm">
+                            {errors.latitude.message}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex flex-1 flex-col gap-2">
+                        <Label htmlFor="longitude">{t('form.longitude')}</Label>
+                        <Input
+                          id="longitude"
+                          type="number"
+                          step="any"
+                          inputMode="decimal"
+                          aria-invalid={!!errors.longitude}
+                          value={lngField.value}
+                          onChange={(event) =>
+                            lngField.onChange(event.target.valueAsNumber)
+                          }
+                        />
+                        {errors.longitude && (
+                          <p className="text-destructive text-sm">
+                            {errors.longitude.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <LocationPickerMap
+                      latitude={latField.value}
+                      longitude={lngField.value}
+                      onChange={(lat, lng) => {
+                        latField.onChange(lat);
+                        lngField.onChange(lng);
+                      }}
+                    />
+                  </>
+                )}
+              />
+            )}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('form.sections.whenTitle')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Controller
+            control={control}
+            name="isUrgent"
+            render={({ field }) => (
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="isUrgent"
+                  checked={field.value}
+                  onCheckedChange={(checked) =>
+                    field.onChange(checked === true)
+                  }
+                />
+                <Label htmlFor="isUrgent" className="font-normal">
+                  {t('form.urgent')}
+                </Label>
+              </div>
+            )}
+          />
+        </CardContent>
+      </Card>
+
+      <Button
+        type="submit"
+        size="lg"
+        disabled={createMutation.isPending}
+        className="bg-accent text-accent-foreground hover:bg-accent/90"
+      >
         {createMutation.isPending ? t('form.submitting') : t('form.submit')}
       </Button>
     </form>

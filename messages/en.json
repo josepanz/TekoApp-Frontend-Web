@@ -1199,13 +1199,18 @@
       "serviceType": "Service type",
       "serviceTypePlaceholder": "Pick a type",
       "address": "Address",
-      "location": "Service location",
       "locationHint": "Enter the latitude and longitude, or drag the marker on the map.",
       "latitude": "Latitude",
       "longitude": "Longitude",
       "urgent": "It's urgent",
       "submitting": "Sending...",
-      "submit": "Request a professional"
+      "submit": "Request a professional",
+      "sections": {
+        "whatTitle": "What you need",
+        "whatDescription": "Tell us what kind of work you're looking for and a short description.",
+        "whereTitle": "Where the job is",
+        "whenTitle": "When"
+      }
     }
   },
   "rateProfessional": {
