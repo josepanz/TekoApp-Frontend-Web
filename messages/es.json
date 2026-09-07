@@ -1271,6 +1271,8 @@
       "link": "Postulate como profesional"
     },
     "form": {
+      "sectionTitle": "Contanos sobre tu trabajo",
+      "sectionDescription": "Tu perfil profesional quedará pendiente de aprobación hasta que el staff lo revise — te avisaremos apenas eso pase.",
       "category": "Categoría",
       "categoryPlaceholder": "Elegí una categoría",
       "description": "Descripción",

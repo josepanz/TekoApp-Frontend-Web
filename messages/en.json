@@ -1271,6 +1271,8 @@
       "link": "Apply as a professional"
     },
     "form": {
+      "sectionTitle": "Tell us about your work",
+      "sectionDescription": "Your professional profile will stay pending until staff reviews it — we'll let you know as soon as that happens.",
       "category": "Category",
       "categoryPlaceholder": "Choose a category",
       "description": "Description",

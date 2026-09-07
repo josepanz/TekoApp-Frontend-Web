@@ -6,6 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Controller, useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -108,110 +115,125 @@ export function ProfessionalApplicationForm() {
       className="flex max-w-xl flex-col gap-4"
       noValidate
     >
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="categoryId">{t('category')}</Label>
-        <Controller
-          control={control}
-          name="categoryId"
-          render={({ field }) => (
-            <Select
-              value={field.value ? String(field.value) : undefined}
-              onValueChange={(value) => field.onChange(Number(value))}
-            >
-              <SelectTrigger id="categoryId" aria-label={t('category')}>
-                <SelectValue placeholder={t('categoryPlaceholder')}>
-                  {(value: string | null) => {
-                    const selected = categories?.find(
-                      (category) => String(category.id) === value,
-                    );
-                    return selected ? (
-                      <CategoryLabel
-                        name={selected.name}
-                        icon={selected.icon}
-                        color={selected.color}
-                      />
-                    ) : (
-                      t('categoryPlaceholder')
-                    );
-                  }}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {categories?.map((category) => (
-                  <SelectItem key={category.id} value={String(category.id)}>
-                    <CategoryLabel
-                      name={category.name}
-                      icon={category.icon}
-                      color={category.color}
-                    />
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
-        {errors.categoryId && (
-          <p className="text-destructive text-sm">
-            {errors.categoryId.message}
-          </p>
-        )}
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('sectionTitle')}</CardTitle>
+          <CardDescription>{t('sectionDescription')}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="categoryId">{t('category')}</Label>
+            <Controller
+              control={control}
+              name="categoryId"
+              render={({ field }) => (
+                <Select
+                  value={field.value ? String(field.value) : undefined}
+                  onValueChange={(value) => field.onChange(Number(value))}
+                >
+                  <SelectTrigger id="categoryId" aria-label={t('category')}>
+                    <SelectValue placeholder={t('categoryPlaceholder')}>
+                      {(value: string | null) => {
+                        const selected = categories?.find(
+                          (category) => String(category.id) === value,
+                        );
+                        return selected ? (
+                          <CategoryLabel
+                            name={selected.name}
+                            icon={selected.icon}
+                            color={selected.color}
+                          />
+                        ) : (
+                          t('categoryPlaceholder')
+                        );
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories?.map((category) => (
+                      <SelectItem key={category.id} value={String(category.id)}>
+                        <CategoryLabel
+                          name={category.name}
+                          icon={category.icon}
+                          color={category.color}
+                        />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.categoryId && (
+              <p className="text-destructive text-sm">
+                {errors.categoryId.message}
+              </p>
+            )}
+          </div>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="description">{t('description')}</Label>
-        <Textarea
-          id="description"
-          aria-invalid={!!errors.description}
-          {...register('description')}
-        />
-        {errors.description && (
-          <p className="text-destructive text-sm">
-            {errors.description.message}
-          </p>
-        )}
-      </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="description">{t('description')}</Label>
+            <Textarea
+              id="description"
+              aria-invalid={!!errors.description}
+              {...register('description')}
+            />
+            {errors.description && (
+              <p className="text-destructive text-sm">
+                {errors.description.message}
+              </p>
+            )}
+          </div>
 
-      <div className="flex gap-4">
-        <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="hourlyRate">{t('hourlyRate')}</Label>
-          <Input
-            id="hourlyRate"
-            type="number"
-            aria-invalid={!!errors.hourlyRate}
-            {...register('hourlyRate', { valueAsNumber: true })}
-          />
-          {errors.hourlyRate && (
-            <p className="text-destructive text-sm">
-              {errors.hourlyRate.message}
-            </p>
-          )}
-        </div>
+          <div className="flex gap-4">
+            <div className="flex flex-1 flex-col gap-2">
+              <Label htmlFor="hourlyRate">{t('hourlyRate')}</Label>
+              <Input
+                id="hourlyRate"
+                type="number"
+                aria-invalid={!!errors.hourlyRate}
+                {...register('hourlyRate', { valueAsNumber: true })}
+              />
+              {errors.hourlyRate && (
+                <p className="text-destructive text-sm">
+                  {errors.hourlyRate.message}
+                </p>
+              )}
+            </div>
 
-        <div className="flex flex-1 flex-col gap-2">
-          <Label htmlFor="fixedRate">{t('fixedRate')}</Label>
-          <Input
-            id="fixedRate"
-            type="number"
-            {...register('fixedRate', { setValueAs: toOptionalNumber })}
-          />
-        </div>
-      </div>
+            <div className="flex flex-1 flex-col gap-2">
+              <Label htmlFor="fixedRate">{t('fixedRate')}</Label>
+              <Input
+                id="fixedRate"
+                type="number"
+                {...register('fixedRate', { setValueAs: toOptionalNumber })}
+              />
+            </div>
+          </div>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="yearsOfExperience">{t('yearsOfExperience')}</Label>
-        <Input
-          id="yearsOfExperience"
-          type="number"
-          {...register('yearsOfExperience', { setValueAs: toOptionalNumber })}
-        />
-      </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="yearsOfExperience">{t('yearsOfExperience')}</Label>
+            <Input
+              id="yearsOfExperience"
+              type="number"
+              {...register('yearsOfExperience', {
+                setValueAs: toOptionalNumber,
+              })}
+            />
+          </div>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="skills">{t('skills')}</Label>
-        <Input id="skills" {...register('skills')} />
-      </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="skills">{t('skills')}</Label>
+            <Input id="skills" {...register('skills')} />
+          </div>
+        </CardContent>
+      </Card>
 
-      <Button type="submit" disabled={applyMutation.isPending}>
+      <Button
+        type="submit"
+        size="lg"
+        disabled={applyMutation.isPending}
+        className="bg-accent text-accent-foreground hover:bg-accent/90"
+      >
         {applyMutation.isPending ? t('submitting') : t('submit')}
       </Button>
     </form>
