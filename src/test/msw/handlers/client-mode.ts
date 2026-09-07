@@ -42,7 +42,7 @@ export const fakeProfessionalsList = {
       status: 'APPROVED',
       isAvailable: true,
       isOnline: false,
-      verificationStatus: 'verified',
+      verificationStatus: 'VERIFIED',
       totalServices: 42,
       averageRating: 4.8,
       totalRatings: 35,

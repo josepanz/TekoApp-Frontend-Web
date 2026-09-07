@@ -23,15 +23,14 @@ const STATUS_VARIANT: Record<
   SUSPENDED: 'destructive',
 };
 
-// `verificationStatus` es un string libre en el backend (no un enum tipado en el Swagger) —
-// se mapea de forma defensiva en vez de asumir un Record exhaustivo.
-function getVerificationVariant(
-  verificationStatus: string,
-): 'default' | 'secondary' | 'destructive' {
-  if (verificationStatus === 'verified') return 'default';
-  if (verificationStatus === 'rejected') return 'destructive';
-  return 'secondary';
-}
+const VERIFICATION_VARIANT: Record<
+  Professional['verificationStatus'],
+  'default' | 'secondary' | 'destructive'
+> = {
+  VERIFIED: 'default',
+  REJECTED: 'destructive',
+  UNVERIFIED: 'secondary',
+};
 
 const PAGE_SIZE = 10;
 
@@ -76,9 +75,7 @@ export function ProfessionalsTable() {
       accessorKey: 'verificationStatus',
       header: t('table.verification'),
       cell: ({ row }) => (
-        <Badge
-          variant={getVerificationVariant(row.original.verificationStatus)}
-        >
+        <Badge variant={VERIFICATION_VARIANT[row.original.verificationStatus]}>
           {row.original.verificationStatus}
         </Badge>
       ),
