@@ -99,6 +99,23 @@ LucideIcon`) como prop desde un Server Component a un Client Component — rompe
   Client Component (ver `AppSidebar`).
 - Antes de dar una fase por cerrada, probar contra el backend real (no solo MSW/fake-backend) al
   menos una vez por dominio nuevo — varios bugs de esta lista fueron invisibles en ambos mocks.
+- **Un tipo `string` en parámetro anula la protección del codegen** — si un helper o
+  comparación espera una value de un union generado (`Professional['verificationStatus']`) pero
+  recibe un parámetro tipado como `string` ancho, TypeScript no advierte y la protección se
+  pierde completamente. Ese es exactamente el drift que `pnpm generate:api-types` existe para
+  prevenir. Ejemplo real: el frontend comparaba `verificationStatus` contra literales en
+  minúscula cuando el backend siempre envió MAYÚSCULAS, las comparaciones nunca matchearon, y
+  nadie lo vio hasta correr `generate:api-types` real — el tipo `string` permitió que la variable
+  tipada genéricamente llegara a un helper que la esperaba narrow sin que `tsc` protestara.
+  Regla: si la función espera un tipo de unión concreto, hazlo exhaustivo (p.ej. con `as const`
+  - `Record<typeof literal, ...>`), nunca genérico.
+- **El prefijo `/v1` se inyecta en un único punto**: `resolveBackendPath()` en
+  `src/core/api-client/backend-paths.ts`. Todas las rutas que salen hacia el backend real pasan
+  por ahí (backend-proxy, login/route, register/route, session.ts). Cambios de versionado se
+  hace aquí, no esparcido en múltiples archivos. **Excepción**: `/tekoapp-backend/api/healthcheck`
+  es `VERSION_NEUTRAL` en el backend (K8s/Render probes) así que NO lleva `/v1` — si algún día
+  hay un caller de ese endpoint, deberá saltear `resolveBackendPath` o se agregará lógica de
+  excepción.
 
 ## Permisos
 
