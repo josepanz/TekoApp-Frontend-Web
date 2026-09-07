@@ -162,6 +162,14 @@
       "title": "Eliminar categoría",
       "description": "Esta acción eliminará permanentemente la categoría \"{name}\". No se puede deshacer."
     },
+    "bulkDelete": {
+      "cta": "Eliminar seleccionadas ({count})",
+      "confirmTitle": "Eliminar categorías seleccionadas",
+      "confirmDescription": "Esta acción eliminará permanentemente {count} categorías. No se puede deshacer.",
+      "successAll": "{count} categorías eliminadas correctamente.",
+      "partialResult": "{succeeded} de {total} categorías eliminadas. {failed} fallaron: {names}.",
+      "failedAll": "No se pudo eliminar ninguna de las {count} categorías seleccionadas."
+    },
     "form": {
       "editTitle": "Editar categoría",
       "createTitle": "Nueva categoría",

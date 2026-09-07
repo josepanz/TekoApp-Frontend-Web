@@ -162,6 +162,14 @@
       "title": "Delete category",
       "description": "This will permanently delete the category \"{name}\". This can't be undone."
     },
+    "bulkDelete": {
+      "cta": "Delete selected ({count})",
+      "confirmTitle": "Delete selected categories",
+      "confirmDescription": "This will permanently delete {count} categories. This can't be undone.",
+      "successAll": "{count} categories deleted successfully.",
+      "partialResult": "{succeeded} of {total} categories deleted. {failed} failed: {names}.",
+      "failedAll": "Couldn't delete any of the {count} selected categories."
+    },
     "form": {
       "editTitle": "Edit category",
       "createTitle": "New category",
