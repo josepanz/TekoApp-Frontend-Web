@@ -1258,11 +1258,16 @@
     },
     "form": {
       "loadError": "No se pudo cargar tu perfil profesional.",
+      "sectionTitle": "Datos del perfil",
       "description": "Descripción",
       "hourlyRate": "Tarifa por hora",
       "fixedRate": "Tarifa fija (opcional)",
       "yearsOfExperience": "Años de experiencia",
-      "skills": "Habilidades (separadas por coma)"
+      "skills": "Habilidades (separadas por coma)",
+      "preview": {
+        "completion": "Completitud del perfil",
+        "ratingsCount": "{count, plural, one {# calificación} other {# calificaciones}}"
+      }
     }
   },
   "professionalApplication": {

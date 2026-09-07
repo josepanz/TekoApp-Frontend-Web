@@ -1258,11 +1258,16 @@
     },
     "form": {
       "loadError": "We couldn't load your professional profile.",
+      "sectionTitle": "Profile details",
       "description": "Description",
       "hourlyRate": "Hourly rate",
       "fixedRate": "Flat rate (optional)",
       "yearsOfExperience": "Years of experience",
-      "skills": "Skills (comma separated)"
+      "skills": "Skills (comma separated)",
+      "preview": {
+        "completion": "Profile completion",
+        "ratingsCount": "{count, plural, one {# rating} other {# ratings}}"
+      }
     }
   },
   "professionalApplication": {
