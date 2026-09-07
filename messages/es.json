@@ -54,7 +54,8 @@
         "legalDocumentVersions": "Documentos legales",
         "dataRetentionPolicies": "Políticas de retención",
         "consentAudit": "Auditoría de consentimiento",
-        "materialCatalog": "Catálogo de materiales"
+        "materialCatalog": "Catálogo de materiales",
+        "contracts": "Contratos"
       },
       "client": {
         "home": "Inicio",
@@ -300,6 +301,10 @@
       "materialCatalog": {
         "title": "Catálogo de materiales",
         "description": "Materiales y calidades sugeridos que los profesionales usan para armar presupuestos."
+      },
+      "contracts": {
+        "title": "Contratos",
+        "description": "Listado de contratos de servicio para soporte y disputas legales. Solo lectura."
       }
     },
     "client": {
@@ -1340,6 +1345,31 @@
       "ACCEPTED": "Aceptado",
       "IN_PROGRESS": "En curso",
       "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    }
+  },
+  "contracts": {
+    "table": {
+      "reference": "Referencia",
+      "status": "Estado",
+      "client": "Cliente",
+      "professional": "Profesional",
+      "service": "Servicio",
+      "pdf": "PDF",
+      "pdfAvailable": "Disponible",
+      "date": "Fecha",
+      "loadError": "No se pudo cargar la lista de contratos.",
+      "empty": "No hay contratos que coincidan con los filtros."
+    },
+    "filter": {
+      "all": "Todos",
+      "statusLabel": "Estado"
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "PENDING_CLIENT_SIGNATURE": "Falta firma del cliente",
+      "PENDING_PROFESSIONAL_SIGNATURE": "Falta firma del profesional",
+      "SIGNED": "Firmado",
       "CANCELLED": "Cancelado"
     }
   }

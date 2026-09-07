@@ -2,6 +2,7 @@ import {
   Bell,
   CreditCard,
   FileCheck,
+  FileSignature,
   FileText,
   FolderTree,
   Hammer,
@@ -125,5 +126,10 @@ export const NAV_ITEMS: NavItem[] = [
     titleKey: 'layout.nav.admin.materialCatalog',
     href: '/admin/material-catalog',
     icon: Hammer,
+  },
+  {
+    titleKey: 'layout.nav.admin.contracts',
+    href: '/admin/contracts',
+    icon: FileSignature,
   },
 ];

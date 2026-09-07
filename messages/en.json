@@ -54,7 +54,8 @@
         "legalDocumentVersions": "Legal documents",
         "dataRetentionPolicies": "Retention policies",
         "consentAudit": "Consent audit",
-        "materialCatalog": "Material catalog"
+        "materialCatalog": "Material catalog",
+        "contracts": "Contracts"
       },
       "client": {
         "home": "Home",
@@ -300,6 +301,10 @@
       "materialCatalog": {
         "title": "Material catalog",
         "description": "Suggested materials and quality tiers professionals use to build budgets."
+      },
+      "contracts": {
+        "title": "Contracts",
+        "description": "List of service contracts for support and legal disputes. Read-only."
       }
     },
     "client": {
@@ -1340,6 +1345,31 @@
       "ACCEPTED": "Accepted",
       "IN_PROGRESS": "In progress",
       "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "contracts": {
+    "table": {
+      "reference": "Reference",
+      "status": "Status",
+      "client": "Client",
+      "professional": "Professional",
+      "service": "Service",
+      "pdf": "PDF",
+      "pdfAvailable": "Available",
+      "date": "Date",
+      "loadError": "We couldn't load the contracts list.",
+      "empty": "No contracts match the current filters."
+    },
+    "filter": {
+      "all": "All",
+      "statusLabel": "Status"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING_CLIENT_SIGNATURE": "Awaiting client signature",
+      "PENDING_PROFESSIONAL_SIGNATURE": "Awaiting professional signature",
+      "SIGNED": "Signed",
       "CANCELLED": "Cancelled"
     }
   }
