@@ -1048,6 +1048,7 @@
     "table": {
       "user": "Usuario",
       "professional": "Profesional",
+      "anonymous": "Anónimo",
       "rating": "Calificación",
       "type": "Tipo",
       "reported": "Reportada",

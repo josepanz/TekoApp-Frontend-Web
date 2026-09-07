@@ -92,12 +92,23 @@ function RatingsTableContent() {
     {
       id: 'userId',
       header: t('table.user'),
-      cell: ({ row }) => `#${row.original.userId}`,
+      // El backend manda `userId: null` cuando la calificación es anónima y quien consulta no
+      // es el autor — nunca pasa para admin/staff hoy, pero el tipo es nullable y un id vacío
+      // (`#null`) causó un crash real en Mobile (tarea B-01 de su WORKPLAN). No resolvemos el
+      // nombre acá: el DTO no lo trae, y armar un lookup por fila sería un N+1 — eso requiere un
+      // cambio de DTO en el backend, no de esta tabla.
+      cell: ({ row }) =>
+        row.original.userId === null
+          ? t('table.anonymous')
+          : `#${row.original.userId}`,
     },
     {
       id: 'professionalId',
       header: t('table.professional'),
-      cell: ({ row }) => `#${row.original.professionalId}`,
+      cell: ({ row }) =>
+        row.original.professionalId === null
+          ? t('table.anonymous')
+          : `#${row.original.professionalId}`,
     },
     {
       accessorKey: 'rating',

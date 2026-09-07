@@ -1048,6 +1048,7 @@
     "table": {
       "user": "User",
       "professional": "Professional",
+      "anonymous": "Anonymous",
       "rating": "Rating",
       "type": "Type",
       "reported": "Reported",

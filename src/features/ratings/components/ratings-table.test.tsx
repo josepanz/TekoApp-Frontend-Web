@@ -5,7 +5,11 @@ import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
-import { fakeRatings, ratingsHandlers } from '@/test/msw/handlers/ratings';
+import {
+  buildRating,
+  fakeRatings,
+  ratingsHandlers,
+} from '@/test/msw/handlers/ratings';
 import { RatingsTable } from './ratings-table';
 
 function renderRatingsTable() {
@@ -79,6 +83,28 @@ describe('RatingsTable', () => {
     expect(screen.getAllByText('Reportada', { selector: 'span' })).toHaveLength(
       1,
     );
+  });
+
+  it('muestra "Anónimo" en vez de "#null" cuando userId/professionalId vienen null', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: null,
+            professionalId: null,
+            isAnonymous: true,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findAllByText('Anónimo')).toHaveLength(2);
+    expect(screen.queryByText('#null')).not.toBeInTheDocument();
   });
 
   it('muestra un mensaje vacío cuando el backend no devuelve calificaciones', async () => {
