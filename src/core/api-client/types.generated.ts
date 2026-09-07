@@ -678,7 +678,7 @@ export interface paths {
         patch: operations["UsersController_unblock"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals": {
+    "/tekoapp-backend/api/v1/professionals": {
         parameters: {
             query?: never;
             header?: never;
@@ -696,7 +696,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/nearby": {
+    "/tekoapp-backend/api/v1/professionals/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -713,7 +713,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/search/skills": {
+    "/tekoapp-backend/api/v1/professionals/search/skills": {
         parameters: {
             query?: never;
             header?: never;
@@ -730,7 +730,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/top-rated": {
+    "/tekoapp-backend/api/v1/professionals/top-rated": {
         parameters: {
             query?: never;
             header?: never;
@@ -747,7 +747,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me": {
+    "/tekoapp-backend/api/v1/professionals/me": {
         parameters: {
             query?: never;
             header?: never;
@@ -764,7 +764,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/reference/{referenceId}": {
+    "/tekoapp-backend/api/v1/professionals/reference/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -782,7 +782,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}": {
+    "/tekoapp-backend/api/v1/professionals/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -800,7 +800,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/availability": {
+    "/tekoapp-backend/api/v1/professionals/{id}/availability": {
         parameters: {
             query?: never;
             header?: never;
@@ -817,7 +817,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/location": {
+    "/tekoapp-backend/api/v1/professionals/{id}/location": {
         parameters: {
             query?: never;
             header?: never;
@@ -834,7 +834,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/services": {
+    "/tekoapp-backend/api/v1/professionals/{id}/services": {
         parameters: {
             query?: never;
             header?: never;
@@ -851,7 +851,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/reviews": {
+    "/tekoapp-backend/api/v1/professionals/{id}/reviews": {
         parameters: {
             query?: never;
             header?: never;
@@ -868,7 +868,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/stats": {
+    "/tekoapp-backend/api/v1/professionals/{id}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -885,7 +885,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/verify": {
+    "/tekoapp-backend/api/v1/professionals/{id}/verify": {
         parameters: {
             query?: never;
             header?: never;
@@ -902,7 +902,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/suspend": {
+    "/tekoapp-backend/api/v1/professionals/{id}/suspend": {
         parameters: {
             query?: never;
             header?: never;
@@ -919,7 +919,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services": {
+    "/tekoapp-backend/api/v1/admin/professionals/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Exportar profesionales a CSV (staff)
+         * @description Mismos filtros que el listado público, sin paginar.
+         */
+        get: operations["AdminProfessionalsExportController_export"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/services": {
         parameters: {
             query?: never;
             header?: never;
@@ -937,7 +957,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/nearby": {
+    "/tekoapp-backend/api/v1/services/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -954,7 +974,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/my-services": {
+    "/tekoapp-backend/api/v1/services/my-services": {
         parameters: {
             query?: never;
             header?: never;
@@ -971,7 +991,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/dashboard/stats": {
+    "/tekoapp-backend/api/v1/services/dashboard/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -988,7 +1008,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}": {
+    "/tekoapp-backend/api/v1/services/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1007,7 +1027,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/accept": {
+    "/tekoapp-backend/api/v1/services/{id}/accept": {
         parameters: {
             query?: never;
             header?: never;
@@ -1024,7 +1044,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/start": {
+    "/tekoapp-backend/api/v1/services/{id}/start": {
         parameters: {
             query?: never;
             header?: never;
@@ -1041,7 +1061,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/complete": {
+    "/tekoapp-backend/api/v1/services/{id}/complete": {
         parameters: {
             query?: never;
             header?: never;
@@ -1058,7 +1078,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests": {
+    "/tekoapp-backend/api/v1/services/{id}/requests": {
         parameters: {
             query?: never;
             header?: never;
@@ -1076,7 +1096,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1093,7 +1113,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/service-types": {
+    "/tekoapp-backend/api/v1/service-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -1110,7 +1130,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/update": {
+    "/tekoapp-backend/api/v1/locations/update": {
         parameters: {
             query?: never;
             header?: never;
@@ -1130,7 +1150,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/online": {
+    "/tekoapp-backend/api/v1/locations/online": {
         parameters: {
             query?: never;
             header?: never;
@@ -1150,7 +1170,7 @@ export interface paths {
         patch: operations["LocationsController_setOnlineStatus"];
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/nearby": {
+    "/tekoapp-backend/api/v1/locations/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -1170,7 +1190,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/professional/{id}": {
+    "/tekoapp-backend/api/v1/locations/professional/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1187,7 +1207,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/online-count": {
+    "/tekoapp-backend/api/v1/locations/online-count": {
         parameters: {
             query?: never;
             header?: never;
@@ -1204,7 +1224,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/area": {
+    "/tekoapp-backend/api/v1/locations/area": {
         parameters: {
             query?: never;
             header?: never;
@@ -1221,7 +1241,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/distance": {
+    "/tekoapp-backend/api/v1/locations/distance": {
         parameters: {
             query?: never;
             header?: never;
@@ -1238,7 +1258,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments": {
+    "/tekoapp-backend/api/v1/payments": {
         parameters: {
             query?: never;
             header?: never;
@@ -1256,7 +1276,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/summary": {
+    "/tekoapp-backend/api/v1/payments/summary": {
         parameters: {
             query?: never;
             header?: never;
@@ -1273,7 +1293,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/trends": {
+    "/tekoapp-backend/api/v1/payments/trends": {
         parameters: {
             query?: never;
             header?: never;
@@ -1290,7 +1310,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/methods": {
+    "/tekoapp-backend/api/v1/payments/methods": {
         parameters: {
             query?: never;
             header?: never;
@@ -1308,7 +1328,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/me": {
+    "/tekoapp-backend/api/v1/payments/me": {
         parameters: {
             query?: never;
             header?: never;
@@ -1325,7 +1345,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}": {
+    "/tekoapp-backend/api/v1/payments/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1343,7 +1363,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/cancel": {
+    "/tekoapp-backend/api/v1/payments/{id}/cancel": {
         parameters: {
             query?: never;
             header?: never;
@@ -1360,7 +1380,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/refund": {
+    "/tekoapp-backend/api/v1/payments/{id}/refund": {
         parameters: {
             query?: never;
             header?: never;
@@ -1377,7 +1397,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/methods/{id}": {
+    "/tekoapp-backend/api/v1/payments/methods/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1395,24 +1415,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/webhooks/{provider}": {
+    "/tekoapp-backend/api/v1/admin/payments/export": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Exportar pagos a CSV (staff)
+         * @description Mismos filtros que el listado admin, sin paginar.
+         */
+        get: operations["AdminPaymentsController_export"];
         put?: never;
-        /** Recibir webhook de proveedor de pagos */
-        post: operations["PaymentController_handleWebhooks"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/tax/config": {
+    "/tekoapp-backend/api/v1/tax/config": {
         parameters: {
             query?: never;
             header?: never;
@@ -1432,7 +1455,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications": {
+    "/tekoapp-backend/api/v1/notifications": {
         parameters: {
             query?: never;
             header?: never;
@@ -1450,7 +1473,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/unread": {
+    "/tekoapp-backend/api/v1/notifications/unread": {
         parameters: {
             query?: never;
             header?: never;
@@ -1467,7 +1490,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/unread/count": {
+    "/tekoapp-backend/api/v1/notifications/unread/count": {
         parameters: {
             query?: never;
             header?: never;
@@ -1484,7 +1507,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/{id}/read": {
+    "/tekoapp-backend/api/v1/notifications/{id}/read": {
         parameters: {
             query?: never;
             header?: never;
@@ -1501,7 +1524,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/read-all": {
+    "/tekoapp-backend/api/v1/notifications/read-all": {
         parameters: {
             query?: never;
             header?: never;
@@ -1518,7 +1541,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/{id}": {
+    "/tekoapp-backend/api/v1/notifications/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1535,7 +1558,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/stream": {
+    "/tekoapp-backend/api/v1/notifications/stream": {
         parameters: {
             query?: never;
             header?: never;
@@ -1552,7 +1575,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/push/vapid-public-key": {
+    "/tekoapp-backend/api/v1/notifications/push/vapid-public-key": {
         parameters: {
             query?: never;
             header?: never;
@@ -1569,7 +1592,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/push-subscriptions": {
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions": {
         parameters: {
             query?: never;
             header?: never;
@@ -1586,7 +1609,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/push-subscriptions/{referenceId}": {
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1603,7 +1626,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/fcm-tokens": {
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens": {
         parameters: {
             query?: never;
             header?: never;
@@ -1620,7 +1643,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications/fcm-tokens/{referenceId}": {
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1637,7 +1660,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions": {
+    "/tekoapp-backend/api/v1/promotions": {
         parameters: {
             query?: never;
             header?: never;
@@ -1655,7 +1678,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/active": {
+    "/tekoapp-backend/api/v1/promotions/active": {
         parameters: {
             query?: never;
             header?: never;
@@ -1672,7 +1695,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/stats": {
+    "/tekoapp-backend/api/v1/promotions/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1689,7 +1712,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/{id}": {
+    "/tekoapp-backend/api/v1/promotions/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1708,7 +1731,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/validate": {
+    "/tekoapp-backend/api/v1/promotions/validate": {
         parameters: {
             query?: never;
             header?: never;
@@ -1725,7 +1748,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/apply": {
+    "/tekoapp-backend/api/v1/promotions/apply": {
         parameters: {
             query?: never;
             header?: never;
@@ -1742,7 +1765,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings": {
+    "/tekoapp-backend/api/v1/ratings": {
         parameters: {
             query?: never;
             header?: never;
@@ -1760,7 +1783,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional-to-client": {
+    "/tekoapp-backend/api/v1/ratings/professional-to-client": {
         parameters: {
             query?: never;
             header?: never;
@@ -1777,7 +1800,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/recent": {
+    "/tekoapp-backend/api/v1/ratings/recent": {
         parameters: {
             query?: never;
             header?: never;
@@ -1794,7 +1817,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/top-professionals": {
+    "/tekoapp-backend/api/v1/ratings/top-professionals": {
         parameters: {
             query?: never;
             header?: never;
@@ -1811,7 +1834,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/user/{userId}": {
+    "/tekoapp-backend/api/v1/ratings/user/{userId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1828,7 +1851,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/user/{userId}/stats": {
+    "/tekoapp-backend/api/v1/ratings/user/{userId}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1845,7 +1868,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/me/stats": {
+    "/tekoapp-backend/api/v1/ratings/me/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1865,7 +1888,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1882,7 +1905,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}/client-ratings": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}/client-ratings": {
         parameters: {
             query?: never;
             header?: never;
@@ -1899,7 +1922,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}/average": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}/average": {
         parameters: {
             query?: never;
             header?: never;
@@ -1916,7 +1939,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/service/{serviceRequestId}": {
+    "/tekoapp-backend/api/v1/ratings/service/{serviceRequestId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1933,7 +1956,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/{id}": {
+    "/tekoapp-backend/api/v1/ratings/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1952,7 +1975,7 @@ export interface paths {
         patch: operations["RatingsController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/{id}/report": {
+    "/tekoapp-backend/api/v1/ratings/{id}/report": {
         parameters: {
             query?: never;
             header?: never;
@@ -1969,7 +1992,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories": {
+    "/tekoapp-backend/api/v1/categories": {
         parameters: {
             query?: never;
             header?: never;
@@ -1993,7 +2016,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/all": {
+    "/tekoapp-backend/api/v1/categories/all": {
         parameters: {
             query?: never;
             header?: never;
@@ -2013,7 +2036,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/main": {
+    "/tekoapp-backend/api/v1/categories/main": {
         parameters: {
             query?: never;
             header?: never;
@@ -2033,7 +2056,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/subcategories/{parentId}": {
+    "/tekoapp-backend/api/v1/categories/subcategories/{parentId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2053,7 +2076,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/search": {
+    "/tekoapp-backend/api/v1/categories/search": {
         parameters: {
             query?: never;
             header?: never;
@@ -2073,7 +2096,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}": {
+    "/tekoapp-backend/api/v1/categories/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2095,7 +2118,7 @@ export interface paths {
         patch: operations["CategoriesController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/slug/{slug}": {
+    "/tekoapp-backend/api/v1/categories/slug/{slug}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2112,7 +2135,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/stats": {
+    "/tekoapp-backend/api/v1/categories/{id}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -2129,7 +2152,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/status": {
+    "/tekoapp-backend/api/v1/categories/{id}/status": {
         parameters: {
             query?: never;
             header?: never;
@@ -2146,7 +2169,7 @@ export interface paths {
         patch: operations["CategoriesController_changeStatus"];
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/toggle-visibility": {
+    "/tekoapp-backend/api/v1/categories/{id}/toggle-visibility": {
         parameters: {
             query?: never;
             header?: never;
@@ -2163,7 +2186,7 @@ export interface paths {
         patch: operations["CategoriesController_toggleVisibility"];
         trace?: never;
     };
-    "/tekoapp-backend/api/analytics/dashboard": {
+    "/tekoapp-backend/api/v1/analytics/dashboard": {
         parameters: {
             query?: never;
             header?: never;
@@ -2180,7 +2203,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/analytics/categories": {
+    "/tekoapp-backend/api/v1/analytics/categories": {
         parameters: {
             query?: never;
             header?: never;
@@ -2197,7 +2220,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/countries": {
+    "/tekoapp-backend/api/v1/countries": {
         parameters: {
             query?: never;
             header?: never;
@@ -2217,7 +2240,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/countries/{id}": {
+    "/tekoapp-backend/api/v1/countries/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2237,7 +2260,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/currencies": {
+    "/tekoapp-backend/api/v1/currencies": {
         parameters: {
             query?: never;
             header?: never;
@@ -2257,7 +2280,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/currencies/{alphaCode}": {
+    "/tekoapp-backend/api/v1/currencies/{alphaCode}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2277,7 +2300,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/languages": {
+    "/tekoapp-backend/api/v1/languages": {
         parameters: {
             query?: never;
             header?: never;
@@ -2297,7 +2320,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/languages/{id}": {
+    "/tekoapp-backend/api/v1/languages/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2317,7 +2340,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/legal/consents/pending": {
+    "/tekoapp-backend/api/v1/legal/consents/pending": {
         parameters: {
             query?: never;
             header?: never;
@@ -2337,7 +2360,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/legal/consents/{versionReferenceId}/accept": {
+    "/tekoapp-backend/api/v1/legal/consents/{versionReferenceId}/accept": {
         parameters: {
             query?: never;
             header?: never;
@@ -2357,7 +2380,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/users/me/data-consents": {
+    "/tekoapp-backend/api/v1/users/me/data-consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2377,7 +2400,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/users/me/content/{contentReferenceId}/consent": {
+    "/tekoapp-backend/api/v1/users/me/content/{contentReferenceId}/consent": {
         parameters: {
             query?: never;
             header?: never;
@@ -2397,7 +2420,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/document-versions": {
+    "/tekoapp-backend/api/v1/admin/legal/document-versions": {
         parameters: {
             query?: never;
             header?: never;
@@ -2415,7 +2438,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/document-versions/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/legal/document-versions/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2432,7 +2455,7 @@ export interface paths {
         patch: operations["AdminLegalConsentsController_updateDocumentVersion"];
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/retention-policies": {
+    "/tekoapp-backend/api/v1/admin/legal/retention-policies": {
         parameters: {
             query?: never;
             header?: never;
@@ -2453,7 +2476,7 @@ export interface paths {
         patch: operations["AdminLegalConsentsController_upsertRetentionPolicy"];
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/consents": {
+    "/tekoapp-backend/api/v1/admin/legal/consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2473,7 +2496,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/content-consents": {
+    "/tekoapp-backend/api/v1/admin/legal/content-consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2493,7 +2516,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ai-disclosures": {
+    "/tekoapp-backend/api/v1/ai-disclosures": {
         parameters: {
             query?: never;
             header?: never;
@@ -2513,7 +2536,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ai-disclosures/{entityType}/{entityReferenceId}": {
+    "/tekoapp-backend/api/v1/ai-disclosures/{entityType}/{entityReferenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2534,7 +2557,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/ai-disclosures": {
+    "/tekoapp-backend/api/v1/admin/ai-disclosures": {
         parameters: {
             query?: never;
             header?: never;
@@ -2554,7 +2577,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/progress": {
+    "/tekoapp-backend/api/v1/services/{id}/progress": {
         parameters: {
             query?: never;
             header?: never;
@@ -2578,7 +2601,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/progress/{entryId}": {
+    "/tekoapp-backend/api/v1/services/{id}/progress/{entryId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2595,7 +2618,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professional-document-types": {
+    "/tekoapp-backend/api/v1/professional-document-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -2615,7 +2638,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-document-types": {
+    "/tekoapp-backend/api/v1/admin/professional-document-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -2632,7 +2655,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-document-types/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/professional-document-types/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2649,7 +2672,7 @@ export interface paths {
         patch: operations["AdminProfessionalDocumentTypesController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/documents": {
+    "/tekoapp-backend/api/v1/professionals/me/documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2670,7 +2693,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{referenceId}/documents/public": {
+    "/tekoapp-backend/api/v1/professionals/{referenceId}/documents/public": {
         parameters: {
             query?: never;
             header?: never;
@@ -2687,7 +2710,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-documents": {
+    "/tekoapp-backend/api/v1/admin/professional-documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2707,7 +2730,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professionals/{referenceId}/documents": {
+    "/tekoapp-backend/api/v1/admin/professionals/{referenceId}/documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2724,7 +2747,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-documents/{referenceId}/review": {
+    "/tekoapp-backend/api/v1/admin/professional-documents/{referenceId}/review": {
         parameters: {
             query?: never;
             header?: never;
@@ -2741,7 +2764,7 @@ export interface paths {
         patch: operations["AdminProfessionalDocumentsController_review"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/portfolio": {
+    "/tekoapp-backend/api/v1/professionals/me/portfolio": {
         parameters: {
             query?: never;
             header?: never;
@@ -2759,7 +2782,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/portfolio/{referenceId}": {
+    "/tekoapp-backend/api/v1/professionals/me/portfolio/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2777,7 +2800,7 @@ export interface paths {
         patch: operations["ProfessionalPortfolioController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{referenceId}/portfolio/public": {
+    "/tekoapp-backend/api/v1/professionals/{referenceId}/portfolio/public": {
         parameters: {
             query?: never;
             header?: never;
@@ -2794,7 +2817,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-portfolio": {
+    "/tekoapp-backend/api/v1/admin/professional-portfolio": {
         parameters: {
             query?: never;
             header?: never;
@@ -2811,7 +2834,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-portfolio/{referenceId}/review": {
+    "/tekoapp-backend/api/v1/admin/professional-portfolio/{referenceId}/review": {
         parameters: {
             query?: never;
             header?: never;
@@ -2828,7 +2851,7 @@ export interface paths {
         patch: operations["AdminProfessionalPortfolioController_review"];
         trace?: never;
     };
-    "/tekoapp-backend/api/material-catalog": {
+    "/tekoapp-backend/api/v1/material-catalog": {
         parameters: {
             query?: never;
             header?: never;
@@ -2848,7 +2871,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/material-catalog": {
+    "/tekoapp-backend/api/v1/admin/material-catalog": {
         parameters: {
             query?: never;
             header?: never;
@@ -2865,7 +2888,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/material-catalog/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/material-catalog/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2882,7 +2905,7 @@ export interface paths {
         patch: operations["AdminMaterialCatalogController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}/budget-options": {
         parameters: {
             query?: never;
             header?: never;
@@ -2906,7 +2929,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options/{optionReferenceId}/select": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}/budget-options/{optionReferenceId}/select": {
         parameters: {
             query?: never;
             header?: never;
@@ -2926,7 +2949,7 @@ export interface paths {
         patch: operations["BudgetsController_select"];
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts": {
+    "/tekoapp-backend/api/v1/contracts": {
         parameters: {
             query?: never;
             header?: never;
@@ -2946,7 +2969,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2966,7 +2989,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}/sign": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}/sign": {
         parameters: {
             query?: never;
             header?: never;
@@ -2986,7 +3009,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}/pdf": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}/pdf": {
         parameters: {
             query?: never;
             header?: never;
@@ -3006,7 +3029,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/budget-options/{referenceId}/generate-contract": {
+    "/tekoapp-backend/api/v1/budget-options/{referenceId}/generate-contract": {
         parameters: {
             query?: never;
             header?: never;
@@ -3026,7 +3049,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/contracts": {
+    "/tekoapp-backend/api/v1/admin/contracts": {
         parameters: {
             query?: never;
             header?: never;
@@ -3046,7 +3069,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/tips/config": {
+    "/tekoapp-backend/api/v1/tips/config": {
         parameters: {
             query?: never;
             header?: never;
@@ -3066,7 +3089,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/tip": {
+    "/tekoapp-backend/api/v1/payments/{id}/tip": {
         parameters: {
             query?: never;
             header?: never;
@@ -3081,6 +3104,63 @@ export interface paths {
          * @description Solo el cliente dueño del pago, una vez (`payment_id` es único en `tips`), y solo si el pago está PAID/COMPLETED. La propina nunca se fusiona a `Payment.totalAmount` ni entra en el cálculo de comisión de la plataforma — es 100% para el profesional.
          */
         post: operations["PaymentTipController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/audit-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listado de auditoría del sistema (staff)
+         * @description Historial de cambios registrado por los triggers de auditoría de la base de datos.
+         */
+        get: operations["AdminAuditLogController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/me/deletion-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar el borrado de la propia cuenta
+         * @description Valida bloqueantes (servicio activo, pago pendiente, contrato sin firmar). Si no hay ninguno, inicia la ventana de gracia configurada.
+         */
+        post: operations["AccountDeletionController_requestDeletion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/me/deletion-request/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancelar una solicitud de borrado de cuenta activa */
+        post: operations["AccountDeletionController_cancelDeletion"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3320,7 +3400,8 @@ export interface components {
              *       "documentType": "CI",
              *       "documentNumber": "12345678",
              *       "phoneNumber": "+595981234567",
-             *       "avatarUrl": null
+             *       "avatarUrl": null,
+             *       "deletionScheduledAt": null
              *     }
              */
             user: Record<string, never>;
@@ -3926,7 +4007,7 @@ export interface components {
              * @example PENDING_VERIFICATION
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
         };
         UserResponseDTO: {
             /** @example 1 */
@@ -3939,7 +4020,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example John */
             firstName: string;
             /** @example Doe */
@@ -4014,7 +4095,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example false */
             isEmployee: boolean;
             /** @example false */
@@ -4053,7 +4134,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example false */
             isEmployee: boolean;
             /** @example false */
@@ -4118,7 +4199,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /**
              * @description El número de documento del usuario.
              * @example 12345678
@@ -4280,8 +4361,11 @@ export interface components {
             isAvailable: boolean;
             /** @example false */
             isOnline: boolean;
-            /** @example verified */
-            verificationStatus: string;
+            /**
+             * @example VERIFIED
+             * @enum {string}
+             */
+            verificationStatus: "UNVERIFIED" | "VERIFIED" | "REJECTED";
             /**
              * @description Derivado automáticamente: todos los documentos obligatorios (antecedentes/habilitación) están aprobados y sin vencer. Distinto de verificationStatus (aprobación manual de staff sobre la cuenta) — ver openspec/specs/professional-documents.md.
              * @example true
@@ -5040,7 +5124,10 @@ export interface components {
             refundDetails?: Record<string, never>;
             /** @example 0 */
             platformFee: number;
-            /** @example 150000 */
+            /**
+             * @description Monto neto del profesional (amount - platformFee - tax, ajustado por reembolsos acumulados). Calculado en la respuesta (D-03) — no implica que exista un payout real todavía, ver I-02.
+             * @example 88700
+             */
             professionalNetAmount?: number;
             /** @example false */
             isRecurring: boolean;
@@ -6782,8 +6869,8 @@ export interface components {
         ProfessionalDocumentResponseDTO: {
             referenceId: string;
             professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
-            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
-            fileKey: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. `null` si la cuenta del profesional fue anonimizada (I-01): el objeto real se borra de S3, la fila se conserva como registro de que existió una verificación. */
+            fileKey?: string;
             /** @enum {string} */
             status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
             /** Format: date-time */
@@ -6814,8 +6901,8 @@ export interface components {
         AdminProfessionalDocumentResponseDTO: {
             referenceId: string;
             professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
-            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
-            fileKey: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. `null` si la cuenta del profesional fue anonimizada (I-01): el objeto real se borra de S3, la fila se conserva como registro de que existió una verificación. */
+            fileKey?: string;
             /** @enum {string} */
             status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
             /** Format: date-time */
@@ -7132,6 +7219,43 @@ export interface components {
              * @example 15000
              */
             amount?: number;
+        };
+        AuditLogResponseDTO: {
+            id: string;
+            tableName: string;
+            recordId: string;
+            operationType: string;
+            oldData?: Record<string, never>;
+            newData?: Record<string, never>;
+            /** Format: date-time */
+            changedAt: string;
+            changedBy: string;
+            reason?: string;
+        };
+        AuditLogsListResponseDTO: {
+            data: components["schemas"]["AuditLogResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        DeletionRequestResponseDTO: {
+            /**
+             * @example PENDING_DELETION
+             * @enum {string}
+             */
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
+            /** Format: date-time */
+            deletionRequestedAt: string;
+            /**
+             * Format: date-time
+             * @description Fecha en la que se anonimizará la cuenta si no se cancela antes.
+             */
+            deletionScheduledAt: string;
+        };
+        DeletionCancelResponseDTO: {
+            /**
+             * @example ACTIVE
+             * @enum {string}
+             */
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
         };
     };
     responses: never;
@@ -8246,7 +8370,7 @@ export interface operations {
                 name?: string;
                 email?: string;
                 documentNumber?: string;
-                status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+                status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             };
             header?: never;
             path?: never;
@@ -8748,6 +8872,8 @@ export interface operations {
                 maxPrice?: number;
                 /** @description Filtrar solo disponibles */
                 isAvailable?: boolean;
+                /** @description Buscar por nombre o apellido del profesional (parcial, insensible a mayúsculas) */
+                search?: string;
             };
             header?: never;
             path?: never;
@@ -9205,6 +9331,53 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProfessionalDetailResponseDTO"];
                 };
+            };
+        };
+    };
+    AdminProfessionalsExportController_export: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Filtrar por ID de categoría */
+                categoryId?: number;
+                /** @description Latitud para filtro geográfico */
+                latitude?: number;
+                /** @description Longitud para filtro geográfico */
+                longitude?: number;
+                /** @description Radio de búsqueda en km */
+                radius?: number;
+                /** @description Calificación mínima (0-5) */
+                minRating?: number;
+                /** @description Tarifa máxima por hora */
+                maxPrice?: number;
+                /** @description Filtrar solo disponibles */
+                isAvailable?: boolean;
+                /** @description Buscar por nombre o apellido del profesional (parcial, insensible a mayúsculas) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Archivo CSV de profesionales */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -10290,19 +10463,23 @@ export interface operations {
             };
         };
     };
-    PaymentController_handleWebhooks: {
+    AdminPaymentsController_export: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Proveedor del webhook de pago */
-                provider: "STRIPE" | "BANCARD" | "INFONET" | "PAYPAL" | "MERCADO_PAGO" | "RAPIPAGO" | "PAGOFACIL" | "CASH" | "DINELCO" | "BEPSA";
+            query?: {
+                /** @description Filtrar por ID de usuario */
+                userId?: number;
+                /** @description Filtrar por ID de profesional */
+                professionalId?: number;
+                /** @description Filtrar por estado del pago */
+                status?: "PENDING" | "PAID" | "FAILED" | "REFUNDED" | "PARTIAL_REFUNDED" | "CANCELLED" | "PROCESSING" | "COMPLETED";
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Webhook procesado */
+            /** @description Archivo CSV de pagos */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -13393,6 +13570,82 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    AdminAuditLogController_list: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Tabla auditada (match exacto) */
+                tableName?: string;
+                /** @description Id del registro auditado (match exacto) */
+                recordId?: string;
+                /** @description Quién hizo el cambio (match exacto) */
+                changedBy?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditLogsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AccountDeletionController_requestDeletion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletionRequestResponseDTO"];
+                };
+            };
+        };
+    };
+    AccountDeletionController_cancelDeletion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletionCancelResponseDTO"];
+                };
             };
         };
     };
