@@ -398,7 +398,8 @@
       "INACTIVE": "Inactive",
       "BLOCKED": "Blocked",
       "DELETED": "Deleted",
-      "REFUSED": "Rejected"
+      "REFUSED": "Rejected",
+      "PENDING_DELETION": "Pending deletion"
     },
     "detail": {
       "back": "Back to users",

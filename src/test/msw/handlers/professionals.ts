@@ -22,7 +22,7 @@ export function buildProfessional(
     status: 'APPROVED',
     isAvailable: true,
     isOnline: false,
-    verificationStatus: 'verified',
+    verificationStatus: 'VERIFIED',
     requiredDocumentsVerified: true,
     totalServices: 42,
     averageRating: 4.8,
@@ -56,7 +56,7 @@ export const fakeProfessionalsPage1: ProfessionalsListResponse = {
       categoryId: 3,
       description: 'Electricista certificado',
       status: 'PENDING',
-      verificationStatus: 'pending',
+      verificationStatus: 'UNVERIFIED',
       isAvailable: false,
       averageRating: 4.2,
       totalRatings: 12,
@@ -99,7 +99,7 @@ export const professionalsHandlers = [
       return HttpResponse.json(
         buildProfessional({
           ...professional,
-          verificationStatus: body.isVerified ? 'verified' : 'rejected',
+          verificationStatus: body.isVerified ? 'VERIFIED' : 'REJECTED',
           status: body.isVerified ? 'APPROVED' : 'REJECTED',
         }),
       );

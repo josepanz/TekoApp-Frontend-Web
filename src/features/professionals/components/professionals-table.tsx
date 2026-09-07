@@ -113,7 +113,7 @@ export function ProfessionalsTable() {
               </Link>
             }
           />
-          {row.original.verificationStatus !== 'verified' && (
+          {row.original.verificationStatus !== 'VERIFIED' && (
             <VerifyProfessionalDialog professional={row.original} />
           )}
           {row.original.status !== 'SUSPENDED' && (

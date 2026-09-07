@@ -91,7 +91,7 @@ export function ProfessionalDetailView({
             </p>
           </div>
           <div className="flex gap-2">
-            {professional.verificationStatus !== 'verified' && (
+            {professional.verificationStatus !== 'VERIFIED' && (
               <VerifyProfessionalDialog professional={professional} />
             )}
             {professional.status !== 'SUSPENDED' && (

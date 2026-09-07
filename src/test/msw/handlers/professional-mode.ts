@@ -16,7 +16,7 @@ export const fakeMyProfessionalProfile: Professional = {
   status: 'APPROVED',
   isAvailable: true,
   isOnline: false,
-  verificationStatus: 'verified',
+  verificationStatus: 'VERIFIED',
   requiredDocumentsVerified: true,
   currentLatitude: undefined,
   currentLongitude: undefined,
