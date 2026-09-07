@@ -153,7 +153,7 @@ const server = createServer(async (req, res) => {
     });
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/analytics/dashboard') {
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/analytics/dashboard') {
     return sendJson(res, 200, FAKE_DASHBOARD_STATS);
   }
 
@@ -161,19 +161,19 @@ const server = createServer(async (req, res) => {
     return sendJson(res, 200, FAKE_USERS_PAGE);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/categories/all') {
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories/all') {
     return sendJson(res, 200, categories);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/categories') {
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories') {
     return sendJson(res, 200, categories.filter((c) => c.isVisible));
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/service-types') {
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/service-types') {
     return sendJson(res, 200, FAKE_SERVICE_TYPES);
   }
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/services') {
+  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/services') {
     const body = await readBody(req);
     const service = {
       id: `svc-${nextServiceId++}`,
@@ -202,11 +202,11 @@ const server = createServer(async (req, res) => {
     return sendJson(res, 201, service);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/services/my-services') {
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/services/my-services') {
     return sendJson(res, 200, clientServices);
   }
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/categories') {
+  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/categories') {
     const body = await readBody(req);
     const category = {
       id: nextCategoryId++,
@@ -228,7 +228,7 @@ const server = createServer(async (req, res) => {
   }
 
   const toggleVisibilityMatch = url.pathname.match(
-    /^\/tekoapp-backend\/api\/categories\/(\d+)\/toggle-visibility$/,
+    /^\/tekoapp-backend\/api\/v1\/categories\/(\d+)\/toggle-visibility$/,
   );
   if (req.method === 'PATCH' && toggleVisibilityMatch) {
     const category = categories.find((c) => c.id === Number(toggleVisibilityMatch[1]));
@@ -237,7 +237,7 @@ const server = createServer(async (req, res) => {
     return sendJson(res, 200, category);
   }
 
-  const categoryByIdMatch = url.pathname.match(/^\/tekoapp-backend\/api\/categories\/(\d+)$/);
+  const categoryByIdMatch = url.pathname.match(/^\/tekoapp-backend\/api\/v1\/categories\/(\d+)$/);
   if (req.method === 'PATCH' && categoryByIdMatch) {
     const body = await readBody(req);
     const category = categories.find((c) => c.id === Number(categoryByIdMatch[1]));
