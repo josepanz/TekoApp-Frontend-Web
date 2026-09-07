@@ -22,6 +22,8 @@ import {
 } from '@/components/ui/tooltip';
 import { HandCoins } from 'lucide-react';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { usePaymentsQuery } from '../hooks';
 import type { Payment, PaymentStatus } from '../api';
@@ -52,7 +54,23 @@ const CANCELLABLE_STATUSES: PaymentStatus[] = ['PENDING', 'PROCESSING'];
 const STATUS_FILTER_ALL = 'ALL';
 type StatusFilterValue = PaymentStatus | typeof STATUS_FILTER_ALL;
 
+// Gate client-side por permiso (`payments.audit:read`/`admin:all`) — mismo patrón que
+// `service-progress-section.tsx`: no pedimos el listado si el permiso no está asignado.
 export function PaymentsTable() {
+  const { data: scope } = useSessionScopeQuery();
+  const canView = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.PAYMENTS.AUDIT_VIEW, PERMISSIONS.ADMIN.ALL],
+  );
+
+  if (!canView) {
+    return null;
+  }
+
+  return <PaymentsTableContent />;
+}
+
+function PaymentsTableContent() {
   const t = useTranslations('payments');
   const tCommon = useTranslations('common');
   const locale = useAppLocale();

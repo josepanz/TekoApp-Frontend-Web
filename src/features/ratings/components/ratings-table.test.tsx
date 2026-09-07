@@ -10,16 +10,47 @@ import { RatingsTable } from './ratings-table';
 
 function renderRatingsTable() {
   const queryClient = createTestQueryClient();
-  return render(
+  render(
     <QueryClientProvider client={queryClient}>
       <RatingsTable />
     </QueryClientProvider>,
+  );
+  return queryClient;
+}
+
+function mockScope(permissions: string[]) {
+  server.use(
+    http.get('/api/backend/auth/scope', () => {
+      return HttpResponse.json({
+        permissions: permissions.map((name) => ({ name })),
+        roles: [],
+      });
+    }),
   );
 }
 
 describe('RatingsTable', () => {
   beforeEach(() => {
     server.use(...ratingsHandlers);
+    mockScope(['admin:all']);
+  });
+
+  it('no renderiza nada si el usuario no tiene permiso de auditoría', async () => {
+    // Arrange
+    mockScope([]);
+
+    // Act
+    const queryClient = renderRatingsTable();
+
+    // Assert
+    await waitFor(() =>
+      expect(queryClient.getQueryState(['auth', 'scope'])?.status).toBe(
+        'success',
+      ),
+    );
+    expect(
+      screen.queryByText('Excelente trabajo, muy profesional y puntual.'),
+    ).not.toBeInTheDocument();
   });
 
   it('muestra las filas de calificaciones una vez cargadas', async () => {

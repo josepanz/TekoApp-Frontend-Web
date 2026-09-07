@@ -9,22 +9,51 @@ import { createTestQueryClient } from '@/test/query-client';
 import { formatCurrency } from '@/lib/formatters';
 import { PaymentsTable } from './payments-table';
 
+function mockScope(permissions: string[]) {
+  server.use(
+    http.get('/api/backend/auth/scope', () => {
+      return HttpResponse.json({
+        permissions: permissions.map((name) => ({ name })),
+        roles: [],
+      });
+    }),
+  );
+}
+
 // El agregador central `src/test/msw/handlers.ts` todavía no incluye este dominio (lo integra
 // otro equipo), así que los handlers se registran acá con `server.use`.
 beforeEach(() => {
   server.use(...paymentsHandlers);
+  mockScope(['admin:all']);
 });
 
 function renderPaymentsTable() {
   const queryClient = createTestQueryClient();
-  return render(
+  render(
     <QueryClientProvider client={queryClient}>
       <PaymentsTable />
     </QueryClientProvider>,
   );
+  return queryClient;
 }
 
 describe('PaymentsTable', () => {
+  it('no renderiza nada si el usuario no tiene permiso de auditoría', async () => {
+    // Arrange
+    mockScope([]);
+
+    // Act
+    const queryClient = renderPaymentsTable();
+
+    // Assert
+    await waitFor(() =>
+      expect(queryClient.getQueryState(['auth', 'scope'])?.status).toBe(
+        'success',
+      ),
+    );
+    expect(screen.queryByText('txn-uuid-abc')).not.toBeInTheDocument();
+  });
+
   it('muestra las filas de pagos una vez cargadas', async () => {
     // Arrange & Act
     renderPaymentsTable();

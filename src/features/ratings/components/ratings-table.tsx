@@ -19,6 +19,8 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
 import { formatDate } from '@/lib/formatters';
 import { useDeleteRatingMutation, useRatingsQuery } from '../hooks';
 import type { Rating } from '../api';
@@ -65,7 +67,23 @@ function RatingActionsCell({ rating }: { rating: Rating }) {
   );
 }
 
+// Gate client-side por permiso (`ratings.audit:read`/`admin:all`) — mismo patrón que
+// `service-progress-section.tsx`: no pedimos el listado si el permiso no está asignado.
 export function RatingsTable() {
+  const { data: scope } = useSessionScopeQuery();
+  const canView = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.RATINGS.AUDIT_VIEW, PERMISSIONS.ADMIN.ALL],
+  );
+
+  if (!canView) {
+    return null;
+  }
+
+  return <RatingsTableContent />;
+}
+
+function RatingsTableContent() {
   const t = useTranslations('ratings');
   const locale = useAppLocale();
   const { data, isPending, isError } = useRatingsQuery();
