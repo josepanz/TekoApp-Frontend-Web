@@ -1200,13 +1200,12 @@
       "serviceTypePlaceholder": "Pick a type",
       "address": "Address",
       "location": "Service location",
-      "locationHint": "Click on the map or drag the marker to pick where the job is.",
+      "locationHint": "Enter the latitude and longitude, or drag the marker on the map.",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
       "urgent": "It's urgent",
       "submitting": "Sending...",
       "submit": "Request a professional"
-    },
-    "map": {
-      "ariaLabel": "Map to pick the service location"
     }
   },
   "rateProfessional": {

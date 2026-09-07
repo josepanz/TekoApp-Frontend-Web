@@ -1200,13 +1200,12 @@
       "serviceTypePlaceholder": "Elegí un tipo",
       "address": "Dirección",
       "location": "Ubicación del servicio",
-      "locationHint": "Hacé click en el mapa o arrastrá el marcador para elegir dónde es el trabajo.",
+      "locationHint": "Ingresá la latitud y longitud, o arrastrá el marcador del mapa.",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
       "urgent": "Es urgente",
       "submitting": "Enviando...",
       "submit": "Solicitar profesional"
-    },
-    "map": {
-      "ariaLabel": "Mapa para elegir la ubicación del servicio"
     }
   },
   "rateProfessional": {

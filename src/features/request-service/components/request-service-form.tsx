@@ -209,14 +209,56 @@ export function RequestServiceForm() {
               control={control}
               name="longitude"
               render={({ field: lngField }) => (
-                <LocationPickerMap
-                  latitude={latField.value}
-                  longitude={lngField.value}
-                  onChange={(lat, lng) => {
-                    latField.onChange(lat);
-                    lngField.onChange(lng);
-                  }}
-                />
+                <>
+                  <div className="flex gap-4">
+                    <div className="flex flex-1 flex-col gap-2">
+                      <Label htmlFor="latitude">{t('form.latitude')}</Label>
+                      <Input
+                        id="latitude"
+                        type="number"
+                        step="any"
+                        inputMode="decimal"
+                        aria-invalid={!!errors.latitude}
+                        value={latField.value}
+                        onChange={(event) =>
+                          latField.onChange(event.target.valueAsNumber)
+                        }
+                      />
+                      {errors.latitude && (
+                        <p className="text-destructive text-sm">
+                          {errors.latitude.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col gap-2">
+                      <Label htmlFor="longitude">{t('form.longitude')}</Label>
+                      <Input
+                        id="longitude"
+                        type="number"
+                        step="any"
+                        inputMode="decimal"
+                        aria-invalid={!!errors.longitude}
+                        value={lngField.value}
+                        onChange={(event) =>
+                          lngField.onChange(event.target.valueAsNumber)
+                        }
+                      />
+                      {errors.longitude && (
+                        <p className="text-destructive text-sm">
+                          {errors.longitude.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <LocationPickerMap
+                    latitude={latField.value}
+                    longitude={lngField.value}
+                    onChange={(lat, lng) => {
+                      latField.onChange(lat);
+                      lngField.onChange(lng);
+                    }}
+                  />
+                </>
               )}
             />
           )}
