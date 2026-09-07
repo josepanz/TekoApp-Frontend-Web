@@ -150,6 +150,8 @@
       "slug": "Slug",
       "iconColor": "Icon / Color",
       "visible": "Visible",
+      "visibleBadge": "Visible",
+      "hiddenBadge": "Hidden",
       "actions": "Actions",
       "hide": "Hide {name}",
       "show": "Show {name}",

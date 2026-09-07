@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/layout/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -66,18 +67,25 @@ export function CategoriesTable() {
       id: 'isVisible',
       header: t('table.visible'),
       cell: ({ row }) => (
-        <Switch
-          checked={row.original.isVisible}
-          disabled={toggleVisibilityMutation.isPending}
-          onCheckedChange={() =>
-            toggleVisibilityMutation.mutate(row.original.id)
-          }
-          aria-label={
-            row.original.isVisible
-              ? t('table.hide', { name: row.original.name })
-              : t('table.show', { name: row.original.name })
-          }
-        />
+        <div className="flex items-center gap-2">
+          <Switch
+            checked={row.original.isVisible}
+            disabled={toggleVisibilityMutation.isPending}
+            onCheckedChange={() =>
+              toggleVisibilityMutation.mutate(row.original.id)
+            }
+            aria-label={
+              row.original.isVisible
+                ? t('table.hide', { name: row.original.name })
+                : t('table.show', { name: row.original.name })
+            }
+          />
+          <Badge variant={row.original.isVisible ? 'success' : 'secondary'}>
+            {row.original.isVisible
+              ? t('table.visibleBadge')
+              : t('table.hiddenBadge')}
+          </Badge>
+        </div>
       ),
     },
     {
