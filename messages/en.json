@@ -854,7 +854,7 @@
       "loadError": "Couldn't load the role.",
       "permissionsCount": "{count} permissions",
       "permissionsTitle": "Assigned permissions",
-      "createdBy": "Created by {user}"
+      "createdBy": "Created by {user} on {date}"
     }
   },
   "payments": {

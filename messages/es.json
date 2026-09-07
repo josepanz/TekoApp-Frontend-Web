@@ -854,7 +854,7 @@
       "loadError": "No se pudo cargar el rol.",
       "permissionsCount": "{count} permisos",
       "permissionsTitle": "Permisos asignados",
-      "createdBy": "Creado por {user}"
+      "createdBy": "Creado por {user} el {date}"
     }
   },
   "payments": {
