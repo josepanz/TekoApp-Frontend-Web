@@ -99,6 +99,15 @@ LucideIcon`) como prop desde un Server Component a un Client Component — rompe
   Client Component (ver `AppSidebar`).
 - Antes de dar una fase por cerrada, probar contra el backend real (no solo MSW/fake-backend) al
   menos una vez por dominio nuevo — varios bugs de esta lista fueron invisibles en ambos mocks.
+- **El backend envuelve toda respuesta de ERROR** en `{success:false, error:{code, message,
+error, errorCode?, details?, timestamp, path}}` (`HttpExceptionFilter` global) — `message`
+  nunca está en la raíz del body. `parseErrorResponse` en `client.ts` asumió lo contrario durante
+  un tiempo y el bug fue invisible porque los mocks de MSW/`e2e/fake-backend` devuelven el DTO
+  pelado (`{message}`) a propósito: la app entera mostraba el fallback genérico `Error {status}
+en {path}` para cualquier error real del backend, en todas las features, y ningún test ni mock
+  lo detectó. Fix: `extractErrorInfo()` en `client.ts` soporta las dos formas (envelope real y DTO
+  pelado) y expone `errorCode`/`details` tipados en `ApiError` — reusalo ahí, no dupliques el
+  parseo en un fetch nuevo que maneje errores a mano (mismo motivo que la tarea C-04).
 - **Un tipo `string` en parámetro anula la protección del codegen** — si un helper o
   comparación espera una value de un union generado (`Professional['verificationStatus']`) pero
   recibe un parámetro tipado como `string` ancho, TypeScript no advierte y la protección se

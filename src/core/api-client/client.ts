@@ -23,9 +23,75 @@ export function isBackendEnvelope<T>(
   );
 }
 
+// Hermano de `BackendEnvelope`/`isBackendEnvelope` para el camino de ERROR: `HttpExceptionFilter`
+// (TekoApp-Backend, `src/common/filters/http-exception.filter.ts`) arma TODO error como
+// `{success:false, error:{code,message,error,errorCode?,details?,timestamp,path}}` — nunca
+// `message` en la raíz del body, a diferencia de lo que asumía `parseErrorResponse` hasta ahora
+// (bug real: en producción, `ApiError.message` caía siempre al fallback genérico `Error {status}
+// en {path}` para TODA la app, no solo una feature — confirmado leyendo el filtro real del
+// backend). Los mocks de MSW y `e2e/fake-backend` devuelven el DTO "pelado" (`{message}`) a
+// propósito, así que `extractErrorInfo` soporta las 2 formas.
+interface BackendErrorEnvelope {
+  success: false;
+  error: {
+    code: number;
+    message: string;
+    error: string;
+    errorCode?: string;
+    details?: unknown;
+    timestamp: string;
+    path: string;
+  };
+}
+
+function isBackendErrorEnvelope(body: unknown): body is BackendErrorEnvelope {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    'success' in body &&
+    (body as { success: unknown }).success === false &&
+    'error' in body &&
+    typeof (body as { error: unknown }).error === 'object' &&
+    (body as { error: unknown }).error !== null
+  );
+}
+
+interface ExtractedErrorInfo {
+  message: string;
+  errorCode?: string;
+  details?: unknown;
+}
+
 /**
- * Parsea el cuerpo de una respuesta no-ok en un `ApiError` — compartido por `apiFetch` y
- * `uploadFile` para no duplicar el mismo try/parse en las dos.
+ * Extrae `message`/`errorCode`/`details` de un body de error YA parseado (nunca hace fetch/parse
+ * acá) — compartido por `parseErrorResponse` (client.ts) y por `features/auth/api.ts`
+ * (`login`/`register`, que pegan a rutas dedicadas del BFF, no al proxy genérico, pero pueden
+ * reenviar el mismo envelope real del backend tal cual). Soporta, en este orden: el envelope real
+ * (`{success:false,error:{...}}`), y el DTO "pelado" (`{message}`) de los mocks — si ninguno de
+ * los dos calza, devuelve `fallbackMessage`.
+ */
+export function extractErrorInfo(
+  body: unknown,
+  fallbackMessage: string,
+): ExtractedErrorInfo {
+  if (isBackendErrorEnvelope(body)) {
+    return {
+      message: body.error.message,
+      errorCode: body.error.errorCode,
+      details: body.error.details,
+    };
+  }
+  if (body && typeof body === 'object' && 'message' in body) {
+    const raw = (body as { message: unknown }).message;
+    return { message: typeof raw === 'string' ? raw : fallbackMessage };
+  }
+  return { message: fallbackMessage };
+}
+
+/**
+ * Parsea el cuerpo de una respuesta no-ok en un `ApiError` — compartido por `apiFetch`,
+ * `uploadFile` y `downloadFile` para no duplicar el mismo try/parse en las tres (mismo motivo que
+ * C-04 del WORKPLAN de hardening).
  */
 async function parseErrorResponse(
   response: Response,
@@ -37,11 +103,11 @@ async function parseErrorResponse(
   } catch {
     body = await response.text();
   }
-  const message =
-    body && typeof body === 'object' && 'message' in body
-      ? String((body as { message: unknown }).message)
-      : `Error ${response.status} en ${path}`;
-  return new ApiError(response.status, message, body);
+  const { message, errorCode, details } = extractErrorInfo(
+    body,
+    `Error ${response.status} en ${path}`,
+  );
+  return new ApiError(response.status, message, body, errorCode, details);
 }
 
 /**

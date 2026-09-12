@@ -32,31 +32,19 @@ export function cancelAccountDeletion(): Promise<DeletionCancelResponse> {
   });
 }
 
-// El backend real envuelve TODO error en `{ success: false, error: { message, errorCode,
-// details, ... } }` (`HttpExceptionFilter` en TekoApp-Backend) — pero `parseErrorResponse` de
-// `core/api-client/client.ts` solo busca `message` en el nivel superior del body (corrige eso es
-// una tarea aparte, toca código compartido por todas las features; acá alcanza con leer
-// `error.body` directamente, que sí llega intacto sin parsear). Se acepta también la forma
-// "plana" (`{errorCode, details}` sin el wrapper `error`) para no atarse a un solo shape exacto.
+// `errorCode`/`details` ahora vienen tipados en `ApiError` (ver `core/api-client/client.ts`,
+// `extractErrorInfo` los saca del envelope real del backend `{success:false,error:{...}}`) — ya
+// no hace falta cavar en `error.body` a mano acá.
 export function extractDeletionBlockers(
   error: unknown,
 ): DeletionBlocker[] | null {
   if (!(error instanceof ApiError) || error.status !== 409) {
     return null;
   }
-  const body = error.body;
-  if (!body || typeof body !== 'object') {
+  if (error.errorCode !== 'DELETION_BLOCKED') {
     return null;
   }
-  const container =
-    'error' in body && typeof (body as { error?: unknown }).error === 'object'
-      ? (body as { error: Record<string, unknown> }).error
-      : (body as Record<string, unknown>);
-
-  if (container.errorCode !== 'DELETION_BLOCKED') {
-    return null;
-  }
-  const details = container.details as { blockers?: unknown } | undefined;
+  const details = error.details as { blockers?: unknown } | undefined;
   return Array.isArray(details?.blockers)
     ? (details.blockers as DeletionBlocker[])
     : null;
