@@ -1430,5 +1430,18 @@
       "oldData": "Valores anteriores",
       "newData": "Valores nuevos"
     }
+  },
+  "globalSearch": {
+    "trigger": "Búsqueda global",
+    "title": "Buscar",
+    "description": "Buscá un usuario o un profesional por nombre. Ctrl/Cmd+K para abrir esto desde cualquier pantalla.",
+    "placeholder": "Buscar por nombre...",
+    "minLength": "Escribí al menos 2 caracteres.",
+    "empty": "Sin resultados para \"{query}\".",
+    "partialError": "No se pudo completar una de las búsquedas (puede faltar un permiso) — se muestran los resultados disponibles.",
+    "type": {
+      "user": "Usuario",
+      "professional": "Profesional"
+    }
   }
 }

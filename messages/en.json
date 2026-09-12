@@ -1430,5 +1430,18 @@
       "oldData": "Previous values",
       "newData": "New values"
     }
+  },
+  "globalSearch": {
+    "trigger": "Global search",
+    "title": "Search",
+    "description": "Search a user or a professional by name. Ctrl/Cmd+K opens this from any screen.",
+    "placeholder": "Search by name...",
+    "minLength": "Type at least 2 characters.",
+    "empty": "No results for \"{query}\".",
+    "partialError": "One of the searches couldn't complete (a permission may be missing) — showing the results that are available.",
+    "type": {
+      "user": "User",
+      "professional": "Professional"
+    }
   }
 }
