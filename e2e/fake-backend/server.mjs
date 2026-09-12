@@ -153,6 +153,49 @@ const professionals = [];
 let nextProfessionalId = 1;
 let myProfessionalReferenceId = null;
 
+// Estado mutable en memoria — Fase de I-03 (backlog e2e): colas de revisión de documentos y
+// portafolio. Un solo ítem PENDING por cola alcanza para ejercitar aprobar/rechazar de punta a
+// punta; no hace falta un profesional real detrás (el `professional` de estos DTOs es solo un
+// resumen para mostrar nombre, no una FK que el resto del fake-backend necesite resolver).
+const professionalDocuments = [
+  {
+    referenceId: 'document-1',
+    professionalDocumentType: {
+      referenceId: 'doctype-1',
+      code: 'BACKGROUND_CHECK',
+      name: 'Antecedentes penales',
+      category: 'BACKGROUND_CHECK',
+      isRequired: true,
+    },
+    fileKey: 'document-abc123.pdf',
+    status: 'PENDING',
+    issuedAt: '2026-08-01T00:00:00.000Z',
+    createdAt: '2026-08-05T10:00:00.000Z',
+    professional: {
+      referenceId: 'professional-doc-1',
+      firstName: 'Carlos',
+      lastName: 'Gómez',
+    },
+  },
+];
+
+const portfolioItems = [
+  {
+    referenceId: 'portfolio-e2e-1',
+    fileKey: 'portfolio-e2e-abc123.jpg',
+    caption: 'Instalación de aire acondicionado',
+    sortOrder: 0,
+    isVisible: true,
+    status: 'PENDING',
+    createdAt: '2026-08-10T10:00:00.000Z',
+    professional: {
+      referenceId: 'professional-portfolio-1',
+      firstName: 'Lucía',
+      lastName: 'Fernández',
+    },
+  },
+];
+
 const FAKE_TIP_CONFIG = {
   isEnabled: true,
   isMandatory: false,
@@ -509,6 +552,75 @@ const server = createServer(async (req, res) => {
     professional.verificationStatus = body.isVerified ? 'VERIFIED' : 'REJECTED';
     if (body.isVerified) professional.status = 'APPROVED';
     return sendJson(res, 200, professional);
+  }
+
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/admin/professional-documents'
+  ) {
+    return sendJson(res, 200, {
+      data: professionalDocuments,
+      pagination: {
+        total: professionalDocuments.length,
+        page: 1,
+        pageSize: 10,
+        totalPages: 1,
+      },
+    });
+  }
+
+  const documentReviewMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/admin\/professional-documents\/([^/]+)\/review$/,
+  );
+  if (req.method === 'PATCH' && documentReviewMatch) {
+    const body = await readBody(req);
+    const document = professionalDocuments.find(
+      (d) => d.referenceId === documentReviewMatch[1],
+    );
+    if (!document) {
+      return sendJson(res, 404, { message: 'Documento no encontrado' });
+    }
+    document.status = body.status;
+    document.rejectionReason = body.rejectionReason;
+    return sendJson(res, 200, document);
+  }
+
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/admin/professional-portfolio'
+  ) {
+    return sendJson(res, 200, {
+      data: portfolioItems,
+      pagination: {
+        total: portfolioItems.length,
+        page: 1,
+        pageSize: 10,
+        totalPages: 1,
+      },
+    });
+  }
+
+  const portfolioReviewMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/admin\/professional-portfolio\/([^/]+)\/review$/,
+  );
+  if (req.method === 'PATCH' && portfolioReviewMatch) {
+    const body = await readBody(req);
+    const item = portfolioItems.find(
+      (p) => p.referenceId === portfolioReviewMatch[1],
+    );
+    if (!item) return sendJson(res, 404, { message: 'Foto no encontrada' });
+    item.status = body.status;
+    item.rejectionReason = body.rejectionReason;
+    return sendJson(res, 200, item);
+  }
+
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/uploads/presigned-url'
+  ) {
+    return sendJson(res, 200, {
+      url: 'https://example.com/fake-presigned-url',
+    });
   }
 
   sendJson(res, 404, { message: `Fake backend: ruta no implementada ${req.method} ${url.pathname}` });
