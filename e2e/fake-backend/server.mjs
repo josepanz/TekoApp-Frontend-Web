@@ -73,6 +73,85 @@ const categories = [
   },
 ];
 
+// Estado mutable en memoria — Fase de I-03 (backlog e2e): reembolso, cancelación y propina sobre
+// pagos ya existentes. IDs/referenceId fijos (no incrementales) porque cada test necesita un pago
+// en un estado puntual (reembolsable/cancelable/con propina pendiente), nunca cualquiera.
+const payments = [
+  {
+    id: 1,
+    referenceId: 'payment-refund-1',
+    userId: 1,
+    professionalId: 1,
+    serviceId: 'svc-payment-1',
+    amount: 150000,
+    tip: null,
+    currencyCode: 'PYG',
+    fee: 4350,
+    tax: 32262,
+    totalAmount: 186612,
+    status: 'PAID',
+    paymentMethod: 'CREDIT_CARD',
+    paymentProvider: 'STRIPE',
+    transactionId: 'txn-refund-1',
+    description: 'Servicio de plomería',
+    platformFee: 0,
+    professionalNetAmount: 150000,
+    isRecurring: false,
+    createdAt: '2026-09-01T10:00:00.000Z',
+    paidAt: '2026-09-01T10:05:00.000Z',
+  },
+  {
+    id: 2,
+    referenceId: 'payment-cancel-1',
+    userId: 1,
+    professionalId: 1,
+    serviceId: 'svc-payment-2',
+    amount: 80000,
+    tip: null,
+    currencyCode: 'PYG',
+    fee: 0,
+    tax: 0,
+    totalAmount: 80000,
+    status: 'PENDING',
+    paymentMethod: 'CASH',
+    paymentProvider: 'CASH',
+    transactionId: 'txn-cancel-1',
+    description: 'Servicio de electricidad',
+    platformFee: 0,
+    isRecurring: false,
+    createdAt: '2026-09-02T10:00:00.000Z',
+  },
+  {
+    id: 3,
+    referenceId: 'payment-tip-1',
+    userId: 1,
+    professionalId: 1,
+    serviceId: 'svc-payment-3',
+    amount: 120000,
+    tip: null,
+    currencyCode: 'PYG',
+    fee: 3000,
+    tax: 10000,
+    totalAmount: 133000,
+    status: 'COMPLETED',
+    paymentMethod: 'QR',
+    paymentProvider: 'BANCARD',
+    transactionId: 'txn-tip-1',
+    description: 'Servicio de jardinería',
+    platformFee: 0,
+    isRecurring: false,
+    createdAt: '2026-09-03T10:00:00.000Z',
+    paidAt: '2026-09-03T10:05:00.000Z',
+  },
+];
+
+const FAKE_TIP_CONFIG = {
+  isEnabled: true,
+  isMandatory: false,
+  suggestedPercentages: [10, 15, 20],
+  allowFreeAmount: true,
+};
+
 const FAKE_USERS_PAGE = {
   data: [
     {
@@ -250,6 +329,79 @@ const server = createServer(async (req, res) => {
     if (index === -1) return sendJson(res, 404, { message: 'Categoría no encontrada' });
     categories.splice(index, 1);
     return sendJson(res, 204, null);
+  }
+
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/payments/me') {
+    return sendJson(res, 200, payments);
+  }
+
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/payments') {
+    return sendJson(res, 200, payments);
+  }
+
+  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/tips/config') {
+    return sendJson(res, 200, FAKE_TIP_CONFIG);
+  }
+
+  const refundMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/payments\/([^/]+)\/refund$/,
+  );
+  if (req.method === 'POST' && refundMatch) {
+    const body = await readBody(req);
+    const payment = payments.find((p) => p.referenceId === refundMatch[1]);
+    if (!payment) return sendJson(res, 404, { message: 'Pago no encontrado' });
+    payment.status =
+      body.amount >= payment.totalAmount ? 'REFUNDED' : 'PARTIAL_REFUNDED';
+    payment.refundDetails = {
+      amount: body.amount,
+      reason: body.reason,
+      description: body.description,
+    };
+    return sendJson(res, 200, payment);
+  }
+
+  const cancelMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/payments\/([^/]+)\/cancel$/,
+  );
+  if (req.method === 'POST' && cancelMatch) {
+    const payment = payments.find((p) => p.referenceId === cancelMatch[1]);
+    if (!payment) return sendJson(res, 404, { message: 'Pago no encontrado' });
+    payment.status = 'CANCELLED';
+    return sendJson(res, 200, payment);
+  }
+
+  const tipMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/payments\/([^/]+)\/tip$/,
+  );
+  if (req.method === 'POST' && tipMatch) {
+    const body = await readBody(req);
+    const payment = payments.find((p) => p.referenceId === tipMatch[1]);
+    if (!payment) return sendJson(res, 404, { message: 'Pago no encontrado' });
+    const amount =
+      body.mode === 'PERCENTAGE'
+        ? Math.round((payment.amount * body.percentage) / 100)
+        : body.amount;
+    const tip = {
+      referenceId: `tip-${payment.referenceId}`,
+      mode: body.mode,
+      percentage: body.mode === 'PERCENTAGE' ? body.percentage : null,
+      amount,
+      currencyCode: payment.currencyCode,
+      createdAt: new Date().toISOString(),
+    };
+    payment.tip = tip;
+    return sendJson(res, 201, tip);
+  }
+
+  // Va DESPUÉS de /refund, /cancel y /tip: esos son más específicos que este match genérico de
+  // "un id cualquiera" y tienen que ganarle en orden de evaluación.
+  const paymentByIdMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/payments\/([^/]+)$/,
+  );
+  if (req.method === 'GET' && paymentByIdMatch) {
+    const payment = payments.find((p) => p.referenceId === paymentByIdMatch[1]);
+    if (!payment) return sendJson(res, 404, { message: 'Pago no encontrado' });
+    return sendJson(res, 200, payment);
   }
 
   sendJson(res, 404, { message: `Fake backend: ruta no implementada ${req.method} ${url.pathname}` });

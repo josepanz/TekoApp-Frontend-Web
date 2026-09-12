@@ -14,7 +14,7 @@ test.describe('Login', () => {
     await page.goto('/login');
 
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
-    await page.getByLabel('Contraseña').fill('Sup3rSecreto!');
+    await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
 
     await expect(page).toHaveURL('/');
@@ -33,7 +33,7 @@ test.describe('Login', () => {
     await page.goto('/login');
 
     await page.getByLabel('Email').fill('fail@tekoapp.com.py');
-    await page.getByLabel('Contraseña').fill('loQueSea');
+    await page.getByLabel('Contraseña', { exact: true }).fill('loQueSea');
     await page.getByRole('button', { name: 'Ingresar' }).click();
 
     await expect(page.getByText('Credenciales inválidas')).toBeVisible();
@@ -45,7 +45,7 @@ test.describe('Login', () => {
   }) => {
     await page.goto('/login');
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
-    await page.getByLabel('Contraseña').fill('Sup3rSecreto!');
+    await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
     await expect(page).toHaveURL('/');
 
