@@ -145,6 +145,14 @@ const payments = [
   },
 ];
 
+// Estado mutable en memoria — Fase de I-03 (backlog e2e): embudo de postulación → verificación de
+// profesional. Un solo usuario fake existe (Ana), así que "postularse" y "ser el profesional
+// verificado por el propio admin" son la misma cuenta cambiando de modo — igual que en el resto de
+// este servidor, no hay más de un usuario para simular roles distintos.
+const professionals = [];
+let nextProfessionalId = 1;
+let myProfessionalReferenceId = null;
+
 const FAKE_TIP_CONFIG = {
   isEnabled: true,
   isMandatory: false,
@@ -402,6 +410,105 @@ const server = createServer(async (req, res) => {
     const payment = payments.find((p) => p.referenceId === paymentByIdMatch[1]);
     if (!payment) return sendJson(res, 404, { message: 'Pago no encontrado' });
     return sendJson(res, 200, payment);
+  }
+
+  // GET /professionals/me (literal, va ANTES de /professionals a secas): 404 hasta que la cuenta
+  // se postule, después siempre el mismo profesional. `ProfessionalApplicationForm` y el
+  // `ModeSwitcher`/`ProfessionalGate` dependen de esta ruta para saber si ya existe el perfil.
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/professionals/me'
+  ) {
+    const professional = professionals.find(
+      (p) => p.referenceId === myProfessionalReferenceId,
+    );
+    if (!professional) {
+      return sendJson(res, 404, { message: 'Profesional no encontrado' });
+    }
+    return sendJson(res, 200, professional);
+  }
+
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/professionals'
+  ) {
+    return sendJson(res, 200, {
+      data: professionals,
+      pagination: {
+        total: professionals.length,
+        page: 1,
+        pageSize: 10,
+        totalPages: 1,
+      },
+    });
+  }
+
+  if (
+    req.method === 'POST' &&
+    url.pathname === '/tekoapp-backend/api/v1/professionals'
+  ) {
+    const body = await readBody(req);
+    const category =
+      categories.find((c) => c.id === Number(body.categoryId)) ??
+      categories[0] ??
+      null;
+    const professional = {
+      id: nextProfessionalId,
+      referenceId: `professional-${nextProfessionalId}`,
+      userId: 1,
+      categoryId: category ? category.id : Number(body.categoryId),
+      description: body.description,
+      hourlyRate: body.hourlyRate,
+      fixedRate: body.fixedRate ?? undefined,
+      skills: body.skills ?? [],
+      certifications: [],
+      yearsOfExperience: body.yearsOfExperience ?? 0,
+      status: 'PENDING',
+      isAvailable: true,
+      isOnline: false,
+      verificationStatus: 'UNVERIFIED',
+      requiredDocumentsVerified: false,
+      totalServices: 0,
+      averageRating: 0,
+      totalRatings: 0,
+      createdAt: new Date().toISOString(),
+      user: {
+        id: 1,
+        referenceId: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+        email: 'ana@tekoapp.com.py',
+        firstName: 'Ana',
+        lastName: 'Test',
+      },
+      category: category
+        ? {
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            icon: category.icon,
+            color: category.color,
+          }
+        : null,
+    };
+    nextProfessionalId += 1;
+    professionals.push(professional);
+    myProfessionalReferenceId = professional.referenceId;
+    return sendJson(res, 201, professional);
+  }
+
+  const verifyMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/professionals\/(\d+)\/verify$/,
+  );
+  if (req.method === 'POST' && verifyMatch) {
+    const body = await readBody(req);
+    const professional = professionals.find(
+      (p) => p.id === Number(verifyMatch[1]),
+    );
+    if (!professional) {
+      return sendJson(res, 404, { message: 'Profesional no encontrado' });
+    }
+    professional.verificationStatus = body.isVerified ? 'VERIFIED' : 'REJECTED';
+    if (body.isVerified) professional.status = 'APPROVED';
+    return sendJson(res, 200, professional);
   }
 
   sendJson(res, 404, { message: `Fake backend: ruta no implementada ${req.method} ${url.pathname}` });
