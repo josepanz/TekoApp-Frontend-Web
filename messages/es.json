@@ -488,6 +488,22 @@
       "verifiedLabel": "Marcar como verificado",
       "notes": "Notas"
     },
+    "bulk": {
+      "verifyButton": "Verificar seleccionados ({count})",
+      "suspendButton": "Suspender seleccionados ({count})",
+      "verifyConfirmTitle": "Verificar profesionales seleccionados",
+      "verifyConfirmDescription": "Esta acción marcará como verificados a {count} profesionales.",
+      "verifySuccessAll": "{count} profesionales verificados correctamente.",
+      "verifyPartialResult": "{succeeded} de {total} profesionales verificados. {failed} fallaron: {names}.",
+      "verifyFailedAll": "No se pudo verificar a ninguno de los {count} profesionales seleccionados.",
+      "suspendConfirmTitle": "Suspender profesionales seleccionados",
+      "suspendConfirmDescription": "Esta acción suspenderá a {count} profesionales con el motivo que indiques a continuación.",
+      "suspendReasonLabel": "Motivo de suspensión (se aplica a todos los profesionales seleccionados)",
+      "confirmSuspendButton": "Confirmar suspensión",
+      "suspendSuccessAll": "{count} profesionales suspendidos correctamente.",
+      "suspendPartialResult": "{succeeded} de {total} profesionales suspendidos. {failed} fallaron: {names}.",
+      "suspendFailedAll": "No se pudo suspender a ninguno de los {count} profesionales seleccionados."
+    },
     "detail": {
       "back": "Volver a profesionales",
       "loadError": "No se pudo cargar el perfil de este profesional.",

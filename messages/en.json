@@ -488,6 +488,22 @@
       "verifiedLabel": "Mark as verified",
       "notes": "Notes"
     },
+    "bulk": {
+      "verifyButton": "Verify selected ({count})",
+      "suspendButton": "Suspend selected ({count})",
+      "verifyConfirmTitle": "Verify selected professionals",
+      "verifyConfirmDescription": "This will mark {count} professionals as verified.",
+      "verifySuccessAll": "{count} professionals verified successfully.",
+      "verifyPartialResult": "{succeeded} of {total} professionals verified. {failed} failed: {names}.",
+      "verifyFailedAll": "Couldn't verify any of the {count} selected professionals.",
+      "suspendConfirmTitle": "Suspend selected professionals",
+      "suspendConfirmDescription": "This will suspend {count} professionals with the reason you enter below.",
+      "suspendReasonLabel": "Suspension reason (applies to every selected professional)",
+      "confirmSuspendButton": "Confirm suspension",
+      "suspendSuccessAll": "{count} professionals suspended successfully.",
+      "suspendPartialResult": "{succeeded} of {total} professionals suspended. {failed} failed: {names}.",
+      "suspendFailedAll": "Couldn't suspend any of the {count} selected professionals."
+    },
     "detail": {
       "back": "Back to professionals",
       "loadError": "Couldn't load this professional's profile.",

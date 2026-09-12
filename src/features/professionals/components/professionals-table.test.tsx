@@ -1,9 +1,12 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@/test/render';
+import { render, screen, waitFor, within } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { professionalsHandlers } from '@/test/msw/handlers/professionals';
+import {
+  fakeProfessionalsPage1,
+  professionalsHandlers,
+} from '@/test/msw/handlers/professionals';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import { triggerFileDownload } from '@/lib/trigger-file-download';
@@ -167,5 +170,146 @@ describe('ProfessionalsTable', () => {
     const [blob, filename] = vi.mocked(triggerFileDownload).mock.calls[0];
     expect(filename).toBe('profesionales.csv');
     expect(blob.type).toBe('text/csv');
+  });
+
+  it('verifica en bloque a los profesionales seleccionados cuando todas las llamadas tienen éxito', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const verifiedIds: string[] = [];
+    server.use(
+      http.post('/api/backend/professionals/:id/verify', ({ params }) => {
+        verifiedIds.push(String(params.id));
+        return HttpResponse.json({
+          ...fakeProfessionalsPage1.data[0],
+          id: Number(params.id),
+          verificationStatus: 'VERIFIED',
+        });
+      }),
+    );
+    renderProfessionalsTable();
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+
+    // Act
+    const rowCheckboxes = screen.getAllByRole('checkbox', {
+      name: 'Seleccionar fila',
+    });
+    await user.click(rowCheckboxes[0]);
+    await user.click(rowCheckboxes[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'Verificar seleccionados (2)' }),
+    );
+    const dialog = await screen.findByRole('alertdialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Confirmar' }));
+
+    // Assert
+    await waitFor(() => {
+      expect(verifiedIds.sort()).toEqual(['1', '2']);
+    });
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+  });
+
+  it('exige un motivo para suspender en bloque y aplica el mismo motivo a todas las llamadas', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const suspendCalls: { id: string; reason?: string }[] = [];
+    server.use(
+      http.post(
+        '/api/backend/professionals/:id/suspend',
+        async ({ request, params }) => {
+          const body = (await request.json()) as { reason?: string };
+          suspendCalls.push({ id: String(params.id), reason: body.reason });
+          return HttpResponse.json({
+            ...fakeProfessionalsPage1.data[0],
+            id: Number(params.id),
+            status: 'SUSPENDED',
+          });
+        },
+      ),
+    );
+    renderProfessionalsTable();
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+
+    // Act
+    const rowCheckboxes = screen.getAllByRole('checkbox', {
+      name: 'Seleccionar fila',
+    });
+    await user.click(rowCheckboxes[0]);
+    await user.click(rowCheckboxes[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'Suspender seleccionados (2)' }),
+    );
+
+    // Assert: exige el motivo antes de mandar cualquier request
+    await user.click(
+      screen.getByRole('button', { name: 'Confirmar suspensión' }),
+    );
+    expect(
+      await screen.findByText('El motivo es obligatorio'),
+    ).toBeInTheDocument();
+    expect(suspendCalls).toHaveLength(0);
+
+    // Act: completa el motivo y confirma
+    await user.type(
+      screen.getByLabelText(
+        'Motivo de suspensión (se aplica a todos los profesionales seleccionados)',
+      ),
+      'Conducta inapropiada reportada por varios clientes',
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Confirmar suspensión' }),
+    );
+
+    // Assert
+    await waitFor(() => {
+      expect(suspendCalls).toHaveLength(2);
+    });
+    expect(
+      suspendCalls.every(
+        (call) =>
+          call.reason === 'Conducta inapropiada reportada por varios clientes',
+      ),
+    ).toBe(true);
+  });
+
+  it('reporta el fallo parcial y no bloquea el resto cuando alguna verificación en bloque falla', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    server.use(
+      http.post('/api/backend/professionals/:id/verify', ({ params }) => {
+        if (params.id === '2') {
+          return HttpResponse.json(
+            { message: 'No autorizado' },
+            { status: 403 },
+          );
+        }
+        return HttpResponse.json({
+          ...fakeProfessionalsPage1.data[0],
+          id: Number(params.id),
+          verificationStatus: 'VERIFIED',
+        });
+      }),
+    );
+    renderProfessionalsTable();
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+
+    // Act
+    const rowCheckboxes = screen.getAllByRole('checkbox', {
+      name: 'Seleccionar fila',
+    });
+    await user.click(rowCheckboxes[0]);
+    await user.click(rowCheckboxes[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'Verificar seleccionados (2)' }),
+    );
+    const dialog = await screen.findByRole('alertdialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Confirmar' }));
+
+    // Assert: el diálogo se cierra y la selección se limpia pese al fallo parcial
+    await waitFor(() => {
+      expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    });
+    expect(
+      screen.getAllByRole('checkbox', { name: 'Seleccionar fila' })[0],
+    ).not.toBeChecked();
   });
 });
