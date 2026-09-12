@@ -1121,6 +1121,14 @@
       "title": "Delete rating",
       "description": "This can't be undone. The rating will be deleted permanently.",
       "confirm": "Confirm deletion"
+    },
+    "bulkDelete": {
+      "cta": "Delete selected ({count})",
+      "confirmTitle": "Delete selected ratings",
+      "confirmDescription": "This will permanently delete {count} ratings. This can't be undone.",
+      "successAll": "{count} ratings deleted successfully.",
+      "partialResult": "{succeeded} of {total} ratings deleted. {failed} failed: {names}.",
+      "failedAll": "Couldn't delete any of the {count} selected ratings."
     }
   },
   "notifications": {

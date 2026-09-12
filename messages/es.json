@@ -1121,6 +1121,14 @@
       "title": "Eliminar calificación",
       "description": "Esta acción no se puede deshacer. La calificación se eliminará permanentemente.",
       "confirm": "Confirmar eliminación"
+    },
+    "bulkDelete": {
+      "cta": "Eliminar seleccionadas ({count})",
+      "confirmTitle": "Eliminar calificaciones seleccionadas",
+      "confirmDescription": "Esta acción eliminará permanentemente {count} calificaciones. No se puede deshacer.",
+      "successAll": "{count} calificaciones eliminadas correctamente.",
+      "partialResult": "{succeeded} de {total} calificaciones eliminadas. {failed} fallaron: {names}.",
+      "failedAll": "No se pudo eliminar ninguna de las {count} calificaciones seleccionadas."
     }
   },
   "notifications": {
