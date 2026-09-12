@@ -76,6 +76,9 @@ export const PERMISSIONS = {
   PAYMENTS: {
     AUDIT_VIEW: 'payments.audit:read',
   },
+  SYSTEM: {
+    AUDIT_VIEW: 'system.audit:read',
+  },
 } as const;
 
 /** Todos los valores string posibles dentro de PERMISSIONS, aplanados (para el tipo de `user.permissions: string[]`). */

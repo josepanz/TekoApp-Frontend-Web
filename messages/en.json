@@ -57,7 +57,8 @@
         "dataRetentionPolicies": "Retention policies",
         "consentAudit": "Consent audit",
         "materialCatalog": "Material catalog",
-        "contracts": "Contracts"
+        "contracts": "Contracts",
+        "auditLog": "Audit log"
       },
       "client": {
         "home": "Home",
@@ -317,6 +318,10 @@
       "contracts": {
         "title": "Contracts",
         "description": "List of service contracts for support and legal disputes. Read-only."
+      },
+      "auditLog": {
+        "title": "Audit log",
+        "description": "Audit trail of changes to business tables: who changed what, when, and with what values. Read-only."
       }
     },
     "client": {
@@ -1396,6 +1401,34 @@
       "PENDING_PROFESSIONAL_SIGNATURE": "Awaiting professional signature",
       "SIGNED": "Signed",
       "CANCELLED": "Cancelled"
+    }
+  },
+  "auditLog": {
+    "table": {
+      "tableName": "Table",
+      "recordId": "Record",
+      "operation": "Operation",
+      "changedBy": "Changed by",
+      "changedAt": "Changed at",
+      "actions": "Actions",
+      "loadError": "We couldn't load the audit log.",
+      "empty": "No audit log entries match the current filters."
+    },
+    "filter": {
+      "tableName": "Affected table",
+      "tableNamePlaceholder": "e.g. professionals",
+      "recordId": "Record ID",
+      "changedBy": "Changed by",
+      "startDate": "From",
+      "endDate": "To"
+    },
+    "detail": {
+      "trigger": "View",
+      "title": "Change detail",
+      "description": "{table} · record {record}",
+      "reason": "Reason",
+      "oldData": "Previous values",
+      "newData": "New values"
     }
   }
 }

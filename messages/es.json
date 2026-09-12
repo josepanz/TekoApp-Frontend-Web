@@ -57,7 +57,8 @@
         "dataRetentionPolicies": "Políticas de retención",
         "consentAudit": "Auditoría de consentimiento",
         "materialCatalog": "Catálogo de materiales",
-        "contracts": "Contratos"
+        "contracts": "Contratos",
+        "auditLog": "Auditoría"
       },
       "client": {
         "home": "Inicio",
@@ -317,6 +318,10 @@
       "contracts": {
         "title": "Contratos",
         "description": "Listado de contratos de servicio para soporte y disputas legales. Solo lectura."
+      },
+      "auditLog": {
+        "title": "Auditoría",
+        "description": "Rastro de auditoría de cambios en tablas de negocio: quién cambió qué, cuándo y con qué valores. Solo lectura."
       }
     },
     "client": {
@@ -1396,6 +1401,34 @@
       "PENDING_PROFESSIONAL_SIGNATURE": "Falta firma del profesional",
       "SIGNED": "Firmado",
       "CANCELLED": "Cancelado"
+    }
+  },
+  "auditLog": {
+    "table": {
+      "tableName": "Tabla",
+      "recordId": "Registro",
+      "operation": "Operación",
+      "changedBy": "Quién",
+      "changedAt": "Cuándo",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar el registro de auditoría.",
+      "empty": "No hay registros de auditoría que coincidan con los filtros."
+    },
+    "filter": {
+      "tableName": "Tabla afectada",
+      "tableNamePlaceholder": "ej. professionals",
+      "recordId": "ID de registro",
+      "changedBy": "Quién",
+      "startDate": "Desde",
+      "endDate": "Hasta"
+    },
+    "detail": {
+      "trigger": "Ver",
+      "title": "Detalle del cambio",
+      "description": "{table} · registro {record}",
+      "reason": "Motivo",
+      "oldData": "Valores anteriores",
+      "newData": "Valores nuevos"
     }
   }
 }
