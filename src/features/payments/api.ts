@@ -1,5 +1,9 @@
-import { apiFetch } from '@/core/api-client/client';
-import type { components } from '@/core/api-client/types.generated';
+import {
+  apiFetch,
+  downloadFile,
+  type DownloadedFile,
+} from '@/core/api-client/client';
+import type { components, operations } from '@/core/api-client/types.generated';
 
 export type Payment = components['schemas']['PaymentDetailResponseDTO'];
 export type PaymentStatus = Payment['status'];
@@ -80,4 +84,28 @@ export function createTip(paymentId: string, dto: CreateTipDto): Promise<Tip> {
     method: 'POST',
     body: JSON.stringify(dto),
   });
+}
+
+// GET /admin/payments/export (AdminPaymentsController_export) — CSV solamente, sin paginar
+// (mismos filtros que /admin/payments, sin page/pageSize). Gateado por
+// PAYMENTS.AUDIT_VIEW/ADMIN.ALL en el backend, igual que el listado. El backend responde un
+// StreamableFile (sin envelope {success,data}), por eso usa `downloadFile` y no `apiFetch`.
+export type ExportPaymentsParams = NonNullable<
+  operations['AdminPaymentsController_export']['parameters']['query']
+>;
+
+export function exportPayments(
+  params: ExportPaymentsParams = {},
+): Promise<DownloadedFile> {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      query.set(key, String(value));
+    }
+  });
+  const queryString = query.toString();
+  return downloadFile(
+    `admin/payments/export${queryString ? `?${queryString}` : ''}`,
+    'pagos.csv',
+  );
 }

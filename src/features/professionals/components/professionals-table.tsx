@@ -1,6 +1,7 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { Download } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -8,7 +9,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/layout/data-table';
-import { useProfessionalsQuery } from '../hooks';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
+import {
+  useExportProfessionalsMutation,
+  useProfessionalsQuery,
+} from '../hooks';
 import type { Professional } from '../api';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
@@ -42,6 +48,17 @@ export function ProfessionalsTable() {
     page,
     pageSize: PAGE_SIZE,
   });
+  const exportMutation = useExportProfessionalsMutation();
+
+  // El export pega contra `PROFESSIONALS.VERIFY`/`ADMIN.ALL` en el backend (mismo permiso que
+  // verificar/suspender) — la tabla en sí no está gateada (no todo staff que la ve puede
+  // exportar), así que el botón se oculta solo si falta el permiso, sin tocar el resto de la
+  // tabla.
+  const { data: scope } = useSessionScopeQuery();
+  const canExport = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.PROFESSIONALS.VERIFY, PERMISSIONS.ADMIN.ALL],
+  );
 
   const statusLabel: Record<Professional['status'], string> = {
     PENDING: t('status.PENDING'),
@@ -121,24 +138,42 @@ export function ProfessionalsTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
-  }
-
   return (
-    <DataTable
-      columns={columns}
-      data={data.data}
-      emptyMessage={t('table.empty')}
-      pagination={{
-        page: data.pagination.page,
-        totalPages: data.pagination.totalPages,
-        onPageChange: setPage,
-      }}
-    />
+    <div className="flex flex-col gap-4">
+      {canExport && (
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={exportMutation.isPending}
+            onClick={() => exportMutation.mutate({})}
+          >
+            <Download />
+            {exportMutation.isPending
+              ? tCommon('states.generating')
+              : tCommon('actions.export')}
+          </Button>
+        </div>
+      )}
+
+      {isPending && <Skeleton className="h-64" />}
+
+      {!isPending && isError && (
+        <p className="text-muted-foreground">{t('table.loadError')}</p>
+      )}
+
+      {!isPending && !isError && (
+        <DataTable
+          columns={columns}
+          data={data.data}
+          emptyMessage={t('table.empty')}
+          pagination={{
+            page: data.pagination.page,
+            totalPages: data.pagination.totalPages,
+            onPageChange: setPage,
+          }}
+        />
+      )}
+    </div>
   );
 }

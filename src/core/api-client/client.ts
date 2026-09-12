@@ -73,6 +73,41 @@ export async function apiFetch<T>(
   return (isBackendEnvelope<T>(body) ? body.data : body) as T;
 }
 
+export interface DownloadedFile {
+  blob: Blob;
+  filename: string;
+}
+
+/** Extrae el filename de un header `Content-Disposition: attachment; filename="...".` */
+function extractFilename(response: Response, fallback: string): string {
+  const disposition = response.headers.get('content-disposition');
+  if (!disposition) return fallback;
+  const match = /filename\*?=(?:UTF-8''|")?([^";]+)"?/i.exec(disposition);
+  return match?.[1] ?? fallback;
+}
+
+/**
+ * Descarga un archivo binario (CSV/Excel/PDF) servido por el backend vía `StreamableFile` +
+ * `Content-Disposition: attachment` (ver `FileDownloadInterceptor` en TekoApp-Backend). A
+ * diferencia de `apiFetch`, NUNCA hace `.json()` sobre un body exitoso: el envelope
+ * `{success,data}` del `TransformInterceptor` no aplica a una respuesta binaria (el backend no lo
+ * envuelve para estos endpoints). El error 4xx/5xx sí sigue siendo JSON, así que reusa
+ * `parseErrorResponse` sin cambios.
+ */
+export async function downloadFile(
+  path: string,
+  fallbackFilename: string,
+): Promise<DownloadedFile> {
+  const response = await fetch(`/api/backend/${path}`);
+
+  if (!response.ok) {
+    throw await parseErrorResponse(response, path);
+  }
+
+  const blob = await response.blob();
+  return { blob, filename: extractFilename(response, fallbackFilename) };
+}
+
 interface UploadFileOptions {
   /** Nombre del campo del archivo en el form — default `'file'` (convención de NestJS/Multer). */
   fieldName?: string;

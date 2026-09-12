@@ -89,6 +89,16 @@ export const professionalsHandlers = [
     });
   }),
 
+  // GET /admin/professionals/export (CSV, sin envelope {success,data} — ver `downloadFile`).
+  http.get('/api/backend/admin/professionals/export', () => {
+    return new HttpResponse('id,nombre\n1,Juan Pérez', {
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': 'attachment; filename="profesionales.csv"',
+      },
+    });
+  }),
+
   http.post(
     '/api/backend/professionals/:id/verify',
     async ({ request, params }) => {

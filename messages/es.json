@@ -17,12 +17,14 @@
       "search": "Buscar",
       "retry": "Reintentar",
       "back": "Volver",
-      "view": "Ver"
+      "view": "Ver",
+      "export": "Exportar"
     },
     "states": {
       "loading": "Cargando...",
       "saving": "Guardando...",
       "deleting": "Eliminando...",
+      "generating": "Generando...",
       "yes": "Sí",
       "no": "No"
     },

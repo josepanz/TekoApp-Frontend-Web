@@ -17,12 +17,14 @@
       "search": "Search",
       "retry": "Retry",
       "back": "Back",
-      "view": "View"
+      "view": "View",
+      "export": "Export"
     },
     "states": {
       "loading": "Loading...",
       "saving": "Saving...",
       "deleting": "Deleting...",
+      "generating": "Generating...",
       "yes": "Yes",
       "no": "No"
     },

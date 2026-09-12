@@ -1,17 +1,36 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@/test/render';
+import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { professionalsHandlers } from '@/test/msw/handlers/professionals';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
+import { triggerFileDownload } from '@/lib/trigger-file-download';
 import { ProfessionalsTable } from './professionals-table';
+
+vi.mock('@/lib/trigger-file-download', () => ({
+  triggerFileDownload: vi.fn(),
+}));
+
+function mockScope(permissions: string[]) {
+  server.use(
+    http.get('/api/backend/auth/scope', () => {
+      return HttpResponse.json({
+        permissions: permissions.map((name) => ({ name })),
+        roles: [],
+      });
+    }),
+  );
+}
 
 // El agregador central `src/test/msw/handlers.ts` todavía no incluye este dominio (lo integra
 // otro equipo), así que los handlers se registran acá con `server.use`.
 beforeEach(() => {
   server.use(...professionalsHandlers);
+  // `vi.mock` crea el mock una sola vez por archivo — sin esto, las llamadas de un test quedan
+  // registradas en el siguiente.
+  vi.mocked(triggerFileDownload).mockClear();
 });
 
 function renderProfessionalsTable() {
@@ -113,5 +132,40 @@ describe('ProfessionalsTable', () => {
         'No se pudo cargar la lista de profesionales. Intentá recargar la página.',
       ),
     ).toBeInTheDocument();
+  });
+
+  it('no muestra el botón de exportar si el usuario no tiene el permiso de verificación', async () => {
+    // Arrange
+    mockScope([]);
+
+    // Act
+    renderProfessionalsTable();
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+
+    // Assert
+    expect(
+      screen.queryByRole('button', { name: 'Exportar' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('exporta el CSV de profesionales y dispara la descarga con el filename real', async () => {
+    // Arrange
+    mockScope(['admin:all']);
+    const user = userEvent.setup();
+    renderProfessionalsTable();
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+
+    // Act
+    await user.click(await screen.findByRole('button', { name: 'Exportar' }));
+
+    // Assert
+    await waitFor(() => {
+      expect(triggerFileDownload).toHaveBeenCalledTimes(1);
+    });
+    // No `expect.any(Blob)`: ver nota en payments-table.test.tsx (mismatch de `instanceof` entre
+    // el `Blob` de undici/Node y el de jsdom en este entorno de test).
+    const [blob, filename] = vi.mocked(triggerFileDownload).mock.calls[0];
+    expect(filename).toBe('profesionales.csv');
+    expect(blob.type).toBe('text/csv');
   });
 });

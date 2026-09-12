@@ -7,7 +7,12 @@ import { buildPayment, paymentsHandlers } from '@/test/msw/handlers/payments';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import { formatCurrency } from '@/lib/formatters';
+import { triggerFileDownload } from '@/lib/trigger-file-download';
 import { PaymentsTable } from './payments-table';
+
+vi.mock('@/lib/trigger-file-download', () => ({
+  triggerFileDownload: vi.fn(),
+}));
 
 function mockScope(permissions: string[]) {
   server.use(
@@ -25,6 +30,9 @@ function mockScope(permissions: string[]) {
 beforeEach(() => {
   server.use(...paymentsHandlers);
   mockScope(['admin:all']);
+  // `vi.mock` crea el mock una sola vez por archivo — sin esto, las llamadas de un test quedan
+  // registradas en el siguiente.
+  vi.mocked(triggerFileDownload).mockClear();
 });
 
 function renderPaymentsTable() {
@@ -228,5 +236,65 @@ describe('PaymentsTable', () => {
         name: `Propina: ${formatCurrency(15000, 'PYG')}`,
       }),
     ).toBeInTheDocument();
+  });
+
+  it('exporta el CSV y dispara la descarga con el filename que manda el backend', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onExportRequest = vi.fn();
+    server.use(
+      http.get('/api/backend/admin/payments/export', ({ request }) => {
+        onExportRequest(new URL(request.url).search);
+        return new HttpResponse('id,monto\n1,55000', {
+          headers: {
+            'Content-Type': 'text/csv',
+            'Content-Disposition': 'attachment; filename="pagos.csv"',
+          },
+        });
+      }),
+    );
+    renderPaymentsTable();
+    await screen.findByText('txn-uuid-abc');
+
+    // Act: sin filtro activo (ALL) → el export no debe mandar `status`.
+    await user.click(screen.getByRole('button', { name: 'Exportar' }));
+
+    // Assert
+    await waitFor(() => {
+      expect(onExportRequest).toHaveBeenCalledWith('');
+    });
+    await waitFor(() => {
+      expect(triggerFileDownload).toHaveBeenCalledTimes(1);
+    });
+    // No `expect.any(Blob)`: el `Blob` que devuelve `Response.blob()` (undici/Node) no pasa
+    // `instanceof` contra el `Blob` global de jsdom en este entorno de test — se verifica por
+    // contenido (`type`) en vez de por identidad de clase.
+    const [blob, filename] = vi.mocked(triggerFileDownload).mock.calls[0];
+    expect(filename).toBe('pagos.csv');
+    expect(blob.type).toBe('text/csv');
+  });
+
+  it('no dispara la descarga si el backend responde error al exportar', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    server.use(
+      http.get('/api/backend/admin/payments/export', () =>
+        HttpResponse.json({ message: 'Error interno' }, { status: 500 }),
+      ),
+    );
+    renderPaymentsTable();
+    await screen.findByText('txn-uuid-abc');
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Exportar' }));
+
+    // Assert: el botón vuelve a su estado normal (ya no "Generando...") y nunca se disparó la
+    // descarga con un archivo de error.
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Exportar' }),
+      ).not.toBeDisabled();
+    });
+    expect(triggerFileDownload).not.toHaveBeenCalled();
   });
 });
