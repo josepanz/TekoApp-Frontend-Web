@@ -647,6 +647,22 @@
       "rejectButton": "Rechazar",
       "confirmRejectButton": "Confirmar rechazo"
     },
+    "bulk": {
+      "approveButton": "Aprobar seleccionadas ({count})",
+      "rejectButton": "Rechazar seleccionadas ({count})",
+      "approveConfirmTitle": "Aprobar fotos seleccionadas",
+      "approveConfirmDescription": "Esta acción aprobará {count} fotos de portafolio.",
+      "approveSuccessAll": "{count} fotos aprobadas correctamente.",
+      "approvePartialResult": "{succeeded} de {total} fotos aprobadas. {failed} fallaron: {names}.",
+      "approveFailedAll": "No se pudo aprobar ninguna de las {count} fotos seleccionadas.",
+      "rejectConfirmTitle": "Rechazar fotos seleccionadas",
+      "rejectConfirmDescription": "Esta acción rechazará {count} fotos de portafolio con el motivo que indiques a continuación.",
+      "rejectionReasonLabel": "Motivo de rechazo (se aplica a todas las fotos seleccionadas)",
+      "confirmRejectButton": "Confirmar rechazo",
+      "rejectSuccessAll": "{count} fotos rechazadas correctamente.",
+      "rejectPartialResult": "{succeeded} de {total} fotos rechazadas. {failed} fallaron: {names}.",
+      "rejectFailedAll": "No se pudo rechazar ninguna de las {count} fotos seleccionadas."
+    },
     "public": {
       "title": "Trabajos anteriores"
     }

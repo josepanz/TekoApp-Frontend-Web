@@ -647,6 +647,22 @@
       "rejectButton": "Reject",
       "confirmRejectButton": "Confirm rejection"
     },
+    "bulk": {
+      "approveButton": "Approve selected ({count})",
+      "rejectButton": "Reject selected ({count})",
+      "approveConfirmTitle": "Approve selected photos",
+      "approveConfirmDescription": "This will approve {count} portfolio photos.",
+      "approveSuccessAll": "{count} photos approved successfully.",
+      "approvePartialResult": "{succeeded} of {total} photos approved. {failed} failed: {names}.",
+      "approveFailedAll": "Couldn't approve any of the {count} selected photos.",
+      "rejectConfirmTitle": "Reject selected photos",
+      "rejectConfirmDescription": "This will reject {count} portfolio photos with the reason you enter below.",
+      "rejectionReasonLabel": "Rejection reason (applies to every selected photo)",
+      "confirmRejectButton": "Confirm rejection",
+      "rejectSuccessAll": "{count} photos rejected successfully.",
+      "rejectPartialResult": "{succeeded} of {total} photos rejected. {failed} failed: {names}.",
+      "rejectFailedAll": "Couldn't reject any of the {count} selected photos."
+    },
     "public": {
       "title": "Past work"
     }
