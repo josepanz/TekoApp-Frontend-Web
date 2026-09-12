@@ -113,6 +113,43 @@ describe('getSession', () => {
       profileStatus: 'COMPLETE',
       permissions: ['admin:all'],
       roles: ['ADMIN'],
+      deletionScheduledAt: null,
     });
+  });
+
+  it('mapea deletionScheduledAt cuando el usuario tiene una solicitud de borrado activa', async () => {
+    // Arrange
+    mockCookiesGet.mockReturnValue({ value: 'token-123' });
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          success: true,
+          data: {
+            user: {
+              id: 'ref-1',
+              email: 'user@test.com',
+              firstName: 'Ana',
+              lastName: 'Gómez',
+              status: 'PENDING_DELETION',
+              profileStatus: 'COMPLETE',
+              accessLevelId: 1,
+              deletionScheduledAt: '2026-09-25T00:00:00.000Z',
+            },
+            roles: [],
+            permissions: [],
+          },
+        }),
+      }),
+    );
+
+    // Act
+    const result = await getSession();
+
+    // Assert
+    expect(result?.deletionScheduledAt).toBe('2026-09-25T00:00:00.000Z');
+    expect(result?.userStatus).toBe('PENDING_DELETION');
   });
 });

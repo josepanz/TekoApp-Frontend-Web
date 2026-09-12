@@ -117,6 +117,48 @@
       "blocked": "Bloqueadas en la configuración del navegador."
     }
   },
+  "accountDeletion": {
+    "section": {
+      "title": "Eliminar mi cuenta",
+      "description": "Pedí la baja de tu cuenta. Tenés 14 días para cancelarla antes de que se haga efectiva.",
+      "trigger": "Eliminar mi cuenta"
+    },
+    "info": {
+      "title": "Antes de continuar",
+      "description": "Esto es lo que pasa si pedís eliminar tu cuenta:",
+      "anonymized": "Se anonimizan tu nombre, email, teléfono, documento y foto de perfil — dejan de estar asociados a tu identidad real.",
+      "retained": "Se conservan tus pagos, contratos y calificaciones (por obligación legal/contable), pero ya no muestran tu nombre real.",
+      "gracePeriod": "Tenés 14 días desde que lo pedís para arrepentirte y cancelar la solicitud.",
+      "irreversible": "Pasados esos 14 días, la eliminación es definitiva: no hay forma de recuperar tu nombre ni tus datos personales.",
+      "cancel": "Cancelar",
+      "continue": "Continuar"
+    },
+    "confirm": {
+      "title": "Confirmá la eliminación",
+      "description": "Esta acción inicia el plazo de 14 días. Podés cancelarla en cualquier momento antes de que se cumpla.",
+      "blockedTitle": "No podés eliminar tu cuenta todavía:",
+      "checkboxLabel": "Entiendo que, pasado el plazo de gracia, esta acción no se puede deshacer.",
+      "back": "Volver",
+      "submit": "Confirmar eliminación",
+      "pending": "Enviando...",
+      "success": "Listo. Tu cuenta se eliminará en 14 días — podés cancelarlo cuando quieras desde acá.",
+      "genericError": "No se pudo procesar la solicitud. Intentá de nuevo."
+    },
+    "blockers": {
+      "ACTIVE_SERVICE": "{count, plural, one {Tenés # servicio en curso} other {Tenés # servicios en curso}}",
+      "PENDING_PAYMENT": "{count, plural, one {Tenés # pago pendiente} other {Tenés # pagos pendientes}}",
+      "UNSIGNED_CONTRACT": "{count, plural, one {Tenés # contrato sin firmar} other {Tenés # contratos sin firmar}}",
+      "OPEN_DISPUTE": "{count, plural, one {Tenés # disputa abierta} other {Tenés # disputas abiertas}}"
+    },
+    "banner": {
+      "title": "Eliminación pendiente",
+      "description": "Tu cuenta se eliminará el {date}. Podés cancelarlo mientras tanto.",
+      "cancel": "Cancelar eliminación",
+      "cancelling": "Cancelando...",
+      "cancelSuccess": "Se canceló la eliminación de tu cuenta.",
+      "cancelError": "No se pudo cancelar la eliminación. Intentá de nuevo."
+    }
+  },
   "auth": {
     "login": {
       "pageTitle": "{brand}",

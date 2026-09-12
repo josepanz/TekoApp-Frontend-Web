@@ -117,6 +117,48 @@
       "blocked": "Blocked in your browser settings."
     }
   },
+  "accountDeletion": {
+    "section": {
+      "title": "Delete my account",
+      "description": "Request your account to be deleted. You have 14 days to cancel before it takes effect.",
+      "trigger": "Delete my account"
+    },
+    "info": {
+      "title": "Before you continue",
+      "description": "Here's what happens if you request your account to be deleted:",
+      "anonymized": "Your name, email, phone, ID document and profile photo are anonymized — they stop being linked to your real identity.",
+      "retained": "Your payments, contracts and ratings are kept (legal/accounting requirement), but no longer show your real name.",
+      "gracePeriod": "You have 14 days from the request to change your mind and cancel it.",
+      "irreversible": "After those 14 days, the deletion is final: there is no way to recover your name or personal data.",
+      "cancel": "Cancel",
+      "continue": "Continue"
+    },
+    "confirm": {
+      "title": "Confirm the deletion",
+      "description": "This starts the 14-day window. You can cancel it any time before it's due.",
+      "blockedTitle": "You can't delete your account yet:",
+      "checkboxLabel": "I understand that, after the grace period, this action can't be undone.",
+      "back": "Back",
+      "submit": "Confirm deletion",
+      "pending": "Submitting...",
+      "success": "Done. Your account will be deleted in 14 days — you can cancel it any time from here.",
+      "genericError": "We couldn't process the request. Please try again."
+    },
+    "blockers": {
+      "ACTIVE_SERVICE": "{count, plural, one {You have # active service} other {You have # active services}}",
+      "PENDING_PAYMENT": "{count, plural, one {You have # pending payment} other {You have # pending payments}}",
+      "UNSIGNED_CONTRACT": "{count, plural, one {You have # unsigned contract} other {You have # unsigned contracts}}",
+      "OPEN_DISPUTE": "{count, plural, one {You have # open dispute} other {You have # open disputes}}"
+    },
+    "banner": {
+      "title": "Pending deletion",
+      "description": "Your account will be deleted on {date}. You can cancel it in the meantime.",
+      "cancel": "Cancel deletion",
+      "cancelling": "Cancelling...",
+      "cancelSuccess": "Your account deletion was cancelled.",
+      "cancelError": "We couldn't cancel the deletion. Please try again."
+    }
+  },
   "auth": {
     "login": {
       "pageTitle": "{brand}",
