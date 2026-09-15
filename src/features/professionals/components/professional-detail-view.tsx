@@ -26,13 +26,14 @@ const STATUS_VARIANT: Record<
   SUSPENDED: 'destructive',
 };
 
-function getVerificationVariant(
-  verificationStatus: string,
-): 'default' | 'secondary' | 'destructive' {
-  if (verificationStatus === 'verified') return 'default';
-  if (verificationStatus === 'rejected') return 'destructive';
-  return 'secondary';
-}
+const VERIFICATION_VARIANT: Record<
+  Professional['verificationStatus'],
+  'default' | 'secondary' | 'destructive'
+> = {
+  VERIFIED: 'default',
+  REJECTED: 'destructive',
+  UNVERIFIED: 'secondary',
+};
 
 export function ProfessionalDetailView({
   referenceId,
@@ -91,7 +92,7 @@ export function ProfessionalDetailView({
             </p>
           </div>
           <div className="flex gap-2">
-            {professional.verificationStatus !== 'verified' && (
+            {professional.verificationStatus !== 'VERIFIED' && (
               <VerifyProfessionalDialog professional={professional} />
             )}
             {professional.status !== 'SUSPENDED' && (
@@ -105,7 +106,7 @@ export function ProfessionalDetailView({
               {statusLabel[professional.status]}
             </Badge>
             <Badge
-              variant={getVerificationVariant(professional.verificationStatus)}
+              variant={VERIFICATION_VARIANT[professional.verificationStatus]}
             >
               {professional.verificationStatus}
             </Badge>

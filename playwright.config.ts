@@ -24,6 +24,12 @@ export default defineConfig({
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:3001',
     trace: 'on-first-retry',
+    // Sin esto, el locale del browser (y por lo tanto el `Accept-Language` que negocia
+    // `src/i18n/config.ts`) es el del sistema operativo del runner. En un runner en inglés, la
+    // app entera se sirve en inglés (`"Contraseña"` no existe) y CADA spec falla en el login,
+    // incluidos los preexistentes — no es un bug de la app, es que faltaba fijar el idioma del
+    // entorno de test. `es-PY` porque TekoApp es un marketplace paraguayo.
+    locale: 'es-PY',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [

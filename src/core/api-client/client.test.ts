@@ -44,7 +44,7 @@ describe('apiFetch', () => {
     expect(result).toEqual([{ id: 1, name: 'Plomería' }]);
   });
 
-  it('lanza ApiError con el mensaje del backend cuando la respuesta no es ok', async () => {
+  it('lanza ApiError con el mensaje del backend cuando la respuesta no es ok (DTO pelado, MSW/fake-backend)', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/categories', () =>
@@ -52,7 +52,65 @@ describe('apiFetch', () => {
       ),
     );
 
-    // Act & Assert
-    await expect(apiFetch('categories')).rejects.toThrow(ApiError);
+    // Act
+    const error = await apiFetch('categories').catch((err: unknown) => err);
+
+    // Assert
+    expect(error).toBeInstanceOf(ApiError);
+    expect((error as ApiError).message).toBe('No autorizado');
+    expect((error as ApiError).status).toBe(401);
+  });
+
+  it('lee message/errorCode/details del envelope REAL de error del backend, no del genérico', async () => {
+    // Arrange — así responde `HttpExceptionFilter` (TekoApp-Backend): nunca `message` en la
+    // raíz del body, siempre anidado en `error.message`.
+    server.use(
+      http.get('/api/backend/categories', () =>
+        HttpResponse.json(
+          {
+            success: false,
+            error: {
+              code: 409,
+              message: 'No se puede eliminar la cuenta',
+              error: 'Conflict',
+              errorCode: 'DELETION_BLOCKED',
+              details: { blockers: [{ type: 'ACTIVE_SERVICE', count: 1 }] },
+              timestamp: '2026-01-01T00:00:00.000Z',
+              path: '/tekoapp-backend/api/v1/categories',
+            },
+          },
+          { status: 409 },
+        ),
+      ),
+    );
+
+    // Act
+    const error = await apiFetch('categories').catch((err: unknown) => err);
+
+    // Assert: el mensaje real llega a la UI en vez del fallback genérico
+    // `Error 409 en categories`.
+    expect(error).toBeInstanceOf(ApiError);
+    const apiError = error as ApiError;
+    expect(apiError.message).toBe('No se puede eliminar la cuenta');
+    expect(apiError.errorCode).toBe('DELETION_BLOCKED');
+    expect(apiError.details).toEqual({
+      blockers: [{ type: 'ACTIVE_SERVICE', count: 1 }],
+    });
+  });
+
+  it('cae al mensaje genérico solo si el body no calza con ninguna de las 2 formas conocidas', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/categories', () =>
+        HttpResponse.json({ unexpected: 'shape' }, { status: 500 }),
+      ),
+    );
+
+    // Act
+    const error = await apiFetch('categories').catch((err: unknown) => err);
+
+    // Assert
+    expect((error as ApiError).message).toBe('Error 500 en categories');
+    expect((error as ApiError).errorCode).toBeUndefined();
   });
 });

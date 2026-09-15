@@ -22,7 +22,7 @@ export function buildProfessional(
     status: 'APPROVED',
     isAvailable: true,
     isOnline: false,
-    verificationStatus: 'verified',
+    verificationStatus: 'VERIFIED',
     requiredDocumentsVerified: true,
     totalServices: 42,
     averageRating: 4.8,
@@ -56,7 +56,7 @@ export const fakeProfessionalsPage1: ProfessionalsListResponse = {
       categoryId: 3,
       description: 'Electricista certificado',
       status: 'PENDING',
-      verificationStatus: 'pending',
+      verificationStatus: 'UNVERIFIED',
       isAvailable: false,
       averageRating: 4.2,
       totalRatings: 12,
@@ -89,6 +89,16 @@ export const professionalsHandlers = [
     });
   }),
 
+  // GET /admin/professionals/export (CSV, sin envelope {success,data} — ver `downloadFile`).
+  http.get('/api/backend/admin/professionals/export', () => {
+    return new HttpResponse('id,nombre\n1,Juan Pérez', {
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': 'attachment; filename="profesionales.csv"',
+      },
+    });
+  }),
+
   http.post(
     '/api/backend/professionals/:id/verify',
     async ({ request, params }) => {
@@ -99,7 +109,7 @@ export const professionalsHandlers = [
       return HttpResponse.json(
         buildProfessional({
           ...professional,
-          verificationStatus: body.isVerified ? 'verified' : 'rejected',
+          verificationStatus: body.isVerified ? 'VERIFIED' : 'REJECTED',
           status: body.isVerified ? 'APPROVED' : 'REJECTED',
         }),
       );

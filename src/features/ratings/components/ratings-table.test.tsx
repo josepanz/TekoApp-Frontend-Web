@@ -1,25 +1,60 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@/test/render';
+import { render, screen, waitFor, within } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
-import { fakeRatings, ratingsHandlers } from '@/test/msw/handlers/ratings';
+import {
+  buildRating,
+  fakeRatings,
+  ratingsHandlers,
+} from '@/test/msw/handlers/ratings';
 import { RatingsTable } from './ratings-table';
 
 function renderRatingsTable() {
   const queryClient = createTestQueryClient();
-  return render(
+  render(
     <QueryClientProvider client={queryClient}>
       <RatingsTable />
     </QueryClientProvider>,
+  );
+  return queryClient;
+}
+
+function mockScope(permissions: string[]) {
+  server.use(
+    http.get('/api/backend/auth/scope', () => {
+      return HttpResponse.json({
+        permissions: permissions.map((name) => ({ name })),
+        roles: [],
+      });
+    }),
   );
 }
 
 describe('RatingsTable', () => {
   beforeEach(() => {
     server.use(...ratingsHandlers);
+    mockScope(['admin:all']);
+  });
+
+  it('no renderiza nada si el usuario no tiene permiso de auditoría', async () => {
+    // Arrange
+    mockScope([]);
+
+    // Act
+    const queryClient = renderRatingsTable();
+
+    // Assert
+    await waitFor(() =>
+      expect(queryClient.getQueryState(['auth', 'scope'])?.status).toBe(
+        'success',
+      ),
+    );
+    expect(
+      screen.queryByText('Excelente trabajo, muy profesional y puntual.'),
+    ).not.toBeInTheDocument();
   });
 
   it('muestra las filas de calificaciones una vez cargadas', async () => {
@@ -48,6 +83,112 @@ describe('RatingsTable', () => {
     expect(screen.getAllByText('Reportada', { selector: 'span' })).toHaveLength(
       1,
     );
+  });
+
+  it('muestra "Anónimo" en vez de "#null" cuando la calificación es anónima y no hay ids', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: null,
+            userName: null,
+            professionalId: null,
+            professionalName: null,
+            isAnonymous: true,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findAllByText('Anónimo')).toHaveLength(2);
+    expect(screen.queryByText('#null')).not.toBeInTheDocument();
+  });
+
+  it('muestra "Anónimo" aunque el backend mande el nombre real, si la calificación es anónima', async () => {
+    // Arrange: el admin tiene permiso de auditoría, así que el backend le manda el nombre real
+    // incluso en una calificación anónima — la UI igual respeta la elección de anonimato del
+    // usuario y no expone el nombre.
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: 'Nombre Real Del Usuario',
+            professionalId: 20,
+            professionalName: 'Nombre Real Del Profesional',
+            isAnonymous: true,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findAllByText('Anónimo')).toHaveLength(2);
+    expect(
+      screen.queryByText('Nombre Real Del Usuario'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Nombre Real Del Profesional'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('muestra el nombre real del usuario y del profesional cuando la calificación no es anónima', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: 'Carlos López',
+            professionalId: 20,
+            professionalName: 'Marta Ruiz',
+            isAnonymous: false,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findByText('Carlos López')).toBeInTheDocument();
+    expect(screen.getByText('Marta Ruiz')).toBeInTheDocument();
+    expect(screen.queryByText('#7')).not.toBeInTheDocument();
+    expect(screen.queryByText('#20')).not.toBeInTheDocument();
+  });
+
+  it('recurre al id cuando la calificación no es anónima pero el backend no manda el nombre', async () => {
+    // Arrange: caso defensivo — no debería pasar para admin/staff según el contrato del DTO,
+    // pero el tipo sigue siendo nullable y no queremos romper la fila si pasa.
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: null,
+            professionalId: 20,
+            professionalName: null,
+            isAnonymous: false,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findByText('#7')).toBeInTheDocument();
+    expect(screen.getByText('#20')).toBeInTheDocument();
   });
 
   it('muestra un mensaje vacío cuando el backend no devuelve calificaciones', async () => {
@@ -106,5 +247,77 @@ describe('RatingsTable', () => {
 
     // Assert
     await waitFor(() => expect(deletedId).toBe(fakeRatings[0].referenceId));
+  });
+
+  it('elimina en bloque las calificaciones seleccionadas cuando todas las llamadas tienen éxito', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const deletedIds: string[] = [];
+    server.use(
+      http.delete('/api/backend/ratings/:id', ({ params }) => {
+        deletedIds.push(String(params.id));
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+    renderRatingsTable();
+    await screen.findByText('Excelente trabajo, muy profesional y puntual.');
+
+    // Act
+    const rowCheckboxes = screen.getAllByRole('checkbox', {
+      name: 'Seleccionar fila',
+    });
+    await user.click(rowCheckboxes[0]);
+    await user.click(rowCheckboxes[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'Eliminar seleccionadas (2)' }),
+    );
+    const dialog = await screen.findByRole('alertdialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Eliminar' }));
+
+    // Assert
+    await waitFor(() => {
+      expect(deletedIds.sort()).toEqual(
+        [fakeRatings[0].referenceId, fakeRatings[1].referenceId].sort(),
+      );
+    });
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+  });
+
+  it('reporta el fallo parcial y no bloquea el resto cuando alguna eliminación falla', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    server.use(
+      http.delete('/api/backend/ratings/:id', ({ params }) => {
+        if (params.id === fakeRatings[1].referenceId) {
+          return HttpResponse.json(
+            { message: 'No autorizado' },
+            { status: 403 },
+          );
+        }
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+    renderRatingsTable();
+    await screen.findByText('Excelente trabajo, muy profesional y puntual.');
+
+    // Act
+    const rowCheckboxes = screen.getAllByRole('checkbox', {
+      name: 'Seleccionar fila',
+    });
+    await user.click(rowCheckboxes[0]);
+    await user.click(rowCheckboxes[1]);
+    await user.click(
+      screen.getByRole('button', { name: 'Eliminar seleccionadas (2)' }),
+    );
+    const dialog = await screen.findByRole('alertdialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Eliminar' }));
+
+    // Assert: el diálogo se cierra y la selección se limpia pese al fallo parcial
+    await waitFor(() => {
+      expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    });
+    expect(
+      screen.getAllByRole('checkbox', { name: 'Seleccionar fila' })[0],
+    ).not.toBeChecked();
   });
 });

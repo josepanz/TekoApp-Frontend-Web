@@ -3,16 +3,19 @@ import { toast } from 'sonner';
 import {
   cancelPayment,
   createTip,
+  exportPayments,
   getMyPayments,
   getPaymentById,
   getPayments,
   getTipConfig,
   refundPayment,
   type CreateTipDto,
+  type ExportPaymentsParams,
   type GetPaymentsParams,
   type RefundPaymentDto,
 } from './api';
 import { ApiError } from '@/core/api-client/errors';
+import { triggerFileDownload } from '@/lib/trigger-file-download';
 
 const PAYMENTS_QUERY_KEY = 'payments';
 const TIP_CONFIG_QUERY_KEY = 'tip-config';
@@ -110,6 +113,23 @@ export function useCancelPaymentMutation() {
         getErrorMessage(
           error,
           'No se pudo cancelar el pago. Intentá de nuevo.',
+        ),
+      );
+    },
+  });
+}
+
+// Dispara la descarga del CSV con los filtros activos de la tabla (nunca "exportar todo"
+// ignorando el filtro visible) — ver `admin-data-export.md`.
+export function useExportPaymentsMutation() {
+  return useMutation({
+    mutationFn: (params: ExportPaymentsParams) => exportPayments(params),
+    onSuccess: ({ blob, filename }) => triggerFileDownload(blob, filename),
+    onError: (error) => {
+      toast.error(
+        getErrorMessage(
+          error,
+          'No se pudo generar el archivo. Intentá de nuevo.',
         ),
       );
     },

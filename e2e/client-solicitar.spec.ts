@@ -6,7 +6,7 @@ test.describe('Cliente — Solicitar servicio', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/login');
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
-    await page.getByLabel('Contraseña').fill('Sup3rSecreto!');
+    await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
     await expect(page).toHaveURL('/');
   });
