@@ -85,14 +85,16 @@ describe('RatingsTable', () => {
     );
   });
 
-  it('muestra "Anónimo" en vez de "#null" cuando userId/professionalId vienen null', async () => {
+  it('muestra "Anónimo" en vez de "#null" cuando la calificación es anónima y no hay ids', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/ratings', () =>
         HttpResponse.json([
           buildRating({
             userId: null,
+            userName: null,
             professionalId: null,
+            professionalName: null,
             isAnonymous: true,
           }),
         ]),
@@ -105,6 +107,88 @@ describe('RatingsTable', () => {
     // Assert
     expect(await screen.findAllByText('Anónimo')).toHaveLength(2);
     expect(screen.queryByText('#null')).not.toBeInTheDocument();
+  });
+
+  it('muestra "Anónimo" aunque el backend mande el nombre real, si la calificación es anónima', async () => {
+    // Arrange: el admin tiene permiso de auditoría, así que el backend le manda el nombre real
+    // incluso en una calificación anónima — la UI igual respeta la elección de anonimato del
+    // usuario y no expone el nombre.
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: 'Nombre Real Del Usuario',
+            professionalId: 20,
+            professionalName: 'Nombre Real Del Profesional',
+            isAnonymous: true,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findAllByText('Anónimo')).toHaveLength(2);
+    expect(
+      screen.queryByText('Nombre Real Del Usuario'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Nombre Real Del Profesional'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('muestra el nombre real del usuario y del profesional cuando la calificación no es anónima', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: 'Carlos López',
+            professionalId: 20,
+            professionalName: 'Marta Ruiz',
+            isAnonymous: false,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findByText('Carlos López')).toBeInTheDocument();
+    expect(screen.getByText('Marta Ruiz')).toBeInTheDocument();
+    expect(screen.queryByText('#7')).not.toBeInTheDocument();
+    expect(screen.queryByText('#20')).not.toBeInTheDocument();
+  });
+
+  it('recurre al id cuando la calificación no es anónima pero el backend no manda el nombre', async () => {
+    // Arrange: caso defensivo — no debería pasar para admin/staff según el contrato del DTO,
+    // pero el tipo sigue siendo nullable y no queremos romper la fila si pasa.
+    server.use(
+      http.get('/api/backend/ratings', () =>
+        HttpResponse.json([
+          buildRating({
+            userId: 7,
+            userName: null,
+            professionalId: 20,
+            professionalName: null,
+            isAnonymous: false,
+          }),
+        ]),
+      ),
+    );
+
+    // Act
+    renderRatingsTable();
+
+    // Assert
+    expect(await screen.findByText('#7')).toBeInTheDocument();
+    expect(screen.getByText('#20')).toBeInTheDocument();
   });
 
   it('muestra un mensaje vacío cuando el backend no devuelve calificaciones', async () => {

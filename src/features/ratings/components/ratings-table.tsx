@@ -146,23 +146,35 @@ function RatingsTableContent() {
     {
       id: 'userId',
       header: t('table.user'),
-      // El backend manda `userId: null` cuando la calificación es anónima y quien consulta no
-      // es el autor — nunca pasa para admin/staff hoy, pero el tipo es nullable y un id vacío
-      // (`#null`) causó un crash real en Mobile (tarea B-01 de su WORKPLAN). No resolvemos el
-      // nombre acá: el DTO no lo trae, y armar un lookup por fila sería un N+1 — eso requiere un
-      // cambio de DTO en el backend, no de esta tabla.
-      cell: ({ row }) =>
-        row.original.userId === null
-          ? t('table.anonymous')
-          : `#${row.original.userId}`,
+      // "Anónimo" comunica una decisión del usuario (calificar sin identificarse) — no la
+      // confundimos con "no teníamos el nombre". `RatingDetailResponseDTO.userName` (tarea 9 de
+      // platform-hardening-2026-09, backend) ya trae el nombre real con el mismo criterio de
+      // anonimato que `userId` (null solo para un viewer sin permiso de auditoría; para
+      // admin/staff nunca es null). Por eso `isAnonymous` decide la etiqueta, no la nulidad del
+      // id/nombre: si es anónima mostramos "Anónimo" aunque el backend nos haya mandado el
+      // nombre real (admin lo tiene por auditoría, pero la UI respeta la elección de anonimato).
+      // El fallback a `#id`/'—' es defensivo (no debería pasar para admin/staff hoy).
+      cell: ({ row }) => {
+        const { isAnonymous, userId, userName } = row.original;
+        if (isAnonymous) {
+          return t('table.anonymous');
+        }
+        return userName ?? (userId === null ? '—' : `#${userId}`);
+      },
     },
     {
       id: 'professionalId',
       header: t('table.professional'),
-      cell: ({ row }) =>
-        row.original.professionalId === null
-          ? t('table.anonymous')
-          : `#${row.original.professionalId}`,
+      cell: ({ row }) => {
+        const { isAnonymous, professionalId, professionalName } = row.original;
+        if (isAnonymous) {
+          return t('table.anonymous');
+        }
+        return (
+          professionalName ??
+          (professionalId === null ? '—' : `#${professionalId}`)
+        );
+      },
     },
     {
       accessorKey: 'rating',
