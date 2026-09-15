@@ -1,3 +1,5 @@
+## [1.0.0-develop.14](https://github.com/josepanz/TekoApp-Frontend-Web/compare/v1.0.0-develop.13...v1.0.0-develop.14) (2026-09-15)
+
 ## [1.0.0-develop.13](https://github.com/josepanz/TekoApp-Frontend-Web/compare/v1.0.0-develop.12...v1.0.0-develop.13) (2026-09-04)
 
 ## [1.0.0-develop.12](https://github.com/josepanz/TekoApp-Frontend-Web/compare/v1.0.0-develop.11...v1.0.0-develop.12) (2026-09-04)
