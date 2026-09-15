@@ -939,6 +939,229 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/v1/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener historial de notificaciones paginado del usuario */
+        get: operations["NotificationsController_findAll"];
+        put?: never;
+        /** Emitir y encolar una nueva notificación */
+        post: operations["NotificationsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar las notificaciones no leídas */
+        get: operations["NotificationsController_findUnread"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/unread/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener contador de elementos no leídos */
+        get: operations["NotificationsController_getUnreadCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Marcar una notificación específica como leída */
+        put: operations["NotificationsController_markAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Marcar todas las notificaciones del usuario como leídas */
+        put: operations["NotificationsController_markAllAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remover una notificación del historial */
+        delete: operations["NotificationsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stream en tiempo real de notificaciones (SSE) para el usuario autenticado — solo cubre "app abierta ahora mismo", complementario a Web Push/FCM */
+        get: operations["NotificationsController_stream"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push/vapid-public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener la clave pública VAPID para pushManager.subscribe() */
+        get: operations["NotificationsController_getVapidPublicKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) la suscripción Web Push del navegador actual */
+        post: operations["NotificationsController_registerPushSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja una suscripción Web Push */
+        delete: operations["NotificationsController_removePushSubscription"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) el token FCM del dispositivo actual */
+        post: operations["NotificationsController_registerFcmToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja un token FCM */
+        delete: operations["NotificationsController_removeFcmToken"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notification-preferences/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener las preferencias de notificación del usuario autenticado (un ítem por tipo) */
+        get: operations["NotificationPreferencesController_getMyPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Activar/desactivar un tipo de notificación puntual (auto-save por switch) */
+        patch: operations["NotificationPreferencesController_updateMyPreference"];
+        trace?: never;
+    };
     "/tekoapp-backend/api/v1/services": {
         parameters: {
             query?: never;
@@ -1450,211 +1673,6 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener historial de notificaciones paginado del usuario */
-        get: operations["NotificationsController_findAll"];
-        put?: never;
-        /** Emitir y encolar una nueva notificación */
-        post: operations["NotificationsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/unread": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Listar las notificaciones no leídas */
-        get: operations["NotificationsController_findUnread"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/unread/count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener contador de elementos no leídos */
-        get: operations["NotificationsController_getUnreadCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Marcar una notificación específica como leída */
-        put: operations["NotificationsController_markAsRead"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Marcar todas las notificaciones del usuario como leídas */
-        put: operations["NotificationsController_markAllAsRead"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Remover una notificación del historial */
-        delete: operations["NotificationsController_remove"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/stream": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Stream en tiempo real de notificaciones (SSE) para el usuario autenticado — solo cubre "app abierta ahora mismo", complementario a Web Push/FCM */
-        get: operations["NotificationsController_stream"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/push/vapid-public-key": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener la clave pública VAPID para pushManager.subscribe() */
-        get: operations["NotificationsController_getVapidPublicKey"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/push-subscriptions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Registrar (o actualizar) la suscripción Web Push del navegador actual */
-        post: operations["NotificationsController_registerPushSubscription"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/push-subscriptions/{referenceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Dar de baja una suscripción Web Push */
-        delete: operations["NotificationsController_removePushSubscription"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/fcm-tokens": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Registrar (o actualizar) el token FCM del dispositivo actual */
-        post: operations["NotificationsController_registerFcmToken"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/v1/notifications/fcm-tokens/{referenceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Dar de baja un token FCM */
-        delete: operations["NotificationsController_removeFcmToken"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3167,6 +3185,110 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/v1/payments/{id}/disputes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial de disputas de un pago
+         * @description Cliente, profesional, o staff con payments.audit:read/admin:all.
+         */
+        get: operations["PaymentDisputesController_listForPayment"];
+        put?: never;
+        /**
+         * Abrir una disputa sobre un pago
+         * @description Solo el cliente o el profesional del pago. Solo un pago COMPLETED/PARTIAL_REFUNDED puede disputarse, y no puede haber otra disputa OPEN/UNDER_REVIEW ya abierta sobre el mismo pago.
+         */
+        post: operations["PaymentDisputesController_openDispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/payments/{id}/disputes/{referenceId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retirar una disputa propia
+         * @description Solo quien la abrió, y solo mientras siga OPEN (sin staff asignado).
+         */
+        post: operations["PaymentDisputesController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cola de disputas para staff
+         * @description Paginada, filtrable por status. Requiere disputes.adjudication:manage.
+         */
+        get: operations["AdminDisputesController_listQueue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes/{referenceId}/claim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Tomar una disputa para revisarla
+         * @description OPEN -> UNDER_REVIEW. Requiere disputes.adjudication:manage.
+         */
+        patch: operations["AdminDisputesController_claim"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes/{referenceId}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Adjudicar una disputa
+         * @description RESOLVED/REJECTED. Si la resolución es FULL_REFUND/PARTIAL_REFUND, dispara el reembolso (PaymentDbService.executeRefund) dentro de la misma transacción. Requiere disputes.adjudication:manage.
+         */
+        patch: operations["AdminDisputesController_resolve"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3363,6 +3485,11 @@ export interface components {
              *     ]
              */
             permissions: string[];
+            /**
+             * @description Tarea 8 (platform-hardening-2026-09): si el email/teléfono de este usuario se exponen en ServiceUserSummaryResponseDTO. Solo presente en la respuesta de PUT /auth/me (lectura fresca de DB tras la edición) — GET /auth/me lee directo del JWT, que no lleva este campo (deliberado: no se tocó el payload del token para esta tarea), así que ahí siempre viene ausente.
+             * @example true
+             */
+            shareContactInfo?: boolean;
         };
         UpdateMeRequestDTO: {
             /** @example Juan */
@@ -3376,6 +3503,11 @@ export interface components {
              * @example a1b2c3d4-e5f6.jpg
              */
             avatarKey?: string;
+            /**
+             * @description Tarea 8 (platform-hardening-2026-09): si el propio usuario permite que su email/teléfono se expongan en ServiceUserSummaryResponseDTO (a quien pueda ver el servicio, ej. el profesional viendo el contacto del cliente). Default true en la base — esto es un opt-out explícito, no un opt-in.
+             * @example false
+             */
+            shareContactInfo?: boolean;
         };
         RoleScopeDTO: {
             /** @example merchant-admin */
@@ -4538,6 +4670,227 @@ export interface components {
              */
             reason: string;
         };
+        CreateNotificationRequestDTO: {
+            /**
+             * @description Título descriptivo de la notificación
+             * @example Nueva solicitud de servicio
+             */
+            title: string;
+            /**
+             * @description Cuerpo detallado del mensaje de la notificación
+             * @example El cliente Juan Pérez ha solicitado un servicio de plomería.
+             */
+            message: string;
+            /**
+             * @description Tipo o categoría de la notificación para segmentación
+             * @example service_request
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description Objeto con datos dinámicos requeridos por el cliente (Payload útil)
+             * @example {
+             *       "requestId": "c52b5212-db5e-4ef5-9614-726614174000",
+             *       "price": 45000
+             *     }
+             */
+            data?: Record<string, never>;
+            /**
+             * @description Canales específicos de distribución y despacho para la notificación
+             * @default [
+             *       "in_app"
+             *     ]
+             * @example [
+             *       "in_app",
+             *       "push",
+             *       "email"
+             *     ]
+             */
+            channels: string[];
+            /**
+             * @description Metadatos adicionales de auditoría o traza técnica
+             * @example {
+             *       "ip": "192.168.1.1",
+             *       "device": "iOS"
+             *     }
+             */
+            metadata?: Record<string, never>;
+        };
+        NotificationResponseDTO: {
+            /**
+             * @description ID de la notificación
+             * @example 6481fc923fbc4a3a6c23e801
+             */
+            id: string;
+            /**
+             * @description ID del usuario destino
+             * @example 6481fc923fbc4a3a6c23e802
+             */
+            userId: string;
+            /**
+             * @description Título de la notificación
+             * @example Pago Recibido
+             */
+            title: string;
+            /**
+             * @description Mensaje de la notificación
+             * @example Tu pago ha sido procesado exitosamente.
+             */
+            message: string;
+            /**
+             * @example payment_received
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @example read
+             * @enum {string}
+             */
+            status: "pending" | "sent" | "read" | "failed";
+            /**
+             * @description Canales asignados
+             * @example [
+             *       "in_app"
+             *     ]
+             */
+            channels: string[];
+            /** @description Payload con datos extras */
+            data?: Record<string, never>;
+            /**
+             * Format: date-time
+             * @description Fecha de lectura
+             * @example 2026-06-07T22:30:00.000Z
+             */
+            readAt?: string;
+            /**
+             * Format: date-time
+             * @description Fecha de envío
+             * @example 2026-06-07T22:25:00.000Z
+             */
+            sentAt?: string;
+            /**
+             * Format: date-time
+             * @description Fecha de creación
+             * @example 2026-06-07T22:24:00.000Z
+             */
+            createdAt: string;
+        };
+        UnreadCountResponseDTO: {
+            /**
+             * @description Cantidad consolidada de notificaciones pendientes de lectura
+             * @example 5
+             */
+            count: number;
+        };
+        VapidPublicKeyResponseDTO: {
+            /**
+             * @description Clave pública VAPID — la usa el frontend en pushManager.subscribe({ applicationServerKey })
+             * @example BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4
+             */
+            publicKey: string;
+        };
+        PushSubscriptionKeysDTO: {
+            /**
+             * @description Clave pública P-256 de la suscripción (cifrado del payload)
+             * @example BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM
+             */
+            p256dh: string;
+            /**
+             * @description Secreto de autenticación de la suscripción
+             * @example tBHItJI5svbpez7KI4CCXg
+             */
+            auth: string;
+        };
+        CreatePushSubscriptionRequestDTO: {
+            /**
+             * @description URL única del endpoint del navegador para este dispositivo/sesión
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /** @description Claves de cifrado de la suscripción */
+            keys: components["schemas"]["PushSubscriptionKeysDTO"];
+            /**
+             * @description User-Agent del navegador al momento de suscribirse (informativo, para soporte)
+             * @example Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+             */
+            userAgent?: string;
+        };
+        PushSubscriptionResponseDTO: {
+            /**
+             * @description Identificador público de la suscripción
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Endpoint del navegador registrado
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /**
+             * Format: date-time
+             * @description Fecha de creación de la suscripción
+             */
+            createdAt: string;
+        };
+        CreateFcmTokenRequestDTO: {
+            /**
+             * @description Token FCM del dispositivo (retornado por firebase_messaging/getToken())
+             * @example dGVzdC1mY20tdG9rZW4tZXhhbXBsZQ
+             */
+            token: string;
+            /**
+             * @description Plataforma que registra el token
+             * @example ANDROID
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+        };
+        FcmTokenResponseDTO: {
+            /**
+             * @description Identificador público del token
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Plataforma del dispositivo
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+            /**
+             * Format: date-time
+             * @description Fecha de registro del token
+             */
+            createdAt: string;
+        };
+        NotificationPreferenceItemResponseDTO: {
+            /**
+             * @example promotion
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description false si el usuario desactivó explícitamente este tipo.
+             * @example true
+             */
+            enabled: boolean;
+        };
+        NotificationPreferencesResponseDTO: {
+            /** @description Un ítem por cada valor de NotificationType — no solo los que el usuario desactivó, para que el frontend pueda pintar todos los switches sin tener que conocer el catálogo completo. */
+            preferences: components["schemas"]["NotificationPreferenceItemResponseDTO"][];
+        };
+        UpdateNotificationPreferenceRequestDTO: {
+            /**
+             * @description Tipo de notificación cuya preferencia se está cambiando.
+             * @example promotion
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description true = el usuario quiere seguir recibiendo este tipo; false = lo desactivó. Se guarda por switch (auto-save), no hace falta mandar el resto de las preferencias.
+             * @example false
+             */
+            enabled: boolean;
+        };
         CreateServiceRequestDTO: {
             /** @description Título del servicio */
             title: string;
@@ -4573,13 +4926,19 @@ export interface components {
             id: number;
             /** @example a1b2c3d4-e5f6-7890-abcd-ef1234567890 */
             referenceId: string;
-            /** @example juan@example.com */
-            email: string;
+            /**
+             * @description Ausente (no `null`, la clave directamente no viaja) cuando el dueño de esta cuenta desactivó `shareContactInfo` — ver services-response.helper.ts#maskContactIfNotShared. Tarea 8, platform-hardening-2026-09.
+             * @example juan@example.com
+             */
+            email?: string;
             /** @example Juan */
             firstName: string;
             /** @example Pérez */
             lastName: string;
-            /** @example +595981234567 */
+            /**
+             * @description Mismo criterio de ausencia condicional que `email` (tarea 8).
+             * @example +595981234567
+             */
             phoneNumber?: string;
         };
         ServiceProfessionalSummaryResponseDTO: {
@@ -5382,198 +5741,6 @@ export interface components {
              */
             rate: number;
         };
-        CreateNotificationRequestDTO: {
-            /**
-             * @description Título descriptivo de la notificación
-             * @example Nueva solicitud de servicio
-             */
-            title: string;
-            /**
-             * @description Cuerpo detallado del mensaje de la notificación
-             * @example El cliente Juan Pérez ha solicitado un servicio de plomería.
-             */
-            message: string;
-            /**
-             * @description Tipo o categoría de la notificación para segmentación
-             * @example service_request
-             * @enum {string}
-             */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
-            /**
-             * @description Objeto con datos dinámicos requeridos por el cliente (Payload útil)
-             * @example {
-             *       "requestId": "c52b5212-db5e-4ef5-9614-726614174000",
-             *       "price": 45000
-             *     }
-             */
-            data?: Record<string, never>;
-            /**
-             * @description Canales específicos de distribución y despacho para la notificación
-             * @default [
-             *       "in_app"
-             *     ]
-             * @example [
-             *       "in_app",
-             *       "push",
-             *       "email"
-             *     ]
-             */
-            channels: string[];
-            /**
-             * @description Metadatos adicionales de auditoría o traza técnica
-             * @example {
-             *       "ip": "192.168.1.1",
-             *       "device": "iOS"
-             *     }
-             */
-            metadata?: Record<string, never>;
-        };
-        NotificationResponseDTO: {
-            /**
-             * @description ID de la notificación
-             * @example 6481fc923fbc4a3a6c23e801
-             */
-            id: string;
-            /**
-             * @description ID del usuario destino
-             * @example 6481fc923fbc4a3a6c23e802
-             */
-            userId: string;
-            /**
-             * @description Título de la notificación
-             * @example Pago Recibido
-             */
-            title: string;
-            /**
-             * @description Mensaje de la notificación
-             * @example Tu pago ha sido procesado exitosamente.
-             */
-            message: string;
-            /**
-             * @example payment_received
-             * @enum {string}
-             */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
-            /**
-             * @example read
-             * @enum {string}
-             */
-            status: "pending" | "sent" | "read" | "failed";
-            /**
-             * @description Canales asignados
-             * @example [
-             *       "in_app"
-             *     ]
-             */
-            channels: string[];
-            /** @description Payload con datos extras */
-            data?: Record<string, never>;
-            /**
-             * Format: date-time
-             * @description Fecha de lectura
-             * @example 2026-06-07T22:30:00.000Z
-             */
-            readAt?: string;
-            /**
-             * Format: date-time
-             * @description Fecha de envío
-             * @example 2026-06-07T22:25:00.000Z
-             */
-            sentAt?: string;
-            /**
-             * Format: date-time
-             * @description Fecha de creación
-             * @example 2026-06-07T22:24:00.000Z
-             */
-            createdAt: string;
-        };
-        UnreadCountResponseDTO: {
-            /**
-             * @description Cantidad consolidada de notificaciones pendientes de lectura
-             * @example 5
-             */
-            count: number;
-        };
-        VapidPublicKeyResponseDTO: {
-            /**
-             * @description Clave pública VAPID — la usa el frontend en pushManager.subscribe({ applicationServerKey })
-             * @example BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4
-             */
-            publicKey: string;
-        };
-        PushSubscriptionKeysDTO: {
-            /**
-             * @description Clave pública P-256 de la suscripción (cifrado del payload)
-             * @example BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM
-             */
-            p256dh: string;
-            /**
-             * @description Secreto de autenticación de la suscripción
-             * @example tBHItJI5svbpez7KI4CCXg
-             */
-            auth: string;
-        };
-        CreatePushSubscriptionRequestDTO: {
-            /**
-             * @description URL única del endpoint del navegador para este dispositivo/sesión
-             * @example https://fcm.googleapis.com/fcm/send/abc123
-             */
-            endpoint: string;
-            /** @description Claves de cifrado de la suscripción */
-            keys: components["schemas"]["PushSubscriptionKeysDTO"];
-            /**
-             * @description User-Agent del navegador al momento de suscribirse (informativo, para soporte)
-             * @example Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
-             */
-            userAgent?: string;
-        };
-        PushSubscriptionResponseDTO: {
-            /**
-             * @description Identificador público de la suscripción
-             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
-             */
-            referenceId: string;
-            /**
-             * @description Endpoint del navegador registrado
-             * @example https://fcm.googleapis.com/fcm/send/abc123
-             */
-            endpoint: string;
-            /**
-             * Format: date-time
-             * @description Fecha de creación de la suscripción
-             */
-            createdAt: string;
-        };
-        CreateFcmTokenRequestDTO: {
-            /**
-             * @description Token FCM del dispositivo (retornado por firebase_messaging/getToken())
-             * @example dGVzdC1mY20tdG9rZW4tZXhhbXBsZQ
-             */
-            token: string;
-            /**
-             * @description Plataforma que registra el token
-             * @example ANDROID
-             * @enum {string}
-             */
-            deviceType: "WEB" | "ANDROID" | "IOS";
-        };
-        FcmTokenResponseDTO: {
-            /**
-             * @description Identificador público del token
-             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
-             */
-            referenceId: string;
-            /**
-             * @description Plataforma del dispositivo
-             * @enum {string}
-             */
-            deviceType: "WEB" | "ANDROID" | "IOS";
-            /**
-             * Format: date-time
-             * @description Fecha de registro del token
-             */
-            createdAt: string;
-        };
         CreatePromotionRequestDTO: {
             /**
              * @description Código único de la promoción
@@ -5913,10 +6080,20 @@ export interface components {
              */
             userId: number | null;
             /**
+             * @description Nombre completo del usuario de `userId` ("Nombre Apellido"). Mismo criterio de anonimato que `userId`: null cuando `userId` es null (nunca se filtra la identidad por esta vía aunque el id esté oculto). Tarea 9, platform-hardening-2026-09 — reemplaza el id crudo que las tablas admin de Web mostraban ("Anónimo" era un parche de UI).
+             * @example Juan Pérez
+             */
+            userName: string | null;
+            /**
              * @description ID del profesional involucrado (calificado si type=CLIENT_TO_PROFESSIONAL, autor si type=PROFESSIONAL_TO_CLIENT). null cuando isAnonymous=true y quien consulta no es el autor ni tiene permiso de auditoría — nunca null para admin/staff.
              * @example 1
              */
             professionalId: number | null;
+            /**
+             * @description Nombre completo del profesional de `professionalId` ("Nombre Apellido"). Mismo criterio de anonimato que `professionalId`. Tarea 9, platform-hardening-2026-09.
+             * @example Ana Gómez
+             */
+            professionalName: string | null;
             /**
              * @description ID de la solicitud de servicio asociada
              * @example b72c6323-ec6f-5fg6-a725-837725285111
@@ -7256,6 +7433,66 @@ export interface components {
              * @enum {string}
              */
             status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
+        };
+        CreateDisputeRequestDTO: {
+            /** @enum {string} */
+            reason: "SERVICE_NOT_PROVIDED" | "POOR_SERVICE_QUALITY" | "OVERCHARGE" | "DUPLICATE_PAYMENT" | "FRAUD" | "OTHER";
+            /**
+             * @description Explicación del reclamo
+             * @example El profesional nunca llegó al domicilio pactado
+             */
+            description: string;
+            /** @description Keys de S3 de evidencia adjunta (fotos, comprobantes) */
+            evidenceKeys?: string[];
+        };
+        DisputePartyResponseDTO: {
+            referenceId: string;
+            firstName: string;
+            lastName: string;
+        };
+        DisputeResponseDTO: {
+            /** @description referenceId (UUID) público de la disputa */
+            referenceId: string;
+            /** @description referenceId (UUID) del pago disputado */
+            paymentReferenceId: string;
+            /** @enum {string} */
+            reason: "SERVICE_NOT_PROVIDED" | "POOR_SERVICE_QUALITY" | "OVERCHARGE" | "DUPLICATE_PAYMENT" | "FRAUD" | "OTHER";
+            description: string;
+            evidenceKeys: string[];
+            /** @enum {string} */
+            status: "OPEN" | "UNDER_REVIEW" | "RESOLVED" | "REJECTED" | "WITHDRAWN";
+            openedBy: components["schemas"]["DisputePartyResponseDTO"];
+            adjudicatedBy?: components["schemas"]["DisputePartyResponseDTO"];
+            /** @enum {string} */
+            resolution?: "FULL_REFUND" | "PARTIAL_REFUND" | "NO_REFUND" | "OTHER_REMEDY";
+            resolutionNotes?: string;
+            /** @description Solo si resolution es FULL_REFUND/PARTIAL_REFUND */
+            refundAmount?: number;
+            /** Format: date-time */
+            resolvedAt?: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        DisputesListResponseDTO: {
+            data: components["schemas"]["DisputeResponseDTO"][];
+        };
+        DisputesQueueResponseDTO: {
+            data: components["schemas"]["DisputeResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        ResolveDisputeRequestDTO: {
+            /** @enum {string} */
+            resolution: "FULL_REFUND" | "PARTIAL_REFUND" | "NO_REFUND" | "OTHER_REMEDY";
+            /**
+             * @description Motivo de la adjudicación, visible en el registro contable
+             * @example Se verificó con el profesional: el reclamo es procedente
+             */
+            resolutionNotes: string;
+            /**
+             * @description Obligatorio si resolution es FULL_REFUND o PARTIAL_REFUND. Validado también por PaymentDbService.executeRefund contra el monto disponible del pago.
+             * @example 100
+             */
+            refundAmount?: number;
         };
     };
     responses: never;
@@ -9381,6 +9618,314 @@ export interface operations {
             };
         };
     };
+    NotificationsController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Límite máximo de notificaciones a retornar en la consulta */
+                limit?: number;
+                /** @description Cantidad de registros a omitir para paginación (Offset) */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"][];
+                };
+            };
+        };
+    };
+    NotificationsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateNotificationRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_findUnread: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"][];
+                };
+            };
+        };
+    };
+    NotificationsController_getUnreadCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnreadCountResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_markAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador único de la notificación (MongoDB ObjectId) */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_markAllAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador único de la notificación (MongoDB ObjectId) */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_stream: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_getVapidPublicKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VapidPublicKeyResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_registerPushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePushSubscriptionRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removePushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público de la suscripción Web Push */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_registerFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFcmTokenRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FcmTokenResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removeFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público del token FCM */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationPreferencesController_getMyPreferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationPreferencesResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationPreferencesController_updateMyPreference: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateNotificationPreferenceRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationPreferencesResponseDTO"];
+                };
+            };
+        };
+    };
     ServicesController_getServices: {
         parameters: {
             query?: {
@@ -10504,272 +11049,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TaxConfigResponseDTO"];
                 };
-            };
-        };
-    };
-    NotificationsController_findAll: {
-        parameters: {
-            query?: {
-                /** @description Límite máximo de notificaciones a retornar en la consulta */
-                limit?: number;
-                /** @description Cantidad de registros a omitir para paginación (Offset) */
-                offset?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"][];
-                };
-            };
-        };
-    };
-    NotificationsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateNotificationRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_findUnread: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"][];
-                };
-            };
-        };
-    };
-    NotificationsController_getUnreadCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UnreadCountResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_markAsRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador único de la notificación (MongoDB ObjectId) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_markAllAsRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador único de la notificación (MongoDB ObjectId) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_stream: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_getVapidPublicKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["VapidPublicKeyResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_registerPushSubscription: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePushSubscriptionRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PushSubscriptionResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_removePushSubscription: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador público de la suscripción Web Push */
-                referenceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_registerFcmToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateFcmTokenRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FcmTokenResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_removeFcmToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador público del token FCM */
-                referenceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -13646,6 +13925,201 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["DeletionCancelResponseDTO"];
                 };
+            };
+        };
+    };
+    PaymentDisputesController_listForPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputesListResponseDTO"];
+                };
+            };
+        };
+    };
+    PaymentDisputesController_openDispute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDisputeRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description No es cliente ni profesional del pago. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Ya existe una disputa abierta sobre este pago. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PaymentDisputesController_withdraw: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description Ya fue tomada o resuelta. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminDisputesController_listQueue: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                status?: "OPEN" | "UNDER_REVIEW" | "RESOLVED" | "REJECTED" | "WITHDRAWN";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputesQueueResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminDisputesController_claim: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description Otro staff ya la tomó. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminDisputesController_resolve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveDisputeRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description refundAmount faltante para una resolución que reembolsa. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description La disputa ya no es adjudicable. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
