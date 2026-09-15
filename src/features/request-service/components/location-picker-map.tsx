@@ -2,7 +2,6 @@
 
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 
 // Leaflet + OpenStreetMap — sin API key, 100% gratuito (a diferencia de Google Maps, que además
@@ -28,7 +27,6 @@ export function LocationPickerMap({
   longitude,
   onChange,
 }: LocationPickerMapProps) {
-  const t = useTranslations('requestService');
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
@@ -70,17 +68,26 @@ export function LocationPickerMap({
       mapRef.current = null;
       markerRef.current = null;
     };
-    // Solo se inicializa una vez — mover el mapa/marcador ante cambios de lat/lng viene del
-    // propio usuario arrastrando el marcador, no de un re-render con nuevas props.
+    // Solo se inicializa una vez — el drag/click son un camino más para setear la posición, no
+    // el único (ver los inputs numéricos en `request-service-form.tsx`).
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // El mapa es una ayuda visual opcional: cuando la posición cambia desde otro lado (los inputs
+  // numéricos de latitud/longitud), el marcador y el centro del mapa se actualizan para reflejarlo.
+  useEffect(() => {
+    if (!markerRef.current || !mapRef.current) return;
+    const current = markerRef.current.getLatLng();
+    if (current.lat === latitude && current.lng === longitude) return;
+    markerRef.current.setLatLng([latitude, longitude]);
+    mapRef.current.panTo([latitude, longitude]);
+  }, [latitude, longitude]);
 
   return (
     <div
       ref={containerRef}
       className="h-64 w-full overflow-hidden rounded-md border"
-      role="application"
-      aria-label={t('map.ariaLabel')}
+      aria-hidden="true"
     />
   );
 }

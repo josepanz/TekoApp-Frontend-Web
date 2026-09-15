@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCurrency } from '@/lib/formatters';
+import { PublicPortfolioGallery } from '@/features/professional-portfolio/components/public-portfolio-gallery';
 import { useProfessionalDetailQuery } from '../hooks';
 
 export function ProfessionalDetailCard({
@@ -66,6 +67,9 @@ export function ProfessionalDetailCard({
             ))}
           </div>
         )}
+        <PublicPortfolioGallery
+          professionalReferenceId={professional.referenceId}
+        />
       </CardContent>
     </Card>
   );

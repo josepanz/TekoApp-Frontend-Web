@@ -1,8 +1,12 @@
-import { apiFetch } from '@/core/api-client/client';
+import { apiFetch, uploadFile } from '@/core/api-client/client';
 import type { components } from '@/core/api-client/types.generated';
 
 export type ProfessionalDocument =
   components['schemas']['ProfessionalDocumentResponseDTO'];
+export type MyDocumentStatus =
+  components['schemas']['MyDocumentStatusResponseDTO'];
+export type MyDocumentsListResponse =
+  components['schemas']['MyDocumentsListResponseDTO'];
 export type AdminProfessionalDocument =
   components['schemas']['AdminProfessionalDocumentResponseDTO'];
 export type AdminProfessionalDocumentsListResponse =
@@ -69,4 +73,22 @@ export function getPresignedUrl(key: string): Promise<{ url: string }> {
   return apiFetch<{ url: string }>(
     `uploads/presigned-url?key=${encodeURIComponent(key)}`,
   );
+}
+
+// GET /professionals/me/documents — cada tipo de documento aplicable a MI categoría, con mi
+// documento más recientemente cargado si existe (el backend ya hace el cruce, no hace falta pedir
+// el catálogo completo por separado).
+export function getMyDocuments(): Promise<MyDocumentStatus[]> {
+  return apiFetch<MyDocumentsListResponse>('professionals/me/documents').then(
+    (response) => response.data,
+  );
+}
+
+export function uploadMyDocument(
+  file: File,
+  professionalDocumentTypeReferenceId: string,
+): Promise<ProfessionalDocument> {
+  return uploadFile<ProfessionalDocument>('professionals/me/documents', file, {
+    fields: { professionalDocumentTypeReferenceId },
+  });
 }

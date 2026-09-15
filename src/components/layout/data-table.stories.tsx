@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import type { ColumnDef } from '@tanstack/react-table';
+import { useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { DataTable } from './data-table';
 
 type Professional = {
+  id: string;
   name: string;
   service: string;
   status: 'Activo' | 'Pendiente' | 'Bloqueado';
@@ -30,9 +32,14 @@ const columns: ColumnDef<Professional>[] = [
 ];
 
 const data: Professional[] = [
-  { name: 'Ana Giménez', service: 'Plomería', status: 'Activo' },
-  { name: 'Juan Pérez', service: 'Electricidad', status: 'Pendiente' },
-  { name: 'María Rodríguez', service: 'Pintura', status: 'Bloqueado' },
+  { id: '1', name: 'Ana Giménez', service: 'Plomería', status: 'Activo' },
+  { id: '2', name: 'Juan Pérez', service: 'Electricidad', status: 'Pendiente' },
+  {
+    id: '3',
+    name: 'María Rodríguez',
+    service: 'Pintura',
+    status: 'Bloqueado',
+  },
 ];
 
 const meta = {
@@ -64,5 +71,27 @@ export const Empty: Story = {
     columns,
     data: [],
     emptyMessage: 'No hay profesionales para mostrar',
+  },
+};
+
+// Selección de filas para acciones masivas (ver `BulkActionsBar`) — controlada por el caller,
+// igual que `pagination`.
+export const WithSelection: Story = {
+  render: () => {
+    function Wrapper() {
+      const [selectedIds, setSelectedIds] = useState<string[]>([]);
+      return (
+        <DataTable
+          columns={columns}
+          data={data}
+          selection={{
+            selectedIds,
+            onSelectionChange: setSelectedIds,
+            getRowId: (row) => row.id,
+          }}
+        />
+      );
+    }
+    return <Wrapper />;
   },
 };

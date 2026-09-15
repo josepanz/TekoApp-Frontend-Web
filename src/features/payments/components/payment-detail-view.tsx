@@ -9,6 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
 import { usePaymentDetailQuery } from '../hooks';
 import type { PaymentStatus } from '../api';
 import { CancelPaymentDialog } from './cancel-payment-dialog';
@@ -33,7 +35,23 @@ const STATUS_VARIANT: Record<
 const REFUNDABLE_STATUSES: PaymentStatus[] = ['PAID', 'COMPLETED'];
 const CANCELLABLE_STATUSES: PaymentStatus[] = ['PENDING', 'PROCESSING'];
 
+// Gate client-side por permiso (`payments.audit:read`/`admin:all`) — mismo patrón que
+// `service-progress-section.tsx`: no pedimos el detalle si el permiso no está asignado.
 export function PaymentDetailView({ id }: { id: string }) {
+  const { data: scope } = useSessionScopeQuery();
+  const canView = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.PAYMENTS.AUDIT_VIEW, PERMISSIONS.ADMIN.ALL],
+  );
+
+  if (!canView) {
+    return null;
+  }
+
+  return <PaymentDetailViewContent id={id} />;
+}
+
+function PaymentDetailViewContent({ id }: { id: string }) {
   const t = useTranslations('payments');
   const locale = useAppLocale();
   const { data: payment, isPending, isError } = usePaymentDetailQuery(id);

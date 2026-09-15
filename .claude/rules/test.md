@@ -51,8 +51,12 @@ describe('UserTable', () => {
 ## Playwright (e2e)
 
 - Vive en `e2e/` en la raíz del proyecto (no en `src/`).
-- Cubre por ahora: login completo (real contra un backend de test) + un flujo CRUD representativo
-  (users). Se amplía a medida que se agregan dominios — no se busca cubrir el 100% de las rutas
+- Corre contra `e2e/fake-backend/` (un servidor liviano que simula las rutas necesarias), nunca
+  contra el backend real — ver `playwright.config.ts`.
+- Cubre por ahora (`e2e/*.spec.ts`): `login.spec.ts` (login completo + error de credenciales +
+  logout), `admin-categories.spec.ts` (CRUD de categorías), `client-solicitar.spec.ts` (un cliente
+  solicita un servicio y lo ve en "Mis servicios") y `smoke.spec.ts`. **`users` NO tiene e2e
+  todavía** — se amplía a medida que se agregan dominios, no se busca cubrir el 100% de las rutas
   con e2e, eso es trabajo de los tests unitarios/integración.
 - `data-testid` solo cuando no hay un rol ARIA o texto visible confiable para seleccionar el
   elemento — preferir `getByRole`/`getByLabelText` siempre que se pueda.

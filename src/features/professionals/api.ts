@@ -1,4 +1,8 @@
-import { apiFetch } from '@/core/api-client/client';
+import {
+  apiFetch,
+  downloadFile,
+  type DownloadedFile,
+} from '@/core/api-client/client';
 import type { components, operations } from '@/core/api-client/types.generated';
 
 export type Professional =
@@ -59,4 +63,28 @@ export function suspendProfessional(
     method: 'POST',
     body: JSON.stringify(dto),
   });
+}
+
+// GET /admin/professionals/export (AdminProfessionalsExportController_export) — CSV solamente,
+// sin paginar, mismos filtros que el listado público (incluye `search`). Gateado por
+// PROFESSIONALS.VERIFY/ADMIN.ALL en el backend. Responde un StreamableFile sin envelope
+// {success,data}, por eso usa `downloadFile` y no `apiFetch`.
+export type ExportProfessionalsParams = NonNullable<
+  operations['AdminProfessionalsExportController_export']['parameters']['query']
+>;
+
+export function exportProfessionals(
+  params: ExportProfessionalsParams = {},
+): Promise<DownloadedFile> {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      query.set(key, String(value));
+    }
+  });
+  const queryString = query.toString();
+  return downloadFile(
+    `admin/professionals/export${queryString ? `?${queryString}` : ''}`,
+    'profesionales.csv',
+  );
 }

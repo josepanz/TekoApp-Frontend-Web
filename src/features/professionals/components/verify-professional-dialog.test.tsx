@@ -12,7 +12,7 @@ function renderDialog() {
   const queryClient = createTestQueryClient();
   const professional = buildProfessional({
     id: 7,
-    verificationStatus: 'pending',
+    verificationStatus: 'UNVERIFIED',
   });
   render(
     <QueryClientProvider client={queryClient}>
@@ -33,7 +33,7 @@ describe('VerifyProfessionalDialog', () => {
           const body = await request.json();
           onRequest(params.id, body);
           return HttpResponse.json(
-            buildProfessional({ verificationStatus: 'verified' }),
+            buildProfessional({ verificationStatus: 'VERIFIED' }),
           );
         },
       ),
@@ -68,7 +68,7 @@ describe('VerifyProfessionalDialog', () => {
           const body = await request.json();
           onRequest(params.id, body);
           return HttpResponse.json(
-            buildProfessional({ verificationStatus: 'rejected' }),
+            buildProfessional({ verificationStatus: 'REJECTED' }),
           );
         },
       ),

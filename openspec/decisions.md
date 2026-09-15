@@ -431,3 +431,122 @@ trabajo aislado sobre ese endpoint ya listo.
 Verificado: `pnpm check:types` 0 errores, `pnpm lint` 0 warnings, `pnpm test` 69 archivos/215 tests
 en verde (sin tests nuevos — cambio puramente aditivo sobre un enum ya cubierto por los tests
 existentes del formulario/tabla).
+
+## Galería de portafolio de trabajos — implementado 2026-09-02 (Fase 5 de onboarding-and-portfolio)
+
+Ver `TekoApp-Backend/openspec/specs/professional-onboarding-and-portfolio.md`, Fase 4 (modelo
+`ProfessionalPortfolioItems`, revisión de staff) — este repo no tenía spec propia todavía para el
+tramo de onboarding (Fases 1-3 viven en PRs separados sin mergear); esta fase cierra el vertical
+completo del lado Web: autogestión del profesional + cola de revisión de staff + vista pública.
+Tipos generados (`pnpm generate:api-types`) contra el backend de esa fase corriendo local en su
+propia branch, mismo criterio que cualquier feature nueva de backend todavía no mergeada a develop.
+
+- `src/features/professional-portfolio/` nuevo, espejo de `professional-documents/`:
+  `api.ts`/`hooks.ts`/`schemas.ts` + `MyPortfolioManager` (grid propio: subir/editar
+  caption/visibilidad/borrar), `PublicPortfolioGallery` (solo lectura, embebida en
+  `ProfessionalDetailCard` del lado cliente), `PortfolioReviewQueueTable` +
+  `PortfolioReviewDialog` (cola de staff, mismo patrón que `ReviewQueueTable`/
+  `DocumentReviewDialog` de `professional-documents`).
+- `core/api-client/client.ts#uploadFile` extendido con `options?: {fieldName?, fields?}` (antes
+  solo aceptaba `fieldName`) para poder mandar `caption` en el mismo multipart que el archivo —
+  sin callers previos, cambio de firma seguro (mismo hallazgo ya hecho una vez en la Fase 2 de Web
+  de esta misma spec, en una branch distinta sin mergear todavía; se repite acá porque esta branch
+  partió de `develop`, que no tiene esa extensión).
+- Rutas nuevas: `/pro/portafolio` (nav `layout.nav.pro.portfolio`) y `/admin/professional-portfolio`
+  (nav `layout.nav.admin.professionalPortfolio`).
+- Sin `history`/cola por profesional para portafolio (a diferencia de documentos) — el backend no
+  expone ese endpoint para portafolio, solo la cola global paginada por estado.
+
+Verificado: `pnpm check:types` 0 errores, `pnpm lint` 0 warnings, `pnpm test` 76 archivos/237 tests
+en verde (7 archivos nuevos).
+
+## Corte de versionado a `/v1` en todas las rutas del backend — implementado 2026-09-07 (auditoría)
+
+Ver `TekoApp-Backend` commits bedcca1 y 7e22526 — el backend versiona el 100% de sus rutas
+(cambiando `defaultVersion: '1'` en su config), así que el frontend necesitaba reflejar ese cambio
+en su punto de inyección del prefijo. Antes, `/v1/` se prefijaba solo para una lista hardcodeada
+de dominios (`V1_DOMAINS` con auth, onboarding, roles, users, uploads); ahora se hace
+incondicionalmente porque todo endpoint real del backend vive bajo `/v1`.
+
+El prefijo se inyecta en un **único punto de control**: `resolveBackendPath()` en
+`src/core/api-client/backend-paths.ts` — es el paso obligatorio antes de cualquier fetch al backend.
+Esa función es reutilizada por `backend-proxy.ts`, `login/route.ts`, `register/route.ts` y
+`session.ts` (siendo estas tres últimas las rutas Next que salen del navegador directo al backend
+con RSA + Basic Auth, no vía el proxy genérico). También se actualizó `e2e/fake-backend/server.mjs`
+para que los mocks mantengan el mismo contrato de `/v1` preconvenciones. Los handlers de MSW no se
+tocaron: interceptan las rutas internas Next (`/api/backend/*` y `/api/auth/*`), nunca la URL
+real del backend.
+
+Durante la auditoría quedó aclarado que el enunciado original de esta tarea contenía dos errores
+de análisis: `refresh/route.ts` no existe en este repo (el token refresh viaja por el proxy
+genérico vía la ruta interna `auth/refresh-token`, cubierta por `BASIC_AUTH_PATHS`), y
+`register/route.ts` **sí** llama al backend directo, igual que `login/route.ts` (ambas con RSA +
+Basic Auth) pero no estaba listado. Las rutas `logout/route.ts` y `realtime/ticket/route.ts` no
+llaman al backend real.
+
+**Excepción conocida**: `/tekoapp-backend/api/healthcheck` quedó tipificada como
+`VERSION_NEUTRAL` en el backend (por requerimiento de las probes de K8s y de Render), así que NO
+lleva el prefijo `/v1`. A la fecha ningún código de este repo la consume, de modo que no se
+agregó lógica de excepción a `resolveBackendPath()`. Si en el futuro algún caller (por ejemplo,
+una sonda de monitoreo local) la invoca, deberá saltear el prefijo porque `resolveBackendPath`
+lo agrega sin condición — se recomienda documentarlo si eso ocurre.
+
+Commit c0aaeb6 (2026-09-05).
+
+## Regeneración de tipos contra el backend real y hallazgo de bugs de casing — implementado 2026-09-07
+
+Commit 750e0d4: `pnpm generate:api-types` corrió contra el backend en su rama de versionado,
+produciendo un delta importante en `src/core/api-client/types.generated.ts`: subió de 13.399 a
+13.652 líneas, incorporando las 3 rutas admin nuevas (`admin/audit-logs`, `admin/payments/export`,
+`admin/professionals/export`), todas bajo `/v1`. **169 de 170 path keys están ahora versionadas**,
+dejando mínima la superficie de cambios futuros.
+
+**Bug real destapado por el codegen**: `Professional.verificationStatus` estaba tipado como
+`string` suelto en los tipos viejos — una fuga que permitió que el frontend comparara contra
+literales en minúscula (`'verified'` / `'rejected'`) cuando el backend siempre envió MAYÚSCULAS
+(`"UNVERIFIED"` | `"VERIFIED"` | `"REJECTED"`). Las comparaciones nunca matchearon en runtime.
+Como resultado, el badge de verificación mostraba la variante de estado equivocada para TODOS los
+profesionales: un `VERIFIED` caía en el fallback `'secondary'` en lugar de `'default'`, y un
+`REJECTED` también caía en fallback en lugar de `'destructive'`.
+
+El primer intento de fix (commit 07e40d7) no fue suficiente porque el helper `getVerificationVariant()`
+recibía el parámetro tipado como `string` ancho, lo que desactivaba cualquier protección de
+compilador. El fix definitivo (commit 9de6e1d) reemplazó el helper por un `Record` exhaustivo,
+`Record<Professional['verificationStatus'], ...>`, directamente en las dos ubicaciones que lo
+usaban (`professional-detail-view.tsx` y `professionals-table.tsx`), mapeando explícitamente
+`VERIFIED → 'default'`, `REJECTED → 'destructive'`, `UNVERIFIED → 'secondary'`. Eso obliga al
+compilador a avisar si el backend agrega un nuevo valor. Se corrigió además un literal numérico
+en minúscula que había quedado en `src/test/msw/handlers/client-mode.ts`.
+
+**Lección**: un parámetro tipado `string` en lugar del union generado por `generate:api-types`
+anula completamente la protección que el codegen existe para proveer — es exactamente el drift
+que la herramienta está diseñada para prevenir y detectar.
+
+Commits 750e0d4 (types), 07e40d7 (fix fallible) y 9de6e1d (fix definitivo).
+
+## Adición de estado `PENDING_DELETION` en `User` — implementado 2026-09-07
+
+Commit 07e40d7: como parte de la integración de la feature de borrado de cuenta del backend
+(I-01 del backend), el tipo `User['status']` ganó un nuevo valor `PENDING_DELETION`. La decisión
+de producto (José) fue tipificar ese estado con la variante `'secondary'` en el Badge (mismo
+precedente que `PENDING_VERIFICATION`, el otro estado transitorio del sistema — la elección
+deliberada fue no agrandar el enum de variantes del Badge solo para esto).
+
+La copia para el nuevo estado es propia — se agregó en `messages/es.json` como `"Eliminación
+pendiente"` y en `messages/en.json` como `"Pending deletion"`. Se rechazó explícitamente reusar
+la copia existente de `DELETED` como placeholder porque sería **falsa** en el contexto de la UI
+de staff: un usuario tipificado como `PENDING_DELETION` está dentro de la ventana de gracia de
+14 días desde su solicitud de borrado, y la baja todavía puede cancelarse. Mostrar "Eliminado"
+llevaría al operador a creer incorrectamente que no hay nada que hacer, cuando en realidad la
+cuenta está en estado reversible.
+
+**Aclaración importante**: esto **no** constituye una implementación de la tarea I-02 (pantalla
+de autogestión del borrado en `(client)/perfil` para que el cliente mismo pueda solicitar su
+baja). Esa pantalla sigue pendiente y bloqueada en el roadmap. Este cambio solo mantiene honesta
+una tabla de staff que ya existía (`admin/users`), evitando falsos positivos en las auditorías
+operativas.
+
+Commit 07e40d7 (con el bug de casing, en paralelo).
+
+Verificado: `pnpm check:types` 0 errores, `pnpm lint` 0 errores / 0 warnings, `pnpm test -- --run`
+87 archivos / 283 tests en verde.

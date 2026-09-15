@@ -22,6 +22,7 @@ const STATUS_VARIANT: Record<
   BLOCKED: 'destructive',
   DELETED: 'destructive',
   REFUSED: 'destructive',
+  PENDING_DELETION: 'secondary',
 };
 
 const PAGE_SIZE = 10;
@@ -45,6 +46,7 @@ export function UsersTable() {
     BLOCKED: t('status.BLOCKED'),
     DELETED: t('status.DELETED'),
     REFUSED: t('status.REFUSED'),
+    PENDING_DELETION: t('status.PENDING_DELETION'),
   };
 
   const columns: ColumnDef<User, unknown>[] = [
