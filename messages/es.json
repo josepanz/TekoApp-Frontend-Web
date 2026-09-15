@@ -17,12 +17,14 @@
       "search": "Buscar",
       "retry": "Reintentar",
       "back": "Volver",
-      "view": "Ver"
+      "view": "Ver",
+      "export": "Exportar"
     },
     "states": {
       "loading": "Cargando...",
       "saving": "Guardando...",
       "deleting": "Eliminando...",
+      "generating": "Generando...",
       "yes": "Sí",
       "no": "No"
     },
@@ -54,7 +56,9 @@
         "legalDocumentVersions": "Documentos legales",
         "dataRetentionPolicies": "Políticas de retención",
         "consentAudit": "Auditoría de consentimiento",
-        "materialCatalog": "Catálogo de materiales"
+        "materialCatalog": "Catálogo de materiales",
+        "contracts": "Contratos",
+        "auditLog": "Auditoría"
       },
       "client": {
         "home": "Inicio",
@@ -113,6 +117,48 @@
       "blocked": "Bloqueadas en la configuración del navegador."
     }
   },
+  "accountDeletion": {
+    "section": {
+      "title": "Eliminar mi cuenta",
+      "description": "Pedí la baja de tu cuenta. Tenés 14 días para cancelarla antes de que se haga efectiva.",
+      "trigger": "Eliminar mi cuenta"
+    },
+    "info": {
+      "title": "Antes de continuar",
+      "description": "Esto es lo que pasa si pedís eliminar tu cuenta:",
+      "anonymized": "Se anonimizan tu nombre, email, teléfono, documento y foto de perfil — dejan de estar asociados a tu identidad real.",
+      "retained": "Se conservan tus pagos, contratos y calificaciones (por obligación legal/contable), pero ya no muestran tu nombre real.",
+      "gracePeriod": "Tenés 14 días desde que lo pedís para arrepentirte y cancelar la solicitud.",
+      "irreversible": "Pasados esos 14 días, la eliminación es definitiva: no hay forma de recuperar tu nombre ni tus datos personales.",
+      "cancel": "Cancelar",
+      "continue": "Continuar"
+    },
+    "confirm": {
+      "title": "Confirmá la eliminación",
+      "description": "Esta acción inicia el plazo de 14 días. Podés cancelarla en cualquier momento antes de que se cumpla.",
+      "blockedTitle": "No podés eliminar tu cuenta todavía:",
+      "checkboxLabel": "Entiendo que, pasado el plazo de gracia, esta acción no se puede deshacer.",
+      "back": "Volver",
+      "submit": "Confirmar eliminación",
+      "pending": "Enviando...",
+      "success": "Listo. Tu cuenta se eliminará en 14 días — podés cancelarlo cuando quieras desde acá.",
+      "genericError": "No se pudo procesar la solicitud. Intentá de nuevo."
+    },
+    "blockers": {
+      "ACTIVE_SERVICE": "{count, plural, one {Tenés # servicio en curso} other {Tenés # servicios en curso}}",
+      "PENDING_PAYMENT": "{count, plural, one {Tenés # pago pendiente} other {Tenés # pagos pendientes}}",
+      "UNSIGNED_CONTRACT": "{count, plural, one {Tenés # contrato sin firmar} other {Tenés # contratos sin firmar}}",
+      "OPEN_DISPUTE": "{count, plural, one {Tenés # disputa abierta} other {Tenés # disputas abiertas}}"
+    },
+    "banner": {
+      "title": "Eliminación pendiente",
+      "description": "Tu cuenta se eliminará el {date}. Podés cancelarlo mientras tanto.",
+      "cancel": "Cancelar eliminación",
+      "cancelling": "Cancelando...",
+      "cancelSuccess": "Se canceló la eliminación de tu cuenta.",
+      "cancelError": "No se pudo cancelar la eliminación. Intentá de nuevo."
+    }
+  },
   "auth": {
     "login": {
       "pageTitle": "{brand}",
@@ -149,6 +195,8 @@
       "slug": "Slug",
       "iconColor": "Ícono / Color",
       "visible": "Visible",
+      "visibleBadge": "Visible",
+      "hiddenBadge": "Oculta",
       "actions": "Acciones",
       "hide": "Ocultar {name}",
       "show": "Mostrar {name}",
@@ -158,6 +206,14 @@
     "delete": {
       "title": "Eliminar categoría",
       "description": "Esta acción eliminará permanentemente la categoría \"{name}\". No se puede deshacer."
+    },
+    "bulkDelete": {
+      "cta": "Eliminar seleccionadas ({count})",
+      "confirmTitle": "Eliminar categorías seleccionadas",
+      "confirmDescription": "Esta acción eliminará permanentemente {count} categorías. No se puede deshacer.",
+      "successAll": "{count} categorías eliminadas correctamente.",
+      "partialResult": "{succeeded} de {total} categorías eliminadas. {failed} fallaron: {names}.",
+      "failedAll": "No se pudo eliminar ninguna de las {count} categorías seleccionadas."
     },
     "form": {
       "editTitle": "Editar categoría",
@@ -300,6 +356,14 @@
       "materialCatalog": {
         "title": "Catálogo de materiales",
         "description": "Materiales y calidades sugeridos que los profesionales usan para armar presupuestos."
+      },
+      "contracts": {
+        "title": "Contratos",
+        "description": "Listado de contratos de servicio para soporte y disputas legales. Solo lectura."
+      },
+      "auditLog": {
+        "title": "Auditoría",
+        "description": "Rastro de auditoría de cambios en tablas de negocio: quién cambió qué, cuándo y con qué valores. Solo lectura."
       }
     },
     "client": {
@@ -383,7 +447,8 @@
       "INACTIVE": "Inactivo",
       "BLOCKED": "Bloqueado",
       "DELETED": "Eliminado",
-      "REFUSED": "Rechazado"
+      "REFUSED": "Rechazado",
+      "PENDING_DELETION": "Eliminación pendiente"
     },
     "detail": {
       "back": "Volver a usuarios",
@@ -422,6 +487,22 @@
       "title": "Verificar profesional",
       "verifiedLabel": "Marcar como verificado",
       "notes": "Notas"
+    },
+    "bulk": {
+      "verifyButton": "Verificar seleccionados ({count})",
+      "suspendButton": "Suspender seleccionados ({count})",
+      "verifyConfirmTitle": "Verificar profesionales seleccionados",
+      "verifyConfirmDescription": "Esta acción marcará como verificados a {count} profesionales.",
+      "verifySuccessAll": "{count} profesionales verificados correctamente.",
+      "verifyPartialResult": "{succeeded} de {total} profesionales verificados. {failed} fallaron: {names}.",
+      "verifyFailedAll": "No se pudo verificar a ninguno de los {count} profesionales seleccionados.",
+      "suspendConfirmTitle": "Suspender profesionales seleccionados",
+      "suspendConfirmDescription": "Esta acción suspenderá a {count} profesionales con el motivo que indiques a continuación.",
+      "suspendReasonLabel": "Motivo de suspensión (se aplica a todos los profesionales seleccionados)",
+      "confirmSuspendButton": "Confirmar suspensión",
+      "suspendSuccessAll": "{count} profesionales suspendidos correctamente.",
+      "suspendPartialResult": "{succeeded} de {total} profesionales suspendidos. {failed} fallaron: {names}.",
+      "suspendFailedAll": "No se pudo suspender a ninguno de los {count} profesionales seleccionados."
     },
     "detail": {
       "back": "Volver a profesionales",
@@ -581,6 +662,22 @@
       "approveButton": "Aprobar",
       "rejectButton": "Rechazar",
       "confirmRejectButton": "Confirmar rechazo"
+    },
+    "bulk": {
+      "approveButton": "Aprobar seleccionadas ({count})",
+      "rejectButton": "Rechazar seleccionadas ({count})",
+      "approveConfirmTitle": "Aprobar fotos seleccionadas",
+      "approveConfirmDescription": "Esta acción aprobará {count} fotos de portafolio.",
+      "approveSuccessAll": "{count} fotos aprobadas correctamente.",
+      "approvePartialResult": "{succeeded} de {total} fotos aprobadas. {failed} fallaron: {names}.",
+      "approveFailedAll": "No se pudo aprobar ninguna de las {count} fotos seleccionadas.",
+      "rejectConfirmTitle": "Rechazar fotos seleccionadas",
+      "rejectConfirmDescription": "Esta acción rechazará {count} fotos de portafolio con el motivo que indiques a continuación.",
+      "rejectionReasonLabel": "Motivo de rechazo (se aplica a todas las fotos seleccionadas)",
+      "confirmRejectButton": "Confirmar rechazo",
+      "rejectSuccessAll": "{count} fotos rechazadas correctamente.",
+      "rejectPartialResult": "{succeeded} de {total} fotos rechazadas. {failed} fallaron: {names}.",
+      "rejectFailedAll": "No se pudo rechazar ninguna de las {count} fotos seleccionadas."
     },
     "public": {
       "title": "Trabajos anteriores"
@@ -847,7 +944,7 @@
       "loadError": "No se pudo cargar el rol.",
       "permissionsCount": "{count} permisos",
       "permissionsTitle": "Permisos asignados",
-      "createdBy": "Creado por {user}"
+      "createdBy": "Creado por {user} el {date}"
     }
   },
   "payments": {
@@ -1041,6 +1138,7 @@
     "table": {
       "user": "Usuario",
       "professional": "Profesional",
+      "anonymous": "Anónimo",
       "rating": "Calificación",
       "type": "Tipo",
       "reported": "Reportada",
@@ -1055,6 +1153,14 @@
       "title": "Eliminar calificación",
       "description": "Esta acción no se puede deshacer. La calificación se eliminará permanentemente.",
       "confirm": "Confirmar eliminación"
+    },
+    "bulkDelete": {
+      "cta": "Eliminar seleccionadas ({count})",
+      "confirmTitle": "Eliminar calificaciones seleccionadas",
+      "confirmDescription": "Esta acción eliminará permanentemente {count} calificaciones. No se puede deshacer.",
+      "successAll": "{count} calificaciones eliminadas correctamente.",
+      "partialResult": "{succeeded} de {total} calificaciones eliminadas. {failed} fallaron: {names}.",
+      "failedAll": "No se pudo eliminar ninguna de las {count} calificaciones seleccionadas."
     }
   },
   "notifications": {
@@ -1063,6 +1169,22 @@
       "service_accepted": "Servicio aceptado",
       "service_rejected": "Servicio rechazado",
       "service_completed": "Servicio completado",
+      "service_cancelled": "Servicio cancelado",
+      "budget_options_ready": "Presupuestos disponibles",
+      "budget_option_selected": "Presupuesto seleccionado",
+      "contract_created": "Contrato creado",
+      "contract_awaiting_signature": "Contrato pendiente de firma",
+      "contract_signed": "Contrato firmado",
+      "payment_refunded": "Pago reembolsado",
+      "document_approved": "Documento aprobado",
+      "document_rejected": "Documento rechazado",
+      "dispute_opened": "Disputa abierta",
+      "dispute_resolved": "Disputa resuelta",
+      "account_deletion_requested": "Eliminación de cuenta solicitada",
+      "account_deletion_cancelled": "Eliminación de cuenta cancelada",
+      "professional_verified": "Profesional verificado",
+      "professional_verification_rejected": "Verificación de profesional rechazada",
+      "professional_suspended": "Profesional suspendido",
       "payment_received": "Pago recibido",
       "rating_received": "Calificación recibida",
       "promotion": "Promoción",
@@ -1194,14 +1316,18 @@
       "serviceType": "Tipo de servicio",
       "serviceTypePlaceholder": "Elegí un tipo",
       "address": "Dirección",
-      "location": "Ubicación del servicio",
-      "locationHint": "Hacé click en el mapa o arrastrá el marcador para elegir dónde es el trabajo.",
+      "locationHint": "Ingresá la latitud y longitud, o arrastrá el marcador del mapa.",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
       "urgent": "Es urgente",
       "submitting": "Enviando...",
-      "submit": "Solicitar profesional"
-    },
-    "map": {
-      "ariaLabel": "Mapa para elegir la ubicación del servicio"
+      "submit": "Solicitar profesional",
+      "sections": {
+        "whatTitle": "Qué necesitás",
+        "whatDescription": "Contanos qué tipo de trabajo buscás y una breve descripción.",
+        "whereTitle": "Dónde es el trabajo",
+        "whenTitle": "Cuándo"
+      }
     }
   },
   "rateProfessional": {
@@ -1249,11 +1375,16 @@
     },
     "form": {
       "loadError": "No se pudo cargar tu perfil profesional.",
+      "sectionTitle": "Datos del perfil",
       "description": "Descripción",
       "hourlyRate": "Tarifa por hora",
       "fixedRate": "Tarifa fija (opcional)",
       "yearsOfExperience": "Años de experiencia",
-      "skills": "Habilidades (separadas por coma)"
+      "skills": "Habilidades (separadas por coma)",
+      "preview": {
+        "completion": "Completitud del perfil",
+        "ratingsCount": "{count, plural, one {# calificación} other {# calificaciones}}"
+      }
     }
   },
   "professionalApplication": {
@@ -1262,6 +1393,8 @@
       "link": "Postulate como profesional"
     },
     "form": {
+      "sectionTitle": "Contanos sobre tu trabajo",
+      "sectionDescription": "Tu perfil profesional quedará pendiente de aprobación hasta que el staff lo revise — te avisaremos apenas eso pase.",
       "category": "Categoría",
       "categoryPlaceholder": "Elegí una categoría",
       "description": "Descripción",
@@ -1341,6 +1474,72 @@
       "IN_PROGRESS": "En curso",
       "COMPLETED": "Completado",
       "CANCELLED": "Cancelado"
+    }
+  },
+  "contracts": {
+    "table": {
+      "reference": "Referencia",
+      "status": "Estado",
+      "client": "Cliente",
+      "professional": "Profesional",
+      "service": "Servicio",
+      "pdf": "PDF",
+      "pdfAvailable": "Disponible",
+      "date": "Fecha",
+      "loadError": "No se pudo cargar la lista de contratos.",
+      "empty": "No hay contratos que coincidan con los filtros."
+    },
+    "filter": {
+      "all": "Todos",
+      "statusLabel": "Estado"
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "PENDING_CLIENT_SIGNATURE": "Falta firma del cliente",
+      "PENDING_PROFESSIONAL_SIGNATURE": "Falta firma del profesional",
+      "SIGNED": "Firmado",
+      "CANCELLED": "Cancelado"
+    }
+  },
+  "auditLog": {
+    "table": {
+      "tableName": "Tabla",
+      "recordId": "Registro",
+      "operation": "Operación",
+      "changedBy": "Quién",
+      "changedAt": "Cuándo",
+      "actions": "Acciones",
+      "loadError": "No se pudo cargar el registro de auditoría.",
+      "empty": "No hay registros de auditoría que coincidan con los filtros."
+    },
+    "filter": {
+      "tableName": "Tabla afectada",
+      "tableNamePlaceholder": "ej. professionals",
+      "recordId": "ID de registro",
+      "changedBy": "Quién",
+      "startDate": "Desde",
+      "endDate": "Hasta"
+    },
+    "detail": {
+      "trigger": "Ver",
+      "title": "Detalle del cambio",
+      "description": "{table} · registro {record}",
+      "reason": "Motivo",
+      "oldData": "Valores anteriores",
+      "newData": "Valores nuevos"
+    }
+  },
+  "globalSearch": {
+    "trigger": "Búsqueda global",
+    "title": "Buscar",
+    "description": "Buscá un usuario o un profesional por nombre. Ctrl/Cmd+K para abrir esto desde cualquier pantalla.",
+    "placeholder": "Buscar por nombre...",
+    "minLength": "Escribí al menos 2 caracteres.",
+    "empty": "Sin resultados para \"{query}\".",
+    "partialError": "No se pudo completar una de las búsquedas (puede faltar un permiso) — se muestran los resultados disponibles.",
+    "type": {
+      "user": "Usuario",
+      "professional": "Profesional"
     }
   }
 }

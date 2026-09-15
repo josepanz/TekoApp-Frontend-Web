@@ -96,12 +96,12 @@ debería revisar en algún momento — **no se tocan desde este repo**:
   usar un secreto simétrico distinto del par RS256 usado por los access tokens REST — si el
   handshake de socket falla en la práctica, es la primera hipótesis a revisar (no un bug de este
   frontend).
-- Versionado de rutas inconsistente en el backend: `auth`, `onboarding`, `roles-permission`,
-  `users` (algunos endpoints), `uploads` usan `@Version('1')` (→ `/api/v1/...`); el resto no. El
-  cliente de API (`core/api-client`) hardcodea esto por dominio — si el backend versiona algo
-  nuevo, hay que actualizar el path base de ese dominio a mano. **Confirmado contra el Swagger
-  real** (sesión sesión_13/scaffold — se generaron los tipos con `pnpm generate:api-types` contra
-  un backend local corriendo).
+- ~~Versionado de rutas inconsistente en el backend~~ — **corregido 2026-09-07**: el backend
+  setea `defaultVersion: '1'` en `app.enableVersioning()` (`main.ts`), así que TODA ruta vive bajo
+  `/api/v1/*` ahora, tenga o no `@Version('1')` propio el controller. `resolveBackendPath()`
+  (`core/api-client/backend-paths.ts`) prefija `v1/` incondicionalmente a cualquier path — punto
+  único de inyección para el proxy BFF genérico y las rutas dedicadas de auth (`login`, `register`,
+  `session`). Ya no hace falta tocar nada acá si el backend versiona un dominio nuevo.
 - `prisma/seed.ts` del backend (antes de esta sesión, completamente vacío) solo siembra el
   `ApiClientCredential` del cliente "tekoapp-web" — **no siembra tablas de referencia** (tipos de
   documento, niveles de acceso, etc.). Se confirmó end-to-end: `POST /onboarding` a través del

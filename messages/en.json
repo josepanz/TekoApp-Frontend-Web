@@ -17,12 +17,14 @@
       "search": "Search",
       "retry": "Retry",
       "back": "Back",
-      "view": "View"
+      "view": "View",
+      "export": "Export"
     },
     "states": {
       "loading": "Loading...",
       "saving": "Saving...",
       "deleting": "Deleting...",
+      "generating": "Generating...",
       "yes": "Yes",
       "no": "No"
     },
@@ -54,7 +56,9 @@
         "legalDocumentVersions": "Legal documents",
         "dataRetentionPolicies": "Retention policies",
         "consentAudit": "Consent audit",
-        "materialCatalog": "Material catalog"
+        "materialCatalog": "Material catalog",
+        "contracts": "Contracts",
+        "auditLog": "Audit log"
       },
       "client": {
         "home": "Home",
@@ -113,6 +117,48 @@
       "blocked": "Blocked in your browser settings."
     }
   },
+  "accountDeletion": {
+    "section": {
+      "title": "Delete my account",
+      "description": "Request your account to be deleted. You have 14 days to cancel before it takes effect.",
+      "trigger": "Delete my account"
+    },
+    "info": {
+      "title": "Before you continue",
+      "description": "Here's what happens if you request your account to be deleted:",
+      "anonymized": "Your name, email, phone, ID document and profile photo are anonymized — they stop being linked to your real identity.",
+      "retained": "Your payments, contracts and ratings are kept (legal/accounting requirement), but no longer show your real name.",
+      "gracePeriod": "You have 14 days from the request to change your mind and cancel it.",
+      "irreversible": "After those 14 days, the deletion is final: there is no way to recover your name or personal data.",
+      "cancel": "Cancel",
+      "continue": "Continue"
+    },
+    "confirm": {
+      "title": "Confirm the deletion",
+      "description": "This starts the 14-day window. You can cancel it any time before it's due.",
+      "blockedTitle": "You can't delete your account yet:",
+      "checkboxLabel": "I understand that, after the grace period, this action can't be undone.",
+      "back": "Back",
+      "submit": "Confirm deletion",
+      "pending": "Submitting...",
+      "success": "Done. Your account will be deleted in 14 days — you can cancel it any time from here.",
+      "genericError": "We couldn't process the request. Please try again."
+    },
+    "blockers": {
+      "ACTIVE_SERVICE": "{count, plural, one {You have # active service} other {You have # active services}}",
+      "PENDING_PAYMENT": "{count, plural, one {You have # pending payment} other {You have # pending payments}}",
+      "UNSIGNED_CONTRACT": "{count, plural, one {You have # unsigned contract} other {You have # unsigned contracts}}",
+      "OPEN_DISPUTE": "{count, plural, one {You have # open dispute} other {You have # open disputes}}"
+    },
+    "banner": {
+      "title": "Pending deletion",
+      "description": "Your account will be deleted on {date}. You can cancel it in the meantime.",
+      "cancel": "Cancel deletion",
+      "cancelling": "Cancelling...",
+      "cancelSuccess": "Your account deletion was cancelled.",
+      "cancelError": "We couldn't cancel the deletion. Please try again."
+    }
+  },
   "auth": {
     "login": {
       "pageTitle": "{brand}",
@@ -149,6 +195,8 @@
       "slug": "Slug",
       "iconColor": "Icon / Color",
       "visible": "Visible",
+      "visibleBadge": "Visible",
+      "hiddenBadge": "Hidden",
       "actions": "Actions",
       "hide": "Hide {name}",
       "show": "Show {name}",
@@ -158,6 +206,14 @@
     "delete": {
       "title": "Delete category",
       "description": "This will permanently delete the category \"{name}\". This can't be undone."
+    },
+    "bulkDelete": {
+      "cta": "Delete selected ({count})",
+      "confirmTitle": "Delete selected categories",
+      "confirmDescription": "This will permanently delete {count} categories. This can't be undone.",
+      "successAll": "{count} categories deleted successfully.",
+      "partialResult": "{succeeded} of {total} categories deleted. {failed} failed: {names}.",
+      "failedAll": "Couldn't delete any of the {count} selected categories."
     },
     "form": {
       "editTitle": "Edit category",
@@ -300,6 +356,14 @@
       "materialCatalog": {
         "title": "Material catalog",
         "description": "Suggested materials and quality tiers professionals use to build budgets."
+      },
+      "contracts": {
+        "title": "Contracts",
+        "description": "List of service contracts for support and legal disputes. Read-only."
+      },
+      "auditLog": {
+        "title": "Audit log",
+        "description": "Audit trail of changes to business tables: who changed what, when, and with what values. Read-only."
       }
     },
     "client": {
@@ -383,7 +447,8 @@
       "INACTIVE": "Inactive",
       "BLOCKED": "Blocked",
       "DELETED": "Deleted",
-      "REFUSED": "Rejected"
+      "REFUSED": "Rejected",
+      "PENDING_DELETION": "Pending deletion"
     },
     "detail": {
       "back": "Back to users",
@@ -422,6 +487,22 @@
       "title": "Verify professional",
       "verifiedLabel": "Mark as verified",
       "notes": "Notes"
+    },
+    "bulk": {
+      "verifyButton": "Verify selected ({count})",
+      "suspendButton": "Suspend selected ({count})",
+      "verifyConfirmTitle": "Verify selected professionals",
+      "verifyConfirmDescription": "This will mark {count} professionals as verified.",
+      "verifySuccessAll": "{count} professionals verified successfully.",
+      "verifyPartialResult": "{succeeded} of {total} professionals verified. {failed} failed: {names}.",
+      "verifyFailedAll": "Couldn't verify any of the {count} selected professionals.",
+      "suspendConfirmTitle": "Suspend selected professionals",
+      "suspendConfirmDescription": "This will suspend {count} professionals with the reason you enter below.",
+      "suspendReasonLabel": "Suspension reason (applies to every selected professional)",
+      "confirmSuspendButton": "Confirm suspension",
+      "suspendSuccessAll": "{count} professionals suspended successfully.",
+      "suspendPartialResult": "{succeeded} of {total} professionals suspended. {failed} failed: {names}.",
+      "suspendFailedAll": "Couldn't suspend any of the {count} selected professionals."
     },
     "detail": {
       "back": "Back to professionals",
@@ -581,6 +662,22 @@
       "approveButton": "Approve",
       "rejectButton": "Reject",
       "confirmRejectButton": "Confirm rejection"
+    },
+    "bulk": {
+      "approveButton": "Approve selected ({count})",
+      "rejectButton": "Reject selected ({count})",
+      "approveConfirmTitle": "Approve selected photos",
+      "approveConfirmDescription": "This will approve {count} portfolio photos.",
+      "approveSuccessAll": "{count} photos approved successfully.",
+      "approvePartialResult": "{succeeded} of {total} photos approved. {failed} failed: {names}.",
+      "approveFailedAll": "Couldn't approve any of the {count} selected photos.",
+      "rejectConfirmTitle": "Reject selected photos",
+      "rejectConfirmDescription": "This will reject {count} portfolio photos with the reason you enter below.",
+      "rejectionReasonLabel": "Rejection reason (applies to every selected photo)",
+      "confirmRejectButton": "Confirm rejection",
+      "rejectSuccessAll": "{count} photos rejected successfully.",
+      "rejectPartialResult": "{succeeded} of {total} photos rejected. {failed} failed: {names}.",
+      "rejectFailedAll": "Couldn't reject any of the {count} selected photos."
     },
     "public": {
       "title": "Past work"
@@ -847,7 +944,7 @@
       "loadError": "Couldn't load the role.",
       "permissionsCount": "{count} permissions",
       "permissionsTitle": "Assigned permissions",
-      "createdBy": "Created by {user}"
+      "createdBy": "Created by {user} on {date}"
     }
   },
   "payments": {
@@ -1041,6 +1138,7 @@
     "table": {
       "user": "User",
       "professional": "Professional",
+      "anonymous": "Anonymous",
       "rating": "Rating",
       "type": "Type",
       "reported": "Reported",
@@ -1055,6 +1153,14 @@
       "title": "Delete rating",
       "description": "This can't be undone. The rating will be deleted permanently.",
       "confirm": "Confirm deletion"
+    },
+    "bulkDelete": {
+      "cta": "Delete selected ({count})",
+      "confirmTitle": "Delete selected ratings",
+      "confirmDescription": "This will permanently delete {count} ratings. This can't be undone.",
+      "successAll": "{count} ratings deleted successfully.",
+      "partialResult": "{succeeded} of {total} ratings deleted. {failed} failed: {names}.",
+      "failedAll": "Couldn't delete any of the {count} selected ratings."
     }
   },
   "notifications": {
@@ -1063,6 +1169,22 @@
       "service_accepted": "Service accepted",
       "service_rejected": "Service rejected",
       "service_completed": "Service completed",
+      "service_cancelled": "Service cancelled",
+      "budget_options_ready": "Budget options ready",
+      "budget_option_selected": "Budget option selected",
+      "contract_created": "Contract created",
+      "contract_awaiting_signature": "Contract awaiting signature",
+      "contract_signed": "Contract signed",
+      "payment_refunded": "Payment refunded",
+      "document_approved": "Document approved",
+      "document_rejected": "Document rejected",
+      "dispute_opened": "Dispute opened",
+      "dispute_resolved": "Dispute resolved",
+      "account_deletion_requested": "Account deletion requested",
+      "account_deletion_cancelled": "Account deletion cancelled",
+      "professional_verified": "Professional verified",
+      "professional_verification_rejected": "Professional verification rejected",
+      "professional_suspended": "Professional suspended",
       "payment_received": "Payment received",
       "rating_received": "Rating received",
       "promotion": "Promotion",
@@ -1194,14 +1316,18 @@
       "serviceType": "Service type",
       "serviceTypePlaceholder": "Pick a type",
       "address": "Address",
-      "location": "Service location",
-      "locationHint": "Click on the map or drag the marker to pick where the job is.",
+      "locationHint": "Enter the latitude and longitude, or drag the marker on the map.",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
       "urgent": "It's urgent",
       "submitting": "Sending...",
-      "submit": "Request a professional"
-    },
-    "map": {
-      "ariaLabel": "Map to pick the service location"
+      "submit": "Request a professional",
+      "sections": {
+        "whatTitle": "What you need",
+        "whatDescription": "Tell us what kind of work you're looking for and a short description.",
+        "whereTitle": "Where the job is",
+        "whenTitle": "When"
+      }
     }
   },
   "rateProfessional": {
@@ -1249,11 +1375,16 @@
     },
     "form": {
       "loadError": "We couldn't load your professional profile.",
+      "sectionTitle": "Profile details",
       "description": "Description",
       "hourlyRate": "Hourly rate",
       "fixedRate": "Flat rate (optional)",
       "yearsOfExperience": "Years of experience",
-      "skills": "Skills (comma separated)"
+      "skills": "Skills (comma separated)",
+      "preview": {
+        "completion": "Profile completion",
+        "ratingsCount": "{count, plural, one {# rating} other {# ratings}}"
+      }
     }
   },
   "professionalApplication": {
@@ -1262,6 +1393,8 @@
       "link": "Apply as a professional"
     },
     "form": {
+      "sectionTitle": "Tell us about your work",
+      "sectionDescription": "Your professional profile will stay pending until staff reviews it — we'll let you know as soon as that happens.",
       "category": "Category",
       "categoryPlaceholder": "Choose a category",
       "description": "Description",
@@ -1341,6 +1474,72 @@
       "IN_PROGRESS": "In progress",
       "COMPLETED": "Completed",
       "CANCELLED": "Cancelled"
+    }
+  },
+  "contracts": {
+    "table": {
+      "reference": "Reference",
+      "status": "Status",
+      "client": "Client",
+      "professional": "Professional",
+      "service": "Service",
+      "pdf": "PDF",
+      "pdfAvailable": "Available",
+      "date": "Date",
+      "loadError": "We couldn't load the contracts list.",
+      "empty": "No contracts match the current filters."
+    },
+    "filter": {
+      "all": "All",
+      "statusLabel": "Status"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "PENDING_CLIENT_SIGNATURE": "Awaiting client signature",
+      "PENDING_PROFESSIONAL_SIGNATURE": "Awaiting professional signature",
+      "SIGNED": "Signed",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "auditLog": {
+    "table": {
+      "tableName": "Table",
+      "recordId": "Record",
+      "operation": "Operation",
+      "changedBy": "Changed by",
+      "changedAt": "Changed at",
+      "actions": "Actions",
+      "loadError": "We couldn't load the audit log.",
+      "empty": "No audit log entries match the current filters."
+    },
+    "filter": {
+      "tableName": "Affected table",
+      "tableNamePlaceholder": "e.g. professionals",
+      "recordId": "Record ID",
+      "changedBy": "Changed by",
+      "startDate": "From",
+      "endDate": "To"
+    },
+    "detail": {
+      "trigger": "View",
+      "title": "Change detail",
+      "description": "{table} · record {record}",
+      "reason": "Reason",
+      "oldData": "Previous values",
+      "newData": "New values"
+    }
+  },
+  "globalSearch": {
+    "trigger": "Global search",
+    "title": "Search",
+    "description": "Search a user or a professional by name. Ctrl/Cmd+K opens this from any screen.",
+    "placeholder": "Search by name...",
+    "minLength": "Type at least 2 characters.",
+    "empty": "No results for \"{query}\".",
+    "partialError": "One of the searches couldn't complete (a permission may be missing) — showing the results that are available.",
+    "type": {
+      "user": "User",
+      "professional": "Professional"
     }
   }
 }

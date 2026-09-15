@@ -678,7 +678,7 @@ export interface paths {
         patch: operations["UsersController_unblock"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals": {
+    "/tekoapp-backend/api/v1/professionals": {
         parameters: {
             query?: never;
             header?: never;
@@ -696,7 +696,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/nearby": {
+    "/tekoapp-backend/api/v1/professionals/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -713,7 +713,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/search/skills": {
+    "/tekoapp-backend/api/v1/professionals/search/skills": {
         parameters: {
             query?: never;
             header?: never;
@@ -730,7 +730,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/top-rated": {
+    "/tekoapp-backend/api/v1/professionals/top-rated": {
         parameters: {
             query?: never;
             header?: never;
@@ -747,7 +747,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me": {
+    "/tekoapp-backend/api/v1/professionals/me": {
         parameters: {
             query?: never;
             header?: never;
@@ -764,7 +764,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/reference/{referenceId}": {
+    "/tekoapp-backend/api/v1/professionals/reference/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -782,7 +782,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}": {
+    "/tekoapp-backend/api/v1/professionals/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -800,7 +800,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/availability": {
+    "/tekoapp-backend/api/v1/professionals/{id}/availability": {
         parameters: {
             query?: never;
             header?: never;
@@ -817,7 +817,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/location": {
+    "/tekoapp-backend/api/v1/professionals/{id}/location": {
         parameters: {
             query?: never;
             header?: never;
@@ -834,7 +834,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/services": {
+    "/tekoapp-backend/api/v1/professionals/{id}/services": {
         parameters: {
             query?: never;
             header?: never;
@@ -851,7 +851,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/reviews": {
+    "/tekoapp-backend/api/v1/professionals/{id}/reviews": {
         parameters: {
             query?: never;
             header?: never;
@@ -868,7 +868,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/stats": {
+    "/tekoapp-backend/api/v1/professionals/{id}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -885,7 +885,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/verify": {
+    "/tekoapp-backend/api/v1/professionals/{id}/verify": {
         parameters: {
             query?: never;
             header?: never;
@@ -902,7 +902,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{id}/suspend": {
+    "/tekoapp-backend/api/v1/professionals/{id}/suspend": {
         parameters: {
             query?: never;
             header?: never;
@@ -919,7 +919,250 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services": {
+    "/tekoapp-backend/api/v1/admin/professionals/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Exportar profesionales a CSV (staff)
+         * @description Mismos filtros que el listado público, sin paginar.
+         */
+        get: operations["AdminProfessionalsExportController_export"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener historial de notificaciones paginado del usuario */
+        get: operations["NotificationsController_findAll"];
+        put?: never;
+        /** Emitir y encolar una nueva notificación */
+        post: operations["NotificationsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listar las notificaciones no leídas */
+        get: operations["NotificationsController_findUnread"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/unread/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener contador de elementos no leídos */
+        get: operations["NotificationsController_getUnreadCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Marcar una notificación específica como leída */
+        put: operations["NotificationsController_markAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Marcar todas las notificaciones del usuario como leídas */
+        put: operations["NotificationsController_markAllAsRead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remover una notificación del historial */
+        delete: operations["NotificationsController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stream en tiempo real de notificaciones (SSE) para el usuario autenticado — solo cubre "app abierta ahora mismo", complementario a Web Push/FCM */
+        get: operations["NotificationsController_stream"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push/vapid-public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener la clave pública VAPID para pushManager.subscribe() */
+        get: operations["NotificationsController_getVapidPublicKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) la suscripción Web Push del navegador actual */
+        post: operations["NotificationsController_registerPushSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/push-subscriptions/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja una suscripción Web Push */
+        delete: operations["NotificationsController_removePushSubscription"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar (o actualizar) el token FCM del dispositivo actual */
+        post: operations["NotificationsController_registerFcmToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notifications/fcm-tokens/{referenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Dar de baja un token FCM */
+        delete: operations["NotificationsController_removeFcmToken"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/notification-preferences/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obtener las preferencias de notificación del usuario autenticado (un ítem por tipo) */
+        get: operations["NotificationPreferencesController_getMyPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Activar/desactivar un tipo de notificación puntual (auto-save por switch) */
+        patch: operations["NotificationPreferencesController_updateMyPreference"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/services": {
         parameters: {
             query?: never;
             header?: never;
@@ -937,7 +1180,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/nearby": {
+    "/tekoapp-backend/api/v1/services/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -954,7 +1197,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/my-services": {
+    "/tekoapp-backend/api/v1/services/my-services": {
         parameters: {
             query?: never;
             header?: never;
@@ -971,7 +1214,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/dashboard/stats": {
+    "/tekoapp-backend/api/v1/services/dashboard/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -988,7 +1231,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}": {
+    "/tekoapp-backend/api/v1/services/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1007,7 +1250,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/accept": {
+    "/tekoapp-backend/api/v1/services/{id}/accept": {
         parameters: {
             query?: never;
             header?: never;
@@ -1024,7 +1267,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/start": {
+    "/tekoapp-backend/api/v1/services/{id}/start": {
         parameters: {
             query?: never;
             header?: never;
@@ -1041,7 +1284,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/complete": {
+    "/tekoapp-backend/api/v1/services/{id}/complete": {
         parameters: {
             query?: never;
             header?: never;
@@ -1058,7 +1301,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests": {
+    "/tekoapp-backend/api/v1/services/{id}/requests": {
         parameters: {
             query?: never;
             header?: never;
@@ -1076,7 +1319,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1093,7 +1336,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/service-types": {
+    "/tekoapp-backend/api/v1/service-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -1110,7 +1353,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/update": {
+    "/tekoapp-backend/api/v1/locations/update": {
         parameters: {
             query?: never;
             header?: never;
@@ -1130,7 +1373,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/online": {
+    "/tekoapp-backend/api/v1/locations/online": {
         parameters: {
             query?: never;
             header?: never;
@@ -1150,7 +1393,7 @@ export interface paths {
         patch: operations["LocationsController_setOnlineStatus"];
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/nearby": {
+    "/tekoapp-backend/api/v1/locations/nearby": {
         parameters: {
             query?: never;
             header?: never;
@@ -1170,7 +1413,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/professional/{id}": {
+    "/tekoapp-backend/api/v1/locations/professional/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1187,7 +1430,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/online-count": {
+    "/tekoapp-backend/api/v1/locations/online-count": {
         parameters: {
             query?: never;
             header?: never;
@@ -1204,7 +1447,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/area": {
+    "/tekoapp-backend/api/v1/locations/area": {
         parameters: {
             query?: never;
             header?: never;
@@ -1221,7 +1464,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/locations/distance": {
+    "/tekoapp-backend/api/v1/locations/distance": {
         parameters: {
             query?: never;
             header?: never;
@@ -1238,7 +1481,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments": {
+    "/tekoapp-backend/api/v1/payments": {
         parameters: {
             query?: never;
             header?: never;
@@ -1256,7 +1499,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/summary": {
+    "/tekoapp-backend/api/v1/payments/summary": {
         parameters: {
             query?: never;
             header?: never;
@@ -1273,7 +1516,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/trends": {
+    "/tekoapp-backend/api/v1/payments/trends": {
         parameters: {
             query?: never;
             header?: never;
@@ -1290,7 +1533,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/methods": {
+    "/tekoapp-backend/api/v1/payments/methods": {
         parameters: {
             query?: never;
             header?: never;
@@ -1308,7 +1551,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/me": {
+    "/tekoapp-backend/api/v1/payments/me": {
         parameters: {
             query?: never;
             header?: never;
@@ -1325,7 +1568,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}": {
+    "/tekoapp-backend/api/v1/payments/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1343,7 +1586,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/cancel": {
+    "/tekoapp-backend/api/v1/payments/{id}/cancel": {
         parameters: {
             query?: never;
             header?: never;
@@ -1360,7 +1603,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/refund": {
+    "/tekoapp-backend/api/v1/payments/{id}/refund": {
         parameters: {
             query?: never;
             header?: never;
@@ -1377,7 +1620,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/methods/{id}": {
+    "/tekoapp-backend/api/v1/payments/methods/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1395,24 +1638,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/webhooks/{provider}": {
+    "/tekoapp-backend/api/v1/admin/payments/export": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Exportar pagos a CSV (staff)
+         * @description Mismos filtros que el listado admin, sin paginar.
+         */
+        get: operations["AdminPaymentsController_export"];
         put?: never;
-        /** Recibir webhook de proveedor de pagos */
-        post: operations["PaymentController_handleWebhooks"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/tax/config": {
+    "/tekoapp-backend/api/v1/tax/config": {
         parameters: {
             query?: never;
             header?: never;
@@ -1432,212 +1678,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener historial de notificaciones paginado del usuario */
-        get: operations["NotificationsController_findAll"];
-        put?: never;
-        /** Emitir y encolar una nueva notificación */
-        post: operations["NotificationsController_create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/unread": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Listar las notificaciones no leídas */
-        get: operations["NotificationsController_findUnread"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/unread/count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener contador de elementos no leídos */
-        get: operations["NotificationsController_getUnreadCount"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Marcar una notificación específica como leída */
-        put: operations["NotificationsController_markAsRead"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Marcar todas las notificaciones del usuario como leídas */
-        put: operations["NotificationsController_markAllAsRead"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Remover una notificación del historial */
-        delete: operations["NotificationsController_remove"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/stream": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Stream en tiempo real de notificaciones (SSE) para el usuario autenticado — solo cubre "app abierta ahora mismo", complementario a Web Push/FCM */
-        get: operations["NotificationsController_stream"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/push/vapid-public-key": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Obtener la clave pública VAPID para pushManager.subscribe() */
-        get: operations["NotificationsController_getVapidPublicKey"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/push-subscriptions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Registrar (o actualizar) la suscripción Web Push del navegador actual */
-        post: operations["NotificationsController_registerPushSubscription"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/push-subscriptions/{referenceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Dar de baja una suscripción Web Push */
-        delete: operations["NotificationsController_removePushSubscription"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/fcm-tokens": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Registrar (o actualizar) el token FCM del dispositivo actual */
-        post: operations["NotificationsController_registerFcmToken"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/notifications/fcm-tokens/{referenceId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Dar de baja un token FCM */
-        delete: operations["NotificationsController_removeFcmToken"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/tekoapp-backend/api/promotions": {
+    "/tekoapp-backend/api/v1/promotions": {
         parameters: {
             query?: never;
             header?: never;
@@ -1655,7 +1696,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/active": {
+    "/tekoapp-backend/api/v1/promotions/active": {
         parameters: {
             query?: never;
             header?: never;
@@ -1672,7 +1713,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/stats": {
+    "/tekoapp-backend/api/v1/promotions/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1689,7 +1730,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/{id}": {
+    "/tekoapp-backend/api/v1/promotions/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1708,7 +1749,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/validate": {
+    "/tekoapp-backend/api/v1/promotions/validate": {
         parameters: {
             query?: never;
             header?: never;
@@ -1725,7 +1766,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/promotions/apply": {
+    "/tekoapp-backend/api/v1/promotions/apply": {
         parameters: {
             query?: never;
             header?: never;
@@ -1742,7 +1783,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings": {
+    "/tekoapp-backend/api/v1/ratings": {
         parameters: {
             query?: never;
             header?: never;
@@ -1760,7 +1801,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional-to-client": {
+    "/tekoapp-backend/api/v1/ratings/professional-to-client": {
         parameters: {
             query?: never;
             header?: never;
@@ -1777,7 +1818,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/recent": {
+    "/tekoapp-backend/api/v1/ratings/recent": {
         parameters: {
             query?: never;
             header?: never;
@@ -1794,7 +1835,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/top-professionals": {
+    "/tekoapp-backend/api/v1/ratings/top-professionals": {
         parameters: {
             query?: never;
             header?: never;
@@ -1811,7 +1852,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/user/{userId}": {
+    "/tekoapp-backend/api/v1/ratings/user/{userId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1828,7 +1869,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/user/{userId}/stats": {
+    "/tekoapp-backend/api/v1/ratings/user/{userId}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1845,7 +1886,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/me/stats": {
+    "/tekoapp-backend/api/v1/ratings/me/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -1865,7 +1906,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1882,7 +1923,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}/client-ratings": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}/client-ratings": {
         parameters: {
             query?: never;
             header?: never;
@@ -1899,7 +1940,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/professional/{professionalId}/average": {
+    "/tekoapp-backend/api/v1/ratings/professional/{professionalId}/average": {
         parameters: {
             query?: never;
             header?: never;
@@ -1916,7 +1957,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/service/{serviceRequestId}": {
+    "/tekoapp-backend/api/v1/ratings/service/{serviceRequestId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1933,7 +1974,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/{id}": {
+    "/tekoapp-backend/api/v1/ratings/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1952,7 +1993,7 @@ export interface paths {
         patch: operations["RatingsController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/ratings/{id}/report": {
+    "/tekoapp-backend/api/v1/ratings/{id}/report": {
         parameters: {
             query?: never;
             header?: never;
@@ -1969,7 +2010,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories": {
+    "/tekoapp-backend/api/v1/categories": {
         parameters: {
             query?: never;
             header?: never;
@@ -1993,7 +2034,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/all": {
+    "/tekoapp-backend/api/v1/categories/all": {
         parameters: {
             query?: never;
             header?: never;
@@ -2013,7 +2054,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/main": {
+    "/tekoapp-backend/api/v1/categories/main": {
         parameters: {
             query?: never;
             header?: never;
@@ -2033,7 +2074,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/subcategories/{parentId}": {
+    "/tekoapp-backend/api/v1/categories/subcategories/{parentId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2053,7 +2094,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/search": {
+    "/tekoapp-backend/api/v1/categories/search": {
         parameters: {
             query?: never;
             header?: never;
@@ -2073,7 +2114,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}": {
+    "/tekoapp-backend/api/v1/categories/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2095,7 +2136,7 @@ export interface paths {
         patch: operations["CategoriesController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/slug/{slug}": {
+    "/tekoapp-backend/api/v1/categories/slug/{slug}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2112,7 +2153,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/stats": {
+    "/tekoapp-backend/api/v1/categories/{id}/stats": {
         parameters: {
             query?: never;
             header?: never;
@@ -2129,7 +2170,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/status": {
+    "/tekoapp-backend/api/v1/categories/{id}/status": {
         parameters: {
             query?: never;
             header?: never;
@@ -2146,7 +2187,7 @@ export interface paths {
         patch: operations["CategoriesController_changeStatus"];
         trace?: never;
     };
-    "/tekoapp-backend/api/categories/{id}/toggle-visibility": {
+    "/tekoapp-backend/api/v1/categories/{id}/toggle-visibility": {
         parameters: {
             query?: never;
             header?: never;
@@ -2163,7 +2204,7 @@ export interface paths {
         patch: operations["CategoriesController_toggleVisibility"];
         trace?: never;
     };
-    "/tekoapp-backend/api/analytics/dashboard": {
+    "/tekoapp-backend/api/v1/analytics/dashboard": {
         parameters: {
             query?: never;
             header?: never;
@@ -2180,7 +2221,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/analytics/categories": {
+    "/tekoapp-backend/api/v1/analytics/categories": {
         parameters: {
             query?: never;
             header?: never;
@@ -2197,7 +2238,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/countries": {
+    "/tekoapp-backend/api/v1/countries": {
         parameters: {
             query?: never;
             header?: never;
@@ -2217,7 +2258,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/countries/{id}": {
+    "/tekoapp-backend/api/v1/countries/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2237,7 +2278,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/currencies": {
+    "/tekoapp-backend/api/v1/currencies": {
         parameters: {
             query?: never;
             header?: never;
@@ -2257,7 +2298,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/currencies/{alphaCode}": {
+    "/tekoapp-backend/api/v1/currencies/{alphaCode}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2277,7 +2318,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/languages": {
+    "/tekoapp-backend/api/v1/languages": {
         parameters: {
             query?: never;
             header?: never;
@@ -2297,7 +2338,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/languages/{id}": {
+    "/tekoapp-backend/api/v1/languages/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2317,7 +2358,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/legal/consents/pending": {
+    "/tekoapp-backend/api/v1/legal/consents/pending": {
         parameters: {
             query?: never;
             header?: never;
@@ -2337,7 +2378,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/legal/consents/{versionReferenceId}/accept": {
+    "/tekoapp-backend/api/v1/legal/consents/{versionReferenceId}/accept": {
         parameters: {
             query?: never;
             header?: never;
@@ -2357,7 +2398,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/users/me/data-consents": {
+    "/tekoapp-backend/api/v1/users/me/data-consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2377,7 +2418,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/users/me/content/{contentReferenceId}/consent": {
+    "/tekoapp-backend/api/v1/users/me/content/{contentReferenceId}/consent": {
         parameters: {
             query?: never;
             header?: never;
@@ -2397,7 +2438,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/document-versions": {
+    "/tekoapp-backend/api/v1/admin/legal/document-versions": {
         parameters: {
             query?: never;
             header?: never;
@@ -2415,7 +2456,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/document-versions/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/legal/document-versions/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2432,7 +2473,7 @@ export interface paths {
         patch: operations["AdminLegalConsentsController_updateDocumentVersion"];
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/retention-policies": {
+    "/tekoapp-backend/api/v1/admin/legal/retention-policies": {
         parameters: {
             query?: never;
             header?: never;
@@ -2453,7 +2494,7 @@ export interface paths {
         patch: operations["AdminLegalConsentsController_upsertRetentionPolicy"];
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/consents": {
+    "/tekoapp-backend/api/v1/admin/legal/consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2473,7 +2514,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/legal/content-consents": {
+    "/tekoapp-backend/api/v1/admin/legal/content-consents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2493,7 +2534,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ai-disclosures": {
+    "/tekoapp-backend/api/v1/ai-disclosures": {
         parameters: {
             query?: never;
             header?: never;
@@ -2513,7 +2554,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/ai-disclosures/{entityType}/{entityReferenceId}": {
+    "/tekoapp-backend/api/v1/ai-disclosures/{entityType}/{entityReferenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2534,7 +2575,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/ai-disclosures": {
+    "/tekoapp-backend/api/v1/admin/ai-disclosures": {
         parameters: {
             query?: never;
             header?: never;
@@ -2554,7 +2595,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/progress": {
+    "/tekoapp-backend/api/v1/services/{id}/progress": {
         parameters: {
             query?: never;
             header?: never;
@@ -2578,7 +2619,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/progress/{entryId}": {
+    "/tekoapp-backend/api/v1/services/{id}/progress/{entryId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2595,7 +2636,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professional-document-types": {
+    "/tekoapp-backend/api/v1/professional-document-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -2615,7 +2656,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-document-types": {
+    "/tekoapp-backend/api/v1/admin/professional-document-types": {
         parameters: {
             query?: never;
             header?: never;
@@ -2632,7 +2673,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-document-types/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/professional-document-types/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2649,7 +2690,7 @@ export interface paths {
         patch: operations["AdminProfessionalDocumentTypesController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/documents": {
+    "/tekoapp-backend/api/v1/professionals/me/documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2670,7 +2711,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{referenceId}/documents/public": {
+    "/tekoapp-backend/api/v1/professionals/{referenceId}/documents/public": {
         parameters: {
             query?: never;
             header?: never;
@@ -2687,7 +2728,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-documents": {
+    "/tekoapp-backend/api/v1/admin/professional-documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2707,7 +2748,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professionals/{referenceId}/documents": {
+    "/tekoapp-backend/api/v1/admin/professionals/{referenceId}/documents": {
         parameters: {
             query?: never;
             header?: never;
@@ -2724,7 +2765,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-documents/{referenceId}/review": {
+    "/tekoapp-backend/api/v1/admin/professional-documents/{referenceId}/review": {
         parameters: {
             query?: never;
             header?: never;
@@ -2741,7 +2782,7 @@ export interface paths {
         patch: operations["AdminProfessionalDocumentsController_review"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/portfolio": {
+    "/tekoapp-backend/api/v1/professionals/me/portfolio": {
         parameters: {
             query?: never;
             header?: never;
@@ -2759,7 +2800,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/me/portfolio/{referenceId}": {
+    "/tekoapp-backend/api/v1/professionals/me/portfolio/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2777,7 +2818,7 @@ export interface paths {
         patch: operations["ProfessionalPortfolioController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/professionals/{referenceId}/portfolio/public": {
+    "/tekoapp-backend/api/v1/professionals/{referenceId}/portfolio/public": {
         parameters: {
             query?: never;
             header?: never;
@@ -2794,7 +2835,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-portfolio": {
+    "/tekoapp-backend/api/v1/admin/professional-portfolio": {
         parameters: {
             query?: never;
             header?: never;
@@ -2811,7 +2852,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/professional-portfolio/{referenceId}/review": {
+    "/tekoapp-backend/api/v1/admin/professional-portfolio/{referenceId}/review": {
         parameters: {
             query?: never;
             header?: never;
@@ -2828,7 +2869,7 @@ export interface paths {
         patch: operations["AdminProfessionalPortfolioController_review"];
         trace?: never;
     };
-    "/tekoapp-backend/api/material-catalog": {
+    "/tekoapp-backend/api/v1/material-catalog": {
         parameters: {
             query?: never;
             header?: never;
@@ -2848,7 +2889,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/material-catalog": {
+    "/tekoapp-backend/api/v1/admin/material-catalog": {
         parameters: {
             query?: never;
             header?: never;
@@ -2865,7 +2906,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/material-catalog/{referenceId}": {
+    "/tekoapp-backend/api/v1/admin/material-catalog/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2882,7 +2923,7 @@ export interface paths {
         patch: operations["AdminMaterialCatalogController_update"];
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}/budget-options": {
         parameters: {
             query?: never;
             header?: never;
@@ -2906,7 +2947,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/services/{id}/requests/{requestId}/budget-options/{optionReferenceId}/select": {
+    "/tekoapp-backend/api/v1/services/{id}/requests/{requestId}/budget-options/{optionReferenceId}/select": {
         parameters: {
             query?: never;
             header?: never;
@@ -2926,7 +2967,7 @@ export interface paths {
         patch: operations["BudgetsController_select"];
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts": {
+    "/tekoapp-backend/api/v1/contracts": {
         parameters: {
             query?: never;
             header?: never;
@@ -2946,7 +2987,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2966,7 +3007,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}/sign": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}/sign": {
         parameters: {
             query?: never;
             header?: never;
@@ -2986,7 +3027,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/contracts/{referenceId}/pdf": {
+    "/tekoapp-backend/api/v1/contracts/{referenceId}/pdf": {
         parameters: {
             query?: never;
             header?: never;
@@ -3006,7 +3047,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/budget-options/{referenceId}/generate-contract": {
+    "/tekoapp-backend/api/v1/budget-options/{referenceId}/generate-contract": {
         parameters: {
             query?: never;
             header?: never;
@@ -3026,7 +3067,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/admin/contracts": {
+    "/tekoapp-backend/api/v1/admin/contracts": {
         parameters: {
             query?: never;
             header?: never;
@@ -3046,7 +3087,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/tips/config": {
+    "/tekoapp-backend/api/v1/tips/config": {
         parameters: {
             query?: never;
             header?: never;
@@ -3066,7 +3107,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tekoapp-backend/api/payments/{id}/tip": {
+    "/tekoapp-backend/api/v1/payments/{id}/tip": {
         parameters: {
             query?: never;
             header?: never;
@@ -3085,6 +3126,167 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/audit-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listado de auditoría del sistema (staff)
+         * @description Historial de cambios registrado por los triggers de auditoría de la base de datos.
+         */
+        get: operations["AdminAuditLogController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/me/deletion-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar el borrado de la propia cuenta
+         * @description Valida bloqueantes (servicio activo, pago pendiente, contrato sin firmar). Si no hay ninguno, inicia la ventana de gracia configurada.
+         */
+        post: operations["AccountDeletionController_requestDeletion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/me/deletion-request/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancelar una solicitud de borrado de cuenta activa */
+        post: operations["AccountDeletionController_cancelDeletion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/payments/{id}/disputes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial de disputas de un pago
+         * @description Cliente, profesional, o staff con payments.audit:read/admin:all.
+         */
+        get: operations["PaymentDisputesController_listForPayment"];
+        put?: never;
+        /**
+         * Abrir una disputa sobre un pago
+         * @description Solo el cliente o el profesional del pago. Solo un pago COMPLETED/PARTIAL_REFUNDED puede disputarse, y no puede haber otra disputa OPEN/UNDER_REVIEW ya abierta sobre el mismo pago.
+         */
+        post: operations["PaymentDisputesController_openDispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/payments/{id}/disputes/{referenceId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retirar una disputa propia
+         * @description Solo quien la abrió, y solo mientras siga OPEN (sin staff asignado).
+         */
+        post: operations["PaymentDisputesController_withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cola de disputas para staff
+         * @description Paginada, filtrable por status. Requiere disputes.adjudication:manage.
+         */
+        get: operations["AdminDisputesController_listQueue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes/{referenceId}/claim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Tomar una disputa para revisarla
+         * @description OPEN -> UNDER_REVIEW. Requiere disputes.adjudication:manage.
+         */
+        patch: operations["AdminDisputesController_claim"];
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/admin/disputes/{referenceId}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Adjudicar una disputa
+         * @description RESOLVED/REJECTED. Si la resolución es FULL_REFUND/PARTIAL_REFUND, dispara el reembolso (PaymentDbService.executeRefund) dentro de la misma transacción. Requiere disputes.adjudication:manage.
+         */
+        patch: operations["AdminDisputesController_resolve"];
         trace?: never;
     };
 }
@@ -3283,6 +3485,11 @@ export interface components {
              *     ]
              */
             permissions: string[];
+            /**
+             * @description Tarea 8 (platform-hardening-2026-09): si el email/teléfono de este usuario se exponen en ServiceUserSummaryResponseDTO. Solo presente en la respuesta de PUT /auth/me (lectura fresca de DB tras la edición) — GET /auth/me lee directo del JWT, que no lleva este campo (deliberado: no se tocó el payload del token para esta tarea), así que ahí siempre viene ausente.
+             * @example true
+             */
+            shareContactInfo?: boolean;
         };
         UpdateMeRequestDTO: {
             /** @example Juan */
@@ -3296,6 +3503,11 @@ export interface components {
              * @example a1b2c3d4-e5f6.jpg
              */
             avatarKey?: string;
+            /**
+             * @description Tarea 8 (platform-hardening-2026-09): si el propio usuario permite que su email/teléfono se expongan en ServiceUserSummaryResponseDTO (a quien pueda ver el servicio, ej. el profesional viendo el contacto del cliente). Default true en la base — esto es un opt-out explícito, no un opt-in.
+             * @example false
+             */
+            shareContactInfo?: boolean;
         };
         RoleScopeDTO: {
             /** @example merchant-admin */
@@ -3320,7 +3532,8 @@ export interface components {
              *       "documentType": "CI",
              *       "documentNumber": "12345678",
              *       "phoneNumber": "+595981234567",
-             *       "avatarUrl": null
+             *       "avatarUrl": null,
+             *       "deletionScheduledAt": null
              *     }
              */
             user: Record<string, never>;
@@ -3926,7 +4139,7 @@ export interface components {
              * @example PENDING_VERIFICATION
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
         };
         UserResponseDTO: {
             /** @example 1 */
@@ -3939,7 +4152,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example John */
             firstName: string;
             /** @example Doe */
@@ -4014,7 +4227,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example false */
             isEmployee: boolean;
             /** @example false */
@@ -4053,7 +4266,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /** @example false */
             isEmployee: boolean;
             /** @example false */
@@ -4118,7 +4331,7 @@ export interface components {
              * @example ACTIVE
              * @enum {string}
              */
-            status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+            status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             /**
              * @description El número de documento del usuario.
              * @example 12345678
@@ -4280,8 +4493,11 @@ export interface components {
             isAvailable: boolean;
             /** @example false */
             isOnline: boolean;
-            /** @example verified */
-            verificationStatus: string;
+            /**
+             * @example VERIFIED
+             * @enum {string}
+             */
+            verificationStatus: "UNVERIFIED" | "VERIFIED" | "REJECTED";
             /**
              * @description Derivado automáticamente: todos los documentos obligatorios (antecedentes/habilitación) están aprobados y sin vencer. Distinto de verificationStatus (aprobación manual de staff sobre la cuenta) — ver openspec/specs/professional-documents.md.
              * @example true
@@ -4454,6 +4670,227 @@ export interface components {
              */
             reason: string;
         };
+        CreateNotificationRequestDTO: {
+            /**
+             * @description Título descriptivo de la notificación
+             * @example Nueva solicitud de servicio
+             */
+            title: string;
+            /**
+             * @description Cuerpo detallado del mensaje de la notificación
+             * @example El cliente Juan Pérez ha solicitado un servicio de plomería.
+             */
+            message: string;
+            /**
+             * @description Tipo o categoría de la notificación para segmentación
+             * @example service_request
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description Objeto con datos dinámicos requeridos por el cliente (Payload útil)
+             * @example {
+             *       "requestId": "c52b5212-db5e-4ef5-9614-726614174000",
+             *       "price": 45000
+             *     }
+             */
+            data?: Record<string, never>;
+            /**
+             * @description Canales específicos de distribución y despacho para la notificación
+             * @default [
+             *       "in_app"
+             *     ]
+             * @example [
+             *       "in_app",
+             *       "push",
+             *       "email"
+             *     ]
+             */
+            channels: string[];
+            /**
+             * @description Metadatos adicionales de auditoría o traza técnica
+             * @example {
+             *       "ip": "192.168.1.1",
+             *       "device": "iOS"
+             *     }
+             */
+            metadata?: Record<string, never>;
+        };
+        NotificationResponseDTO: {
+            /**
+             * @description ID de la notificación
+             * @example 6481fc923fbc4a3a6c23e801
+             */
+            id: string;
+            /**
+             * @description ID del usuario destino
+             * @example 6481fc923fbc4a3a6c23e802
+             */
+            userId: string;
+            /**
+             * @description Título de la notificación
+             * @example Pago Recibido
+             */
+            title: string;
+            /**
+             * @description Mensaje de la notificación
+             * @example Tu pago ha sido procesado exitosamente.
+             */
+            message: string;
+            /**
+             * @example payment_received
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @example read
+             * @enum {string}
+             */
+            status: "pending" | "sent" | "read" | "failed";
+            /**
+             * @description Canales asignados
+             * @example [
+             *       "in_app"
+             *     ]
+             */
+            channels: string[];
+            /** @description Payload con datos extras */
+            data?: Record<string, never>;
+            /**
+             * Format: date-time
+             * @description Fecha de lectura
+             * @example 2026-06-07T22:30:00.000Z
+             */
+            readAt?: string;
+            /**
+             * Format: date-time
+             * @description Fecha de envío
+             * @example 2026-06-07T22:25:00.000Z
+             */
+            sentAt?: string;
+            /**
+             * Format: date-time
+             * @description Fecha de creación
+             * @example 2026-06-07T22:24:00.000Z
+             */
+            createdAt: string;
+        };
+        UnreadCountResponseDTO: {
+            /**
+             * @description Cantidad consolidada de notificaciones pendientes de lectura
+             * @example 5
+             */
+            count: number;
+        };
+        VapidPublicKeyResponseDTO: {
+            /**
+             * @description Clave pública VAPID — la usa el frontend en pushManager.subscribe({ applicationServerKey })
+             * @example BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4
+             */
+            publicKey: string;
+        };
+        PushSubscriptionKeysDTO: {
+            /**
+             * @description Clave pública P-256 de la suscripción (cifrado del payload)
+             * @example BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM
+             */
+            p256dh: string;
+            /**
+             * @description Secreto de autenticación de la suscripción
+             * @example tBHItJI5svbpez7KI4CCXg
+             */
+            auth: string;
+        };
+        CreatePushSubscriptionRequestDTO: {
+            /**
+             * @description URL única del endpoint del navegador para este dispositivo/sesión
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /** @description Claves de cifrado de la suscripción */
+            keys: components["schemas"]["PushSubscriptionKeysDTO"];
+            /**
+             * @description User-Agent del navegador al momento de suscribirse (informativo, para soporte)
+             * @example Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+             */
+            userAgent?: string;
+        };
+        PushSubscriptionResponseDTO: {
+            /**
+             * @description Identificador público de la suscripción
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Endpoint del navegador registrado
+             * @example https://fcm.googleapis.com/fcm/send/abc123
+             */
+            endpoint: string;
+            /**
+             * Format: date-time
+             * @description Fecha de creación de la suscripción
+             */
+            createdAt: string;
+        };
+        CreateFcmTokenRequestDTO: {
+            /**
+             * @description Token FCM del dispositivo (retornado por firebase_messaging/getToken())
+             * @example dGVzdC1mY20tdG9rZW4tZXhhbXBsZQ
+             */
+            token: string;
+            /**
+             * @description Plataforma que registra el token
+             * @example ANDROID
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+        };
+        FcmTokenResponseDTO: {
+            /**
+             * @description Identificador público del token
+             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
+             */
+            referenceId: string;
+            /**
+             * @description Plataforma del dispositivo
+             * @enum {string}
+             */
+            deviceType: "WEB" | "ANDROID" | "IOS";
+            /**
+             * Format: date-time
+             * @description Fecha de registro del token
+             */
+            createdAt: string;
+        };
+        NotificationPreferenceItemResponseDTO: {
+            /**
+             * @example promotion
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description false si el usuario desactivó explícitamente este tipo.
+             * @example true
+             */
+            enabled: boolean;
+        };
+        NotificationPreferencesResponseDTO: {
+            /** @description Un ítem por cada valor de NotificationType — no solo los que el usuario desactivó, para que el frontend pueda pintar todos los switches sin tener que conocer el catálogo completo. */
+            preferences: components["schemas"]["NotificationPreferenceItemResponseDTO"][];
+        };
+        UpdateNotificationPreferenceRequestDTO: {
+            /**
+             * @description Tipo de notificación cuya preferencia se está cambiando.
+             * @example promotion
+             * @enum {string}
+             */
+            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "service_cancelled" | "budget_options_ready" | "budget_option_selected" | "contract_created" | "contract_awaiting_signature" | "contract_signed" | "payment_refunded" | "document_approved" | "document_rejected" | "dispute_opened" | "dispute_resolved" | "account_deletion_requested" | "account_deletion_cancelled" | "professional_verified" | "professional_verification_rejected" | "professional_suspended" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
+            /**
+             * @description true = el usuario quiere seguir recibiendo este tipo; false = lo desactivó. Se guarda por switch (auto-save), no hace falta mandar el resto de las preferencias.
+             * @example false
+             */
+            enabled: boolean;
+        };
         CreateServiceRequestDTO: {
             /** @description Título del servicio */
             title: string;
@@ -4489,13 +4926,19 @@ export interface components {
             id: number;
             /** @example a1b2c3d4-e5f6-7890-abcd-ef1234567890 */
             referenceId: string;
-            /** @example juan@example.com */
-            email: string;
+            /**
+             * @description Ausente (no `null`, la clave directamente no viaja) cuando el dueño de esta cuenta desactivó `shareContactInfo` — ver services-response.helper.ts#maskContactIfNotShared. Tarea 8, platform-hardening-2026-09.
+             * @example juan@example.com
+             */
+            email?: string;
             /** @example Juan */
             firstName: string;
             /** @example Pérez */
             lastName: string;
-            /** @example +595981234567 */
+            /**
+             * @description Mismo criterio de ausencia condicional que `email` (tarea 8).
+             * @example +595981234567
+             */
             phoneNumber?: string;
         };
         ServiceProfessionalSummaryResponseDTO: {
@@ -5040,7 +5483,10 @@ export interface components {
             refundDetails?: Record<string, never>;
             /** @example 0 */
             platformFee: number;
-            /** @example 150000 */
+            /**
+             * @description Monto neto del profesional (amount - platformFee - tax, ajustado por reembolsos acumulados). Calculado en la respuesta (D-03) — no implica que exista un payout real todavía, ver I-02.
+             * @example 88700
+             */
             professionalNetAmount?: number;
             /** @example false */
             isRecurring: boolean;
@@ -5294,198 +5740,6 @@ export interface components {
              * @example 0
              */
             rate: number;
-        };
-        CreateNotificationRequestDTO: {
-            /**
-             * @description Título descriptivo de la notificación
-             * @example Nueva solicitud de servicio
-             */
-            title: string;
-            /**
-             * @description Cuerpo detallado del mensaje de la notificación
-             * @example El cliente Juan Pérez ha solicitado un servicio de plomería.
-             */
-            message: string;
-            /**
-             * @description Tipo o categoría de la notificación para segmentación
-             * @example service_request
-             * @enum {string}
-             */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
-            /**
-             * @description Objeto con datos dinámicos requeridos por el cliente (Payload útil)
-             * @example {
-             *       "requestId": "c52b5212-db5e-4ef5-9614-726614174000",
-             *       "price": 45000
-             *     }
-             */
-            data?: Record<string, never>;
-            /**
-             * @description Canales específicos de distribución y despacho para la notificación
-             * @default [
-             *       "in_app"
-             *     ]
-             * @example [
-             *       "in_app",
-             *       "push",
-             *       "email"
-             *     ]
-             */
-            channels: string[];
-            /**
-             * @description Metadatos adicionales de auditoría o traza técnica
-             * @example {
-             *       "ip": "192.168.1.1",
-             *       "device": "iOS"
-             *     }
-             */
-            metadata?: Record<string, never>;
-        };
-        NotificationResponseDTO: {
-            /**
-             * @description ID de la notificación
-             * @example 6481fc923fbc4a3a6c23e801
-             */
-            id: string;
-            /**
-             * @description ID del usuario destino
-             * @example 6481fc923fbc4a3a6c23e802
-             */
-            userId: string;
-            /**
-             * @description Título de la notificación
-             * @example Pago Recibido
-             */
-            title: string;
-            /**
-             * @description Mensaje de la notificación
-             * @example Tu pago ha sido procesado exitosamente.
-             */
-            message: string;
-            /**
-             * @example payment_received
-             * @enum {string}
-             */
-            type: "service_request" | "service_accepted" | "service_rejected" | "service_completed" | "payment_received" | "rating_received" | "promotion" | "system" | "document_expired";
-            /**
-             * @example read
-             * @enum {string}
-             */
-            status: "pending" | "sent" | "read" | "failed";
-            /**
-             * @description Canales asignados
-             * @example [
-             *       "in_app"
-             *     ]
-             */
-            channels: string[];
-            /** @description Payload con datos extras */
-            data?: Record<string, never>;
-            /**
-             * Format: date-time
-             * @description Fecha de lectura
-             * @example 2026-06-07T22:30:00.000Z
-             */
-            readAt?: string;
-            /**
-             * Format: date-time
-             * @description Fecha de envío
-             * @example 2026-06-07T22:25:00.000Z
-             */
-            sentAt?: string;
-            /**
-             * Format: date-time
-             * @description Fecha de creación
-             * @example 2026-06-07T22:24:00.000Z
-             */
-            createdAt: string;
-        };
-        UnreadCountResponseDTO: {
-            /**
-             * @description Cantidad consolidada de notificaciones pendientes de lectura
-             * @example 5
-             */
-            count: number;
-        };
-        VapidPublicKeyResponseDTO: {
-            /**
-             * @description Clave pública VAPID — la usa el frontend en pushManager.subscribe({ applicationServerKey })
-             * @example BOZRpAjqLURvFBkW-7jiWpzFRiOULwH-MZ-6zBNw5g5-pTKrDbSZHzCfetZ-qFXTqsWz6FosItuxzdwIN0TY6q4
-             */
-            publicKey: string;
-        };
-        PushSubscriptionKeysDTO: {
-            /**
-             * @description Clave pública P-256 de la suscripción (cifrado del payload)
-             * @example BNcRdreALRFXTkOOUHK1EtK2wtaz5Ry4YfYCA_0QTpQtUbVlUls0VJXg7A8u-Ts1XbjhazAkj7I99e8QcYP7DkM
-             */
-            p256dh: string;
-            /**
-             * @description Secreto de autenticación de la suscripción
-             * @example tBHItJI5svbpez7KI4CCXg
-             */
-            auth: string;
-        };
-        CreatePushSubscriptionRequestDTO: {
-            /**
-             * @description URL única del endpoint del navegador para este dispositivo/sesión
-             * @example https://fcm.googleapis.com/fcm/send/abc123
-             */
-            endpoint: string;
-            /** @description Claves de cifrado de la suscripción */
-            keys: components["schemas"]["PushSubscriptionKeysDTO"];
-            /**
-             * @description User-Agent del navegador al momento de suscribirse (informativo, para soporte)
-             * @example Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
-             */
-            userAgent?: string;
-        };
-        PushSubscriptionResponseDTO: {
-            /**
-             * @description Identificador público de la suscripción
-             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
-             */
-            referenceId: string;
-            /**
-             * @description Endpoint del navegador registrado
-             * @example https://fcm.googleapis.com/fcm/send/abc123
-             */
-            endpoint: string;
-            /**
-             * Format: date-time
-             * @description Fecha de creación de la suscripción
-             */
-            createdAt: string;
-        };
-        CreateFcmTokenRequestDTO: {
-            /**
-             * @description Token FCM del dispositivo (retornado por firebase_messaging/getToken())
-             * @example dGVzdC1mY20tdG9rZW4tZXhhbXBsZQ
-             */
-            token: string;
-            /**
-             * @description Plataforma que registra el token
-             * @example ANDROID
-             * @enum {string}
-             */
-            deviceType: "WEB" | "ANDROID" | "IOS";
-        };
-        FcmTokenResponseDTO: {
-            /**
-             * @description Identificador público del token
-             * @example a3f1e9b2-4c3d-4e5f-8a9b-1c2d3e4f5a6b
-             */
-            referenceId: string;
-            /**
-             * @description Plataforma del dispositivo
-             * @enum {string}
-             */
-            deviceType: "WEB" | "ANDROID" | "IOS";
-            /**
-             * Format: date-time
-             * @description Fecha de registro del token
-             */
-            createdAt: string;
         };
         CreatePromotionRequestDTO: {
             /**
@@ -5826,10 +6080,20 @@ export interface components {
              */
             userId: number | null;
             /**
+             * @description Nombre completo del usuario de `userId` ("Nombre Apellido"). Mismo criterio de anonimato que `userId`: null cuando `userId` es null (nunca se filtra la identidad por esta vía aunque el id esté oculto). Tarea 9, platform-hardening-2026-09 — reemplaza el id crudo que las tablas admin de Web mostraban ("Anónimo" era un parche de UI).
+             * @example Juan Pérez
+             */
+            userName: string | null;
+            /**
              * @description ID del profesional involucrado (calificado si type=CLIENT_TO_PROFESSIONAL, autor si type=PROFESSIONAL_TO_CLIENT). null cuando isAnonymous=true y quien consulta no es el autor ni tiene permiso de auditoría — nunca null para admin/staff.
              * @example 1
              */
             professionalId: number | null;
+            /**
+             * @description Nombre completo del profesional de `professionalId` ("Nombre Apellido"). Mismo criterio de anonimato que `professionalId`. Tarea 9, platform-hardening-2026-09.
+             * @example Ana Gómez
+             */
+            professionalName: string | null;
             /**
              * @description ID de la solicitud de servicio asociada
              * @example b72c6323-ec6f-5fg6-a725-837725285111
@@ -6782,8 +7046,8 @@ export interface components {
         ProfessionalDocumentResponseDTO: {
             referenceId: string;
             professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
-            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
-            fileKey: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. `null` si la cuenta del profesional fue anonimizada (I-01): el objeto real se borra de S3, la fila se conserva como registro de que existió una verificación. */
+            fileKey?: string;
             /** @enum {string} */
             status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
             /** Format: date-time */
@@ -6814,8 +7078,8 @@ export interface components {
         AdminProfessionalDocumentResponseDTO: {
             referenceId: string;
             professionalDocumentType: components["schemas"]["ProfessionalDocumentTypeResponseDTO"];
-            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. */
-            fileKey: string;
+            /** @description Key de S3 — el cliente resuelve la URL presignada vía GET /uploads/presigned-url, mismo patrón que Services.images. `null` si la cuenta del profesional fue anonimizada (I-01): el objeto real se borra de S3, la fila se conserva como registro de que existió una verificación. */
+            fileKey?: string;
             /** @enum {string} */
             status: "PENDING" | "APPROVED" | "REJECTED" | "EXPIRED";
             /** Format: date-time */
@@ -7132,6 +7396,103 @@ export interface components {
              * @example 15000
              */
             amount?: number;
+        };
+        AuditLogResponseDTO: {
+            id: string;
+            tableName: string;
+            recordId: string;
+            operationType: string;
+            oldData?: Record<string, never>;
+            newData?: Record<string, never>;
+            /** Format: date-time */
+            changedAt: string;
+            changedBy: string;
+            reason?: string;
+        };
+        AuditLogsListResponseDTO: {
+            data: components["schemas"]["AuditLogResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        DeletionRequestResponseDTO: {
+            /**
+             * @example PENDING_DELETION
+             * @enum {string}
+             */
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
+            /** Format: date-time */
+            deletionRequestedAt: string;
+            /**
+             * Format: date-time
+             * @description Fecha en la que se anonimizará la cuenta si no se cancela antes.
+             */
+            deletionScheduledAt: string;
+        };
+        DeletionCancelResponseDTO: {
+            /**
+             * @example ACTIVE
+             * @enum {string}
+             */
+            status: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
+        };
+        CreateDisputeRequestDTO: {
+            /** @enum {string} */
+            reason: "SERVICE_NOT_PROVIDED" | "POOR_SERVICE_QUALITY" | "OVERCHARGE" | "DUPLICATE_PAYMENT" | "FRAUD" | "OTHER";
+            /**
+             * @description Explicación del reclamo
+             * @example El profesional nunca llegó al domicilio pactado
+             */
+            description: string;
+            /** @description Keys de S3 de evidencia adjunta (fotos, comprobantes) */
+            evidenceKeys?: string[];
+        };
+        DisputePartyResponseDTO: {
+            referenceId: string;
+            firstName: string;
+            lastName: string;
+        };
+        DisputeResponseDTO: {
+            /** @description referenceId (UUID) público de la disputa */
+            referenceId: string;
+            /** @description referenceId (UUID) del pago disputado */
+            paymentReferenceId: string;
+            /** @enum {string} */
+            reason: "SERVICE_NOT_PROVIDED" | "POOR_SERVICE_QUALITY" | "OVERCHARGE" | "DUPLICATE_PAYMENT" | "FRAUD" | "OTHER";
+            description: string;
+            evidenceKeys: string[];
+            /** @enum {string} */
+            status: "OPEN" | "UNDER_REVIEW" | "RESOLVED" | "REJECTED" | "WITHDRAWN";
+            openedBy: components["schemas"]["DisputePartyResponseDTO"];
+            adjudicatedBy?: components["schemas"]["DisputePartyResponseDTO"];
+            /** @enum {string} */
+            resolution?: "FULL_REFUND" | "PARTIAL_REFUND" | "NO_REFUND" | "OTHER_REMEDY";
+            resolutionNotes?: string;
+            /** @description Solo si resolution es FULL_REFUND/PARTIAL_REFUND */
+            refundAmount?: number;
+            /** Format: date-time */
+            resolvedAt?: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        DisputesListResponseDTO: {
+            data: components["schemas"]["DisputeResponseDTO"][];
+        };
+        DisputesQueueResponseDTO: {
+            data: components["schemas"]["DisputeResponseDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
+        ResolveDisputeRequestDTO: {
+            /** @enum {string} */
+            resolution: "FULL_REFUND" | "PARTIAL_REFUND" | "NO_REFUND" | "OTHER_REMEDY";
+            /**
+             * @description Motivo de la adjudicación, visible en el registro contable
+             * @example Se verificó con el profesional: el reclamo es procedente
+             */
+            resolutionNotes: string;
+            /**
+             * @description Obligatorio si resolution es FULL_REFUND o PARTIAL_REFUND. Validado también por PaymentDbService.executeRefund contra el monto disponible del pago.
+             * @example 100
+             */
+            refundAmount?: number;
         };
     };
     responses: never;
@@ -8246,7 +8607,7 @@ export interface operations {
                 name?: string;
                 email?: string;
                 documentNumber?: string;
-                status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION";
+                status?: "ACTIVE" | "BLOCKED" | "DELETED" | "INACTIVE" | "REFUSED" | "PENDING_VERIFICATION" | "PENDING_DELETION";
             };
             header?: never;
             path?: never;
@@ -8748,6 +9109,8 @@ export interface operations {
                 maxPrice?: number;
                 /** @description Filtrar solo disponibles */
                 isAvailable?: boolean;
+                /** @description Buscar por nombre o apellido del profesional (parcial, insensible a mayúsculas) */
+                search?: string;
             };
             header?: never;
             path?: never;
@@ -9204,6 +9567,361 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProfessionalDetailResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminProfessionalsExportController_export: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Filtrar por ID de categoría */
+                categoryId?: number;
+                /** @description Latitud para filtro geográfico */
+                latitude?: number;
+                /** @description Longitud para filtro geográfico */
+                longitude?: number;
+                /** @description Radio de búsqueda en km */
+                radius?: number;
+                /** @description Calificación mínima (0-5) */
+                minRating?: number;
+                /** @description Tarifa máxima por hora */
+                maxPrice?: number;
+                /** @description Filtrar solo disponibles */
+                isAvailable?: boolean;
+                /** @description Buscar por nombre o apellido del profesional (parcial, insensible a mayúsculas) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Archivo CSV de profesionales */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Límite máximo de notificaciones a retornar en la consulta */
+                limit?: number;
+                /** @description Cantidad de registros a omitir para paginación (Offset) */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"][];
+                };
+            };
+        };
+    };
+    NotificationsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateNotificationRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_findUnread: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"][];
+                };
+            };
+        };
+    };
+    NotificationsController_getUnreadCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnreadCountResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_markAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador único de la notificación (MongoDB ObjectId) */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_markAllAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador único de la notificación (MongoDB ObjectId) */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_stream: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_getVapidPublicKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VapidPublicKeyResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_registerPushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePushSubscriptionRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removePushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público de la suscripción Web Push */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationsController_registerFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFcmTokenRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FcmTokenResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationsController_removeFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Identificador público del token FCM */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    NotificationPreferencesController_getMyPreferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationPreferencesResponseDTO"];
+                };
+            };
+        };
+    };
+    NotificationPreferencesController_updateMyPreference: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateNotificationPreferenceRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationPreferencesResponseDTO"];
                 };
             };
         };
@@ -10290,19 +11008,23 @@ export interface operations {
             };
         };
     };
-    PaymentController_handleWebhooks: {
+    AdminPaymentsController_export: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Proveedor del webhook de pago */
-                provider: "STRIPE" | "BANCARD" | "INFONET" | "PAYPAL" | "MERCADO_PAGO" | "RAPIPAGO" | "PAGOFACIL" | "CASH" | "DINELCO" | "BEPSA";
+            query?: {
+                /** @description Filtrar por ID de usuario */
+                userId?: number;
+                /** @description Filtrar por ID de profesional */
+                professionalId?: number;
+                /** @description Filtrar por estado del pago */
+                status?: "PENDING" | "PAID" | "FAILED" | "REFUNDED" | "PARTIAL_REFUNDED" | "CANCELLED" | "PROCESSING" | "COMPLETED";
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Webhook procesado */
+            /** @description Archivo CSV de pagos */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -10327,272 +11049,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TaxConfigResponseDTO"];
                 };
-            };
-        };
-    };
-    NotificationsController_findAll: {
-        parameters: {
-            query?: {
-                /** @description Límite máximo de notificaciones a retornar en la consulta */
-                limit?: number;
-                /** @description Cantidad de registros a omitir para paginación (Offset) */
-                offset?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"][];
-                };
-            };
-        };
-    };
-    NotificationsController_create: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateNotificationRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_findUnread: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"][];
-                };
-            };
-        };
-    };
-    NotificationsController_getUnreadCount: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UnreadCountResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_markAsRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador único de la notificación (MongoDB ObjectId) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["NotificationResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_markAllAsRead: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador único de la notificación (MongoDB ObjectId) */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_stream: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_getVapidPublicKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["VapidPublicKeyResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_registerPushSubscription: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreatePushSubscriptionRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PushSubscriptionResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_removePushSubscription: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador público de la suscripción Web Push */
-                referenceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    NotificationsController_registerFcmToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CreateFcmTokenRequestDTO"];
-            };
-        };
-        responses: {
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["FcmTokenResponseDTO"];
-                };
-            };
-        };
-    };
-    NotificationsController_removeFcmToken: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Identificador público del token FCM */
-                referenceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -13389,6 +13845,277 @@ export interface operations {
             };
             /** @description Pago no encontrado */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminAuditLogController_list: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                /** @description Tabla auditada (match exacto) */
+                tableName?: string;
+                /** @description Id del registro auditado (match exacto) */
+                recordId?: string;
+                /** @description Quién hizo el cambio (match exacto) */
+                changedBy?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditLogsListResponseDTO"];
+                };
+            };
+        };
+    };
+    AccountDeletionController_requestDeletion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletionRequestResponseDTO"];
+                };
+            };
+        };
+    };
+    AccountDeletionController_cancelDeletion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeletionCancelResponseDTO"];
+                };
+            };
+        };
+    };
+    PaymentDisputesController_listForPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputesListResponseDTO"];
+                };
+            };
+        };
+    };
+    PaymentDisputesController_openDispute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDisputeRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description No es cliente ni profesional del pago. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Ya existe una disputa abierta sobre este pago. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PaymentDisputesController_withdraw: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID UUID del pago */
+                id: string;
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description Ya fue tomada o resuelta. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminDisputesController_listQueue: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+                status?: "OPEN" | "UNDER_REVIEW" | "RESOLVED" | "REJECTED" | "WITHDRAWN";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputesQueueResponseDTO"];
+                };
+            };
+        };
+    };
+    AdminDisputesController_claim: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description Otro staff ya la tomó. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminDisputesController_resolve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description referenceId (UUID) de la disputa */
+                referenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveDisputeRequestDTO"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDTO"];
+                };
+            };
+            /** @description refundAmount faltante para una resolución que reembolsa. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description La disputa ya no es adjudicable. */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

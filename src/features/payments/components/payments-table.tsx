@@ -20,10 +20,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { HandCoins } from 'lucide-react';
+import { Download, HandCoins } from 'lucide-react';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
 import { formatCurrency, formatDate } from '@/lib/formatters';
-import { usePaymentsQuery } from '../hooks';
+import { useExportPaymentsMutation, usePaymentsQuery } from '../hooks';
 import type { Payment, PaymentStatus } from '../api';
 import { CancelPaymentDialog } from './cancel-payment-dialog';
 import { RefundPaymentDialog } from './refund-payment-dialog';
@@ -52,16 +54,35 @@ const CANCELLABLE_STATUSES: PaymentStatus[] = ['PENDING', 'PROCESSING'];
 const STATUS_FILTER_ALL = 'ALL';
 type StatusFilterValue = PaymentStatus | typeof STATUS_FILTER_ALL;
 
+// Gate client-side por permiso (`payments.audit:read`/`admin:all`) — mismo patrón que
+// `service-progress-section.tsx`: no pedimos el listado si el permiso no está asignado.
 export function PaymentsTable() {
+  const { data: scope } = useSessionScopeQuery();
+  const canView = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.PAYMENTS.AUDIT_VIEW, PERMISSIONS.ADMIN.ALL],
+  );
+
+  if (!canView) {
+    return null;
+  }
+
+  return <PaymentsTableContent />;
+}
+
+function PaymentsTableContent() {
   const t = useTranslations('payments');
   const tCommon = useTranslations('common');
   const locale = useAppLocale();
   const [statusFilter, setStatusFilter] =
     useState<StatusFilterValue>(STATUS_FILTER_ALL);
+  const resolvedStatus =
+    statusFilter === STATUS_FILTER_ALL ? undefined : statusFilter;
 
   const { data, isPending, isError } = usePaymentsQuery({
-    status: statusFilter === STATUS_FILTER_ALL ? undefined : statusFilter,
+    status: resolvedStatus,
   });
+  const exportMutation = useExportPaymentsMutation();
 
   const columns: ColumnDef<Payment, unknown>[] = [
     {
@@ -163,24 +184,38 @@ export function PaymentsTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Select
-        value={statusFilter}
-        onValueChange={(value: StatusFilterValue | null) =>
-          setStatusFilter(value ?? STATUS_FILTER_ALL)
-        }
-      >
-        <SelectTrigger className="w-56" aria-label={t('filter.label')}>
-          <SelectValue placeholder={t('filter.label')} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={STATUS_FILTER_ALL}>{t('filter.all')}</SelectItem>
-          {STATUS_OPTIONS.map((status) => (
-            <SelectItem key={status} value={status}>
-              {t(`status.${status}`)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex items-center justify-between gap-2">
+        <Select
+          value={statusFilter}
+          onValueChange={(value: StatusFilterValue | null) =>
+            setStatusFilter(value ?? STATUS_FILTER_ALL)
+          }
+        >
+          <SelectTrigger className="w-56" aria-label={t('filter.label')}>
+            <SelectValue placeholder={t('filter.label')} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={STATUS_FILTER_ALL}>{t('filter.all')}</SelectItem>
+            {STATUS_OPTIONS.map((status) => (
+              <SelectItem key={status} value={status}>
+                {t(`status.${status}`)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={exportMutation.isPending}
+          onClick={() => exportMutation.mutate({ status: resolvedStatus })}
+        >
+          <Download />
+          {exportMutation.isPending
+            ? tCommon('states.generating')
+            : tCommon('actions.export')}
+        </Button>
+      </div>
 
       {isPending && <Skeleton className="h-64" />}
 

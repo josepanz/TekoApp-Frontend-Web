@@ -75,6 +75,16 @@ export const paymentsHandlers = [
     return HttpResponse.json(fakeTipConfig);
   }),
 
+  // GET /admin/payments/export (CSV, sin envelope {success,data} — ver `downloadFile`).
+  http.get('/api/backend/admin/payments/export', () => {
+    return new HttpResponse('id,monto\n1,150000', {
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': 'attachment; filename="pagos.csv"',
+      },
+    });
+  }),
+
   http.post('/api/backend/payments/:id/tip', async ({ params, request }) => {
     const payment = fakePayments.find((item) => item.referenceId === params.id);
     if (!payment) {

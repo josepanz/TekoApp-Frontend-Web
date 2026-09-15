@@ -34,3 +34,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+// Modo admin: agrega el ícono de búsqueda global (Ctrl/Cmd+K) al lado de LanguageSwitcher.
+export const Admin: Story = { args: { variant: 'admin' } };

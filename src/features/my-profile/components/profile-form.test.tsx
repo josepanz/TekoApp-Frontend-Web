@@ -17,6 +17,7 @@ const session: SessionUser = {
   profileStatus: 'COMPLETE',
   permissions: [],
   roles: [],
+  deletionScheduledAt: null,
 };
 
 function renderForm() {

@@ -1,11 +1,3 @@
-/**
- * TekoApp-Backend tiene versionado de rutas inconsistente: `app.enableVersioning()` sin
- * `defaultVersion` en main.ts hace que SOLO los controllers con `@Version('1')` vivan bajo
- * `/api/v1/*`; el resto vive en `/api/*` sin versión. Mapeado por dominio (primer segmento de la
- * ruta) — ver documentation/architecture.md. Si el backend versiona un dominio nuevo, agregarlo acá.
- */
-const V1_DOMAINS = new Set(['auth', 'onboarding', 'roles', 'users', 'uploads']);
-
 /** Endpoints del backend que requieren Basic Auth de cliente (no JWT de usuario) — ver architecture.md. */
 const BASIC_AUTH_PATHS = new Set([
   'auth/login',
@@ -19,11 +11,16 @@ const BASIC_AUTH_PATHS = new Set([
   'onboarding',
 ]);
 
-/** Construye la URL real del backend para un path relativo pedido por el frontend (ej. "users" o "auth/scope"). */
+/**
+ * Construye la URL real del backend para un path relativo pedido por el frontend (ej. "users" o
+ * "auth/scope"). TekoApp-Backend ahora versiona TODAS sus rutas: `main.ts` setea
+ * `defaultVersion: '1'` en `app.enableVersioning()`, así que todo controller (tenga o no
+ * `@Version('1')` propio) vive bajo `/api/v1/*` — ver documentation/architecture.md. Antes solo 6
+ * de 42 controllers estaban versionados y esta función prefijaba por dominio; ya no hace falta
+ * esa lista.
+ */
 export function resolveBackendPath(path: string): string {
-  const domain = path.split('/')[0];
-  const prefix = V1_DOMAINS.has(domain) ? 'v1/' : '';
-  return `${prefix}${path}`;
+  return `v1/${path}`;
 }
 
 export function requiresBasicAuth(path: string): boolean {

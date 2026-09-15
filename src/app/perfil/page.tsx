@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getSession } from '@/core/auth/session';
+import { AccountDeletionSection } from '@/features/account-deletion/components/account-deletion-section';
 import { ProfileForm } from '@/features/my-profile/components/profile-form';
 import { BRAND_NAME } from '@/design-system/tokens/brand';
 
@@ -36,6 +37,7 @@ export default async function PerfilPage() {
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </div>
       <ProfileForm session={session} />
+      <AccountDeletionSection session={session} />
     </div>
   );
 }
