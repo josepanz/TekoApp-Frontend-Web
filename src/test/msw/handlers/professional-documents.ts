@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import type {
   AdminProfessionalDocument,
+  MyDocumentStatus,
   ProfessionalDocument,
 } from '@/features/professional-documents/api';
 import { buildProfessionalDocumentType } from './professional-document-types';
@@ -44,7 +45,44 @@ export function buildProfessionalDocument(
   };
 }
 
+export function buildMyDocumentStatus(
+  overrides: Partial<MyDocumentStatus> = {},
+): MyDocumentStatus {
+  return {
+    documentType: buildProfessionalDocumentType(),
+    document: undefined,
+    ...overrides,
+  };
+}
+
 export const professionalDocumentsHandlers = [
+  http.get('/api/backend/professionals/me/documents', () => {
+    return HttpResponse.json({
+      data: [
+        buildMyDocumentStatus(),
+        buildMyDocumentStatus({
+          documentType: buildProfessionalDocumentType({
+            referenceId: 'type-2',
+            name: 'Título técnico',
+            category: 'QUALIFICATION',
+            isRequired: false,
+          }),
+          document: buildProfessionalDocument({
+            referenceId: 'doc-2',
+            status: 'APPROVED',
+          }),
+        }),
+      ],
+    });
+  }),
+
+  http.post('/api/backend/professionals/me/documents', () => {
+    return HttpResponse.json(
+      buildProfessionalDocument({ referenceId: 'doc-new', status: 'PENDING' }),
+      { status: 201 },
+    );
+  }),
+
   http.get('/api/backend/admin/professional-documents', () => {
     return HttpResponse.json({
       data: [buildAdminProfessionalDocument()],

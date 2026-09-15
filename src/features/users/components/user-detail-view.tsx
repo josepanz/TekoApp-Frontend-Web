@@ -23,6 +23,7 @@ const STATUS_VARIANT: Record<
   BLOCKED: 'destructive',
   DELETED: 'destructive',
   REFUSED: 'destructive',
+  PENDING_DELETION: 'secondary',
 };
 
 function getInitials(name: string): string {
@@ -57,6 +58,7 @@ export function UserDetailView({ referenceId }: { referenceId: string }) {
     BLOCKED: t('status.BLOCKED'),
     DELETED: t('status.DELETED'),
     REFUSED: t('status.REFUSED'),
+    PENDING_DELETION: t('status.PENDING_DELETION'),
   };
 
   const fullName = `${user.firstName} ${user.lastName}`.trim();

@@ -6,14 +6,17 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
+  exportProfessionals,
   getProfessionalByReference,
   getProfessionals,
   suspendProfessional,
   verifyProfessional,
+  type ExportProfessionalsParams,
   type GetProfessionalsParams,
   type SuspendProfessionalRequest,
   type VerifyProfessionalRequest,
 } from './api';
+import { triggerFileDownload } from '@/lib/trigger-file-download';
 
 export function useProfessionalsQuery(params: GetProfessionalsParams) {
   return useQuery({
@@ -63,6 +66,19 @@ export function useSuspendProfessionalMutation() {
     },
     onError: () => {
       toast.error('No se pudo suspender al profesional. Intentá de nuevo.');
+    },
+  });
+}
+
+// Dispara la descarga del CSV con los filtros activos de la tabla (nunca "exportar todo"
+// ignorando el filtro visible) — ver `admin-data-export.md`.
+export function useExportProfessionalsMutation() {
+  return useMutation({
+    mutationFn: (params: ExportProfessionalsParams) =>
+      exportProfessionals(params),
+    onSuccess: ({ blob, filename }) => triggerFileDownload(blob, filename),
+    onError: () => {
+      toast.error('No se pudo generar el archivo. Intentá de nuevo.');
     },
   });
 }

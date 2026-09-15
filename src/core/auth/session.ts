@@ -21,6 +21,10 @@ export interface SessionUser {
   profileStatus: string;
   permissions: string[];
   roles: string[];
+  // Ventana de gracia de borrado de cuenta (I-01/I-02) — `null` si no hay solicitud activa.
+  // `GET /auth/scope` la expone fresca desde DB (no viene en el JWT), ver
+  // `TekoApp-Backend/openspec/changes/platform-hardening-2026-09/I-01-account-deletion.md`.
+  deletionScheduledAt: string | null;
 }
 
 interface UserScopeResponse {
@@ -33,6 +37,7 @@ interface UserScopeResponse {
     status: string;
     profileStatus: string;
     accessLevelId: number;
+    deletionScheduledAt?: string | null;
   };
   roles?: { name: string }[];
   permissions?: { name: string }[];
@@ -107,5 +112,6 @@ export async function getSession(): Promise<SessionUser | null> {
     profileStatus: scope.user.profileStatus,
     permissions: (scope.permissions ?? []).map((p) => p.name),
     roles: (scope.roles ?? []).map((r) => r.name),
+    deletionScheduledAt: scope.user.deletionScheduledAt ?? null,
   };
 }

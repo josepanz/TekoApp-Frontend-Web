@@ -8,19 +8,31 @@ export type UpdateUserDto = components['schemas']['UpdateUserRequestDTO'];
 export interface GetUsersParams {
   page: number;
   pageSize: number;
+  // `name` SÍ existe en el backend (`ListUsersRequestDTO.name`, ver
+  // `TekoApp-Backend/src/api/users/dtos/request/list-users.request.dto.ts`) y hace `contains` +
+  // `mode: insensitive` sobre firstName/lastName (`UsersDBService.findAllUsers`) — no hay un
+  // `search` unificado como en /professionals, así que esto es lo más cercano para buscar por
+  // nombre. NO matchea por email/documentNumber (esos son filtros separados, exactos/contains
+  // propios) — ver `global-search.tsx` para la limitación que esto impone en la búsqueda global.
+  name?: string;
 }
 
-// GET /v1/users no está anotado con @ApiQuery en el backend (el Swagger no documenta query
-// params para este endpoint), pero sí acepta paginación estándar (page/pageSize) igual que el
-// resto de los listados vía PrismaPaginationUtil — ver documentation/architecture.md.
+// GET /v1/users acepta paginación estándar (page/pageSize) más los filtros de
+// `ListUsersRequestDTO` — el Swagger no documenta `description` para varios de sus campos
+// (`name`/`email`/`documentNumber`), por eso no salen con comentario en
+// `types.generated.ts`, pero sí están tipados y sí los aplica el backend.
 export function getUsers({
   page,
   pageSize,
+  name,
 }: GetUsersParams): Promise<UsersListResponse> {
   const query = new URLSearchParams({
     page: String(page),
     pageSize: String(pageSize),
   });
+  if (name) {
+    query.set('name', name);
+  }
   return apiFetch<UsersListResponse>(`users?${query.toString()}`);
 }
 

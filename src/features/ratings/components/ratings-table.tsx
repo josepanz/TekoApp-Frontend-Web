@@ -1,8 +1,10 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,10 +19,20 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
 import { DataTable } from '@/components/layout/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
+import { useSessionScopeQuery } from '@/core/auth/hooks';
+import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
+import { ApiError } from '@/core/api-client/errors';
 import { formatDate } from '@/lib/formatters';
-import { useDeleteRatingMutation, useRatingsQuery } from '../hooks';
+import { runBulkAction } from '@/lib/run-bulk-action';
+import { deleteRating } from '../api';
+import {
+  RATINGS_QUERY_KEY,
+  useDeleteRatingMutation,
+  useRatingsQuery,
+} from '../hooks';
 import type { Rating } from '../api';
 
 const TYPE_VARIANT: Record<Rating['type'], 'default' | 'secondary'> = {
@@ -65,21 +77,104 @@ function RatingActionsCell({ rating }: { rating: Rating }) {
   );
 }
 
+// Gate client-side por permiso (`ratings.audit:read`/`admin:all`) — mismo patrón que
+// `service-progress-section.tsx`: no pedimos el listado si el permiso no está asignado.
 export function RatingsTable() {
+  const { data: scope } = useSessionScopeQuery();
+  const canView = hasAnyPermission(
+    (scope?.permissions ?? []).map((permission) => permission.name),
+    [PERMISSIONS.RATINGS.AUDIT_VIEW, PERMISSIONS.ADMIN.ALL],
+  );
+
+  if (!canView) {
+    return null;
+  }
+
+  return <RatingsTableContent />;
+}
+
+function RatingsTableContent() {
   const t = useTranslations('ratings');
+  const tCommon = useTranslations('common');
   const locale = useAppLocale();
+  const queryClient = useQueryClient();
   const { data, isPending, isError } = useRatingsQuery();
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+  const [isBulkDeleting, setIsBulkDeleting] = useState(false);
+
+  async function handleBulkDelete() {
+    if (!data) return;
+    const selected = data.filter((rating) =>
+      selectedIds.includes(rating.referenceId),
+    );
+    setIsBulkDeleting(true);
+    const { succeeded, failed } = await runBulkAction(selected, (rating) =>
+      deleteRating(rating.referenceId),
+    );
+    setIsBulkDeleting(false);
+    setBulkDeleteOpen(false);
+    setSelectedIds([]);
+    void queryClient.invalidateQueries({ queryKey: RATINGS_QUERY_KEY });
+
+    if (failed.length === 0) {
+      toast.success(t('bulkDelete.successAll', { count: succeeded.length }));
+    } else if (succeeded.length === 0) {
+      toast.error(t('bulkDelete.failedAll', { count: failed.length }));
+    } else {
+      toast.warning(
+        t('bulkDelete.partialResult', {
+          succeeded: succeeded.length,
+          total: selected.length,
+          failed: failed.length,
+          names: failed
+            .map(
+              (f) =>
+                `#${f.item.id} (${
+                  f.error instanceof ApiError
+                    ? f.error.message
+                    : tCommon('unexpectedError')
+                })`,
+            )
+            .join(', '),
+        }),
+      );
+    }
+  }
 
   const columns: ColumnDef<Rating, unknown>[] = [
     {
       id: 'userId',
       header: t('table.user'),
-      cell: ({ row }) => `#${row.original.userId}`,
+      // "Anónimo" comunica una decisión del usuario (calificar sin identificarse) — no la
+      // confundimos con "no teníamos el nombre". `RatingDetailResponseDTO.userName` (tarea 9 de
+      // platform-hardening-2026-09, backend) ya trae el nombre real con el mismo criterio de
+      // anonimato que `userId` (null solo para un viewer sin permiso de auditoría; para
+      // admin/staff nunca es null). Por eso `isAnonymous` decide la etiqueta, no la nulidad del
+      // id/nombre: si es anónima mostramos "Anónimo" aunque el backend nos haya mandado el
+      // nombre real (admin lo tiene por auditoría, pero la UI respeta la elección de anonimato).
+      // El fallback a `#id`/'—' es defensivo (no debería pasar para admin/staff hoy).
+      cell: ({ row }) => {
+        const { isAnonymous, userId, userName } = row.original;
+        if (isAnonymous) {
+          return t('table.anonymous');
+        }
+        return userName ?? (userId === null ? '—' : `#${userId}`);
+      },
     },
     {
       id: 'professionalId',
       header: t('table.professional'),
-      cell: ({ row }) => `#${row.original.professionalId}`,
+      cell: ({ row }) => {
+        const { isAnonymous, professionalId, professionalName } = row.original;
+        if (isAnonymous) {
+          return t('table.anonymous');
+        }
+        return (
+          professionalName ??
+          (professionalId === null ? '—' : `#${professionalId}`)
+        );
+      },
     },
     {
       accessorKey: 'rating',
@@ -135,6 +230,57 @@ export function RatingsTable() {
   }
 
   return (
-    <DataTable columns={columns} data={data} emptyMessage={t('table.empty')} />
+    <>
+      <BulkActionsBar
+        selectedCount={selectedIds.length}
+        onCancel={() => setSelectedIds([])}
+      >
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => setBulkDeleteOpen(true)}
+        >
+          {t('bulkDelete.cta', { count: selectedIds.length })}
+        </Button>
+      </BulkActionsBar>
+
+      <DataTable
+        columns={columns}
+        data={data}
+        emptyMessage={t('table.empty')}
+        selection={{
+          selectedIds,
+          onSelectionChange: setSelectedIds,
+          getRowId: (row) => row.referenceId,
+        }}
+      />
+
+      <AlertDialog open={bulkDeleteOpen} onOpenChange={setBulkDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('bulkDelete.confirmTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('bulkDelete.confirmDescription', {
+                count: selectedIds.length,
+              })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tCommon('actions.cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isBulkDeleting}
+              onClick={() => {
+                void handleBulkDelete();
+              }}
+            >
+              {isBulkDeleting
+                ? tCommon('states.deleting')
+                : tCommon('actions.delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

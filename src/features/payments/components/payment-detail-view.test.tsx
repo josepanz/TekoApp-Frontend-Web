@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@/test/render';
+import { render, screen, waitFor } from '@/test/render';
 import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { buildPayment, paymentsHandlers } from '@/test/msw/handlers/payments';
@@ -7,20 +7,51 @@ import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import { PaymentDetailView } from './payment-detail-view';
 
+function mockScope(permissions: string[]) {
+  server.use(
+    http.get('/api/backend/auth/scope', () => {
+      return HttpResponse.json({
+        permissions: permissions.map((name) => ({ name })),
+        roles: [],
+      });
+    }),
+  );
+}
+
 beforeEach(() => {
   server.use(...paymentsHandlers);
+  mockScope(['admin:all']);
 });
 
 function renderDetailView(id: string) {
   const queryClient = createTestQueryClient();
-  return render(
+  render(
     <QueryClientProvider client={queryClient}>
       <PaymentDetailView id={id} />
     </QueryClientProvider>,
   );
+  return queryClient;
 }
 
 describe('PaymentDetailView', () => {
+  it('no renderiza nada si el usuario no tiene permiso de auditoría', async () => {
+    // Arrange
+    mockScope([]);
+
+    // Act
+    const queryClient = renderDetailView(
+      'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+    );
+
+    // Assert
+    await waitFor(() =>
+      expect(queryClient.getQueryState(['auth', 'scope'])?.status).toBe(
+        'success',
+      ),
+    );
+    expect(screen.queryByText('Pago txn-uuid-abc')).not.toBeInTheDocument();
+  });
+
   it('muestra los datos del pago una vez cargado', async () => {
     // Arrange & Act
     renderDetailView('f47ac10b-58cc-4372-a567-0e02b2c3d479');

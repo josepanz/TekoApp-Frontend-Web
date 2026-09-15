@@ -7,12 +7,33 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAppLocale } from '@/i18n/use-app-locale';
+import { formatDate } from '@/lib/formatters';
+import type { RoleWithPermissions } from '../api';
 import { useRoleDetailQuery } from '../hooks';
 import { RoleFormDialog } from './role-form-dialog';
+
+// Agrupa los permisos por dominio (la parte antes de "." o ":" en su `name`, ej.
+// "ratings.audit:read" -> "ratings") — con un rol de muchos permisos, una sola pared de badges
+// no comunica nada; agrupados por dominio se puede escanear.
+function groupPermissionsByDomain(
+  permissions: RoleWithPermissions['permissions'],
+) {
+  const groups = new Map<string, RoleWithPermissions['permissions']>();
+  for (const permission of permissions) {
+    const domain = permission.name.split(/[.:]/)[0];
+    const label = domain.replace(/-/g, ' ');
+    const existing = groups.get(label) ?? [];
+    existing.push(permission);
+    groups.set(label, existing);
+  }
+  return Array.from(groups.entries());
+}
 
 export function RoleDetailView({ id }: { id: number }) {
   const t = useTranslations('rolesPermission');
   const tCommon = useTranslations('common');
+  const locale = useAppLocale();
   const { data: role, isPending, isError } = useRoleDetailQuery(id);
 
   if (isPending) {
@@ -59,7 +80,7 @@ export function RoleDetailView({ id }: { id: number }) {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant={role.isActive ? 'default' : 'secondary'}>
+            <Badge variant={role.isActive ? 'success' : 'secondary'}>
               {role.isActive ? t('table.active') : t('table.inactive')}
             </Badge>
             <Badge variant="outline">
@@ -70,22 +91,34 @@ export function RoleDetailView({ id }: { id: number }) {
           </div>
 
           {role.permissions.length > 0 && (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-3">
               <span className="text-sm font-medium">
                 {t('detail.permissionsTitle')}
               </span>
-              <div className="flex flex-wrap gap-2">
-                {role.permissions.map((permission) => (
-                  <Badge key={permission.id} variant="secondary">
-                    {permission.displayName || permission.name}
-                  </Badge>
-                ))}
-              </div>
+              {groupPermissionsByDomain(role.permissions).map(
+                ([domain, permissions]) => (
+                  <div key={domain} className="flex flex-col gap-1.5">
+                    <span className="text-muted-foreground text-xs capitalize">
+                      {domain}
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {permissions.map((permission) => (
+                        <Badge key={permission.id} variant="secondary">
+                          {permission.displayName || permission.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ),
+              )}
             </div>
           )}
 
           <p className="text-muted-foreground text-xs">
-            {t('detail.createdBy', { user: role.createdBy })}
+            {t('detail.createdBy', {
+              user: role.createdBy,
+              date: formatDate(role.createdAt, locale),
+            })}
           </p>
         </CardContent>
       </Card>
