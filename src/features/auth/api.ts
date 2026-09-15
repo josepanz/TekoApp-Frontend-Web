@@ -1,4 +1,4 @@
-import { isBackendEnvelope } from '@/core/api-client/client';
+import { extractErrorInfo, isBackendEnvelope } from '@/core/api-client/client';
 import { ApiError } from '@/core/api-client/errors';
 import type { LoginFormValues, RegisterFormValues } from './schemas';
 
@@ -26,11 +26,14 @@ export async function login(values: LoginFormValues): Promise<LoginResult> {
   const body: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
-    const message =
-      body && typeof body === 'object' && 'message' in body
-        ? String((body as { message: unknown }).message)
-        : 'No se pudo iniciar sesión';
-    throw new ApiError(response.status, message, body);
+    // `/api/auth/login` reenvía el body del backend real tal cual en los errores que vienen de
+    // ahí (envelope `{success:false,error:{...}}`) — mismo bug que tenía `parseErrorResponse` de
+    // `client.ts`, reusa la misma corrección en vez de duplicarla otra vez acá.
+    const { message, errorCode, details } = extractErrorInfo(
+      body,
+      'No se pudo iniciar sesión',
+    );
+    throw new ApiError(response.status, message, body, errorCode, details);
   }
 
   return (
@@ -56,11 +59,11 @@ export async function register(
   const body: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
-    const message =
-      body && typeof body === 'object' && 'message' in body
-        ? String((body as { message: unknown }).message)
-        : 'No se pudo crear la cuenta';
-    throw new ApiError(response.status, message, body);
+    const { message, errorCode, details } = extractErrorInfo(
+      body,
+      'No se pudo crear la cuenta',
+    );
+    throw new ApiError(response.status, message, body, errorCode, details);
   }
 
   return (

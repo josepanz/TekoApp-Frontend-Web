@@ -16,6 +16,20 @@ Element.prototype.hasPointerCapture ??= () => false;
 Element.prototype.setPointerCapture ??= () => {};
 Element.prototype.releasePointerCapture ??= () => {};
 
+// jsdom tampoco implementa window.matchMedia — lo usa `hooks/use-mobile.ts` (detecta mobile vs.
+// desktop), del que depende cualquier componente que use `SidebarProvider`/`Sidebar`.
+window.matchMedia ??= (query: string) =>
+  ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  }) as unknown as MediaQueryList;
+
 // Arranca el servidor MSW antes de todos los tests, resetea handlers entre tests
 // (nunca dejar que un test contamine a otro con un handler custom), y lo cierra al final.
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));

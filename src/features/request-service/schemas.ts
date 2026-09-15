@@ -6,8 +6,14 @@ export const requestServiceSchema = z.object({
   categoryId: z.number({ message: 'Elegí una categoría' }),
   serviceTypeId: z.number({ message: 'Elegí un tipo de servicio' }),
   address: z.string().min(1, 'La dirección es obligatoria'),
-  latitude: z.number(),
-  longitude: z.number(),
+  latitude: z
+    .number({ message: 'La latitud es obligatoria' })
+    .min(-90, 'La latitud debe estar entre -90 y 90')
+    .max(90, 'La latitud debe estar entre -90 y 90'),
+  longitude: z
+    .number({ message: 'La longitud es obligatoria' })
+    .min(-180, 'La longitud debe estar entre -180 y 180')
+    .max(180, 'La longitud debe estar entre -180 y 180'),
   isUrgent: z.boolean(),
 });
 

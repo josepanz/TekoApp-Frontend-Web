@@ -12,12 +12,19 @@ Cualquier helper de sesión (`getSession()` y equivalentes futuros) debe disting
   error (lanzar) para que el caller pueda mostrar un estado de servicio no disponible, en vez de
   redirigir a `/login` como si la sesión hubiera expirado.
 
-**Bug confirmado hoy en `core/auth/session.ts#getSession()`** (auditoría comparativa contra
-`portal-comercios-frontend`, 2026-07-21): `if (!response.ok) return null;` colapsa 401 y 5xx en el
-mismo `null`, y el `catch { return null; }` hace lo mismo con errores de red — un usuario logueado
-ve la app como "deslogueada" durante una caída transitoria del backend. Fix pendiente (backlog,
-ver memoria de proyecto) — requiere decidir primero qué hace cada caller de `getSession()` ante un
-error propagado (mostrar página de error vs. redirigir), no es un cambio de una sola línea.
+**Comportamiento actual de `core/auth/session.ts#getSession()`** (verificado en el código, auditoría
+`platform-hardening-2026-09`): la clasificación de arriba **ya está implementada correctamente** —
+401 devuelve `null`, y cualquier otro fallo (5xx o error de red en el `catch`) lanza
+`SessionUnavailableError` en vez de devolver `null` en silencio. No hay bug abierto acá; mantené
+este comportamiento como la regla al tocar `getSession()` o cualquier helper de sesión nuevo.
+
+> Nota histórica: una auditoría anterior (2026-07-21, comparativa contra `portal-comercios-frontend`)
+> reportó que `getSession()` colapsaba 401 y 5xx en el mismo `null`. Eso ya fue corregido — no
+> vuelvas a "arreglarlo".
+
+**Regla general**: al cerrar un ítem de auditoría que corrige (o desmiente) algo documentado acá,
+actualizar esta regla en el mismo commit. Un doc desactualizado hace que la próxima auditoría
+vuelva a gastar trabajo reverificando un bug que ya no existe.
 
 ## Rama protegida — guardrail explícito
 
