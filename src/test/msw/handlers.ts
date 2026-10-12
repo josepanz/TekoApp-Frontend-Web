@@ -2,6 +2,7 @@ import { aiDisclosuresHandlers } from './handlers/ai-disclosures';
 import { analyticsHandlers } from './handlers/analytics';
 import { authHandlers } from './handlers/auth';
 import { categoriesHandlers } from './handlers/categories';
+import { countriesHandlers } from './handlers/countries';
 import { locationsHandlers } from './handlers/locations';
 import { myProfileHandlers } from './handlers/my-profile';
 import { notificationsHandlers } from './handlers/notifications';
@@ -28,6 +29,7 @@ export const handlers = [
   ...ratingsHandlers,
   ...rolesHandlers,
   ...categoriesHandlers,
+  ...countriesHandlers,
   ...notificationsHandlers,
   ...myProfileHandlers,
   ...aiDisclosuresHandlers,

@@ -108,15 +108,17 @@ describe('ContentConsentGrantsAuditTable', () => {
     // Act
     await user.click(screen.getByRole('combobox', { name: 'Alcance de uso' }));
     await user.click(await screen.findByRole('option', { name: 'Marketing' }));
-    await user.type(
-      screen.getByLabelText('Subido por (referenceId)'),
-      'user-7',
+    await user.click(screen.getByLabelText('Subido por'));
+    await user.click(
+      await screen.findByRole('option', { name: /Ana González/ }),
     );
-    await user.tab();
 
     // Assert
     await waitFor(() =>
-      expect(onRequest).toHaveBeenLastCalledWith('MARKETING', 'user-7'),
+      expect(onRequest).toHaveBeenLastCalledWith(
+        'MARKETING',
+        'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      ),
     );
   });
 });

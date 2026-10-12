@@ -2,9 +2,8 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { useState, type KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -14,6 +13,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { DataTable } from '@/components/data-table';
+import { CountryCombobox } from '@/features/countries/components/country-combobox';
+import { UserCombobox } from '@/features/users/components/user-combobox';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
 import { useUserConsentsAuditQuery } from '../hooks';
@@ -49,26 +50,6 @@ export function UserConsentsAuditTable() {
       countryId,
       userReferenceId,
     });
-
-  function commitCountryId(value: string) {
-    const parsed = Number(value);
-    setCountryId(value.trim() && Number.isInteger(parsed) ? parsed : undefined);
-    setPage(1);
-  }
-
-  function commitUserReferenceId(value: string) {
-    setUserReferenceId(value.trim() || undefined);
-    setPage(1);
-  }
-
-  function handleCommitOnEnter(
-    event: KeyboardEvent<HTMLInputElement>,
-    commit: (value: string) => void,
-  ) {
-    if (event.key === 'Enter') {
-      commit(event.currentTarget.value);
-    }
-  }
 
   const columns: ColumnDef<UserConsentAudit, unknown>[] = [
     {
@@ -143,30 +124,32 @@ export function UserConsentsAuditTable() {
         </Select>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="countryIdFilter">{t('filter.countryIdLabel')}</Label>
-          <Input
+          <Label htmlFor="countryIdFilter">{t('filter.countryLabel')}</Label>
+          <CountryCombobox
             id="countryIdFilter"
-            type="number"
-            min={1}
-            className="w-40"
-            defaultValue={countryId ?? ''}
-            onBlur={(event) => commitCountryId(event.currentTarget.value)}
-            onKeyDown={(event) => handleCommitOnEnter(event, commitCountryId)}
+            className="w-64"
+            placeholder={t('filter.searchCountryPlaceholder')}
+            emptyText={t('filter.noCountries')}
+            clearLabel={t('filter.clearFilter')}
+            onChange={(id) => {
+              setCountryId(id);
+              setPage(1);
+            }}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="userReferenceIdFilter">
-            {t('filter.userReferenceIdLabel')}
-          </Label>
-          <Input
+          <Label htmlFor="userReferenceIdFilter">{t('filter.userLabel')}</Label>
+          <UserCombobox
             id="userReferenceIdFilter"
-            className="w-64"
-            defaultValue={userReferenceId ?? ''}
-            onBlur={(event) => commitUserReferenceId(event.currentTarget.value)}
-            onKeyDown={(event) =>
-              handleCommitOnEnter(event, commitUserReferenceId)
-            }
+            className="w-72"
+            placeholder={t('filter.searchUserPlaceholder')}
+            emptyText={t('filter.noUsers')}
+            clearLabel={t('filter.clearFilter')}
+            onChange={(referenceId) => {
+              setUserReferenceId(referenceId);
+              setPage(1);
+            }}
           />
         </div>
       </div>
