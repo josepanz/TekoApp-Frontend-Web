@@ -1,3 +1,10 @@
+/**
+ * Suite: Auditoría de consentimientos de usuario: filas, vacío y filtro por país/usuario con combobox
+ * Casos: CP-WEB-ADMIN-011 (ver test/qa/casos/CP-ADMIN.md)
+ * Tipo: integración (componente + MSW)   Prioridad: P2
+ * Precondiciones: Vitest + jsdom + MSW (GET /api/backend/admin/legal/consents).
+ * Trazabilidad: commit 0c0fb4a; openspec/specs/data-and-media-consent-admin.md
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';

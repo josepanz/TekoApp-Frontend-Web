@@ -1,3 +1,10 @@
+/**
+ * Suite: Auditoría de grants de contenido: estado vigente/revocado y filtros
+ * Casos: CP-WEB-ADMIN-012 (ver test/qa/casos/CP-ADMIN.md)
+ * Tipo: integración (componente + MSW)   Prioridad: P2
+ * Precondiciones: Vitest + jsdom + MSW; combobox de país/usuario con búsqueda.
+ * Trazabilidad: commit 0c0fb4a; openspec/specs/data-and-media-consent-admin.md
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';

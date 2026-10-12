@@ -1,3 +1,10 @@
+/**
+ * Suite: DataTable: selección, estados (skeleton/vacío/sin resultados/error), paginación, toolbar con debounce y ordenamiento (aria-sort)
+ * Casos: CP-WEB-UI-001..011 (ver test/qa/casos/CP-UI.md)
+ * Tipo: unitaria (componente)   Prioridad: P1
+ * Precondiciones: Vitest + jsdom + user-event; sin red.
+ * Trazabilidad: rama feat/admin-ui-datatable-emptystate, commit d1c7bfd
+ */
 import type { ColumnDef } from '@tanstack/react-table';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';

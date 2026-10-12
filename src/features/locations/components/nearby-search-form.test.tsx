@@ -1,3 +1,10 @@
+/**
+ * Suite: NearbySearchForm: envío, "Solo disponibles" y estado pending (sin filtro onlineOnly)
+ * Casos: CP-WEB-LOC-005 (ver test/qa/casos/CP-LOC.md)
+ * Tipo: unitaria (componente)   Prioridad: P2
+ * Precondiciones: Vitest + jsdom + user-event.
+ * Trazabilidad: commit 716df29 (se quitó onlineOnly del formulario)
+ */
 import { render, screen } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';

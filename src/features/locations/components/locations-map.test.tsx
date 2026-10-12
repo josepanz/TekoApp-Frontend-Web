@@ -1,3 +1,10 @@
+/**
+ * Suite: LocationsMap y toMarkers con el contrato nuevo (coordenadas aproximadas, descarte de inválidas)
+ * Casos: CP-WEB-LOC-001..003 (ver test/qa/casos/CP-LOC.md)
+ * Tipo: unitaria (componente)   Prioridad: P1
+ * Precondiciones: Vitest + jsdom; @vis.gl/react-google-maps mockeado; API key por vi.stubEnv.
+ * Trazabilidad: commit 716df29 (mapa alineado al contrato nuevo)
+ */
 import { render, screen } from '@/test/render';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { NearbyProfessional } from '../api';
