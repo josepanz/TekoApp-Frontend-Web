@@ -37,7 +37,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/core/api-client/errors';
 import { useAppLocale } from '@/i18n/use-app-locale';
@@ -100,11 +99,12 @@ export function PortfolioReviewQueueTable() {
   const [bulkApproveOpen, setBulkApproveOpen] = useState(false);
   const [bulkRejectOpen, setBulkRejectOpen] = useState(false);
   const [isBulkProcessing, setIsBulkProcessing] = useState(false);
-  const { data, isPending, isError } = useAdminPortfolioQueueQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    status,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useAdminPortfolioQueueQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      status,
+    });
 
   const {
     register: registerBulkReject,
@@ -252,45 +252,49 @@ export function PortfolioReviewQueueTable() {
         </SelectContent>
       </Select>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <>
-          <BulkActionsBar
-            selectedCount={selectedIds.length}
-            onCancel={() => setSelectedIds([])}
+      <>
+        <BulkActionsBar
+          selectedCount={selectedIds.length}
+          onCancel={() => setSelectedIds([])}
+        >
+          <Button size="sm" onClick={() => setBulkApproveOpen(true)}>
+            {t('bulk.approveButton', { count: selectedIds.length })}
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setBulkRejectOpen(true)}
           >
-            <Button size="sm" onClick={() => setBulkApproveOpen(true)}>
-              {t('bulk.approveButton', { count: selectedIds.length })}
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => setBulkRejectOpen(true)}
-            >
-              {t('bulk.rejectButton', { count: selectedIds.length })}
-            </Button>
-          </BulkActionsBar>
+            {t('bulk.rejectButton', { count: selectedIds.length })}
+          </Button>
+        </BulkActionsBar>
 
-          <DataTable
-            columns={columns}
-            data={data.data}
-            emptyMessage={t('table.empty')}
-            pagination={{
-              page: data.pagination.page,
-              totalPages: data.pagination.totalPages,
-              onPageChange: setPage,
-            }}
-            selection={{
-              selectedIds,
-              onSelectionChange: setSelectedIds,
-              getRowId: (row) => row.referenceId,
-            }}
-          />
-        </>
-      )}
+        <DataTable
+          columns={columns}
+          data={data?.data ?? []}
+          isLoading={isPending}
+          isFetching={isFetching}
+          isError={isError}
+          errorMessage={t('table.loadError')}
+          onRetry={() => void refetch()}
+          isFiltered={status !== undefined}
+          emptyMessage={t('table.empty')}
+          pagination={
+            data
+              ? {
+                  page: data.pagination.page,
+                  totalPages: data.pagination.totalPages,
+                  onPageChange: setPage,
+                }
+              : undefined
+          }
+          selection={{
+            selectedIds,
+            onSelectionChange: setSelectedIds,
+            getRowId: (row) => row.referenceId,
+          }}
+        />
+      </>
 
       <PortfolioReviewDialog
         item={reviewing}

@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { DataTable } from '@/components/data-table';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
@@ -70,7 +69,7 @@ function AuditLogTableContent() {
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<AuditLogFilters>(EMPTY_FILTERS);
 
-  const { data, isPending, isError } = useAuditLogsQuery({
+  const { data, isPending, isError, isFetching, refetch } = useAuditLogsQuery({
     page,
     pageSize: PAGE_SIZE,
     tableName: filters.tableName || undefined,
@@ -179,22 +178,26 @@ function AuditLogTableContent() {
         </div>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={Object.values(filters).some(Boolean)}
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

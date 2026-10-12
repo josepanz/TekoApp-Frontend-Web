@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   Tooltip,
   TooltipContent,
@@ -79,7 +78,7 @@ function PaymentsTableContent() {
   const resolvedStatus =
     statusFilter === STATUS_FILTER_ALL ? undefined : statusFilter;
 
-  const { data, isPending, isError } = usePaymentsQuery({
+  const { data, isPending, isError, isFetching, refetch } = usePaymentsQuery({
     status: resolvedStatus,
   });
   const exportMutation = useExportPaymentsMutation();
@@ -217,19 +216,17 @@ function PaymentsTableContent() {
         </Button>
       </div>
 
-      {isPending && <Skeleton className="h-64" />}
-
-      {isError && (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      )}
-
-      {!isPending && !isError && (
-        <DataTable
-          columns={columns}
-          data={data}
-          emptyMessage={t('table.empty')}
-        />
-      )}
+      <DataTable
+        columns={columns}
+        data={data ?? []}
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={resolvedStatus !== undefined}
+        emptyMessage={t('table.empty')}
+      />
     </div>
   );
 }

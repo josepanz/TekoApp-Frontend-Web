@@ -60,6 +60,7 @@ export interface DataTableLabels {
   loadError: string;
   retry: string;
   noResults: string;
+  empty: string;
 }
 
 const DEFAULT_LABELS: DataTableLabels = {
@@ -71,6 +72,7 @@ const DEFAULT_LABELS: DataTableLabels = {
   loadError: 'No se pudieron cargar los datos',
   retry: 'Reintentar',
   noResults: 'Sin resultados',
+  empty: 'No hay datos para mostrar',
 };
 
 type EmptyStateContent = Pick<
@@ -81,7 +83,7 @@ type EmptyStateContent = Pick<
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  // Atajo para el título del estado vacío; `emptyState` permite ícono/descripción/CTA.
+  // Atajo para el título del estado vacío (también sirve de título para "sin resultados"); `emptyState` permite ícono/descripción/CTA.
   emptyMessage?: string;
   emptyState?: Partial<EmptyStateContent>;
   // Con `isFiltered` y sin filas se muestra la variante "sin resultados" en vez de "vacío".
@@ -158,7 +160,7 @@ function ariaSortFor<TData, TValue>(
 export function DataTable<TData, TValue = unknown>({
   columns,
   data,
-  emptyMessage = 'No hay datos para mostrar',
+  emptyMessage,
   emptyState,
   isFiltered = false,
   noResultsState,
@@ -265,7 +267,7 @@ export function DataTable<TData, TValue = unknown>({
       return (
         <EmptyState
           variant="no-results"
-          title={labels.noResults}
+          title={emptyMessage ?? labels.noResults}
           className="py-8"
           {...noResultsState}
         />
@@ -274,7 +276,7 @@ export function DataTable<TData, TValue = unknown>({
     return (
       <EmptyState
         variant="empty"
-        title={emptyMessage}
+        title={emptyMessage ?? labels.empty}
         className="py-8"
         {...emptyState}
       />

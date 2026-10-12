@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import type { Role } from '../api';
 import { useRolesQuery } from '../hooks';
@@ -19,7 +18,7 @@ import { RoleFormDialog } from './role-form-dialog';
 export function RolesTable() {
   const t = useTranslations('rolesPermission');
   const tCommon = useTranslations('common');
-  const { data, isPending, isError } = useRolesQuery();
+  const { data, isPending, isError, refetch } = useRolesQuery();
 
   const columns: ColumnDef<Role, unknown>[] = [
     {
@@ -69,12 +68,17 @@ export function RolesTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

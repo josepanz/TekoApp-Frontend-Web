@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
 import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
@@ -98,7 +97,7 @@ function RatingsTableContent() {
   const tCommon = useTranslations('common');
   const locale = useAppLocale();
   const queryClient = useQueryClient();
-  const { data, isPending, isError } = useRatingsQuery();
+  const { data, isPending, isError, refetch } = useRatingsQuery();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
   const [isBulkDeleting, setIsBulkDeleting] = useState(false);
@@ -221,12 +220,17 @@ function RatingsTableContent() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

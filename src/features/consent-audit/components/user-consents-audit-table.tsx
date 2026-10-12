@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
@@ -42,13 +41,14 @@ export function UserConsentsAuditTable() {
   const [userReferenceId, setUserReferenceId] = useState<string | undefined>(
     undefined,
   );
-  const { data, isPending, isError } = useUserConsentsAuditQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    documentType,
-    countryId,
-    userReferenceId,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useUserConsentsAuditQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      documentType,
+      countryId,
+      userReferenceId,
+    });
 
   function commitCountryId(value: string) {
     const parsed = Number(value);
@@ -171,22 +171,30 @@ export function UserConsentsAuditTable() {
         </div>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={
+          documentType !== undefined ||
+          countryId !== undefined ||
+          userReferenceId !== undefined
+        }
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

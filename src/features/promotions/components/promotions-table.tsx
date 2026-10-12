@@ -17,7 +17,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatCurrency, formatDate } from '@/lib/formatters';
@@ -112,7 +111,7 @@ function PromotionRowActions({ promotion }: { promotion: Promotion }) {
 export function PromotionsTable() {
   const t = useTranslations('promotions');
   const locale = useAppLocale();
-  const { data, isPending, isError } = usePromotionsQuery();
+  const { data, isPending, isError, refetch } = usePromotionsQuery();
 
   const columns: ColumnDef<Promotion, unknown>[] = [
     {
@@ -151,12 +150,17 @@ export function PromotionsTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

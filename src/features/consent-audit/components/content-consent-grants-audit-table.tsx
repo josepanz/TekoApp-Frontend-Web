@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
@@ -57,14 +56,15 @@ export function ContentConsentGrantsAuditTable() {
   const [uploaderReferenceId, setUploaderReferenceId] = useState<
     string | undefined
   >(undefined);
-  const { data, isPending, isError } = useContentConsentGrantsAuditQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    contentType,
-    usageScope,
-    revoked,
-    uploaderReferenceId,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useContentConsentGrantsAuditQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      contentType,
+      usageScope,
+      revoked,
+      uploaderReferenceId,
+    });
 
   function commitUploaderReferenceId(value: string) {
     setUploaderReferenceId(value.trim() || undefined);
@@ -203,22 +203,31 @@ export function ContentConsentGrantsAuditTable() {
         </div>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={
+          contentType !== undefined ||
+          usageScope !== undefined ||
+          revoked !== undefined ||
+          uploaderReferenceId !== undefined
+        }
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

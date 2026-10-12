@@ -22,7 +22,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import {
   Dialog,
@@ -93,10 +92,11 @@ export function ProfessionalsTable() {
   const tCommon = useTranslations('common');
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const { data, isPending, isError } = useProfessionalsQuery({
-    page,
-    pageSize: PAGE_SIZE,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useProfessionalsQuery({
+      page,
+      pageSize: PAGE_SIZE,
+    });
   const exportMutation = useExportProfessionalsMutation();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkVerifyOpen, setBulkVerifyOpen] = useState(false);
@@ -285,47 +285,48 @@ export function ProfessionalsTable() {
         </div>
       )}
 
-      {isPending && <Skeleton className="h-64" />}
-
-      {!isPending && isError && (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      )}
-
-      {!isPending && !isError && (
-        <>
-          <BulkActionsBar
-            selectedCount={selectedIds.length}
-            onCancel={() => setSelectedIds([])}
+      <>
+        <BulkActionsBar
+          selectedCount={selectedIds.length}
+          onCancel={() => setSelectedIds([])}
+        >
+          <Button size="sm" onClick={() => setBulkVerifyOpen(true)}>
+            {t('bulk.verifyButton', { count: selectedIds.length })}
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setBulkSuspendOpen(true)}
           >
-            <Button size="sm" onClick={() => setBulkVerifyOpen(true)}>
-              {t('bulk.verifyButton', { count: selectedIds.length })}
-            </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => setBulkSuspendOpen(true)}
-            >
-              {t('bulk.suspendButton', { count: selectedIds.length })}
-            </Button>
-          </BulkActionsBar>
+            {t('bulk.suspendButton', { count: selectedIds.length })}
+          </Button>
+        </BulkActionsBar>
 
-          <DataTable
-            columns={columns}
-            data={data.data}
-            emptyMessage={t('table.empty')}
-            pagination={{
-              page: data.pagination.page,
-              totalPages: data.pagination.totalPages,
-              onPageChange: setPage,
-            }}
-            selection={{
-              selectedIds,
-              onSelectionChange: setSelectedIds,
-              getRowId: (row) => String(row.id),
-            }}
-          />
-        </>
-      )}
+        <DataTable
+          columns={columns}
+          data={data?.data ?? []}
+          isLoading={isPending}
+          isFetching={isFetching}
+          isError={isError}
+          errorMessage={t('table.loadError')}
+          onRetry={() => void refetch()}
+          emptyMessage={t('table.empty')}
+          pagination={
+            data
+              ? {
+                  page: data.pagination.page,
+                  totalPages: data.pagination.totalPages,
+                  onPageChange: setPage,
+                }
+              : undefined
+          }
+          selection={{
+            selectedIds,
+            onSelectionChange: setSelectedIds,
+            getRowId: (row) => String(row.id),
+          }}
+        />
+      </>
 
       <AlertDialog open={bulkVerifyOpen} onOpenChange={setBulkVerifyOpen}>
         <AlertDialogContent>

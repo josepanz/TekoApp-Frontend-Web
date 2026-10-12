@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/data-table';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
 import type { LegalDocumentVersion } from '../api';
@@ -18,7 +17,7 @@ export function LegalDocumentVersionsTable() {
   const t = useTranslations('legalDocumentVersions');
   const tCommon = useTranslations('common');
   const locale = useAppLocale();
-  const { data, isPending, isError } = useLegalDocumentVersionsQuery();
+  const { data, isPending, isError, refetch } = useLegalDocumentVersionsQuery();
   const [editingVersion, setEditingVersion] =
     useState<LegalDocumentVersion | null>(null);
 
@@ -88,12 +87,17 @@ export function LegalDocumentVersionsTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

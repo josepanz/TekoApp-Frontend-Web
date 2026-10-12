@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
@@ -61,16 +60,10 @@ export function NotificationsTable() {
   const t = useTranslations('notifications');
   const locale = useAppLocale();
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
-  const { data, isPending, isError } = useNotificationsQuery({ limit });
+  const { data, isPending, isError, refetch } = useNotificationsQuery({
+    limit,
+  });
   const markAsReadMutation = useMarkNotificationAsReadMutation();
-
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
-  }
 
   const columns: ColumnDef<Notification, unknown>[] = [
     {
@@ -130,6 +123,19 @@ export function NotificationsTable() {
         ) : null,
     },
   ];
+
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">
