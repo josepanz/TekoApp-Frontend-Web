@@ -36,7 +36,6 @@ export function NearbySearchForm({
       longitude: DEFAULT_SEARCH_CENTER.longitude,
       radius: 10,
       availableOnly: false,
-      onlineOnly: false,
     },
   });
 
@@ -96,23 +95,6 @@ export function NearbySearchForm({
             />
             <Label htmlFor="availableOnly" className="font-normal">
               {t('search.availableOnly')}
-            </Label>
-          </div>
-        )}
-      />
-
-      <Controller
-        control={control}
-        name="onlineOnly"
-        render={({ field }) => (
-          <div className="flex items-center gap-2 pb-2">
-            <Checkbox
-              id="onlineOnly"
-              checked={field.value}
-              onCheckedChange={(checked) => field.onChange(checked === true)}
-            />
-            <Label htmlFor="onlineOnly" className="font-normal">
-              {t('search.onlineOnly')}
             </Label>
           </div>
         )}

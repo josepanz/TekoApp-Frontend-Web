@@ -21,7 +21,6 @@ describe('NearbySearchForm', () => {
         longitude: -57.5759,
         radius: 10,
         availableOnly: false,
-        onlineOnly: false,
       }),
       expect.anything(),
     );

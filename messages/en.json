@@ -1272,7 +1272,8 @@
     "map": {
       "missingApiKey": "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured, so the map can't be shown.",
       "markerTitle": "Professional #{id} · ⭐ {rating}",
-      "markerTitleWithDistance": "Professional #{id} · ⭐ {rating} · {distance} km"
+      "markerTitleWithDistance": "Professional #{id} · ⭐ {rating} · {distance} km",
+      "approximateNotice": "Approximate location (±300 m) · online professionals only"
     },
     "search": {
       "latitude": "Latitude",

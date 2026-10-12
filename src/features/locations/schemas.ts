@@ -11,7 +11,6 @@ export const nearbySearchSchema = z.object({
   longitude: z.number().min(-180).max(180),
   radius: z.number().positive(),
   availableOnly: z.boolean(),
-  onlineOnly: z.boolean(),
 });
 
 export type NearbySearchValues = z.infer<typeof nearbySearchSchema>;
