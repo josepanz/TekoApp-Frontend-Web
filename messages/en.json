@@ -1280,7 +1280,6 @@
       "longitude": "Longitude",
       "radius": "Radius (km)",
       "availableOnly": "Available only",
-      "onlineOnly": "Online only",
       "searching": "Searching..."
     },
     "onlineStat": {

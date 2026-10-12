@@ -1280,7 +1280,6 @@
       "longitude": "Longitud",
       "radius": "Radio (km)",
       "availableOnly": "Solo disponibles",
-      "onlineOnly": "Solo en línea",
       "searching": "Buscando..."
     },
     "onlineStat": {
