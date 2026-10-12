@@ -121,7 +121,7 @@ export function ColorPicker({
           >
             <span
               className="absolute inset-0"
-              style={{ backgroundColor: value || '#ffffff' }}
+              style={{ backgroundColor: value || 'var(--muted)' }}
               aria-hidden="true"
             />
             <input
