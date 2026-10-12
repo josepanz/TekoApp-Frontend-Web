@@ -3,7 +3,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useMyProfessionalProfileQuery } from '@/features/professional-profile/hooks';
 import { useAppLocale } from '@/i18n/use-app-locale';

@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { CategoryLabel } from '@/features/categories/components/category-label';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatCurrency, formatDate } from '@/lib/formatters';

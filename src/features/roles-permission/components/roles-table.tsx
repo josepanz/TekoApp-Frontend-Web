@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import type { Role } from '../api';
 import { useRolesQuery } from '../hooks';
 import { RoleFormDialog } from './role-form-dialog';

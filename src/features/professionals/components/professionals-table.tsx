@@ -23,7 +23,7 @@ import { Badge } from '@/components/ui/badge';
 import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import {
   Dialog,
   DialogContent,

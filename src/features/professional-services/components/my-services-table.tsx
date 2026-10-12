@@ -4,7 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RateClientDialog } from '@/features/professional-ratings/components/rate-client-dialog';
 import { formatCurrency } from '@/lib/formatters';

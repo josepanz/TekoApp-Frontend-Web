@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { useUsersQuery } from '../hooks';
 import type { User } from '../api';
 import { UserDetailDialog } from './user-detail-dialog';

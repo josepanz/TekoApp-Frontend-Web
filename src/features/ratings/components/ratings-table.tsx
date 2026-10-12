@@ -20,7 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
