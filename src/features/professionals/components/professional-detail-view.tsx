@@ -13,6 +13,7 @@ import { useAppLocale } from '@/i18n/use-app-locale';
 import { ProfessionalDocumentsHistoryTab } from '@/features/professional-documents/components/professional-documents-history-tab';
 import { useProfessionalDetailQuery } from '../hooks';
 import type { Professional } from '../api';
+import { canSuspendProfessional, canVerifyProfessional } from '../rules';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
 
@@ -92,10 +93,10 @@ export function ProfessionalDetailView({
             </p>
           </div>
           <div className="flex gap-2">
-            {professional.verificationStatus !== 'VERIFIED' && (
+            {canVerifyProfessional(professional.status) && (
               <VerifyProfessionalDialog professional={professional} />
             )}
-            {professional.status !== 'SUSPENDED' && (
+            {canSuspendProfessional(professional.status) && (
               <SuspendProfessionalDialog professional={professional} />
             )}
           </div>

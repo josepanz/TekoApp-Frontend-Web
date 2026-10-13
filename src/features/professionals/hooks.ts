@@ -16,6 +16,7 @@ import {
   type SuspendProfessionalRequest,
   type VerifyProfessionalRequest,
 } from './api';
+import { ApiError } from '@/core/api-client/errors';
 import { triggerFileDownload } from '@/lib/trigger-file-download';
 
 export function useProfessionalsQuery(params: GetProfessionalsParams) {
@@ -33,6 +34,16 @@ export function useProfessionalDetailQuery(referenceId: string) {
   });
 }
 
+function transitionErrorMessage(
+  error: unknown,
+  fallback: string,
+  conflict: string,
+): string {
+  return error instanceof ApiError && error.status === 409
+    ? conflict
+    : fallback;
+}
+
 export function useVerifyProfessionalMutation() {
   const queryClient = useQueryClient();
 
@@ -43,8 +54,14 @@ export function useVerifyProfessionalMutation() {
       void queryClient.invalidateQueries({ queryKey: ['professionals'] });
       toast.success('Profesional verificado correctamente.');
     },
-    onError: () => {
-      toast.error('No se pudo verificar al profesional. Intentá de nuevo.');
+    onError: (error) => {
+      toast.error(
+        transitionErrorMessage(
+          error,
+          'No se pudo verificar al profesional. Intentá de nuevo.',
+          'El profesional ya no está en un estado que permita verificarlo. Actualizá la lista.',
+        ),
+      );
     },
   });
 }
@@ -64,8 +81,14 @@ export function useSuspendProfessionalMutation() {
       void queryClient.invalidateQueries({ queryKey: ['professionals'] });
       toast.success('Profesional suspendido correctamente.');
     },
-    onError: () => {
-      toast.error('No se pudo suspender al profesional. Intentá de nuevo.');
+    onError: (error) => {
+      toast.error(
+        transitionErrorMessage(
+          error,
+          'No se pudo suspender al profesional. Intentá de nuevo.',
+          'Solo se puede suspender a un profesional aprobado; su estado cambió. Actualizá la lista.',
+        ),
+      );
     },
   });
 }

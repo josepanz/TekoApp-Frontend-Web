@@ -22,7 +22,7 @@ export function isSafeReturnPath(
 
 /**
  * Destino despues del login: `from` si existe y es seguro; si no, por rol. Staff (admin ->
- * `/admin`, otros -> su primera seccion permitida), luego profesional (`/pro`) y cliente (`/`).
+ * `/admin`, otros -> su primera seccion permitida), luego profesional (`/pro/solicitudes`) y cliente (`/`).
  */
 export function resolvePostLoginPath({
   from,
@@ -32,6 +32,7 @@ export function resolvePostLoginPath({
   if (isSafeReturnPath(from)) return from;
   const adminPath = getAdminLandingPath(permissions);
   if (adminPath) return adminPath;
-  if (isProfessional) return '/pro';
+  // Directo a la bandeja: evita el salto extra por el redirect de servidor de `/pro` (DEF-WEB-014).
+  if (isProfessional) return '/pro/solicitudes';
   return '/';
 }
