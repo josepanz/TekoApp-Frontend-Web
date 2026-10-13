@@ -2,10 +2,10 @@
 
 | Campo          | Valor                                                                                                                                                                                                                                                         |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Fecha y hora   | 2026-10-13 01:53                                                                                                                                                                                                                                              |
+| Fecha y hora   | 2026-10-13 02:05                                                                                                                                                                                                                                              |
 | Repo           | TekoApp-Frontend-Web                                                                                                                                                                                                                                          |
 | Rama           | test/e2e-w1-auth-catalogos                                                                                                                                                                                                                                    |
-| Commit         | 7d5326f (árbol con cambios sin commitear)                                                                                                                                                                                                                     |
+| Commit         | 1d62658                                                                                                                                                                                                                                                       |
 | Entorno        | jsdom (local), Node v22.16.0, vitest vitest/4.1.10 win32-x64 node-v22.16.0, win32                                                                                                                                                                             |
 | Comando exacto | `pnpm qa:unit` → `pnpm exec vitest run --reporter=json --outputFile=test/qa/informes/artefactos/unit.json --coverage.enabled --coverage.reporter=json-summary --coverage.reporter=html --coverage.reportsDirectory=test/qa/informes/artefactos/unit-coverage` |
 | Ejecutor       | Claude Sonnet 5.5 (agente)                                                                                                                                                                                                                                    |
@@ -14,7 +14,7 @@
 
 | Pasaron | Fallaron | Omitidos | Flaky | Total | Duración |
 | ------- | -------- | -------- | ----- | ----- | -------- |
-| 383     | 0        | 0        | 0     | 383   | 1.4 min  |
+| 383     | 0        | 0        | 0     | 383   | 1.1 min  |
 
 Cobertura: v8 sobre `src/**` (config de `vitest.config.ts`): líneas 81.7% (2957/3619) · sentencias 80.46% (3023/3757) · funciones 74.77% (1233/1649) · ramas 71.01% (1737/2446).
 
@@ -379,11 +379,13 @@ Exit code del runner: 0.
 
 ## 3. Defectos encontrados
 
-_Completar a mano: ID `DEF-WEB-NNN`, severidad, caso que lo detectó, repro y estado. Si no hay, escribir "Ninguno"._
+Ninguno nuevo. DEF-WEB-001/002/003 (detectados por e2e real) están corregidos; sus pruebas unitarias nuevas pasan: gate por sección, sidebar filtrado, aterrizaje por rol, login por rol, tabla de categorías paginada y picker de usuario con 403.
 
 ## 4. Desvíos y observaciones
 
-_Completar a mano: flakies, timeouts, entorno y omitidos con su motivo._
+- Corrida de esta tanda, sobre el árbol limpio en el commit indicado (los commits de código son 3d32892, 931b6e6, 801ac26 y 1728880). Total 383.
+- Sin flakies, omitidos ni timeouts. Aviso conocido de jsdom "Not implemented: navigation to another Document" en un test de /perfil (no afecta el resultado).
+- Cobertura: ver sección 1.
 
 ## 5. Evidencia
 
@@ -392,4 +394,4 @@ _Completar a mano: flakies, timeouts, entorno y omitidos con su motivo._
 
 ## 6. Veredicto
 
-_Completar a mano: APROBADO / APROBADO CON OBSERVACIONES / RECHAZADO, con su criterio._
+**APROBADO.** Criterio: 383/383 pasan, 0 fallos, 0 omitidos, sin flakies.
