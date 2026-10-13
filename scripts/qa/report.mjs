@@ -2,7 +2,8 @@
 /**
  * Generador de informes QA (estándar C:\workspace\QA-DOC-STANDARD.md §3). Sin dependencias.
  *
- * Uso:  node scripts/qa/report.mjs <unit|e2e>
+ * Uso:  node scripts/qa/report.mjs <unit|e2e|e2e-real>
+ *   - e2e-real: Playwright contra el backend REAL de e2e (`playwright.real.config.ts`).
  *   - Ejecuta el runner (vitest o playwright) emitiendo JSON, y escribe
  *     test/qa/informes/AAAA-MM-DD_<tipo>_<rama-corta>.md
  *   - Si el informe ya existe, conserva lo escrito a mano (secciones 3, 4 y 6) en vez de pisarlo.
@@ -25,8 +26,8 @@ const INFORMES = join(ROOT, 'test', 'qa', 'informes');
 const ARTEFACTOS = join(INFORMES, 'artefactos');
 const CASOS = join(ROOT, 'test', 'qa', 'casos');
 const type = process.argv[2];
-if (!['unit', 'e2e'].includes(type)) {
-  console.error('Uso: node scripts/qa/report.mjs <unit|e2e>');
+if (!['unit', 'e2e', 'e2e-real'].includes(type)) {
+  console.error('Uso: node scripts/qa/report.mjs <unit|e2e|e2e-real>');
   process.exit(2);
 }
 
@@ -55,11 +56,17 @@ if (type === 'unit') {
     `--coverage.enabled --coverage.reporter=json-summary --coverage.reporter=html ` +
     `--coverage.reportsDirectory=${rel(covDir)}`;
 } else {
-  command = 'pnpm exec playwright test --reporter=html,json';
+  command =
+    type === 'e2e-real'
+      ? 'pnpm exec playwright test -c playwright.real.config.ts --reporter=html,json'
+      : 'pnpm exec playwright test --reporter=html,json';
   env = {
     ...env,
     PLAYWRIGHT_JSON_OUTPUT_FILE: jsonOut,
-    PLAYWRIGHT_HTML_REPORT: join(ARTEFACTOS, 'playwright-report'),
+    PLAYWRIGHT_HTML_REPORT: join(
+      ARTEFACTOS,
+      type === 'e2e-real' ? 'playwright-report-real' : 'playwright-report',
+    ),
     PLAYWRIGHT_HTML_OPEN: 'never',
   };
 }
@@ -103,6 +110,7 @@ if (existsSync(CASOS)) {
 
 // ---------- 3. normalizar resultados ----------
 const icon = {
+  defect: 'DEFECTO (fallo esperado)',
   passed: 'PASÓ',
   failed: 'FALLÓ',
   skipped: 'OMITIDO',
@@ -143,20 +151,25 @@ if (type === 'unit') {
   files = [];
   const walk = (suite, titles) => {
     for (const spec of suite.specs ?? []) {
-      const file = posix(join('e2e', spec.file ?? suite.file));
+      const file = posix(
+        join(type === 'e2e-real' ? 'e2e/real' : 'e2e', spec.file ?? suite.file),
+      );
       let entry = files.find((x) => x.file === file);
       if (!entry) files.push((entry = { file, tests: [] }));
       const t = spec.tests?.[0];
       const results = t?.results ?? [];
       const last = results[results.length - 1];
+      const expectedFail = t?.expectedStatus === 'failed';
       const status =
         t?.status === 'skipped'
           ? 'skipped'
-          : t?.status === 'flaky'
-            ? 'flaky'
-            : spec.ok
-              ? 'passed'
-              : 'failed';
+          : expectedFail && t?.status === 'expected'
+            ? 'defect'
+            : t?.status === 'flaky'
+              ? 'flaky'
+              : spec.ok
+                ? 'passed'
+                : 'failed';
       entry.tests.push({
         name: [...titles, spec.title].join(' › '),
         raw: spec.title,
@@ -167,6 +180,9 @@ if (type === 'unit') {
             ?.replace(/\u001b\[[0-9;]*m/g, '')
             .slice(0, 300) ?? '',
         retries: Math.max(0, results.length - 1),
+        annotations: (t?.annotations ?? []).filter(
+          (a) => a.type === 'a11y' || a.type === 'a11y-scan',
+        ),
       });
     }
     for (const s of suite.suites ?? []) walk(s, [...titles, s.title]);
@@ -179,6 +195,7 @@ const totals = {
   passed: all.filter((t) => t.status === 'passed').length,
   failed: all.filter((t) => t.status === 'failed').length,
   skipped: all.filter((t) => t.status === 'skipped').length,
+  defect: all.filter((t) => t.status === 'defect').length,
   flaky: all.filter((t) => t.status === 'flaky').length,
 };
 
@@ -253,7 +270,10 @@ if (type === 'unit') {
     '| Spec | CP- | Caso | Estado | Duración | Reintentos |\n|---|---|---|---|---|---|\n';
   for (const f of files) {
     for (const t of f.tests) {
-      const cp = cpByTest.get(`${f.file}::${t.raw}`) ?? '—';
+      const cp =
+        cpByTest.get(`${f.file}::${t.raw}`) ??
+        t.raw.match(/CP-WEB-[A-Z0-9]+-\d+/)?.[0] ??
+        '—';
       results += `| \`${f.file}\` | ${cp} | ${esc(t.name)} | ${icon[t.status]} | ${fmtMs(t.ms)} | ${t.retries} |\n`;
     }
   }
@@ -267,6 +287,44 @@ if (type === 'unit') {
       '\n#### Casos fallidos\n\n| Spec | Caso | Mensaje |\n|---|---|---|\n';
     for (const t of failing)
       results += `| \`${t.file}\` | ${esc(t.name)} | ${esc(t.error)} |\n`;
+  }
+}
+
+// ---------- 5b. violaciones a11y (anotaciones `a11y` de scanA11y) ----------
+if (type === 'e2e-real') {
+  const scanned = new Map(); // pagina -> reglas con violaciones (Map regla|impacto -> nodos)
+  for (const f of files)
+    for (const t of f.tests)
+      for (const a of t.annotations ?? []) {
+        const parts = String(a.description)
+          .split('|')
+          .map((x) => x.trim());
+        if (a.type === 'a11y-scan') {
+          if (!scanned.has(parts[1])) scanned.set(parts[1], new Map());
+        } else {
+          const [, path, rule, impact, nodes] = parts; // parts[5] = selector del 1er nodo
+          if (!scanned.has(path)) scanned.set(path, new Map());
+          const rules = scanned.get(path);
+          const k = `${rule}|${impact}`;
+          rules.set(k, Math.max(rules.get(k) ?? 0, Number(nodes)));
+        }
+      }
+  results +=
+    '\n### Escaneo a11y (axe, reglas serious/critical) por página visitada\n\n';
+  if (scanned.size === 0) {
+    results += 'Sin escaneos.\n';
+  } else {
+    results +=
+      '| Página | Violaciones (reglas) | Detalle (regla / impacto, nodos) |\n|---|---|---|\n';
+    for (const [path, rules] of [...scanned].sort(([x], [y]) =>
+      x.localeCompare(y),
+    )) {
+      const det =
+        [...rules]
+          .map(([k, n]) => `${k.replace('|', ' / ')} x${n}`)
+          .join('; ') || '—';
+      results += `| \`${path}\` | ${rules.size} | ${det} |\n`;
+    }
   }
 }
 
@@ -287,11 +345,15 @@ const dirty = sh('git status --porcelain -- . ":(exclude)test/qa/informes"')
 const entorno =
   type === 'unit'
     ? `jsdom (local), Node ${process.version}, vitest ${vt}, ${process.platform}`
-    : `local: fake-backend (\`e2e/fake-backend/server.mjs\`, puerto 4000) + build de producción de Next en 127.0.0.1:3001, Chromium (${pw}), Node ${process.version}, ${process.platform}. No es el backend real`;
+    : type === 'e2e-real'
+      ? `local: backend REAL de e2e (TekoApp-Backend \`pnpm e2e:up/e2e:seed/e2e:serve\`, http://localhost:3100) + build standalone de Next en 127.0.0.1:3002 (\`scripts/e2e-real/serve.mjs\`), Chromium (${pw}), Node ${process.version}, ${process.platform}. Claves RSA y secret leídos en el arranque, no commiteados`
+      : `local: fake-backend (\`e2e/fake-backend/server.mjs\`, puerto 4000) + build de producción de Next en 127.0.0.1:3001, Chromium (${pw}), Node ${process.version}, ${process.platform}. No es el backend real`;
+const reportDir =
+  type === 'e2e-real' ? 'playwright-report-real' : 'playwright-report';
 const evidencia =
   type === 'unit'
     ? `- JSON crudo de vitest: \`${rel(jsonOut)}\` (ignorado por git, regenerable).\n- Cobertura HTML: \`${rel(join(ARTEFACTOS, 'unit-coverage', 'index.html'))}\` (ignorado por git).`
-    : `- Reporte HTML de Playwright: \`${rel(join(ARTEFACTOS, 'playwright-report', 'index.html'))}\` (abrir con \`pnpm exec playwright show-report ${rel(join(ARTEFACTOS, 'playwright-report'))}\`; ignorado por git).\n- JSON crudo: \`${rel(jsonOut)}\` (ignorado por git).\n- Trazas/capturas de fallos: \`test-results/\` (ignorado por git).`;
+    : `- Reporte HTML de Playwright: \`${rel(join(ARTEFACTOS, reportDir, 'index.html'))}\` (abrir con \`pnpm exec playwright show-report ${rel(join(ARTEFACTOS, reportDir))}\`; ignorado por git).\n- JSON crudo: \`${rel(jsonOut)}\` (ignorado por git).\n- Trazas/capturas de fallos: \`test-results/\` (ignorado por git).`;
 
 // Preservar lo escrito a mano si el informe ya existe.
 const manual = {
@@ -310,7 +372,7 @@ if (existsSync(outFile)) {
   }
 }
 
-const md = `# Informe de ejecución — ${type === 'unit' ? 'pruebas unitarias y de componente' : 'e2e Playwright (fake-backend)'}
+const md = `# Informe de ejecución — ${type === 'unit' ? 'pruebas unitarias y de componente' : type === 'e2e-real' ? 'e2e Playwright contra el backend real' : 'e2e Playwright (fake-backend)'}
 
 | Campo | Valor |
 |---|---|
@@ -330,7 +392,13 @@ const md = `# Informe de ejecución — ${type === 'unit' ? 'pruebas unitarias y
 
 Cobertura: ${coverageMd}
 
-Exit code del runner: ${run.status}.
+${
+  totals.defect
+    ? `Casos con defecto conocido (\`test.fail()\`, fallo esperado, no cuentan como fallo del run): ${totals.defect}.
+
+`
+    : ''
+}Exit code del runner: ${run.status}.
 
 ## 2. Resultados por ${type === 'unit' ? 'suite' : 'spec y caso'}
 
