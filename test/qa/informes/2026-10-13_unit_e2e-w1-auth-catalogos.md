@@ -2,10 +2,10 @@
 
 | Campo          | Valor                                                                                                                                                                                                                                                         |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Fecha y hora   | 2026-10-13 00:58                                                                                                                                                                                                                                              |
+| Fecha y hora   | 2026-10-13 01:53                                                                                                                                                                                                                                              |
 | Repo           | TekoApp-Frontend-Web                                                                                                                                                                                                                                          |
 | Rama           | test/e2e-w1-auth-catalogos                                                                                                                                                                                                                                    |
-| Commit         | 851350a (árbol con cambios sin commitear)                                                                                                                                                                                                                     |
+| Commit         | 7d5326f (árbol con cambios sin commitear)                                                                                                                                                                                                                     |
 | Entorno        | jsdom (local), Node v22.16.0, vitest vitest/4.1.10 win32-x64 node-v22.16.0, win32                                                                                                                                                                             |
 | Comando exacto | `pnpm qa:unit` → `pnpm exec vitest run --reporter=json --outputFile=test/qa/informes/artefactos/unit.json --coverage.enabled --coverage.reporter=json-summary --coverage.reporter=html --coverage.reportsDirectory=test/qa/informes/artefactos/unit-coverage` |
 | Ejecutor       | Claude Sonnet 5.5 (agente)                                                                                                                                                                                                                                    |
@@ -14,9 +14,9 @@
 
 | Pasaron | Fallaron | Omitidos | Flaky | Total | Duración |
 | ------- | -------- | -------- | ----- | ----- | -------- |
-| 354     | 0        | 0        | 0     | 354   | 1.2 min  |
+| 383     | 0        | 0        | 0     | 383   | 1.4 min  |
 
-Cobertura: v8 sobre `src/**` (config de `vitest.config.ts`): líneas 81.43% (2909/3572) · sentencias 80.15% (2964/3698) · funciones 74.47% (1214/1630) · ramas 70.64% (1694/2398).
+Cobertura: v8 sobre `src/**` (config de `vitest.config.ts`): líneas 81.7% (2957/3619) · sentencias 80.46% (3023/3757) · funciones 74.77% (1233/1649) · ramas 71.01% (1737/2446).
 
 Exit code del runner: 0.
 
@@ -28,16 +28,16 @@ Exit code del runner: 0.
 | ---------------------------------------- | -------- | ----- | ------- | -------- | -------- |
 | otros                                    | 8        | 26    | 26      | 0        | 0        |
 | src/components/data-table                | 1        | 15    | 15      | 0        | 0        |
-| src/components/layout                    | 6        | 13    | 13      | 0        | 0        |
+| src/components/layout                    | 7        | 21    | 21      | 0        | 0        |
 | src/components/ui                        | 1        | 4     | 4       | 0        | 0        |
-| src/core                                 | 10       | 41    | 41      | 0        | 0        |
+| src/core                                 | 11       | 55    | 55      | 0        | 0        |
 | src/features/account-deletion            | 1        | 6     | 6       | 0        | 0        |
 | src/features/ai-disclosures              | 1        | 5     | 5       | 0        | 0        |
 | src/features/analytics                   | 1        | 2     | 2       | 0        | 0        |
 | src/features/audit-log                   | 2        | 7     | 7       | 0        | 0        |
-| src/features/auth                        | 3        | 12    | 12      | 0        | 0        |
+| src/features/auth                        | 3        | 17    | 17      | 0        | 0        |
 | src/features/browse-professionals        | 2        | 3     | 3       | 0        | 0        |
-| src/features/categories                  | 4        | 15    | 15      | 0        | 0        |
+| src/features/categories                  | 4        | 16    | 16      | 0        | 0        |
 | src/features/consent-audit               | 3        | 9     | 9       | 0        | 0        |
 | src/features/contracts                   | 1        | 4     | 4       | 0        | 0        |
 | src/features/countries                   | 1        | 2     | 2       | 0        | 0        |
@@ -66,7 +66,7 @@ Exit code del runner: 0.
 | src/features/roles-permission            | 4        | 10    | 10      | 0        | 0        |
 | src/features/service-progress            | 1        | 4     | 4       | 0        | 0        |
 | src/features/services                    | 2        | 6     | 6       | 0        | 0        |
-| src/features/users                       | 3        | 8     | 8       | 0        | 0        |
+| src/features/users                       | 4        | 9     | 9       | 0        | 0        |
 
 ### Detalle por archivo de spec
 
@@ -91,14 +91,15 @@ Exit code del runner: 0.
 
 #### src/components/layout
 
-| Archivo                              | CP- | Casos | Pasaron | Fallaron | Omitidos | Estado |
-| ------------------------------------ | --- | ----- | ------- | -------- | -------- | ------ |
-| `app-sidebar.test.tsx`               | —   | 2     | 2       | 0        | 0        | PASÓ   |
-| `brand-gradient-background.test.tsx` | —   | 1     | 1       | 0        | 0        | PASÓ   |
-| `bulk-actions-bar.test.tsx`          | —   | 4     | 4       | 0        | 0        | PASÓ   |
-| `language-switcher.test.tsx`         | —   | 1     | 1       | 0        | 0        | PASÓ   |
-| `mode-switcher.test.tsx`             | —   | 4     | 4       | 0        | 0        | PASÓ   |
-| `user-menu.test.tsx`                 | —   | 1     | 1       | 0        | 0        | PASÓ   |
+| Archivo                              | CP-             | Casos | Pasaron | Fallaron | Omitidos | Estado |
+| ------------------------------------ | --------------- | ----- | ------- | -------- | -------- | ------ |
+| `admin-section-gate.test.tsx`        | CP-WEB-AUTH-112 | 5     | 5       | 0        | 0        | PASÓ   |
+| `app-sidebar.test.tsx`               | CP-WEB-AUTH-112 | 5     | 5       | 0        | 0        | PASÓ   |
+| `brand-gradient-background.test.tsx` | —               | 1     | 1       | 0        | 0        | PASÓ   |
+| `bulk-actions-bar.test.tsx`          | —               | 4     | 4       | 0        | 0        | PASÓ   |
+| `language-switcher.test.tsx`         | —               | 1     | 1       | 0        | 0        | PASÓ   |
+| `mode-switcher.test.tsx`             | —               | 4     | 4       | 0        | 0        | PASÓ   |
+| `user-menu.test.tsx`                 | —               | 1     | 1       | 0        | 0        | PASÓ   |
 
 #### src/components/ui
 
@@ -113,7 +114,8 @@ Exit code del runner: 0.
 | `api-client/backend-proxy.test.ts`  | —                                                 | 3     | 3       | 0        | 0        | PASÓ   |
 | `api-client/client.test.ts`         | —                                                 | 5     | 5       | 0        | 0        | PASÓ   |
 | `api-client/form-errors.test.ts`    | CP-WEB-AUTH-009, CP-WEB-AUTH-010, CP-WEB-AUTH-011 | 3     | 3       | 0        | 0        | PASÓ   |
-| `auth/permissions.test.ts`          | —                                                 | 5     | 5       | 0        | 0        | PASÓ   |
+| `auth/landing.test.ts`              | CP-WEB-AUTH-116                                   | 7     | 7       | 0        | 0        | PASÓ   |
+| `auth/permissions.test.ts`          | CP-WEB-AUTH-112                                   | 12    | 12      | 0        | 0        | PASÓ   |
 | `auth/rsa-encrypt.test.ts`          | —                                                 | 2     | 2       | 0        | 0        | PASÓ   |
 | `auth/session.test.ts`              | —                                                 | 6     | 6       | 0        | 0        | PASÓ   |
 | `logging/logger.test.ts`            | —                                                 | 4     | 4       | 0        | 0        | PASÓ   |
@@ -151,7 +153,7 @@ Exit code del runner: 0.
 | Archivo                             | CP-                                                                | Casos | Pasaron | Fallaron | Omitidos | Estado |
 | ----------------------------------- | ------------------------------------------------------------------ | ----- | ------- | -------- | -------- | ------ |
 | `api.test.ts`                       | CP-WEB-AUTH-001, CP-WEB-AUTH-002, CP-WEB-AUTH-003, CP-WEB-AUTH-004 | 4     | 4       | 0        | 0        | PASÓ   |
-| `components/login-form.test.tsx`    | CP-WEB-AUTH-005                                                    | 4     | 4       | 0        | 0        | PASÓ   |
+| `components/login-form.test.tsx`    | CP-WEB-AUTH-005, CP-WEB-AUTH-121                                   | 9     | 9       | 0        | 0        | PASÓ   |
 | `components/register-form.test.tsx` | —                                                                  | 4     | 4       | 0        | 0        | PASÓ   |
 
 #### src/features/browse-professionals
@@ -163,12 +165,12 @@ Exit code del runner: 0.
 
 #### src/features/categories
 
-| Archivo                                    | CP- | Casos | Pasaron | Fallaron | Omitidos | Estado |
-| ------------------------------------------ | --- | ----- | ------- | -------- | -------- | ------ |
-| `components/categories-table.test.tsx`     | —   | 6     | 6       | 0        | 0        | PASÓ   |
-| `components/category-detail-view.test.tsx` | —   | 2     | 2       | 0        | 0        | PASÓ   |
-| `components/category-form-dialog.test.tsx` | —   | 4     | 4       | 0        | 0        | PASÓ   |
-| `components/category-label.test.tsx`       | —   | 3     | 3       | 0        | 0        | PASÓ   |
+| Archivo                                    | CP-            | Casos | Pasaron | Fallaron | Omitidos | Estado |
+| ------------------------------------------ | -------------- | ----- | ------- | -------- | -------- | ------ |
+| `components/categories-table.test.tsx`     | CP-WEB-CAT-104 | 7     | 7       | 0        | 0        | PASÓ   |
+| `components/category-detail-view.test.tsx` | —              | 2     | 2       | 0        | 0        | PASÓ   |
+| `components/category-form-dialog.test.tsx` | —              | 4     | 4       | 0        | 0        | PASÓ   |
+| `components/category-label.test.tsx`       | —              | 3     | 3       | 0        | 0        | PASÓ   |
 
 #### src/features/consent-audit
 
@@ -370,17 +372,18 @@ Exit code del runner: 0.
 
 | Archivo                                  | CP-              | Casos | Pasaron | Fallaron | Omitidos | Estado |
 | ---------------------------------------- | ---------------- | ----- | ------- | -------- | -------- | ------ |
+| `components/user-combobox.test.tsx`      | CP-WEB-AUTH-128  | 1     | 1       | 0        | 0        | PASÓ   |
 | `components/user-detail-dialog.test.tsx` | —                | 2     | 2       | 0        | 0        | PASÓ   |
 | `components/user-detail-view.test.tsx`   | —                | 2     | 2       | 0        | 0        | PASÓ   |
 | `components/users-table.test.tsx`        | CP-WEB-ADMIN-001 | 4     | 4       | 0        | 0        | PASÓ   |
 
 ## 3. Defectos encontrados
 
-Ninguno.
+_Completar a mano: ID `DEF-WEB-NNN`, severidad, caso que lo detectó, repro y estado. Si no hay, escribir "Ninguno"._
 
 ## 4. Desvíos y observaciones
 
-Casos nuevos de la oleada W1: `src/features/auth/api.test.ts` (4), `login-form.test.tsx` (+1), `src/app/api/auth/logout/route.test.ts` (3), `src/core/api-client/form-errors.test.ts` (3), `src/core/providers/query-provider.test.tsx` (2). Se ajustó `locations-map.test.tsx` al tipo generado y la aserción del 401 en `login-form.test.tsx`. Warnings de jsdom ("Not implemented: navigation") preexistentes.
+_Completar a mano: flakies, timeouts, entorno y omitidos con su motivo._
 
 ## 5. Evidencia
 
@@ -389,4 +392,4 @@ Casos nuevos de la oleada W1: `src/features/auth/api.test.ts` (4), `login-form.t
 
 ## 6. Veredicto
 
-**APROBADO.** 354/354 pasan; cobertura 81.4% líneas / 70.6% ramas (umbral del repo cumplido).
+_Completar a mano: APROBADO / APROBADO CON OBSERVACIONES / RECHAZADO, con su criterio._

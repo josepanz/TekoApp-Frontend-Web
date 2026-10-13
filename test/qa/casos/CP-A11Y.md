@@ -4,18 +4,18 @@ Cada página visitada por los specs reales se escanea con `scanA11y` (`e2e/real/
 
 ### CP-WEB-A11Y-001 — Sin violaciones axe serious/critical en /admin/categories
 
-| Campo              | Contenido                                                                                                                                                                                  |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ID                 | CP-WEB-A11Y-001                                                                                                                                                                            |
-| Título             | Sin violaciones axe serious/critical en /admin/categories                                                                                                                                  |
-| Tipo / Nivel       | a11y (e2e backend real)                                                                                                                                                                    |
-| Prioridad          | P2                                                                                                                                                                                         |
-| Trazabilidad       | plan maestro §2 (a11y con `@axe-core/playwright`), W5 criterio; CP-WEB-CAT-101 / 103                                                                                                       |
-| Precondiciones     | Stack e2e del Backend arriba y Next standalone (`playwright.real.config.ts`); `@axe-core/playwright` con todas las reglas por defecto, se reportan solo impacto serious/critical.          |
-| Pasos              | 1. Iniciar sesión como admin (tabla de categorías, con 3 a 25+ filas).<br>2. Navegar a `/admin/categories` y esperar a que se asiente.<br>3. Ejecutar `scanA11y(page, label)`.             |
-| Datos de prueba    | label `admin-categories*`                                                                                                                                                                  |
-| Resultado esperado | `color-contrast` serious: badge de visibilidad. DEF-WEB-003 (22 nodos con 25+ filas). Las violaciones NO fallan el run: quedan como anotación `a11y` del test y en el informe (sección 2). |
-| Automatizado en    | `e2e/real/m2-catalogos.spec.ts` — `scanA11y` dentro de CP-WEB-CAT-101 / 103                                                                                                                |
+| Campo              | Contenido                                                                                                                                                                                                                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-A11Y-001                                                                                                                                                                                                                                                                                                      |
+| Título             | Sin violaciones axe serious/critical en /admin/categories                                                                                                                                                                                                                                                            |
+| Tipo / Nivel       | a11y (e2e backend real)                                                                                                                                                                                                                                                                                              |
+| Prioridad          | P2                                                                                                                                                                                                                                                                                                                   |
+| Trazabilidad       | plan maestro §2 (a11y con `@axe-core/playwright`), W5 criterio; CP-WEB-CAT-101 / 103                                                                                                                                                                                                                                 |
+| Precondiciones     | Stack e2e del Backend arriba y Next standalone (`playwright.real.config.ts`); `@axe-core/playwright` con todas las reglas por defecto, se reportan solo impacto serious/critical.                                                                                                                                    |
+| Pasos              | 1. Iniciar sesión como admin (tabla de categorías, con 3 a 25+ filas).<br>2. Navegar a `/admin/categories` y esperar a que se asiente.<br>3. Ejecutar `scanA11y(page, label)`.                                                                                                                                       |
+| Datos de prueba    | label `admin-categories*`                                                                                                                                                                                                                                                                                            |
+| Resultado esperado | 0 violaciones serious/critical. DEF-WEB-003 → **Corregido** (6321d0c): el badge "Visible" y el botón destructivo (Eliminar) usan los tokens `success-text` y `destructive-text` (AA ≥ 4.5:1 en claro y oscuro). Las violaciones NO fallan el run: quedan como anotación `a11y` del test y en el informe (sección 2). |
+| Automatizado en    | `e2e/real/m2-catalogos.spec.ts` — `scanA11y` dentro de CP-WEB-CAT-101 / 103                                                                                                                                                                                                                                          |
 
 ### CP-WEB-A11Y-002 — Sin violaciones axe serious/critical en /login
 
@@ -109,15 +109,36 @@ Cada página visitada por los specs reales se escanea con `scanA11y` (`e2e/real/
 
 ### CP-WEB-A11Y-008 — Sin violaciones axe serious/critical en /admin/legal/consent-audit
 
-| Campo              | Contenido                                                                                                                                                                                                                          |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-A11Y-008                                                                                                                                                                                                                    |
-| Título             | Sin violaciones axe serious/critical en /admin/legal/consent-audit                                                                                                                                                                 |
-| Tipo / Nivel       | a11y (e2e backend real)                                                                                                                                                                                                            |
-| Prioridad          | P2                                                                                                                                                                                                                                 |
-| Trazabilidad       | plan maestro §2 (a11y con `@axe-core/playwright`), W5 criterio; CP-WEB-AUTH-109                                                                                                                                                    |
-| Precondiciones     | Stack e2e del Backend arriba y Next standalone (`playwright.real.config.ts`); `@axe-core/playwright` con todas las reglas por defecto, se reportan solo impacto serious/critical.                                                  |
-| Pasos              | 1. Iniciar sesión como compliance (bloqueado por DEF-WEB-001: se escanea solo la primera página antes de fallar).<br>2. Navegar a `/admin/legal/consent-audit` y esperar a que se asiente.<br>3. Ejecutar `scanA11y(page, label)`. |
-| Datos de prueba    | label `compliance/admin/legal/consent-audit`                                                                                                                                                                                       |
-| Resultado esperado | 0 violaciones serious/critical (la página cargó con el layout de sin acceso). Las violaciones NO fallan el run: quedan como anotación `a11y` del test y en el informe (sección 2).                                                 |
-| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `scanA11y` dentro de CP-WEB-AUTH-109                                                                                                                                                                  |
+| Campo              | Contenido                                                                                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-A11Y-008                                                                                                                                                                                   |
+| Título             | Sin violaciones axe serious/critical en /admin/legal/consent-audit                                                                                                                                |
+| Tipo / Nivel       | a11y (e2e backend real)                                                                                                                                                                           |
+| Prioridad          | P2                                                                                                                                                                                                |
+| Trazabilidad       | plan maestro §2 (a11y con `@axe-core/playwright`), W5 criterio; CP-WEB-AUTH-109                                                                                                                   |
+| Precondiciones     | Stack e2e del Backend arriba y Next standalone (`playwright.real.config.ts`); `@axe-core/playwright` con todas las reglas por defecto, se reportan solo impacto serious/critical.                 |
+| Pasos              | 1. Iniciar sesión como compliance (aterriza en Legal).<br>2. Navegar a `/admin/legal/consent-audit` y esperar a que se asiente.<br>3. Ejecutar `scanA11y(page, label)`.                           |
+| Datos de prueba    | label `compliance/admin/legal/consent-audit`                                                                                                                                                      |
+| Resultado esperado | 0 violaciones serious/critical con la página legal cargada (DEF-WEB-001 corregido, 3d32892). Las violaciones NO fallan el run: quedan como anotación `a11y` del test y en el informe (sección 2). |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `scanA11y` dentro de CP-WEB-AUTH-109                                                                                                                                 |
+
+### CP-WEB-A11Y-009 — /admin/categories sin violaciones axe serious/critical en claro y oscuro
+
+| Campo              | Contenido                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-A11Y-009                                                                                                                  |
+| Título             | /admin/categories sin violaciones axe serious/critical en claro y oscuro                                                         |
+| Tipo / Nivel       | a11y (e2e backend real)                                                                                                          |
+| Prioridad          | P2                                                                                                                               |
+| Trazabilidad       | DEF-WEB-003 → Corregido (6321d0c)                                                                                                |
+| Precondiciones     | Backend real arriba; 25+ categorías (badges Visible y botones Eliminar renderizados).                                            |
+| Pasos              | 1. Iniciar sesión como admin.<br>2. Emular `colorScheme: light` y abrir `/admin/categories`; escanear.<br>3. Repetir con `dark`. |
+| Datos de prueba    | admin                                                                                                                            |
+| Resultado esperado | `scanA11y` devuelve 0 en ambos esquemas (assert duro, no solo anotación).                                                        |
+| Automatizado en    | `e2e/real/m2-catalogos.spec.ts` — `CP-WEB-A11Y-009 ...`                                                                          |
+
+## Estado de defectos
+
+| Defecto                   | Estado              |
+| ------------------------- | ------------------- |
+| DEF-WEB-003 (media, a11y) | Corregido (6321d0c) |

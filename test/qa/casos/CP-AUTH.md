@@ -197,20 +197,20 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Resultado esperado | El 403 se propaga al boundary (en la app, `app/error.tsx` muestra "sin acceso"); el 500 no se propaga.   |
 | Automatizado en    | `src/core/providers/query-provider.test.tsx` — `CP-WEB-AUTH-013 ...`                                     |
 
-### CP-WEB-AUTH-101 — Login OK de admin llega al panel /admin
+### CP-WEB-AUTH-101 — Login OK de admin aterriza en /admin
 
-| Campo              | Contenido                                                                                                                                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-AUTH-101                                                                                                                              |
-| Título             | Login OK de admin llega al panel /admin                                                                                                      |
-| Tipo / Nivel       | e2e (backend real)                                                                                                                           |
-| Prioridad          | P0                                                                                                                                           |
-| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; nota: el login siempre aterriza en `/` (no hay redirect por rol)                    |
-| Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`. |
-| Pasos              | 1. Abrir `/login`.<br>2. Ingresar como admin.<br>3. Click en "Ir al panel de administración".                                                |
-| Datos de prueba    | admin@tekoapp.com.py / Tekoapp123!                                                                                                           |
-| Resultado esperado | Tras el login la URL es `/`; luego `/admin` carga sin pantalla de sin acceso.                                                                |
-| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-101 ...`                                                                                           |
+| Campo              | Contenido                                                                                                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-101                                                                                                                                                                 |
+| Título             | Login OK de admin aterriza en /admin                                                                                                                                            |
+| Tipo / Nivel       | e2e (backend real)                                                                                                                                                              |
+| Prioridad          | P0                                                                                                                                                                              |
+| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 7d5326f)                                                                                   |
+| Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`.                                    |
+| Pasos              | 1. Abrir `/login`.<br>2. Ingresar como admin.<br>3. Ir a `/` (home del modo cliente) y volver con "Ir al panel de administración".                                              |
+| Datos de prueba    | admin@tekoapp.com.py / Tekoapp123!                                                                                                                                              |
+| Resultado esperado | Tras el login la URL es `/admin` (sin pantalla de sin acceso); `/` sigue accesible y el link lleva de vuelta a `/admin`. Axe sin violaciones serious/critical en ambas páginas. |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-101 ...`                                                                                                                              |
 
 ### CP-WEB-AUTH-102 — Login OK de cliente llega a la home del modo cliente
 
@@ -227,19 +227,19 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Resultado esperado | Home con el link "Solicitar" y sin el link al panel de administración.                                                                       |
 | Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-102 ...`                                                                                           |
 
-### CP-WEB-AUTH-103 — Login OK de profesional entra al modo /pro
+### CP-WEB-AUTH-103 — Login OK de profesional aterriza en /pro
 
 | Campo              | Contenido                                                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | ID                 | CP-WEB-AUTH-103                                                                                                                              |
-| Título             | Login OK de profesional entra al modo /pro                                                                                                   |
+| Título             | Login OK de profesional aterriza en /pro                                                                                                     |
 | Tipo / Nivel       | e2e (backend real)                                                                                                                           |
 | Prioridad          | P0                                                                                                                                           |
-| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1                                                                                      |
+| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 7d5326f)                                                |
 | Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`. |
-| Pasos              | 1. Ingresar como pro_aprobado.<br>2. Click en "Ir al modo profesional".                                                                      |
+| Pasos              | 1. Ingresar como pro_aprobado.                                                                                                               |
 | Datos de prueba    | pro_aprobado@e2e.tekoapp.local                                                                                                               |
-| Resultado esperado | URL `/pro`.                                                                                                                                  |
+| Resultado esperado | El login lleva a `/pro`, que redirige a `/pro/solicitudes` (URL final).                                                                      |
 | Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-103 ...`                                                                                           |
 
 ### CP-WEB-AUTH-104 — Email inexistente: error genérico y sigue en /login
@@ -317,20 +317,20 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Resultado esperado | Se muestra el heading "No tenés acceso a esta sección" (`data-testid=access-denied`).                                                        |
 | Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-108 ...`                                                                                           |
 
-### CP-WEB-AUTH-109 — Compliance ve las páginas legales (DEF-WEB-001)
+### CP-WEB-AUTH-109 — Compliance ve las páginas legales (DEF-WEB-001: Corregido, 3d32892)
 
-| Campo              | Contenido                                                                                                                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-AUTH-109                                                                                                                                                                         |
-| Título             | Compliance ve las páginas legales (DEF-WEB-001)                                                                                                                                         |
-| Tipo / Nivel       | e2e (backend real)                                                                                                                                                                      |
-| Prioridad          | P1                                                                                                                                                                                      |
-| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; DEF-WEB-001                                                                                                                    |
-| Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`.                                            |
-| Pasos              | 1. Login compliance.<br>2. Visitar `/admin/legal/consent-audit`, `/document-versions`, `/retention-policies`.                                                                           |
-| Datos de prueba    | compliance@e2e.tekoapp.local (permisos `legal.config:manage`, `legal.consent-audit:read`)                                                                                               |
-| Resultado esperado | Las páginas cargan con su heading. **Hoy falla**: el layout de `/admin` exige `admin:all`/`dashboard:read` (`isStaffUser`) y muestra "sin acceso". Marcado `test.fail()` (DEF-WEB-001). |
-| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-109 DEF-WEB-001 ...`                                                                                                                          |
+| Campo              | Contenido                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-109                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Título             | Compliance ve las páginas legales (DEF-WEB-001: Corregido, 3d32892)                                                                                                                                                                                                                                                                                                                                                                 |
+| Tipo / Nivel       | e2e (backend real)                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Prioridad          | P1                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; DEF-WEB-001 → **Corregido** (3d32892)                                                                                                                                                                                                                                                                                                                                      |
+| Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`.                                                                                                                                                                                                                                                                                        |
+| Pasos              | 1. Login compliance.<br>2. Visitar `/admin/legal/consent-audit`, `/document-versions`, `/retention-policies`.                                                                                                                                                                                                                                                                                                                       |
+| Datos de prueba    | compliance@e2e.tekoapp.local (permisos `legal.config:manage`, `legal.consent-audit:read`)                                                                                                                                                                                                                                                                                                                                           |
+| Resultado esperado | Las páginas cargan con su heading y sin pantalla de sin acceso. Corrección: el layout de `/admin` deja entrar a cualquier staff (`isStaffUser` = al menos un permiso de `STAFF_PERMISSIONS`) y cada sección exige el suyo (`AdminSectionGate`); el picker de usuario de las auditorías degrada sin `user:read` (un 403 de `GET /users` ya no manda la página a "sin acceso"). Antes marcado `test.fail()`; ahora es un test normal. |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-109 ...`                                                                                                                                                                                                                                                                                                                                                                                  |
 
 ### CP-WEB-AUTH-110 — Compliance no accede a páginas de admin ajenas
 
@@ -344,7 +344,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`. |
 | Pasos              | 1. Login compliance.<br>2. Ir a `/admin/users`.                                                                                              |
 | Datos de prueba    | compliance                                                                                                                                   |
-| Resultado esperado | Pantalla de sin acceso. (Hoy pasa trivialmente porque compliance no entra a ningún `/admin`; ver DEF-WEB-001.)                               |
+| Resultado esperado | Pantalla de sin acceso dentro del shell (compliance entra al backoffice pero no a Usuarios: gate por sección).                               |
 | Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-110 ...`                                                                                           |
 
 ### CP-WEB-AUTH-111 — La sesión sobrevive a un reload y el JWT no es visible desde JS
@@ -361,3 +361,114 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Datos de prueba    | cliente_a                                                                                                                                    |
 | Resultado esperado | Sigue en `/` con la home; `document.cookie` no contiene `accessToken` ni `refreshToken` (httpOnly).                                          |
 | Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-111 ...`                                                                                           |
+
+### CP-WEB-AUTH-112..115 — Gate por sección del backoffice (AdminSectionGate)
+
+| Campo              | Contenido                                                                                                                                                                        |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-112..115                                                                                                                                                             |
+| Título             | Gate por sección del backoffice (AdminSectionGate)                                                                                                                               |
+| Tipo / Nivel       | unitaria                                                                                                                                                                         |
+| Prioridad          | P0                                                                                                                                                                               |
+| Trazabilidad       | DEF-WEB-001 → Corregido (3d32892)                                                                                                                                                |
+| Precondiciones     | `getSession` y `next/navigation` mockeados.                                                                                                                                      |
+| Pasos              | 1. Renderizar el gate con la sesión indicada y una sección.                                                                                                                      |
+| Datos de prueba    | permisos de compliance (`legal.config:manage`, `legal.consent-audit:read`) y `admin:all`                                                                                         |
+| Resultado esperado | 112: compliance entra a consentAudit; 113: sin acceso en users; 114: `/admin` redirige a `/admin/legal/document-versions`; 115: admin:all ve el dashboard sin redirect.          |
+| Automatizado en    | `src/components/layout/admin-section-gate.test.tsx`; `src/core/auth/permissions.test.ts`; `src/components/layout/app-sidebar.test.tsx` (sidebar filtrado: compliance solo Legal) |
+
+### CP-WEB-AUTH-116..120 — Aterrizaje por rol: resolvePostLoginPath
+
+| Campo              | Contenido                                                                                                                                                        |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-116..120                                                                                                                                             |
+| Título             | Aterrizaje por rol: resolvePostLoginPath                                                                                                                         |
+| Tipo / Nivel       | unitaria                                                                                                                                                         |
+| Prioridad          | P1                                                                                                                                                               |
+| Trazabilidad       | Ítem 4, aterrizaje por rol (7d5326f)                                                                                                                             |
+| Precondiciones     | Funciones puras.                                                                                                                                                 |
+| Pasos              | 1. Llamar `resolvePostLoginPath` con permisos, `isProfessional` y `from`.                                                                                        |
+| Datos de prueba    | admin:all, compliance, profesional, cliente; `from` válido e inseguro                                                                                            |
+| Resultado esperado | admin → `/admin`; compliance → primera sección permitida; profesional → `/pro`; cliente → `/`; `from` interno tiene prioridad; `from` externo o `//x` se ignora. |
+| Automatizado en    | `src/core/auth/landing.test.ts`                                                                                                                                  |
+
+### CP-WEB-AUTH-121..125 — Login: redirección por rol y prioridad del from
+
+| Campo              | Contenido                                                                                                 |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-121..125                                                                                      |
+| Título             | Login: redirección por rol y prioridad del from                                                           |
+| Tipo / Nivel       | unitaria                                                                                                  |
+| Prioridad          | P1                                                                                                        |
+| Trazabilidad       | Ítem 4 (7d5326f)                                                                                          |
+| Precondiciones     | MSW sirve `auth/scope` y `professionals/me`.                                                              |
+| Pasos              | 1. Enviar el formulario de login con cada perfil.                                                         |
+| Datos de prueba    | admin, compliance, profesional, cliente y `?from=%2Fadmin%2Fusers`                                        |
+| Resultado esperado | `router.push` a `/admin`, `/admin/legal/document-versions`, `/pro`, `/` y `/admin/users` respectivamente. |
+| Automatizado en    | `src/features/auth/components/login-form.test.tsx` — `aterrizaje por rol`                                 |
+
+### CP-WEB-AUTH-126 — El from (returnTo) tiene prioridad sobre el aterrizaje por rol
+
+| Campo              | Contenido                                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-126                                                                                            |
+| Título             | El from (returnTo) tiene prioridad sobre el aterrizaje por rol                                             |
+| Tipo / Nivel       | e2e (backend real)                                                                                         |
+| Prioridad          | P1                                                                                                         |
+| Trazabilidad       | Ítem 4 (7d5326f); `proxy.ts` agrega `?from=`                                                               |
+| Precondiciones     | Backend real arriba (ver CP-WEB-AUTH-101).                                                                 |
+| Pasos              | 1. Sin sesión abrir `/admin/users` (redirige a `/login?from=%2Fadmin%2Fusers`).<br>2. Ingresar como admin. |
+| Datos de prueba    | admin                                                                                                      |
+| Resultado esperado | La URL final es `/admin/users` (no `/admin`).                                                              |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-126 ...`                                                         |
+
+### CP-WEB-AUTH-127 — Compliance aterriza en su primera sección permitida (Legal)
+
+| Campo              | Contenido                                                              |
+| ------------------ | ---------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-127                                                        |
+| Título             | Compliance aterriza en su primera sección permitida (Legal)            |
+| Tipo / Nivel       | e2e (backend real)                                                     |
+| Prioridad          | P1                                                                     |
+| Trazabilidad       | Ítem 4 (7d5326f)                                                       |
+| Precondiciones     | Backend real arriba.                                                   |
+| Pasos              | 1. Ingresar como compliance.                                           |
+| Datos de prueba    | compliance                                                             |
+| Resultado esperado | La URL es `/admin/legal/document-versions` sin pantalla de sin acceso. |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-127 ...`                     |
+
+### CP-WEB-AUTH-128 — El picker de usuario no propaga el 403 de GET /users
+
+| Campo              | Contenido                                                          |
+| ------------------ | ------------------------------------------------------------------ |
+| ID                 | CP-WEB-AUTH-128                                                    |
+| Título             | El picker de usuario no propaga el 403 de GET /users               |
+| Tipo / Nivel       | unitaria                                                           |
+| Prioridad          | P1                                                                 |
+| Trazabilidad       | DEF-WEB-001 (3d32892); compliance no tiene `user:read`             |
+| Precondiciones     | MSW responde 403; QueryClient con el `throwOnError` de la app.     |
+| Pasos              | 1. Renderizar `UserCombobox`.                                      |
+| Datos de prueba    | —                                                                  |
+| Resultado esperado | El combobox sigue visible (no se monta el boundary de sin acceso). |
+| Automatizado en    | `src/features/users/components/user-combobox.test.tsx`             |
+
+### CP-WEB-AUTH-129 — Compliance ve solo Legal en el sidebar y /admin lo redirige a su primera sección
+
+| Campo              | Contenido                                                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-AUTH-129                                                                                                                                                        |
+| Título             | Compliance ve solo Legal en el sidebar y /admin lo redirige a su primera sección                                                                                       |
+| Tipo / Nivel       | e2e (backend real)                                                                                                                                                     |
+| Prioridad          | P1                                                                                                                                                                     |
+| Trazabilidad       | DEF-WEB-001 → Corregido (3d32892)                                                                                                                                      |
+| Precondiciones     | Backend real arriba.                                                                                                                                                   |
+| Pasos              | 1. Ingresar como compliance.<br>2. Ir a `/admin`.<br>3. Revisar el sidebar.                                                                                            |
+| Datos de prueba    | compliance                                                                                                                                                             |
+| Resultado esperado | `/admin` redirige a `/admin/legal/document-versions`; el sidebar muestra Documentos legales y Auditoría de consentimiento y no Usuarios, Resumen, Pagos ni Categorías. |
+| Automatizado en    | `e2e/real/m1-auth.spec.ts` — `CP-WEB-AUTH-129 ...`                                                                                                                     |
+
+## Estado de defectos
+
+| Defecto            | Estado              |
+| ------------------ | ------------------- |
+| DEF-WEB-001 (alta) | Corregido (3d32892) |
