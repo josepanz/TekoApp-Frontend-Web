@@ -1,4 +1,4 @@
-import { ApiError } from './errors';
+import { ApiError, type ApiFieldError } from './errors';
 
 // El backend real envuelve TODA respuesta exitosa en `{ success, data, message, timestamp, path }`
 // vía un `TransformInterceptor` global (ver TekoApp-Backend `core/interceptors/transform.interceptor.ts`,
@@ -39,6 +39,8 @@ interface BackendErrorEnvelope {
     error: string;
     errorCode?: string;
     details?: unknown;
+    errors?: unknown;
+    retryAfter?: number;
     timestamp: string;
     path: string;
   };
@@ -60,6 +62,31 @@ interface ExtractedErrorInfo {
   message: string;
   errorCode?: string;
   details?: unknown;
+  fieldErrors: ApiFieldError[];
+  retryAfter?: number;
+}
+
+// `error.errors[]` del 400: `{field, value, constraints:{regla: mensaje}}` (tambien tolera
+// `{field, message}`). Se toma el primer mensaje de cada campo.
+function parseFieldErrors(raw: unknown): ApiFieldError[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((item: unknown) => {
+    if (typeof item !== 'object' || item === null) return [];
+    const { field, message, constraints } = item as {
+      field?: unknown;
+      message?: unknown;
+      constraints?: unknown;
+    };
+    if (typeof field !== 'string') return [];
+    if (typeof message === 'string') return [{ field, message }];
+    if (typeof constraints === 'object' && constraints !== null) {
+      const first = Object.values(constraints).find(
+        (v): v is string => typeof v === 'string',
+      );
+      if (first) return [{ field, message: first }];
+    }
+    return [];
+  });
 }
 
 /**
@@ -79,13 +106,21 @@ export function extractErrorInfo(
       message: body.error.message,
       errorCode: body.error.errorCode,
       details: body.error.details,
+      fieldErrors: parseFieldErrors(body.error.errors),
+      retryAfter:
+        typeof body.error.retryAfter === 'number'
+          ? body.error.retryAfter
+          : undefined,
     };
   }
   if (body && typeof body === 'object' && 'message' in body) {
     const raw = (body as { message: unknown }).message;
-    return { message: typeof raw === 'string' ? raw : fallbackMessage };
+    return {
+      message: typeof raw === 'string' ? raw : fallbackMessage,
+      fieldErrors: [],
+    };
   }
-  return { message: fallbackMessage };
+  return { message: fallbackMessage, fieldErrors: [] };
 }
 
 /**
@@ -103,11 +138,17 @@ async function parseErrorResponse(
   } catch {
     body = await response.text();
   }
-  const { message, errorCode, details } = extractErrorInfo(
+  const { message, errorCode, details, fieldErrors, retryAfter } =
+    extractErrorInfo(body, `Error ${response.status} en ${path}`);
+  return new ApiError(
+    response.status,
+    message,
     body,
-    `Error ${response.status} en ${path}`,
+    errorCode,
+    details,
+    fieldErrors,
+    retryAfter,
   );
-  return new ApiError(response.status, message, body, errorCode, details);
 }
 
 /**

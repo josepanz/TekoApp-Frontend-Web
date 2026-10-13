@@ -13,8 +13,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ApiError } from '@/core/api-client/errors';
+import { applyApiFieldErrors } from '@/core/api-client/form-errors';
 import { useRegisterMutation } from '../hooks';
 import { registerSchema, type RegisterFormValues } from '../schemas';
+
+const REGISTER_FIELDS = [
+  'firstName',
+  'lastName',
+  'email',
+  'phoneNumber',
+  'password',
+  'confirmPassword',
+] as const;
 
 export function RegisterForm() {
   const t = useTranslations('auth.register');
@@ -25,6 +35,7 @@ export function RegisterForm() {
     register,
     control,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: standardSchemaResolver(registerSchema),
@@ -42,6 +53,8 @@ export function RegisterForm() {
   function onSubmit(values: RegisterFormValues) {
     registerMutation.mutate(values, {
       onSuccess: () => router.push('/login?registered=1'),
+      // 400 con `errors[]`: se muestran como error de cada campo.
+      onError: (error) => applyApiFieldErrors(error, setError, REGISTER_FIELDS),
     });
   }
 

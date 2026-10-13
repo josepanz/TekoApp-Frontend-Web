@@ -427,6 +427,12 @@
         "description": "Subí los documentos de habilitación/antecedentes que pide tu categoría."
       }
     },
+    "accessDenied": {
+      "title": "No tenés acceso a esta sección",
+      "description": "Tu cuenta no tiene los permisos necesarios para ver esta pantalla. Si creés que es un error, contactá a un administrador.",
+      "backHome": "Volver al inicio"
+    },
+    "rateLimited": "Demasiadas solicitudes. Reintentá en {seconds} s.",
     "error": {
       "title": "Algo salió mal",
       "description": "No pudimos completar la solicitud. Puede ser un problema temporario del servidor — probá de nuevo en unos segundos."

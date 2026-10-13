@@ -43,11 +43,17 @@ export async function login(values: LoginFormValues): Promise<LoginResult> {
     // `/api/auth/login` reenvía el body del backend real tal cual en los errores que vienen de
     // ahí (envelope `{success:false,error:{...}}`) — mismo bug que tenía `parseErrorResponse` de
     // `client.ts`, reusa la misma corrección en vez de duplicarla otra vez acá.
-    const { message, errorCode, details } = extractErrorInfo(
+    const { message, errorCode, details, fieldErrors, retryAfter } =
+      extractErrorInfo(body, 'No se pudo iniciar sesión');
+    throw new ApiError(
+      response.status,
+      message,
       body,
-      'No se pudo iniciar sesión',
+      errorCode,
+      details,
+      fieldErrors,
+      retryAfter,
     );
-    throw new ApiError(response.status, message, body, errorCode, details);
   }
 
   const result = (
@@ -91,11 +97,17 @@ export async function register(
   const body: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
-    const { message, errorCode, details } = extractErrorInfo(
+    const { message, errorCode, details, fieldErrors, retryAfter } =
+      extractErrorInfo(body, 'No se pudo crear la cuenta');
+    throw new ApiError(
+      response.status,
+      message,
       body,
-      'No se pudo crear la cuenta',
+      errorCode,
+      details,
+      fieldErrors,
+      retryAfter,
     );
-    throw new ApiError(response.status, message, body, errorCode, details);
   }
 
   return (
