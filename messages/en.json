@@ -1558,5 +1558,31 @@
       "user": "User",
       "professional": "Professional"
     }
+  },
+  "legalConsents": {
+    "required": {
+      "title": {
+        "DATA_PROCESSING_CONSENT": "Data processing consent",
+        "IMAGE_USAGE_CONSENT": "Image usage consent",
+        "TERMS_OF_SERVICE": "Terms of service",
+        "PRIVACY_POLICY": "Privacy policy",
+        "SERVICE_CONTRACT_TERMS": "Service contract terms",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "User content liability"
+      },
+      "description": {
+        "DATA_PROCESSING_CONSENT": "To upload your documents we need your consent to process your personal data. Read the document and accept it to continue.",
+        "IMAGE_USAGE_CONSENT": "To upload photos we need your consent for image usage. Read the document and accept it to continue.",
+        "TERMS_OF_SERVICE": "Accept the terms of service to continue.",
+        "PRIVACY_POLICY": "Accept the privacy policy to continue.",
+        "SERVICE_CONTRACT_TERMS": "Accept the service contract terms to continue.",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Accept the content liability notice to continue."
+      },
+      "viewDocument": "Read the document (version {version})",
+      "nothingPending": "There is nothing pending to accept. Try uploading the file again.",
+      "loadError": "Could not load the legal document. Try again.",
+      "acceptError": "Could not record your acceptance. Try again.",
+      "accept": "I accept and continue",
+      "accepting": "Saving..."
+    }
   }
 }

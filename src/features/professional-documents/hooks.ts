@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ApiError } from '@/core/api-client/errors';
+import { isConsentRequiredError } from '@/features/legal-consents/api';
 import {
   getAdminProfessionalDocumentsByProfessional,
   getAdminProfessionalDocumentsQueue,
@@ -81,6 +82,8 @@ export function useUploadMyDocumentMutation() {
       toast.success('Documento subido correctamente.');
     },
     onError: (error) => {
+      // 403 CONSENT_REQUIRED: el componente abre el diálogo de aceptación, no es un error a mostrar.
+      if (isConsentRequiredError(error)) return;
       toast.error(getErrorMessage(error, 'No se pudo subir el documento.'));
     },
   });

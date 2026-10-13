@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useMyDocumentsQuery, useUploadMyDocumentMutation } from '../hooks';
+import { isConsentRequiredError } from '@/features/legal-consents/api';
+import { ConsentRequiredDialog } from '@/features/legal-consents/components/consent-required-dialog';
 import type { DocumentReviewStatus } from '../api';
 
 const STATUS_VARIANT: Record<
@@ -28,6 +30,11 @@ export function MyDocumentsUpload() {
   const uploadMutation = useUploadMyDocumentMutation();
   const [uploadingType, setUploadingType] = useState<string | null>(null);
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  // Subida bloqueada por 403 CONSENT_REQUIRED: se conserva el archivo para reintentar al aceptar.
+  const [blockedUpload, setBlockedUpload] = useState<{
+    file: File;
+    typeReferenceId: string;
+  } | null>(null);
 
   if (isPending) {
     return <Skeleton className="h-64 max-w-xl" />;
@@ -39,13 +46,30 @@ export function MyDocumentsUpload() {
     );
   }
 
-  function handleFileChange(typeReferenceId: string, file: File | undefined) {
-    if (!file) return;
+  function upload(typeReferenceId: string, file: File) {
     setUploadingType(typeReferenceId);
     uploadMutation.mutate(
       { file, professionalDocumentTypeReferenceId: typeReferenceId },
-      { onSettled: () => setUploadingType(null) },
+      {
+        onSettled: () => setUploadingType(null),
+        onError: (error) => {
+          if (isConsentRequiredError(error)) {
+            setBlockedUpload({ file, typeReferenceId });
+          }
+        },
+      },
     );
+  }
+
+  function handleFileChange(typeReferenceId: string, file: File | undefined) {
+    if (!file) return;
+    upload(typeReferenceId, file);
+  }
+
+  function handleConsentAccepted() {
+    const pending = blockedUpload;
+    setBlockedUpload(null);
+    if (pending) upload(pending.typeReferenceId, pending.file);
   }
 
   return (
@@ -119,6 +143,14 @@ export function MyDocumentsUpload() {
           </div>
         </div>
       ))}
+      <ConsentRequiredDialog
+        documentType="DATA_PROCESSING_CONSENT"
+        open={blockedUpload !== null}
+        onOpenChange={(open) => {
+          if (!open) setBlockedUpload(null);
+        }}
+        onAccepted={handleConsentAccepted}
+      />
     </div>
   );
 }

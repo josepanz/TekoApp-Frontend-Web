@@ -19,6 +19,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
+import { isConsentRequiredError } from '@/features/legal-consents/api';
+import { ConsentRequiredDialog } from '@/features/legal-consents/components/consent-required-dialog';
 import type { PortfolioItem, PortfolioReviewStatus } from '../api';
 import {
   useDeletePortfolioItemMutation,
@@ -45,12 +47,31 @@ export function MyPortfolioManager() {
   const { data, isPending, isError } = useMyPortfolioQuery();
   const uploadMutation = useUploadPortfolioItemMutation();
   const inputRef = useRef<HTMLInputElement>(null);
+  // Subida bloqueada por 403 CONSENT_REQUIRED: se conserva el archivo para reintentar al aceptar.
+  const [blockedFile, setBlockedFile] = useState<File | null>(null);
+
+  function upload(file: File) {
+    uploadMutation.mutate(
+      { file },
+      {
+        onError: (error) => {
+          if (isConsentRequiredError(error)) setBlockedFile(file);
+        },
+      },
+    );
+  }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
-    uploadMutation.mutate({ file });
+    upload(file);
+  }
+
+  function handleConsentAccepted() {
+    const file = blockedFile;
+    setBlockedFile(null);
+    if (file) upload(file);
   }
 
   return (
@@ -76,6 +97,15 @@ export function MyPortfolioManager() {
           onChange={handleFileChange}
         />
       </div>
+
+      <ConsentRequiredDialog
+        documentType="IMAGE_USAGE_CONSENT"
+        open={blockedFile !== null}
+        onOpenChange={(open) => {
+          if (!open) setBlockedFile(null);
+        }}
+        onAccepted={handleConsentAccepted}
+      />
 
       {isPending && <Skeleton className="h-48" />}
       {isError && <p className="text-muted-foreground">{t('loadError')}</p>}

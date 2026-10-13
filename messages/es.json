@@ -1558,5 +1558,31 @@
       "user": "Usuario",
       "professional": "Profesional"
     }
+  },
+  "legalConsents": {
+    "required": {
+      "title": {
+        "DATA_PROCESSING_CONSENT": "Consentimiento de tratamiento de datos",
+        "IMAGE_USAGE_CONSENT": "Consentimiento de uso de imágenes",
+        "TERMS_OF_SERVICE": "Términos de servicio",
+        "PRIVACY_POLICY": "Política de privacidad",
+        "SERVICE_CONTRACT_TERMS": "Términos del contrato de servicio",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Responsabilidad por contenido del usuario"
+      },
+      "description": {
+        "DATA_PROCESSING_CONSENT": "Para subir tus documentos necesitamos tu consentimiento para tratar tus datos personales. Leé el documento y aceptalo para continuar.",
+        "IMAGE_USAGE_CONSENT": "Para subir fotos necesitamos tu consentimiento para el uso de imágenes. Leé el documento y aceptalo para continuar.",
+        "TERMS_OF_SERVICE": "Aceptá los términos de servicio para continuar.",
+        "PRIVACY_POLICY": "Aceptá la política de privacidad para continuar.",
+        "SERVICE_CONTRACT_TERMS": "Aceptá los términos del contrato de servicio para continuar.",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Aceptá el aviso de responsabilidad por contenido para continuar."
+      },
+      "viewDocument": "Leer el documento (versión {version})",
+      "nothingPending": "No hay documentos pendientes de aceptar. Probá subir el archivo de nuevo.",
+      "loadError": "No se pudo cargar el documento legal. Intentá de nuevo.",
+      "acceptError": "No se pudo registrar tu aceptación. Intentá de nuevo.",
+      "accept": "Acepto y continuar",
+      "accepting": "Registrando..."
+    }
   }
 }
