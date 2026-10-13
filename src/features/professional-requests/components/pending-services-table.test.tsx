@@ -1,6 +1,6 @@
 /**
  * Suite: PendingServicesTable (solicitudes pendientes del profesional)
- * Casos: CP-WEB-MKT-105 (ver test/qa/casos/CP-MKT.md)
+ * Casos: CP-WEB-MKT-001 (ver test/qa/casos/CP-MKT.md)
  * Tipo: unitaria (componente + MSW)   Prioridad: P1
  * Precondiciones: handlers MSW de professional-mode; sin backend real.
  * Trazabilidad: DEF-WEB-006 (403 de profesional no aprobado), plan maestro M3/M4.
@@ -57,7 +57,7 @@ describe('PendingServicesTable', () => {
   });
 
   // DEF-WEB-006
-  it('explica que el perfil no está aprobado cuando el backend responde 403', async () => {
+  it('CP-WEB-MKT-001 explica que el perfil no está aprobado cuando el backend responde 403', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/services', () =>

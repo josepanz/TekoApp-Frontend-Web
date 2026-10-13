@@ -1,6 +1,6 @@
 /**
  * Suite: ProfessionalGate (acceso al modo profesional y aviso de estado)
- * Casos: CP-WEB-MKT-107 (ver test/qa/casos/CP-MKT.md)
+ * Casos: CP-WEB-ONB-006 (ver test/qa/casos/CP-ONB.md)
  * Tipo: unitaria (componente + MSW)   Prioridad: P1
  * Precondiciones: handlers MSW de professional-mode; sin backend real.
  * Trazabilidad: DEF-WEB-005, plan maestro M3/M4.
@@ -67,7 +67,7 @@ describe('ProfessionalGate', () => {
   });
 
   // DEF-WEB-005
-  it('muestra el aviso de postulación pendiente junto al contenido cuando el perfil está PENDING', async () => {
+  it('CP-WEB-ONB-006 muestra el aviso de postulación pendiente junto al contenido cuando el perfil está PENDING', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/professionals/me', () =>
@@ -85,7 +85,7 @@ describe('ProfessionalGate', () => {
     ).toBeInTheDocument();
   });
 
-  it('no muestra aviso cuando el perfil está APROBADO', async () => {
+  it('CP-WEB-ONB-006 no muestra aviso cuando el perfil está APROBADO', async () => {
     // Arrange & Act
     renderGate();
 

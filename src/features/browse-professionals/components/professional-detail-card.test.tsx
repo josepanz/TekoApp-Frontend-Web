@@ -1,6 +1,6 @@
 /**
  * Suite: ProfessionalDetailCard (perfil publico del profesional para el cliente)
- * Casos: CP-WEB-ONB-105 (ver test/qa/casos/CP-ONB.md)
+ * Casos: CP-WEB-ONB-004 (ver test/qa/casos/CP-ONB.md)
  * Tipo: unitaria (componente + MSW)   Prioridad: P1
  * Precondiciones: handlers MSW de client-mode y portfolio; sin backend real.
  * Trazabilidad: DEF-WEB-007 (404 de profesional no aprobado mostrado como error generico), M3.
@@ -49,7 +49,7 @@ describe('ProfessionalDetailCard', () => {
   });
 
   // DEF-WEB-007
-  it('muestra una pantalla amable de "no disponible" cuando el backend responde 404', async () => {
+  it('CP-WEB-ONB-004 muestra una pantalla amable de "no disponible" cuando el backend responde 404', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/professionals/reference/:referenceId', () =>

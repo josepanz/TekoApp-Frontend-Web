@@ -1,6 +1,6 @@
 /**
  * Suite: PresignedImage (imagen por URL presignada con placeholder ante 403/404)
- * Casos: CP-WEB-IMG-001..003 (ver test/qa/casos/CP-ONB.md)
+ * Casos: CP-WEB-IMG-001..004 (ver test/qa/casos/CP-ONB.md)
  * Tipo: unitaria (componente + MSW)   Prioridad: P1
  * Precondiciones: handlers MSW inline de `uploads/presigned-url`; sin backend real.
  * Trazabilidad: DEF-WEB-008 (imagen rota ante 403/404 del presigned), plan maestro M3.
@@ -42,7 +42,7 @@ function presignedError(status: number) {
 }
 
 describe('PresignedImage', () => {
-  it('muestra la imagen cuando el presigned resuelve', async () => {
+  it('CP-WEB-IMG-001 muestra la imagen cuando el presigned resuelve', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/uploads/presigned-url', () =>
@@ -59,7 +59,7 @@ describe('PresignedImage', () => {
   });
 
   it.each([403, 404])(
-    'muestra un placeholder, no una imagen rota, si el presigned responde %i',
+    'CP-WEB-IMG-002 muestra un placeholder, no una imagen rota, si el presigned responde %i',
     async (status) => {
       // Arrange
       server.use(presignedError(status));
@@ -75,7 +75,7 @@ describe('PresignedImage', () => {
     },
   );
 
-  it('muestra el placeholder si la URL presignada no carga el archivo', async () => {
+  it('CP-WEB-IMG-003 muestra el placeholder si la URL presignada no carga el archivo', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/uploads/presigned-url', () =>
@@ -94,7 +94,7 @@ describe('PresignedImage', () => {
 
   // DEF-WEB-008: el QueryClient de produccion propaga todo 403 al error boundary (pantalla de sin
   // acceso); el presigned 403 NO debe tumbar la pagina entera.
-  it('un 403 del presigned no se propaga al error boundary global', async () => {
+  it('CP-WEB-IMG-004 un 403 del presigned no se propaga al error boundary global', async () => {
     // Arrange
     server.use(presignedError(403));
     const prodLikeClient = new QueryClient({

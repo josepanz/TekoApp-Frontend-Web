@@ -1,6 +1,6 @@
 /**
  * Suite: DocumentReviewDialog (revision admin de un documento del profesional)
- * Casos: CP-WEB-IMG-004 (ver test/qa/casos/CP-ONB.md)
+ * Casos: CP-WEB-IMG-005 (ver test/qa/casos/CP-ONB.md)
  * Tipo: unitaria (componente + MSW)   Prioridad: P1
  * Precondiciones: handlers MSW de professional-documents; sin backend real.
  * Trazabilidad: DEF-WEB-008 (presigned 403/404 sin aviso en la revision de documentos), M3.
@@ -145,7 +145,7 @@ describe('DocumentReviewDialog', () => {
   });
 
   // DEF-WEB-008
-  it('avisa que el archivo no está disponible si el presigned responde 404', async () => {
+  it('CP-WEB-IMG-005 avisa que el archivo no está disponible si el presigned responde 404', async () => {
     // Arrange
     server.use(
       http.get('/api/backend/uploads/presigned-url', () =>

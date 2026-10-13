@@ -118,7 +118,7 @@ describe('MyDocumentsUpload', () => {
   });
 
   // CP-WEB-ONB-001 / DEF-WEB-004
-  it('ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento y reintenta la subida', async () => {
+  it('CP-WEB-ONB-001 ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento y reintenta la subida', async () => {
     // Arrange
     let uploads = 0;
     const accepted: string[] = [];
@@ -196,7 +196,7 @@ describe('MyDocumentsUpload', () => {
   });
 
   // CP-WEB-ONB-002 / DEF-WEB-004
-  it('si el usuario cancela el diálogo de consentimiento no reintenta la subida', async () => {
+  it('CP-WEB-ONB-002 si el usuario cancela el diálogo de consentimiento no reintenta la subida', async () => {
     // Arrange
     let uploads = 0;
     server.use(

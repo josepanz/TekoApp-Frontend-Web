@@ -83,7 +83,7 @@ describe('MyPortfolioManager', () => {
   });
 
   // DEF-WEB-004: 403 CONSENT_REQUIRED de IMAGE_USAGE_CONSENT -> aceptar y reintentar
-  it('ante 403 CONSENT_REQUIRED pide aceptar el consentimiento de imágenes y reintenta', async () => {
+  it('CP-WEB-ONB-003 ante 403 CONSENT_REQUIRED pide aceptar el consentimiento de imágenes y reintenta', async () => {
     // Arrange
     const user = userEvent.setup();
     let uploads = 0;
