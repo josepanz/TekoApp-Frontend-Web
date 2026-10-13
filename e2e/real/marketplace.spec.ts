@@ -203,6 +203,11 @@ test.describe('M4 Marketplace', () => {
     );
     // Sin crash: la tabla sigue y tras el refetch refleja el estado real.
     await expect(tab2.getByRole('table')).toBeVisible();
+    // La vista se asienta (refetch + transiciones de los botones) antes de escanear.
+    await settle(tab2);
+    await expect(
+      tab2.getByRole('row').filter({ hasText: title }),
+    ).toContainText('Completado');
     await scanA11y(tab2, 'pro-servicios-conflicto');
     test.info().annotations.push({
       type: 'mensaje-409',

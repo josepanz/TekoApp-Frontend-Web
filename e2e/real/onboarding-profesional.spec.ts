@@ -300,6 +300,8 @@ test.describe.serial('M3 Onboarding profesional', () => {
       .getByRole('dialog')
       .getByRole('button', { name: 'Confirmar' })
       .click();
+    // El dialogo termina de cerrarse (animacion) antes de escanear: axe no debe ver el overlay.
+    await expect(admin.getByRole('dialog')).toBeHidden();
     await expect(
       admin.getByText('Aprobado', { exact: true }).first(),
     ).toBeVisible();
