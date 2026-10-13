@@ -2,21 +2,21 @@
 
 | Campo          | Valor                                                                                                                                                                                                                                                         |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Fecha y hora   | 2026-10-13 10:17                                                                                                                                                                                                                                              |
+| Fecha y hora   | 2026-10-13 14:27                                                                                                                                                                                                                                              |
 | Repo           | TekoApp-Frontend-Web                                                                                                                                                                                                                                          |
 | Rama           | test/e2e-w2-onboarding-marketplace                                                                                                                                                                                                                            |
-| Commit         | 202c905                                                                                                                                                                                                                                                       |
+| Commit         | cfc7e86 (árbol con cambios sin commitear)                                                                                                                                                                                                                     |
 | Entorno        | jsdom (local), Node v22.16.0, vitest vitest/4.1.10 win32-x64 node-v22.16.0, win32                                                                                                                                                                             |
 | Comando exacto | `pnpm qa:unit` → `pnpm exec vitest run --reporter=json --outputFile=test/qa/informes/artefactos/unit.json --coverage.enabled --coverage.reporter=json-summary --coverage.reporter=html --coverage.reportsDirectory=test/qa/informes/artefactos/unit-coverage` |
-| Ejecutor       | Claude Sonnet 5.5 (agente, oleada W2)                                                                                                                                                                                                                         |
+| Ejecutor       | humano                                                                                                                                                                                                                                                        |
 
 ## 1. Resumen
 
 | Pasaron | Fallaron | Omitidos | Flaky | Total | Duración |
 | ------- | -------- | -------- | ----- | ----- | -------- |
-| 403     | 0        | 0        | 0     | 403   | 1.7 min  |
+| 417     | 0        | 0        | 0     | 417   | 1.9 min  |
 
-Cobertura: v8 sobre `src/**` (config de `vitest.config.ts`): líneas 82.85% (3054/3686) · sentencias 81.63% (3130/3834) · funciones 75.72% (1273/1681) · ramas 71.59% (1812/2531).
+Cobertura: v8 sobre `src/**` (config de `vitest.config.ts`): líneas 82.84% (3056/3689) · sentencias 81.62% (3132/3837) · funciones 75.71% (1275/1684) · ramas 71.5% (1814/2537).
 
 Exit code del runner: 0.
 
@@ -26,7 +26,7 @@ Exit code del runner: 0.
 
 | Grupo                                    | Archivos | Casos | Pasaron | Fallaron | Omitidos |
 | ---------------------------------------- | -------- | ----- | ------- | -------- | -------- |
-| otros                                    | 8        | 26    | 26      | 0        | 0        |
+| otros                                    | 9        | 36    | 36      | 0        | 0        |
 | src/components/data-table                | 1        | 15    | 15      | 0        | 0        |
 | src/components/layout                    | 7        | 21    | 21      | 0        | 0        |
 | src/components/ui                        | 2        | 6     | 6       | 0        | 0        |
@@ -59,7 +59,7 @@ Exit code del runner: 0.
 | src/features/professional-ratings        | 1        | 2     | 2       | 0        | 0        |
 | src/features/professional-requests       | 1        | 3     | 3       | 0        | 0        |
 | src/features/professional-services       | 1        | 2     | 2       | 0        | 0        |
-| src/features/professionals               | 4        | 16    | 16      | 0        | 0        |
+| src/features/professionals               | 5        | 20    | 20      | 0        | 0        |
 | src/features/promotions                  | 3        | 9     | 9       | 0        | 0        |
 | src/features/ratings                     | 1        | 12    | 12      | 0        | 0        |
 | src/features/request-service             | 2        | 3     | 3       | 0        | 0        |
@@ -75,6 +75,7 @@ Exit code del runner: 0.
 
 | Archivo                                 | CP-                                               | Casos | Pasaron | Fallaron | Omitidos | Estado |
 | --------------------------------------- | ------------------------------------------------- | ----- | ------- | -------- | -------- | ------ |
+| `scripts/qa/log-parser.test.mjs`        | —                                                 | 10    | 10      | 0        | 0        | PASÓ   |
 | `src/app/api/auth/logout/route.test.ts` | CP-WEB-AUTH-006, CP-WEB-AUTH-007, CP-WEB-AUTH-008 | 3     | 3       | 0        | 0        | PASÓ   |
 | `src/hooks/use-debounced-value.test.ts` | —                                                 | 2     | 2       | 0        | 0        | PASÓ   |
 | `src/lib/formatters.test.ts`            | —                                                 | 8     | 8       | 0        | 0        | PASÓ   |
@@ -324,10 +325,11 @@ Exit code del runner: 0.
 
 | Archivo                                           | CP-                                | Casos | Pasaron | Fallaron | Omitidos | Estado |
 | ------------------------------------------------- | ---------------------------------- | ----- | ------- | -------- | -------- | ------ |
-| `components/professional-detail-view.test.tsx`    | —                                  | 2     | 2       | 0        | 0        | PASÓ   |
+| `components/professional-detail-view.test.tsx`    | CP-WEB-ONB-007                     | 4     | 4       | 0        | 0        | PASÓ   |
 | `components/professionals-table.test.tsx`         | CP-WEB-ADMIN-003, CP-WEB-ADMIN-004 | 10    | 10      | 0        | 0        | PASÓ   |
 | `components/suspend-professional-dialog.test.tsx` | —                                  | 2     | 2       | 0        | 0        | PASÓ   |
 | `components/verify-professional-dialog.test.tsx`  | —                                  | 2     | 2       | 0        | 0        | PASÓ   |
+| `rules.test.ts`                                   | CP-WEB-ONB-007                     | 2     | 2       | 0        | 0        | PASÓ   |
 
 #### src/features/promotions
 
@@ -393,7 +395,7 @@ Ninguno nuevo en las pruebas unitarias: todas pasan. Las pruebas unitarias nueva
 
 ## 4. Desvíos y observaciones
 
-- Corrida sobre el árbol limpio en el commit indicado (`202c905`): 403 casos, con pruebas nuevas en `my-documents-upload`, `my-portfolio-manager`, `presigned-image`, `professional-status-banner`, `professional-gate`, `pending-services-table`, `my-services-table`, `professional-detail-card`, `document-review-dialog`, `location-picker-map` y `button`.
+- Corrida sobre el árbol limpio en el commit indicado (`cfc7e86` más los cambios de esta tanda, DEF-WEB-013/014 y el parser de logs): 417 casos, con pruebas nuevas en `my-documents-upload`, `my-portfolio-manager`, `presigned-image`, `professional-status-banner`, `professional-gate`, `pending-services-table`, `my-services-table`, `professional-detail-card`, `document-review-dialog`, `location-picker-map` y `button`.
 - Sin flakies, omitidos ni timeouts. Aviso conocido de jsdom "Not implemented: navigation to another Document" en un test de /perfil (no afecta el resultado).
 - Cobertura: ver sección 1.
 
@@ -404,4 +406,12 @@ Ninguno nuevo en las pruebas unitarias: todas pasan. Las pruebas unitarias nueva
 
 ## 6. Veredicto
 
-**APROBADO.** Criterio: 403/403 pasan, 0 fallos, 0 omitidos, sin flakies; lint y typecheck en verde.
+**APROBADO.** Criterio: 417/417 pasan, 0 fallos, 0 omitidos, sin flakies; lint y typecheck en verde.
+
+## 7. Logs de servicios
+
+No aplica: las pruebas unitarias corren en jsdom y no levantan servicios.
+
+### Explicación de señales
+
+_Sin señales bloqueantes._
