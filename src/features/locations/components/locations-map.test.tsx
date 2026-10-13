@@ -45,8 +45,10 @@ const professionals: NearbyProfessional[] = [
     categoryId: 3,
     description: 'Sin posicion',
     hourlyRate: 0,
-    latitude: null,
-    longitude: null,
+    // Defensivo: el DTO tipa number, pero se prueba el descarte ante null del backend.
+    latitude: null as unknown as number,
+    longitude: null as unknown as number,
+    distanceKm: 0,
     isAvailable: false,
     isOnline: false,
     averageRating: 3,
@@ -97,8 +99,18 @@ describe('toMarkers', () => {
   it('mapea latitude/longitude (aproximadas) a posiciones y descarta las invalidas', () => {
     const result = toMarkers([
       ...professionals,
-      { ...professionals[0], id: 3, latitude: '-25.3', longitude: 'x' },
-      { ...professionals[0], id: 4, latitude: '-25.3', longitude: '-57.6' },
+      {
+        ...professionals[0],
+        id: 3,
+        latitude: '-25.3' as unknown as number,
+        longitude: 'x' as unknown as number,
+      },
+      {
+        ...professionals[0],
+        id: 4,
+        latitude: '-25.3' as unknown as number,
+        longitude: '-57.6' as unknown as number,
+      },
     ]);
 
     expect(result.map((m) => m.professional.id)).toEqual([1, 4]);
