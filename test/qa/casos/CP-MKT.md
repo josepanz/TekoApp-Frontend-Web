@@ -7,6 +7,7 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 | ID             | Título                                                                                         | Tipo                      | Prio |
 | -------------- | ---------------------------------------------------------------------------------------------- | ------------------------- | ---- |
 | CP-WEB-MKT-001 | La tabla de solicitudes explica que el perfil no está aprobado cuando el backend responde 403  | unitaria (componente)     | P1   |
+| CP-WEB-MKT-002 | Tras un 409 al completar refresca la lista y deja de ofrecer "Completar"                       | unitaria (componente)     | P1   |
 | CP-WEB-MKT-101 | Solicitar → aceptar → iniciar → completar, visto por ambos roles                               | e2e (backend real) + a11y | P1   |
 | CP-WEB-MKT-102 | El cliente cancela un servicio pendiente y el profesional ya no lo ve                          | e2e (backend real)        | P1   |
 | CP-WEB-MKT-103 | Conflicto: completar dos veces desde dos pestañas muestra el 409 explicado, sin crash          | e2e (backend real) + a11y | P1   |
@@ -35,6 +36,21 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 | Datos de prueba    | —                                                                                                                                                                        |
 | Resultado esperado | Alerta "Tu perfil profesional todavía no está aprobado…" (no el error genérico de carga).                                                                                |
 | Automatizado en    | `src/features/professional-requests/components/pending-services-table.test.tsx` — `CP-WEB-MKT-001 explica que el perfil no está aprobado cuando el backend responde 403` |
+
+### CP-WEB-MKT-002 — Tras un 409 al completar refresca la lista y deja de ofrecer "Completar"
+
+| Campo              | Contenido                                                                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-MKT-002                                                                                                                                                       |
+| Título             | Tras un 409 al completar refresca la lista y deja de ofrecer "Completar"                                                                                             |
+| Tipo / Nivel       | unitaria (componente)                                                                                                                                                |
+| Prioridad          | P1                                                                                                                                                                   |
+| Trazabilidad       | DEF-WEB-011 (Corregido, fde99bd); plan maestro M4 (transición inválida → 409)                                                                                        |
+| Precondiciones     | Vitest + Testing Library + MSW (`pnpm test`); sin backend real.                                                                                                      |
+| Pasos              | 1. `MyServicesTable` con un servicio "En curso" y el POST de completar respondiendo 409 (el servicio ya está COMPLETED en el backend).<br>2. Pulsar "Completar".     |
+| Datos de prueba    | —                                                                                                                                                                    |
+| Resultado esperado | Se vuelve a pedir la lista y el servicio aparece Completado: ya no se ofrece "Completar".                                                                            |
+| Automatizado en    | `src/features/professional-services/components/my-services-table.test.tsx` — `CP-WEB-MKT-002 tras un 409 al completar refresca la lista y deja de ofrecer Completar` |
 
 ### CP-WEB-MKT-101 — Solicitar → aceptar → iniciar → completar, visto por ambos roles
 
@@ -68,18 +84,18 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 
 ### CP-WEB-MKT-103 — Conflicto: completar dos veces desde dos pestañas muestra el 409 explicado, sin crash
 
-| Campo              | Contenido                                                                                                                                                                                                                        |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-MKT-103                                                                                                                                                                                                                   |
-| Título             | Conflicto: completar dos veces desde dos pestañas muestra el 409 explicado, sin crash                                                                                                                                            |
-| Tipo / Nivel       | e2e (backend real) + a11y                                                                                                                                                                                                        |
-| Prioridad          | P1                                                                                                                                                                                                                               |
-| Trazabilidad       | plan maestro M4 ("transición inválida → 409"); contrato W2 (409)                                                                                                                                                                 |
-| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`.                               |
-| Pasos              | 1. Servicio aceptado e iniciado por el pro.<br>2. Abrir una segunda pestaña (misma sesión) en `/pro/servicios` con el servicio "En curso".<br>3. En la pestaña 1: "Completar".<br>4. En la pestaña 2 (vista vieja): "Completar". |
-| Datos de prueba    | título `E2E MKT <runId> conflicto`                                                                                                                                                                                               |
-| Resultado esperado | La pestaña 2 muestra un toast de error con el mensaje del backend (no "Error 409" ni el genérico), la tabla sigue visible y se refetchea. El mensaje queda en la anotación `mensaje-409` del informe.                            |
-| Automatizado en    | `e2e/real/marketplace.spec.ts` — `CP-WEB-MKT-103 conflicto: completar dos veces desde dos pestanas muestra el 409 explicado, sin crash`                                                                                          |
+| Campo              | Contenido                                                                                                                                                                                                                                                                                                             |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-MKT-103                                                                                                                                                                                                                                                                                                        |
+| Título             | Conflicto: completar dos veces desde dos pestañas muestra el 409 explicado, sin crash                                                                                                                                                                                                                                 |
+| Tipo / Nivel       | e2e (backend real) + a11y                                                                                                                                                                                                                                                                                             |
+| Prioridad          | P1                                                                                                                                                                                                                                                                                                                    |
+| Trazabilidad       | plan maestro M4 ("transición inválida → 409"); contrato W2 (409)                                                                                                                                                                                                                                                      |
+| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`.                                                                                                                    |
+| Pasos              | 1. Servicio aceptado e iniciado por el pro.<br>2. Abrir una segunda pestaña (misma sesión) en `/pro/servicios` con el servicio "En curso".<br>3. En la pestaña 1: "Completar".<br>4. En la pestaña 2 (vista vieja): "Completar".                                                                                      |
+| Datos de prueba    | título `E2E MKT <runId> conflicto`                                                                                                                                                                                                                                                                                    |
+| Resultado esperado | La pestaña 2 muestra un toast de error con el mensaje del backend ("El servicio no puede ser completado en este estado", no "Error 409" ni el genérico), sin crash; la vista se refresca sola (DEF-WEB-011) y pasa a Completado sin el botón "Completar". El mensaje queda en la anotación `mensaje-409` del informe. |
+| Automatizado en    | `e2e/real/marketplace.spec.ts` — `CP-WEB-MKT-103 conflicto: completar dos veces desde dos pestanas muestra el 409 explicado, sin crash`                                                                                                                                                                               |
 
 ### CP-WEB-MKT-104 — IDOR por UI: otro cliente no ve ni accede al servicio ajeno
 
@@ -233,8 +249,9 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 
 ## Defectos asociados
 
-| Defecto                                                                                        | Estado              |
-| ---------------------------------------------------------------------------------------------- | ------------------- |
-| DEF-WEB-005 (media): el profesional no ve el estado de su postulación                          | Corregido (ff84793) |
-| DEF-WEB-006 (alta): el 403 de solicitudes a un profesional no aprobado tumba toda el área /pro | Corregido (8f30d19) |
-| DEF-BE-027 (baja): rechazar una oferta con motivo vacío responde 200                           | Abierto (backend)   |
+| Defecto                                                                                                         | Estado              |
+| --------------------------------------------------------------------------------------------------------------- | ------------------- |
+| DEF-WEB-005 (media): el profesional no ve el estado de su postulación                                           | Corregido (ff84793) |
+| DEF-WEB-006 (alta): el 403 de solicitudes a un profesional no aprobado tumba toda el área /pro                  | Corregido (8f30d19) |
+| DEF-WEB-011 (media): tras un 409 de transición la vista queda desactualizada y sigue ofreciendo la acción vieja | Corregido (fde99bd) |
+| DEF-BE-027 (baja): rechazar una oferta con motivo vacío responde 200                                            | Abierto (backend)   |

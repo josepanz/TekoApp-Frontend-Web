@@ -15,6 +15,8 @@ test/qa/
     CP-E2E.md          los 14 casos Playwright contra el fake-backend
     CP-AUTH.md         login/logout/errores (unitarias) y M1 e2e contra el backend real
     CP-CAT.md          M2 categorías e2e contra el backend real
+    CP-ONB.md          M3 onboarding profesional, uploads e imágenes por presigned (backend real)
+    CP-MKT.md          M4 marketplace cliente-profesional, IDOR y contrato de servicios (backend real)
     CP-A11Y.md         escaneo axe por página (backend real)
   informes/            un .md por ejecución real: AAAA-MM-DD_<tipo>_<rama-corta>.md
 scripts/qa/report.mjs  generador de informes (Node, sin dependencias)
