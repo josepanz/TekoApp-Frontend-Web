@@ -129,6 +129,23 @@ export async function scanA11y(page: Page, label: string): Promise<number> {
   return bad.length;
 }
 
+/**
+ * Fija el tema de la app (next-themes guarda `theme` en localStorage; el default es `dark` aunque
+ * el SO sea claro, asi que `emulateMedia` no alcanza). Llamar ANTES de navegar.
+ */
+export async function setTheme(
+  page: Page,
+  theme: 'light' | 'dark',
+): Promise<void> {
+  await page.addInitScript((t) => {
+    try {
+      localStorage.setItem('theme', t);
+    } catch {
+      /* sin storage: queda el default */
+    }
+  }, theme);
+}
+
 /** Navega y escanea a11y. */
 export async function visit(
   page: Page,

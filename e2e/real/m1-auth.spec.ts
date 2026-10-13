@@ -13,6 +13,7 @@ import {
   backendBasicAuth,
   loginUi,
   scanA11y,
+  setTheme,
   settle,
   visit,
 } from './support';
@@ -179,6 +180,23 @@ test.describe('M1 Auth', () => {
       await expect(
         sidebar.getByRole('link', { name, exact: true }),
       ).toHaveCount(0);
+    }
+  });
+
+  // CP-WEB-A11Y-010: la pagina legal que ahora si carga para compliance, en claro y oscuro.
+  test('CP-WEB-A11Y-010 /admin/legal/consent-audit sin violaciones axe serious/critical en claro y oscuro', async ({
+    page,
+  }) => {
+    await loginUi(page, 'compliance');
+    for (const scheme of ['light', 'dark'] as const) {
+      await setTheme(page, scheme);
+      await page.goto('/admin/legal/consent-audit');
+      await settle(page);
+      await expect(page.locator('html')).toHaveClass(new RegExp(scheme));
+      expect(
+        await scanA11y(page, `compliance-consent-audit-${scheme}`),
+        `violaciones serious/critical (${scheme})`,
+      ).toBe(0);
     }
   });
 

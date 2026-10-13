@@ -14,7 +14,14 @@ import {
   type APIRequestContext,
   type Page,
 } from '@playwright/test';
-import { loginUi, newBffContext, scanA11y, visit } from './support';
+import {
+  loginUi,
+  newBffContext,
+  scanA11y,
+  setTheme,
+  settle,
+  visit,
+} from './support';
 
 const RUN_ID = `${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}`;
 const NAME = `E2E-${RUN_ID}`;
@@ -157,5 +164,23 @@ test.describe
     await next.click();
     await expect(page.getByText(/^Página 2 de \d+$/)).toBeVisible();
     expect(await page.getByRole('row').count()).toBeLessThanOrEqual(11);
+  });
+
+  // DEF-WEB-003 (corregido): el badge "Visible" usa el token success-text (AA en claro y oscuro).
+  test('CP-WEB-A11Y-009 /admin/categories sin violaciones axe serious/critical en claro y oscuro', async ({
+    page,
+  }) => {
+    await loginUi(page, 'admin');
+    for (const scheme of ['light', 'dark'] as const) {
+      await setTheme(page, scheme);
+      await page.goto('/admin/categories');
+      await settle(page);
+      await expect(page.locator('html')).toHaveClass(new RegExp(scheme));
+      await expect(page.getByText('Visible').first()).toBeVisible();
+      expect(
+        await scanA11y(page, `admin-categories-${scheme}`),
+        `violaciones serious/critical (${scheme})`,
+      ).toBe(0);
+    }
   });
 });
