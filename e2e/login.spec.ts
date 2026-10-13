@@ -25,11 +25,7 @@ test.describe('Login', () => {
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
 
-    await expect(page).toHaveURL('/');
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
-
+    // Aterrizaje por rol: la cuenta admin:all entra directo a /admin.
     await expect(page).toHaveURL('/admin');
     await expect(page.getByText('Usuarios totales')).toBeVisible();
     await expect(page.getByText('1.500')).toBeVisible();
@@ -57,11 +53,6 @@ test.describe('Login', () => {
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
-    await expect(page).toHaveURL('/');
-
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
     await expect(page).toHaveURL('/admin');
 
     await page.getByRole('link', { name: 'Usuarios' }).click();

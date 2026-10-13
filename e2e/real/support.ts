@@ -48,7 +48,19 @@ export function backendBasicAuth(): string {
   return `Basic ${Buffer.from(`tekoapp-web:${readWebClientSecret()}`).toString('base64')}`;
 }
 
-/** Login por la UI (formulario `/login`). Termina en la home del modo cliente. */
+/** Aterrizaje por rol despues del login (sin `from`): admin -> /admin, compliance -> su primera
+ *  seccion permitida, profesional -> /pro y cliente -> /. */
+export const LANDING: Record<UserKey, string> = {
+  admin: '/admin',
+  cliente_a: '/',
+  cliente_b: '/',
+  // `/pro` redirige a `/pro/solicitudes` (entrada del modo profesional).
+  pro_aprobado: '/pro/solicitudes',
+  pro_pendiente: '/',
+  compliance: '/admin/legal/document-versions',
+};
+
+/** Login por la UI (formulario `/login`). Termina en el aterrizaje del rol (`LANDING`). */
 export async function loginUi(page: Page, who: UserKey): Promise<void> {
   await page.goto('/login');
   await page.getByLabel('Email').fill(USERS[who].email);
@@ -56,7 +68,7 @@ export async function loginUi(page: Page, who: UserKey): Promise<void> {
     .getByLabel('Contraseña', { exact: true })
     .fill(USERS[who].password);
   await page.getByRole('button', { name: 'Ingresar' }).click();
-  await expect(page).toHaveURL('/');
+  await expect(page).toHaveURL(LANDING[who]);
 }
 
 /**

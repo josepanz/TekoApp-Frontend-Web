@@ -15,23 +15,26 @@ import {
   scanA11y,
   setTheme,
   settle,
+  USERS,
   visit,
 } from './support';
 
 test.describe('M1 Auth', () => {
-  test('CP-WEB-AUTH-101 login OK de admin llega a la home y al panel /admin', async ({
+  test('CP-WEB-AUTH-101 login OK de admin aterriza en /admin y la home del modo cliente sigue accesible', async ({
     page,
   }) => {
     await visit(page, '/login', 'login');
     await loginUi(page, 'admin');
+    await expect(page.getByTestId('access-denied')).toHaveCount(0);
+    await settle(page);
+    await scanA11y(page, 'admin-dashboard');
+    await page.goto('/');
+    await settle(page);
     await scanA11y(page, 'home-admin');
     await page
       .getByRole('link', { name: 'Ir al panel de administración' })
       .click();
     await expect(page).toHaveURL('/admin');
-    await expect(page.getByTestId('access-denied')).toHaveCount(0);
-    await settle(page);
-    await scanA11y(page, 'admin-dashboard');
   });
 
   test('CP-WEB-AUTH-102 login OK de cliente llega a la home del modo cliente', async ({
@@ -46,14 +49,34 @@ test.describe('M1 Auth', () => {
     ).toHaveCount(0);
   });
 
-  test('CP-WEB-AUTH-103 login OK de profesional entra al modo /pro', async ({
+  test('CP-WEB-AUTH-103 login OK de profesional aterriza en /pro', async ({
     page,
   }) => {
     await loginUi(page, 'pro_aprobado');
-    await page.getByRole('link', { name: 'Ir al modo profesional' }).click();
-    await expect(page).toHaveURL('/pro');
+    await expect(page).toHaveURL('/pro/solicitudes');
     await settle(page);
     await scanA11y(page, 'pro-home');
+  });
+
+  test('CP-WEB-AUTH-126 el from (returnTo) tiene prioridad sobre el aterrizaje por rol', async ({
+    page,
+  }) => {
+    await page.goto('/admin/users');
+    await expect(page).toHaveURL(/\/login\?from=%2Fadmin%2Fusers/);
+    await page.getByLabel('Email').fill(USERS.admin.email);
+    await page
+      .getByLabel('Contraseña', { exact: true })
+      .fill(USERS.admin.password);
+    await page.getByRole('button', { name: 'Ingresar' }).click();
+    await expect(page).toHaveURL('/admin/users');
+  });
+
+  test('CP-WEB-AUTH-127 compliance aterriza en su primera seccion permitida (Legal)', async ({
+    page,
+  }) => {
+    await loginUi(page, 'compliance');
+    await expect(page).toHaveURL('/admin/legal/document-versions');
+    await expect(page.getByTestId('access-denied')).toHaveCount(0);
   });
 
   test('CP-WEB-AUTH-104 email inexistente muestra error generico y sigue en /login (regresion bug login:false)', async ({

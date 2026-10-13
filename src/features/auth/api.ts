@@ -1,4 +1,9 @@
-import { extractErrorInfo, isBackendEnvelope } from '@/core/api-client/client';
+import {
+  apiFetch,
+  extractErrorInfo,
+  isBackendEnvelope,
+} from '@/core/api-client/client';
+import { resolvePostLoginPath } from '@/core/auth/landing';
 import { ApiError } from '@/core/api-client/errors';
 import type { LoginFormValues, RegisterFormValues } from './schemas';
 
@@ -77,6 +82,24 @@ export async function login(values: LoginFormValues): Promise<LoginResult> {
   }
 
   return result;
+}
+
+// Destino tras el login: `from` si existe; si no, segun rol (staff/compliance/profesional/cliente).
+// Los permisos salen de `GET /auth/scope` y el perfil profesional de `GET /professionals/me` (404 si
+// no es profesional). Cualquier falla degrada a `/` (home del cliente), nunca bloquea el login.
+export async function getPostLoginPath(from?: string | null): Promise<string> {
+  const [scope, professional] = await Promise.allSettled([
+    apiFetch<{ permissions: { name: string }[] }>('auth/scope'),
+    apiFetch<unknown>('professionals/me'),
+  ]);
+  return resolvePostLoginPath({
+    from,
+    permissions:
+      scope.status === 'fulfilled'
+        ? scope.value.permissions.map((p) => p.name)
+        : [],
+    isProfessional: professional.status === 'fulfilled' && !!professional.value,
+  });
 }
 
 export async function logout(): Promise<void> {
