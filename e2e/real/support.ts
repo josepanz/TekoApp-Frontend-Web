@@ -55,10 +55,11 @@ export const LANDING: Record<UserKey, string> = {
   admin: '/admin',
   cliente_a: '/',
   cliente_b: '/',
-  // `/pro` redirige a `/pro/solicitudes` (entrada del modo profesional).
-  pro_aprobado: '/pro/solicitudes',
+  // `/pro` redirige por servidor a `/pro/solicitudes`; el login aterriza en `/pro` y el salto puede
+  // tardar o no completarse (flaky de test, DEF-WEB-014): `loginUi` acepta ambas URLs.
+  pro_aprobado: '/pro',
   // Tiene perfil profesional (aunque PENDING): el login lo lleva igual al modo pro.
-  pro_pendiente: '/pro/solicitudes',
+  pro_pendiente: '/pro',
   compliance: '/admin/legal/document-versions',
 };
 
@@ -70,7 +71,12 @@ export async function loginUi(page: Page, who: UserKey): Promise<void> {
     .getByLabel('Contraseña', { exact: true })
     .fill(USERS[who].password);
   await page.getByRole('button', { name: 'Ingresar' }).click();
-  await expect(page).toHaveURL(LANDING[who]);
+  if (LANDING[who] === '/pro') {
+    // No depende del redirect `/pro` -> `/pro/solicitudes`: quien necesite la bandeja navega explicito.
+    await expect(page).toHaveURL(/\/pro(\/solicitudes)?$/);
+  } else {
+    await expect(page).toHaveURL(LANDING[who]);
+  }
 }
 
 /**

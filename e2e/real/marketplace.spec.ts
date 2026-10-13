@@ -294,12 +294,14 @@ test.describe('M4 Marketplace', () => {
     const proPend = await asRole(browser, 'pro_pendiente');
     await solicitar(cliente, title);
 
+    // Navegacion explicita: no depende del redirect `/pro` -> `/pro/solicitudes` del aterrizaje (DEF-WEB-014).
     await proPend.goto('/pro/solicitudes');
-    await settle(proPend);
-    await scanA11y(proPend, 'pro-solicitudes-pendiente');
+    await expect(proPend).toHaveURL(/\/pro\/solicitudes$/);
     await expect(
       proPend.getByText(/pendiente de aprobación/i).first(),
     ).toBeVisible();
+    await settle(proPend);
+    await scanA11y(proPend, 'pro-solicitudes-pendiente');
     await expect(proPend.getByRole('button', { name: 'Aceptar' })).toHaveCount(
       0,
     );

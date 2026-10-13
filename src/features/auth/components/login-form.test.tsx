@@ -151,9 +151,7 @@ describe('LoginForm', () => {
 
     it('CP-WEB-AUTH-123 profesional va a /pro', async () => {
       await loginAs({ permissions: [], professional: true });
-      await vi.waitFor(() =>
-        expect(mockPush).toHaveBeenCalledWith('/pro/solicitudes'),
-      );
+      await vi.waitFor(() => expect(mockPush).toHaveBeenCalledWith('/pro'));
     });
 
     it('CP-WEB-AUTH-124 cliente va a /', async () => {

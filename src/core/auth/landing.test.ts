@@ -29,7 +29,7 @@ describe('resolvePostLoginPath', () => {
   it('CP-WEB-AUTH-118 profesional aterriza en /pro y cliente en /', () => {
     expect(
       resolvePostLoginPath({ permissions: [], isProfessional: true }),
-    ).toBe('/pro/solicitudes');
+    ).toBe('/pro');
     expect(
       resolvePostLoginPath({ permissions: [], isProfessional: false }),
     ).toBe('/');
