@@ -8,8 +8,8 @@
  *   pro_aprobado, pro_pendiente y admin. Cada servicio lleva un titulo unico por corrida y se
  *   deja en estado terminal (COMPLETED/CANCELLED) para no acumular pendientes.
  * Trazabilidad: contrato W2 del backend (409 en transiciones invalidas y doble postulacion, 403 en
- *   GET /services/:id, /services solo admin o pro aprobado, motivo vacio -> 400, profesionales no
- *   aprobados -> 404, uploads 403/404 y TTL <= 300 s); defectos DEF-BE-027..029 (`test.fail()`).
+ *   GET /services/:id, /services solo admin o pro aprobado, motivo de rechazo de oferta opcional -> 200, profesionales no
+ *   aprobados -> 404, uploads 403/404 y TTL <= 300 s); DEF-BE-027..029 resueltos en el backend (contrato nuevo).
  */
 import {
   expect,
@@ -202,13 +202,8 @@ test.describe('M4 contrato de servicios y ofertas (via BFF)', () => {
     await cancel(ref);
   });
 
-  // DEF-BE-027: el contrato dice "motivo vacio de rechazo -> 400"; rechazar una OFERTA con
-  // `reason: ''` responde 200 (el DTO deja `reason` opcional y ni siquiera lo persiste).
-  test('CP-WEB-MKT-208 rechazar una oferta con motivo vacio responde 400 (DEF-BE-027)', async () => {
-    test.fail(
-      true,
-      'DEF-BE-027: PUT /services/:id/requests/:requestId {status:REJECTED, reason:""} responde 200',
-    );
+  // DEF-BE-027 descartado: el motivo de rechazo de una OFERTA es opcional (vacio u omitido -> 200).
+  test('CP-WEB-MKT-208 rechazar una oferta con motivo vacio responde 200 (motivo opcional, DEF-BE-027 descartado)', async () => {
     const ref = await createService('cliente_a', 'rechazo-oferta');
     const pro = await as('pro_aprobado');
     const a = await as('cliente_a');
@@ -222,7 +217,7 @@ test.describe('M4 contrato de servicios y ofertas (via BFF)', () => {
       const res = await a.put(be(`services/${ref}/requests/${requestRef}`), {
         data: { status: 'REJECTED', reason: '' },
       });
-      expect(res.status(), 'rechazo de oferta con motivo vacio').toBe(400);
+      expect(res.status(), 'rechazo de oferta con motivo vacio').toBe(200);
     } finally {
       await cancel(ref);
     }
@@ -378,9 +373,9 @@ test.describe('M3 contrato de profesionales (via BFF)', () => {
     await throwaway.dispose();
   });
 
-  // DEF-BE-028 / DEF-BE-029: la maquina de estados del profesional no valida transiciones. Verificar
-  // a un SUSPENDED lo reactiva (APPROVED) con 201 y suspender a un SUSPENDED responde 201 otra vez;
-  // el contrato W2 pide 409 para transiciones invalidas (servicios/ofertas), y aqui ocurre lo mismo.
+  // Ex DEF-BE-028 / DEF-BE-029 (corregidos en el backend): la maquina de estados del profesional ahora valida
+  // transiciones: verificar o suspender a un SUSPENDED responde 409 (antes: reactivaba con 201 y suspendia
+  // dos veces).
   async function throwawayPro(label: string) {
     const creds = await registerViaApi(baseURL, {
       firstName: 'Descartable',
@@ -402,20 +397,32 @@ test.describe('M3 contrato de profesionales (via BFF)', () => {
     return { ctx, id: me.id };
   }
 
-  test('CP-WEB-ONB-204 verificar a un profesional SUSPENDED responde 409 (DEF-BE-028)', async () => {
-    test.fail(
-      true,
-      'DEF-BE-028: POST /professionals/:id/verify sobre un SUSPENDED responde 201 y lo deja APPROVED',
-    );
+  // Contrato nuevo: verify solo PENDING/REJECTED -> 201, suspend solo APPROVED -> 201 (resto 409).
+  // Para llegar a SUSPENDED un descartable PENDING primero se aprueba.
+  async function approveAndSuspend(id: number, reason: string) {
     const admin = await as('admin');
-    const { ctx, id } = await throwawayPro('Reactivacion');
+    expect(
+      (
+        await admin.post(be(`professionals/${id}/verify`), {
+          data: { isVerified: true },
+        })
+      ).status(),
+      'verify sobre PENDING',
+    ).toBe(201);
     expect(
       (
         await admin.post(be(`professionals/${id}/suspend`), {
-          data: { reason: 'Motivo e2e' },
+          data: { reason },
         })
       ).status(),
+      'suspend sobre APPROVED',
     ).toBe(201);
+  }
+
+  test('CP-WEB-ONB-204 verificar a un profesional SUSPENDED responde 409 (contrato corregido, ex DEF-BE-028)', async () => {
+    const admin = await as('admin');
+    const { ctx, id } = await throwawayPro('Reactivacion');
+    await approveAndSuspend(id, 'Motivo e2e');
     const verify = await admin.post(be(`professionals/${id}/verify`), {
       data: { isVerified: true },
     });
@@ -427,19 +434,13 @@ test.describe('M3 contrato de profesionales (via BFF)', () => {
       verify.status(),
       `verify sobre SUSPENDED dejo al profesional ${after.status}`,
     ).toBe(409);
+    expect(after.status).toBe('SUSPENDED');
   });
 
-  test('CP-WEB-ONB-205 suspender a un profesional ya SUSPENDED responde 409 (DEF-BE-029)', async () => {
-    test.fail(
-      true,
-      'DEF-BE-029: POST /professionals/:id/suspend sobre un SUSPENDED responde 201 (sobrescribe el motivo)',
-    );
+  test('CP-WEB-ONB-205 suspender a un profesional ya SUSPENDED responde 409 (contrato corregido, ex DEF-BE-029)', async () => {
     const admin = await as('admin');
     const { ctx, id } = await throwawayPro('Resuspension');
-    const first = await admin.post(be(`professionals/${id}/suspend`), {
-      data: { reason: 'Primer motivo' },
-    });
-    expect(first.status()).toBe(201);
+    await approveAndSuspend(id, 'Primer motivo');
     const second = await admin.post(be(`professionals/${id}/suspend`), {
       data: { reason: 'Segundo motivo' },
     });

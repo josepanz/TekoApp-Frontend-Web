@@ -2,40 +2,41 @@
 
 Oleada W2. Flujo cruzado usuario nuevo → admin → cliente, subida de documentos (multipart al backend, con consentimiento), portafolio y vistas que usan URL presignada, contra el backend real de e2e (rama `test/e2e-w2-onboarding-marketplace`). Formato según `C:\workspace\QA-DOC-STANDARD.md` §2; los archivos de test llevan el encabezado de §4.
 
-Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx` son e2e por UI con varios `browser.newContext()`; `2xx` son e2e de contrato por el BFF (`/api/backend/*`). Los casos que llevan `test.fail()` documentan defectos de backend abiertos (DEF-BE-0NN).
+Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx` son e2e por UI con varios `browser.newContext()`; `2xx` son e2e de contrato por el BFF (`/api/backend/*`). Ya no queda ningún `test.fail()`: DEF-BE-027..029 se resolvieron en el backend (contrato nuevo) y sus casos son tests normales.
 
-| ID             | Título                                                                                                               | Tipo                      | Prio |
-| -------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------- | ---- |
-| CP-WEB-ONB-001 | Ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento de datos y reintenta la subida del documento              | unitaria (componente)     | P1   |
-| CP-WEB-ONB-002 | Si el usuario cancela el diálogo de consentimiento no se reintenta la subida                                         | unitaria (componente)     | P2   |
-| CP-WEB-ONB-003 | Ante 403 CONSENT_REQUIRED en el portafolio pide aceptar el consentimiento de imágenes y reintenta                    | unitaria (componente)     | P2   |
-| CP-WEB-ONB-004 | Un 404 del perfil público muestra una pantalla amable de "Profesional no disponible"                                 | unitaria (componente)     | P1   |
-| CP-WEB-ONB-005 | El banner de estado avisa si la postulación está pendiente o suspendida y se oculta si está aprobada                 | unitaria (componente)     | P1   |
-| CP-WEB-ONB-006 | El gate del modo profesional muestra el banner junto al contenido solo si el perfil no está aprobado                 | unitaria (componente)     | P1   |
-| CP-WEB-ONB-101 | Un usuario nuevo se registra y se postula como profesional                                                           | e2e (backend real)        | P1   |
-| CP-WEB-ONB-102 | Mientras está PENDING el nuevo profesional ve su estado y un mensaje claro de que no puede ver solicitudes           | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-103 | Subir un documento sin consentimiento muestra el pedido de aceptación y, al aceptar, se sube                         | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-104 | Un cliente no ve al profesional PENDING ni en el listado ni por URL directa (404 amable)                             | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-105 | El admin rechaza un documento (con motivo obligatorio) y aprueba otro; el pro ve el resultado                        | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-106 | El admin verifica al profesional y el pro ve su estado actualizado en /pro                                           | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-107 | Ya aprobado, el cliente ve su perfil por URL directa y en el listado al quedar disponible                            | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-108 | Portafolio: el admin lo revisa y el perfil público muestra solo lo aprobado y visible                                | e2e (backend real) + a11y | P1   |
-| CP-WEB-ONB-201 | Un profesional PENDING no es visible a un cliente (id, reference, stats, services, listado, nearby) pero sí al admin | e2e (API vía BFF)         | P1   |
-| CP-WEB-ONB-202 | Suspender con motivo vacío o en blanco responde 400 y no cambia el estado                                            | e2e (API vía BFF)         | P1   |
-| CP-WEB-ONB-203 | Rechazar un documento sin motivo responde 400 y con motivo se rechaza                                                | e2e (API vía BFF)         | P1   |
-| CP-WEB-ONB-204 | Verificar a un profesional SUSPENDED responde 409 (DEF-BE-028)                                                       | e2e (API vía BFF)         | P2   |
-| CP-WEB-ONB-205 | Suspender a un profesional ya SUSPENDED responde 409 (DEF-BE-029)                                                    | e2e (API vía BFF)         | P3   |
-| CP-WEB-IMG-001 | PresignedImage muestra la imagen cuando el presigned resuelve                                                        | unitaria (componente)     | P2   |
-| CP-WEB-IMG-002 | Ante 403 o 404 del presigned muestra un placeholder, no una imagen rota                                              | unitaria (componente)     | P1   |
-| CP-WEB-IMG-003 | Si la URL presignada no carga el archivo muestra el placeholder                                                      | unitaria (componente)     | P2   |
-| CP-WEB-IMG-004 | Un 403 del presigned no se propaga al error boundary global                                                          | unitaria (componente)     | P1   |
-| CP-WEB-IMG-005 | La revisión de documentos avisa que el archivo no está disponible si el presigned responde 404                       | unitaria (componente)     | P2   |
-| CP-WEB-IMG-101 | El portafolio propio y el perfil público cargan la imagen por presigned                                              | e2e (backend real) + a11y | P1   |
-| CP-WEB-IMG-102 | Ante 403/404 del presigned las vistas de portafolio muestran placeholder, no imagen rota                             | e2e (backend real) + a11y | P1   |
-| CP-WEB-IMG-103 | La revisión del admin muestra placeholder o aviso ante 403/404 del presigned                                         | e2e (backend real) + a11y | P1   |
-| CP-WEB-IMG-104 | Avatar: se sube, carga por presigned y ante imagen caída muestra las iniciales                                       | e2e (backend real) + a11y | P2   |
-| CP-WEB-IMG-201 | presigned-url: 403 sin permiso, 404 sin registro y TTL ≤ 300 s                                                       | e2e (API vía BFF)         | P1   |
-| CP-WEB-IMG-202 | Un documento sensible del profesional no es legible por otro cliente                                                 | e2e (API vía BFF)         | P1   |
+| ID             | Título                                                                                                                       | Tipo                      | Prio |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ---- |
+| CP-WEB-ONB-001 | Ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento de datos y reintenta la subida del documento                      | unitaria (componente)     | P1   |
+| CP-WEB-ONB-002 | Si el usuario cancela el diálogo de consentimiento no se reintenta la subida                                                 | unitaria (componente)     | P2   |
+| CP-WEB-ONB-003 | Ante 403 CONSENT_REQUIRED en el portafolio pide aceptar el consentimiento de imágenes y reintenta                            | unitaria (componente)     | P2   |
+| CP-WEB-ONB-004 | Un 404 del perfil público muestra una pantalla amable de "Profesional no disponible"                                         | unitaria (componente)     | P1   |
+| CP-WEB-ONB-005 | El banner de estado avisa si la postulación está pendiente o suspendida y se oculta si está aprobada                         | unitaria (componente)     | P1   |
+| CP-WEB-ONB-006 | El gate del modo profesional muestra el banner junto al contenido solo si el perfil no está aprobado                         | unitaria (componente)     | P1   |
+| CP-WEB-ONB-007 | La UI admin solo ofrece verificar en PENDING/REJECTED y suspender en APPROVED; el 409 muestra un mensaje claro (DEF-WEB-013) | unitaria (componente)     | P2   |
+| CP-WEB-ONB-101 | Un usuario nuevo se registra y se postula como profesional                                                                   | e2e (backend real)        | P1   |
+| CP-WEB-ONB-102 | Mientras está PENDING el nuevo profesional ve su estado y un mensaje claro de que no puede ver solicitudes                   | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-103 | Subir un documento sin consentimiento muestra el pedido de aceptación y, al aceptar, se sube                                 | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-104 | Un cliente no ve al profesional PENDING ni en el listado ni por URL directa (404 amable)                                     | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-105 | El admin rechaza un documento (con motivo obligatorio) y aprueba otro; el pro ve el resultado                                | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-106 | El admin verifica al profesional y el pro ve su estado actualizado en /pro                                                   | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-107 | Ya aprobado, el cliente ve su perfil por URL directa y en el listado al quedar disponible                                    | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-108 | Portafolio: el admin lo revisa y el perfil público muestra solo lo aprobado y visible                                        | e2e (backend real) + a11y | P1   |
+| CP-WEB-ONB-201 | Un profesional PENDING no es visible a un cliente (id, reference, stats, services, listado, nearby) pero sí al admin         | e2e (API vía BFF)         | P1   |
+| CP-WEB-ONB-202 | Suspender con motivo vacío o en blanco responde 400 y no cambia el estado                                                    | e2e (API vía BFF)         | P1   |
+| CP-WEB-ONB-203 | Rechazar un documento sin motivo responde 400 y con motivo se rechaza                                                        | e2e (API vía BFF)         | P1   |
+| CP-WEB-ONB-204 | Verificar a un profesional SUSPENDED responde 409 (contrato corregido, ex DEF-BE-028)                                        | e2e (API vía BFF)         | P2   |
+| CP-WEB-ONB-205 | Suspender a un profesional ya SUSPENDED responde 409 (contrato corregido, ex DEF-BE-029)                                     | e2e (API vía BFF)         | P3   |
+| CP-WEB-IMG-001 | PresignedImage muestra la imagen cuando el presigned resuelve                                                                | unitaria (componente)     | P2   |
+| CP-WEB-IMG-002 | Ante 403 o 404 del presigned muestra un placeholder, no una imagen rota                                                      | unitaria (componente)     | P1   |
+| CP-WEB-IMG-003 | Si la URL presignada no carga el archivo muestra el placeholder                                                              | unitaria (componente)     | P2   |
+| CP-WEB-IMG-004 | Un 403 del presigned no se propaga al error boundary global                                                                  | unitaria (componente)     | P1   |
+| CP-WEB-IMG-005 | La revisión de documentos avisa que el archivo no está disponible si el presigned responde 404                               | unitaria (componente)     | P2   |
+| CP-WEB-IMG-101 | El portafolio propio y el perfil público cargan la imagen por presigned                                                      | e2e (backend real) + a11y | P1   |
+| CP-WEB-IMG-102 | Ante 403/404 del presigned las vistas de portafolio muestran placeholder, no imagen rota                                     | e2e (backend real) + a11y | P1   |
+| CP-WEB-IMG-103 | La revisión del admin muestra placeholder o aviso ante 403/404 del presigned                                                 | e2e (backend real) + a11y | P1   |
+| CP-WEB-IMG-104 | Avatar: se sube, carga por presigned y ante imagen caída muestra las iniciales                                               | e2e (backend real) + a11y | P2   |
+| CP-WEB-IMG-201 | presigned-url: 403 sin permiso, 404 sin registro y TTL ≤ 300 s                                                               | e2e (API vía BFF)         | P1   |
+| CP-WEB-IMG-202 | Un documento sensible del profesional no es legible por otro cliente                                                         | e2e (API vía BFF)         | P1   |
 
 ### CP-WEB-ONB-001 — Ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento de datos y reintenta la subida del documento
 
@@ -126,6 +127,21 @@ Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx
 | Datos de prueba    | —                                                                                                                                                                                                                                                          |
 | Resultado esperado | PENDING: contenido y banner. APPROVED: solo el contenido.                                                                                                                                                                                                  |
 | Automatizado en    | `src/features/professional-profile/components/professional-gate.test.tsx` — `CP-WEB-ONB-006 muestra el aviso de postulación pendiente junto al contenido cuando el perfil está PENDING` · `CP-WEB-ONB-006 no muestra aviso cuando el perfil está APROBADO` |
+
+### CP-WEB-ONB-007 — La UI admin solo ofrece verificar en PENDING/REJECTED y suspender en APPROVED (DEF-WEB-013)
+
+| Campo              | Contenido                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-ONB-007                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Título             | La UI admin solo ofrece verificar en PENDING/REJECTED y suspender en APPROVED; el 409 muestra un mensaje claro                                                                                                                                                                                                                                                                                                       |
+| Tipo / Nivel       | unitaria (componente)                                                                                                                                                                                                                                                                                                                                                                                                |
+| Prioridad          | P2                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Trazabilidad       | DEF-WEB-013 (Corregido); contrato del backend: verify APPROVED/SUSPENDED → 409, suspend no-APPROVED → 409                                                                                                                                                                                                                                                                                                            |
+| Precondiciones     | Vitest + Testing Library + MSW (`pnpm test`); sin backend real.                                                                                                                                                                                                                                                                                                                                                      |
+| Pasos              | 1. Renderizar el detalle admin de un profesional APPROVED y de uno SUSPENDED.<br>2. Evaluar `canVerifyProfessional` / `canSuspendProfessional` para los 4 estados.                                                                                                                                                                                                                                                   |
+| Datos de prueba    | —                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Resultado esperado | APPROVED: botón "Suspender", sin "Verificar". SUSPENDED: ninguno de los dos. Si de todos modos llega un 409, el toast dice que el estado cambió y pide actualizar la lista (no el genérico).                                                                                                                                                                                                                         |
+| Automatizado en    | `src/features/professionals/components/professional-detail-view.test.tsx` — `CP-WEB-ONB-007 un profesional APROBADO ofrece suspender pero no verificar (DEF-WEB-013)` · `CP-WEB-ONB-007 un profesional SUSPENDIDO no ofrece verificar ni suspender (DEF-WEB-013)` · `src/features/professionals/rules.test.ts` — `CP-WEB-ONB-007 verificar solo en PENDING y REJECTED` · `CP-WEB-ONB-007 suspender solo en APPROVED` |
 
 ### CP-WEB-ONB-101 — Un usuario nuevo se registra y se postula como profesional
 
@@ -292,35 +308,35 @@ Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx
 | Resultado esperado | 400 sin motivo (3 variantes); 200 con motivo.                                                                                                                                                                                                                                        |
 | Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-ONB-203 rechazar un documento sin motivo responde 400 y con motivo se rechaza`                                                                                                                                                      |
 
-### CP-WEB-ONB-204 — Verificar a un profesional SUSPENDED responde 409 (DEF-BE-028)
+### CP-WEB-ONB-204 — Verificar a un profesional SUSPENDED responde 409 (contrato corregido, ex DEF-BE-028)
 
-| Campo              | Contenido                                                                                                                                                                                                                                                                                 |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-ONB-204                                                                                                                                                                                                                                                                            |
-| Título             | Verificar a un profesional SUSPENDED responde 409 (DEF-BE-028)                                                                                                                                                                                                                            |
-| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                                                                                         |
-| Prioridad          | P2                                                                                                                                                                                                                                                                                        |
-| Trazabilidad       | DEF-BE-028 (abierto, backend); contrato W2 "transiciones inválidas → 409"                                                                                                                                                                                                                 |
-| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. Profesional descartable. El test lleva `test.fail()` mientras el defecto siga abierto. |
-| Pasos              | 1. Postular un profesional descartable y suspenderlo con motivo.<br>2. Admin: `POST /professionals/:id/verify` con `{isVerified:true}`.<br>3. Consultar `GET /professionals/me`.                                                                                                          |
-| Datos de prueba    | —                                                                                                                                                                                                                                                                                         |
-| Resultado esperado | Esperado: 409 (transición inválida). Real: 201 y el profesional queda `APPROVED` (se reactiva sin acción explícita).                                                                                                                                                                      |
-| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-ONB-204 verificar a un profesional SUSPENDED responde 409 (DEF-BE-028)`                                                                                                                                                                  |
+| Campo              | Contenido                                                                                                                                                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-ONB-204                                                                                                                                                                                                              |
+| Título             | Verificar a un profesional SUSPENDED responde 409 (contrato corregido, ex DEF-BE-028)                                                                                                                                       |
+| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                           |
+| Prioridad          | P2                                                                                                                                                                                                                          |
+| Trazabilidad       | DEF-BE-028 (corregido en backend); DEF-WEB-013 (UI admin oculta verificar/suspender según estado); contrato W2 "transiciones inválidas → 409"                                                                               |
+| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. Profesional descartable. |
+| Pasos              | 1. Postular un profesional descartable y suspenderlo con motivo.<br>2. Admin: `POST /professionals/:id/verify` con `{isVerified:true}`.<br>3. Consultar `GET /professionals/me`.                                            |
+| Datos de prueba    | —                                                                                                                                                                                                                           |
+| Resultado esperado | 409 (transición inválida: verify solo aplica a PENDING/REJECTED); el profesional sigue `SUSPENDED`.                                                                                                                         |
+| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-ONB-204 verificar a un profesional SUSPENDED responde 409 (contrato corregido, ex DEF-BE-028)`                                                                             |
 
-### CP-WEB-ONB-205 — Suspender a un profesional ya SUSPENDED responde 409 (DEF-BE-029)
+### CP-WEB-ONB-205 — Suspender a un profesional ya SUSPENDED responde 409 (contrato corregido, ex DEF-BE-029)
 
-| Campo              | Contenido                                                                                                                                                                                                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-ONB-205                                                                                                                                                                                                                                                              |
-| Título             | Suspender a un profesional ya SUSPENDED responde 409 (DEF-BE-029)                                                                                                                                                                                                           |
-| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                                                                           |
-| Prioridad          | P3                                                                                                                                                                                                                                                                          |
-| Trazabilidad       | DEF-BE-029 (abierto, backend)                                                                                                                                                                                                                                               |
-| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. Profesional descartable; `test.fail()` mientras el defecto siga abierto. |
-| Pasos              | 1. Postular un profesional descartable.<br>2. Admin: `POST /professionals/:id/suspend` con motivo "Primer motivo" y luego "Segundo motivo".                                                                                                                                 |
-| Datos de prueba    | —                                                                                                                                                                                                                                                                           |
-| Resultado esperado | Esperado: la segunda suspensión responde 409. Real: 201 (sobrescribe el motivo).                                                                                                                                                                                            |
-| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-ONB-205 suspender a un profesional ya SUSPENDED responde 409 (DEF-BE-029)`                                                                                                                                                 |
+| Campo              | Contenido                                                                                                                                                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-ONB-205                                                                                                                                                                                                              |
+| Título             | Suspender a un profesional ya SUSPENDED responde 409 (contrato corregido, ex DEF-BE-029)                                                                                                                                    |
+| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                           |
+| Prioridad          | P3                                                                                                                                                                                                                          |
+| Trazabilidad       | DEF-BE-029 (corregido en backend); DEF-WEB-013                                                                                                                                                                              |
+| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. Profesional descartable. |
+| Pasos              | 1. Postular un profesional descartable.<br>2. Admin: `POST /professionals/:id/suspend` con motivo "Primer motivo" y luego "Segundo motivo".                                                                                 |
+| Datos de prueba    | —                                                                                                                                                                                                                           |
+| Resultado esperado | La primera suspensión responde 201 y la segunda 409 (suspend solo aplica a APPROVED).                                                                                                                                       |
+| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-ONB-205 suspender a un profesional ya SUSPENDED responde 409 (contrato corregido, ex DEF-BE-029)`                                                                          |
 
 ### CP-WEB-IMG-001 — PresignedImage muestra la imagen cuando el presigned resuelve
 
@@ -489,11 +505,12 @@ Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx
 
 ## Defectos asociados
 
-| Defecto                                                                                | Estado              |
-| -------------------------------------------------------------------------------------- | ------------------- |
-| DEF-WEB-004 (alta): sin forma de aceptar el consentimiento ante 403 `CONSENT_REQUIRED` | Corregido (7a759c5) |
-| DEF-WEB-005 (media): el profesional no ve el estado de su postulación (enum crudo)     | Corregido (ff84793) |
-| DEF-WEB-007 (media): 404 de un profesional no disponible mostrado como error genérico  | Corregido (cc76d2a) |
-| DEF-WEB-008 (alta): 403/404 del presigned deja imagen rota o tumba la página entera    | Corregido (e3946ff) |
-| DEF-BE-028 (media): verificar a un SUSPENDED lo reactiva (201)                         | Abierto (backend)   |
-| DEF-BE-029 (baja): suspender a un SUSPENDED responde 201                               | Abierto (backend)   |
+| Defecto                                                                                                | Estado                                                      |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| DEF-WEB-004 (alta): sin forma de aceptar el consentimiento ante 403 `CONSENT_REQUIRED`                 | Corregido (7a759c5)                                         |
+| DEF-WEB-005 (media): el profesional no ve el estado de su postulación (enum crudo)                     | Corregido (ff84793)                                         |
+| DEF-WEB-007 (media): 404 de un profesional no disponible mostrado como error genérico                  | Corregido (cc76d2a)                                         |
+| DEF-WEB-008 (alta): 403/404 del presigned deja imagen rota o tumba la página entera                    | Corregido (e3946ff)                                         |
+| DEF-BE-028 (media): verificar a un SUSPENDED lo reactiva (201)                                         | Corregido (backend)                                         |
+| DEF-BE-029 (baja): suspender a un SUSPENDED responde 201                                               | Corregido (backend)                                         |
+| DEF-WEB-013 (media): la UI admin ofrecía verificar/suspender en estados que el backend rechaza con 409 | Corregido (`rules.ts`, `professional-detail-view.test.tsx`) |

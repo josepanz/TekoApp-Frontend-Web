@@ -20,7 +20,7 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 | CP-WEB-MKT-205 | Aceptar con un pro pendiente o un cliente responde 403                                         | e2e (API vía BFF)         | P1   |
 | CP-WEB-MKT-206 | Cancelar con motivo vacío responde 400 y cancelar dos veces responde 409                       | e2e (API vía BFF)         | P1   |
 | CP-WEB-MKT-207 | Otro cliente no puede cancelar ni editar el servicio ajeno                                     | e2e (API vía BFF)         | P0   |
-| CP-WEB-MKT-208 | Rechazar una oferta con motivo vacío responde 400 (DEF-BE-027)                                 | e2e (API vía BFF)         | P2   |
+| CP-WEB-MKT-208 | Rechazar una oferta con motivo vacío responde 200 (motivo opcional; DEF-BE-027 descartado)     | e2e (API vía BFF)         | P2   |
 
 ### CP-WEB-MKT-001 — La tabla de solicitudes explica que el perfil no está aprobado cuando el backend responde 403
 
@@ -232,26 +232,26 @@ La Web actual no tiene flujo de ofertas ni pantalla de detalle de servicio del c
 | Resultado esperado | 403 en ambos.                                                                                                                                                                                      |
 | Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-MKT-207 otro cliente no puede cancelar ni editar el servicio ajeno`                                                                               |
 
-### CP-WEB-MKT-208 — Rechazar una oferta con motivo vacío responde 400 (DEF-BE-027)
+### CP-WEB-MKT-208 — Rechazar una oferta con motivo vacío responde 200 (motivo opcional; DEF-BE-027 descartado)
 
-| Campo              | Contenido                                                                                                                                                                                                                                          |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ID                 | CP-WEB-MKT-208                                                                                                                                                                                                                                     |
-| Título             | Rechazar una oferta con motivo vacío responde 400 (DEF-BE-027)                                                                                                                                                                                     |
-| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                                                  |
-| Prioridad          | P2                                                                                                                                                                                                                                                 |
-| Trazabilidad       | DEF-BE-027 (abierto, backend); contrato W2 "motivo vacío de rechazo → 400"                                                                                                                                                                         |
-| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. `test.fail()` mientras el defecto siga abierto. |
-| Pasos              | 1. `pro_aprobado` ofrece sobre un servicio PENDING.<br>2. `cliente_a`: `PUT /services/<ref>/requests/<requestRef>` con `{status:"REJECTED", reason:""}`.                                                                                           |
-| Datos de prueba    | —                                                                                                                                                                                                                                                  |
-| Resultado esperado | Esperado: 400. Real: 200 (el DTO deja `reason` opcional y no lo persiste). Si el contrato de motivo obligatorio no aplica a ofertas, descartar.                                                                                                    |
-| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-MKT-208 rechazar una oferta con motivo vacio responde 400 (DEF-BE-027)`                                                                                                                           |
+| Campo              | Contenido                                                                                                                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-MKT-208                                                                                                                                                                                                                                 |
+| Título             | Rechazar una oferta con motivo vacío responde 200 (motivo opcional; DEF-BE-027 descartado)                                                                                                                                                     |
+| Tipo / Nivel       | e2e (API vía BFF)                                                                                                                                                                                                                              |
+| Prioridad          | P2                                                                                                                                                                                                                                             |
+| Trazabilidad       | DEF-BE-027 (descartado: el motivo de rechazo de una oferta es opcional)                                                                                                                                                                        |
+| Precondiciones     | Stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, rama `test/e2e-w2-onboarding-marketplace`) y Next standalone levantado por `playwright.real.config.ts`. Backend con la corrección: motivo opcional. |
+| Pasos              | 1. `pro_aprobado` ofrece sobre un servicio PENDING.<br>2. `cliente_a`: `PUT /services/<ref>/requests/<requestRef>` con `{status:"REJECTED", reason:""}`.                                                                                       |
+| Datos de prueba    | —                                                                                                                                                                                                                                              |
+| Resultado esperado | 200: el motivo de rechazo de una oferta es opcional (vacío u omitido). Ya no hay `test.fail()`.                                                                                                                                                |
+| Automatizado en    | `e2e/real/backend-contrato-w2.spec.ts` — `CP-WEB-MKT-208 rechazar una oferta con motivo vacio responde 200 (motivo opcional, DEF-BE-027 descartado)`                                                                                           |
 
 ## Defectos asociados
 
-| Defecto                                                                                                         | Estado              |
-| --------------------------------------------------------------------------------------------------------------- | ------------------- |
-| DEF-WEB-005 (media): el profesional no ve el estado de su postulación                                           | Corregido (ff84793) |
-| DEF-WEB-006 (alta): el 403 de solicitudes a un profesional no aprobado tumba toda el área /pro                  | Corregido (8f30d19) |
-| DEF-WEB-011 (media): tras un 409 de transición la vista queda desactualizada y sigue ofreciendo la acción vieja | Corregido (fde99bd) |
-| DEF-BE-027 (baja): rechazar una oferta con motivo vacío responde 200                                            | Abierto (backend)   |
+| Defecto                                                                                                         | Estado                       |
+| --------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| DEF-WEB-005 (media): el profesional no ve el estado de su postulación                                           | Corregido (ff84793)          |
+| DEF-WEB-006 (alta): el 403 de solicitudes a un profesional no aprobado tumba toda el área /pro                  | Corregido (8f30d19)          |
+| DEF-WEB-011 (media): tras un 409 de transición la vista queda desactualizada y sigue ofreciendo la acción vieja | Corregido (fde99bd)          |
+| DEF-BE-027 (baja): rechazar una oferta con motivo vacío responde 200                                            | Descartado (motivo opcional) |

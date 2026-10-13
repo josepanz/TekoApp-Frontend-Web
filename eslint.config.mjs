@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     "src/core/api-client/types.generated.ts",
     // Salida estática del build de Storybook (bundles minificados) — no es código fuente.
     "storybook-static/**",
+    // Artefactos de corridas QA (reportes HTML de Playwright, cobertura, logs): salida generada.
+    "test/qa/informes/artefactos/**",
   ]),
 ]);
 
