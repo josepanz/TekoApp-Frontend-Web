@@ -1495,7 +1495,8 @@
       "actions": "Actions",
       "accept": "Accept",
       "empty": "There are no pending requests in your category",
-      "loadError": "We couldn't load the pending requests. Try reloading the page."
+      "loadError": "We couldn't load the pending requests. Try reloading the page.",
+      "notApproved": "Your professional profile is not approved yet: you cannot see or accept requests until staff approves it."
     }
   },
   "professionalServices": {

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ApiError } from '@/core/api-client/errors';
 import { useMyProfessionalProfileQuery } from '@/features/professional-profile/hooks';
 import { formatCurrency } from '@/lib/formatters';
 import { useAcceptServiceMutation, usePendingServicesQuery } from '../hooks';
@@ -18,7 +19,7 @@ export function PendingServicesTable() {
   const t = useTranslations('professionalRequests.table');
   const [page, setPage] = useState(1);
   const { data: professional } = useMyProfessionalProfileQuery();
-  const { data, isPending, isError } = usePendingServicesQuery({
+  const { data, error, isPending, isError } = usePendingServicesQuery({
     categoryId: professional?.categoryId,
     page,
     pageSize: PAGE_SIZE,
@@ -75,7 +76,13 @@ export function PendingServicesTable() {
   }
 
   if (isError) {
-    return <p className="text-muted-foreground">{t('loadError')}</p>;
+    // 403: el backend solo lista solicitudes a admin o profesional APPROVED y activo.
+    const forbidden = error instanceof ApiError && error.status === 403;
+    return (
+      <p className="text-muted-foreground" role="alert">
+        {forbidden ? t('notApproved') : t('loadError')}
+      </p>
+    );
   }
 
   return (

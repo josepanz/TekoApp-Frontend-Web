@@ -1495,7 +1495,8 @@
       "actions": "Acciones",
       "accept": "Aceptar",
       "empty": "No hay solicitudes pendientes en tu categoría",
-      "loadError": "No se pudieron cargar las solicitudes pendientes. Intentá recargar la página."
+      "loadError": "No se pudieron cargar las solicitudes pendientes. Intentá recargar la página.",
+      "notApproved": "Tu perfil profesional todavía no está aprobado: no podés ver ni aceptar solicitudes hasta que el staff lo apruebe."
     }
   },
   "professionalServices": {
