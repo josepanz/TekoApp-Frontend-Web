@@ -11,7 +11,8 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   retries: 0,
-  timeout: 60_000,
+  // Los specs cruzados (varios roles + escaneo axe sobre tablas que crecen entre corridas) pasan los 60 s.
+  timeout: 120_000,
   expect: { timeout: 10_000 },
   reporter: 'html',
   use: {
