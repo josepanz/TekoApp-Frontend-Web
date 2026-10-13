@@ -1,6 +1,11 @@
+/**
+ * Casos: CP-WEB-AUTH-005 agregado (ver test/qa/casos/CP-AUTH.md). Tipo: unitaria (componente) P0.
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@/test/render';
 import userEvent from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import { server } from '@/test/msw/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestQueryClient } from '@/test/query-client';
 import { LoginForm } from './login-form';
@@ -72,7 +77,30 @@ describe('LoginForm', () => {
 
     // Assert
     expect(
-      await screen.findByText('Credenciales inválidas'),
+      await screen.findByText('Email o contraseña incorrectos.'),
+    ).toBeInTheDocument();
+    expect(mockPush).not.toHaveBeenCalled();
+  });
+
+  // CP-WEB-AUTH-005 (regresion bug W1): 200 con login:false no debe redirigir como exito.
+  it('no redirige y muestra error ante 200 con login:false', async () => {
+    server.use(
+      http.post('/api/auth/login', () =>
+        HttpResponse.json({
+          success: true,
+          data: { login: false, requiredNewPassword: true },
+        }),
+      ),
+    );
+    const user = userEvent.setup();
+    renderLoginForm();
+
+    await user.type(screen.getByLabelText('Email'), 'legacy@tekoapp.com.py');
+    await user.type(screen.getByLabelText('Contraseña'), 'loQueSea');
+    await user.click(screen.getByRole('button', { name: 'Ingresar' }));
+
+    expect(
+      await screen.findByText(/necesita crear una contraseña/),
     ).toBeInTheDocument();
     expect(mockPush).not.toHaveBeenCalled();
   });
