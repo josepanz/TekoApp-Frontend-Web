@@ -25,6 +25,13 @@ export function useCancelServiceMutation() {
       void queryClient.invalidateQueries({ queryKey: ['my-client-services'] });
     },
     onError: (error) => {
+      // 409: el servicio ya cambió de estado (p. ej. un profesional lo inició): se refresca la
+      // lista para mostrar el estado real (DEF-WEB-011).
+      if (error instanceof ApiError && error.status === 409) {
+        void queryClient.invalidateQueries({
+          queryKey: ['my-client-services'],
+        });
+      }
       toast.error(
         error instanceof ApiError
           ? error.message

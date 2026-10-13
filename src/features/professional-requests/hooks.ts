@@ -40,6 +40,16 @@ export function useAcceptServiceMutation() {
       });
     },
     onError: (error) => {
+      // 409: otro profesional ya aceptó la solicitud (o el cliente la canceló): se refresca la
+      // lista para que desaparezca (DEF-WEB-011).
+      if (error instanceof ApiError && error.status === 409) {
+        void queryClient.invalidateQueries({
+          queryKey: ['professional-requests'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['professional-services'],
+        });
+      }
       toast.error(
         error instanceof ApiError
           ? error.message
