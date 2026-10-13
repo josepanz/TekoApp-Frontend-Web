@@ -201,6 +201,8 @@ test.describe('M4 Marketplace', () => {
     await expect(toast).not.toContainText(
       /Error 409|Ocurrió un error inesperado/,
     );
+    // El toast se cierra solo a los pocos segundos: se lee ahora, no al final del test.
+    const message409 = (await toast.innerText()).replace(/\s+/g, ' ');
     // Sin crash: la tabla sigue y tras el refetch refleja el estado real.
     await expect(tab2.getByRole('table')).toBeVisible();
     // Tras el 409 la vista se refresca sola (DEF-WEB-011): ya no ofrece "Completar" y muestra el
@@ -218,7 +220,7 @@ test.describe('M4 Marketplace', () => {
     await scanA11y(tab2, 'pro-servicios-conflicto');
     test.info().annotations.push({
       type: 'mensaje-409',
-      description: (await toast.innerText()).replace(/\s+/g, ' '),
+      description: message409,
     });
 
     await cliente.context().close();
