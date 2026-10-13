@@ -205,7 +205,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | Login OK de admin aterriza en /admin                                                                                                                                            |
 | Tipo / Nivel       | e2e (backend real)                                                                                                                                                              |
 | Prioridad          | P0                                                                                                                                                                              |
-| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 7d5326f)                                                                                   |
+| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 1728880)                                                                                   |
 | Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`.                                    |
 | Pasos              | 1. Abrir `/login`.<br>2. Ingresar como admin.<br>3. Ir a `/` (home del modo cliente) y volver con "Ir al panel de administración".                                              |
 | Datos de prueba    | admin@tekoapp.com.py / Tekoapp123!                                                                                                                                              |
@@ -235,7 +235,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | Login OK de profesional aterriza en /pro                                                                                                     |
 | Tipo / Nivel       | e2e (backend real)                                                                                                                           |
 | Prioridad          | P0                                                                                                                                           |
-| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 7d5326f)                                                |
+| Trazabilidad       | plan maestro `TEKOAPP-E2E-MASTER-PLAN.md` M1; oleada W1; aterrizaje por rol (ítem 4, 1728880)                                                |
 | Precondiciones     | Stack e2e del Backend arriba (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`) y Next standalone levantado por `playwright.real.config.ts`. |
 | Pasos              | 1. Ingresar como pro_aprobado.                                                                                                               |
 | Datos de prueba    | pro_aprobado@e2e.tekoapp.local                                                                                                               |
@@ -385,7 +385,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | Aterrizaje por rol: resolvePostLoginPath                                                                                                                         |
 | Tipo / Nivel       | unitaria                                                                                                                                                         |
 | Prioridad          | P1                                                                                                                                                               |
-| Trazabilidad       | Ítem 4, aterrizaje por rol (7d5326f)                                                                                                                             |
+| Trazabilidad       | Ítem 4, aterrizaje por rol (1728880)                                                                                                                             |
 | Precondiciones     | Funciones puras.                                                                                                                                                 |
 | Pasos              | 1. Llamar `resolvePostLoginPath` con permisos, `isProfessional` y `from`.                                                                                        |
 | Datos de prueba    | admin:all, compliance, profesional, cliente; `from` válido e inseguro                                                                                            |
@@ -400,7 +400,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | Login: redirección por rol y prioridad del from                                                           |
 | Tipo / Nivel       | unitaria                                                                                                  |
 | Prioridad          | P1                                                                                                        |
-| Trazabilidad       | Ítem 4 (7d5326f)                                                                                          |
+| Trazabilidad       | Ítem 4 (1728880)                                                                                          |
 | Precondiciones     | MSW sirve `auth/scope` y `professionals/me`.                                                              |
 | Pasos              | 1. Enviar el formulario de login con cada perfil.                                                         |
 | Datos de prueba    | admin, compliance, profesional, cliente y `?from=%2Fadmin%2Fusers`                                        |
@@ -415,7 +415,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | El from (returnTo) tiene prioridad sobre el aterrizaje por rol                                             |
 | Tipo / Nivel       | e2e (backend real)                                                                                         |
 | Prioridad          | P1                                                                                                         |
-| Trazabilidad       | Ítem 4 (7d5326f); `proxy.ts` agrega `?from=`                                                               |
+| Trazabilidad       | Ítem 4 (1728880); `proxy.ts` agrega `?from=`                                                               |
 | Precondiciones     | Backend real arriba (ver CP-WEB-AUTH-101).                                                                 |
 | Pasos              | 1. Sin sesión abrir `/admin/users` (redirige a `/login?from=%2Fadmin%2Fusers`).<br>2. Ingresar como admin. |
 | Datos de prueba    | admin                                                                                                      |
@@ -430,7 +430,7 @@ Oleada W1. Incluye el login (401, `login:false`), el logout contra `POST /auth/l
 | Título             | Compliance aterriza en su primera sección permitida (Legal)            |
 | Tipo / Nivel       | e2e (backend real)                                                     |
 | Prioridad          | P1                                                                     |
-| Trazabilidad       | Ítem 4 (7d5326f)                                                       |
+| Trazabilidad       | Ítem 4 (1728880)                                                       |
 | Precondiciones     | Backend real arriba.                                                   |
 | Pasos              | 1. Ingresar como compliance.                                           |
 | Datos de prueba    | compliance                                                             |
