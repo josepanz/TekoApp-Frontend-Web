@@ -132,6 +132,10 @@ test.describe.serial('M3 Onboarding profesional', () => {
         'Consentimiento de tratamiento de datos',
       );
       await expect(dialog).toContainText('necesitamos tu consentimiento');
+      // El boton de aceptar queda habilitado cuando carga el documento pendiente.
+      await expect(
+        dialog.getByRole('button', { name: 'Acepto y continuar' }),
+      ).toBeEnabled();
       await scanA11y(page, 'consentimiento-requerido');
       await dialog.getByRole('button', { name: 'Cancelar' }).click();
       await expect(dialog).toBeHidden();

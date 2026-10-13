@@ -155,6 +155,20 @@ export async function unwrap<T>(res: {
  * Devuelve el conteo de violaciones serious/critical.
  */
 export async function scanA11y(page: Page, label: string): Promise<number> {
+  // Estabiliza transiciones antes de escanear: toasts de sonner entrando/saliendo y dialogos de
+  // Base UI abriendose/cerrandose miden contraste con opacidad parcial o con el overlay encima.
+  await page
+    .waitForFunction(
+      () =>
+        document.querySelector('[data-starting-style],[data-ending-style]') ===
+          null &&
+        [...document.querySelectorAll('[data-sonner-toast]')].every(
+          (t) => getComputedStyle(t).opacity === '1',
+        ),
+      undefined,
+      { timeout: 3_000 },
+    )
+    .catch(() => {});
   const results = await new AxeBuilder({ page }).analyze();
   const bad = results.violations.filter(
     (v) => v.impact === 'serious' || v.impact === 'critical',
