@@ -2059,7 +2059,7 @@ export interface paths {
         };
         /**
          * Obtener todas las categorías (incluyendo inactivas)
-         * @description Retorna todo el árbol de categorías para panel de administración.
+         * @description Listado paginado para panel de administración. Query: page (>=1, default 1), pageSize (1..100, default 10). Respuesta: { data, pagination: { total, page, pageSize, totalPages } }.
          */
         get: operations["CategoriesController_findAllWithRelations"];
         put?: never;
@@ -11910,7 +11910,20 @@ export interface operations {
     };
     CategoriesController_findAllWithRelations: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;

@@ -140,20 +140,22 @@ test.describe
     await admin.dispose();
   });
 
-  // DEF-WEB-002: `GET /categories/all` devuelve TODAS las categorias (ignora page/pageSize) y la
-  // tabla las renderiza todas, sin paginacion: con N grande el DOM crece sin limite.
-  test('CP-WEB-CAT-103 DEF-WEB-002 la tabla admin de categorias pagina (no renderiza todo de una vez)', async ({
+  // DEF-WEB-002 (corregido, contrato DEF-BE-012): `GET /categories/all` pagina y la tabla usa
+  // paginacion server-side (10 por pagina).
+  test('CP-WEB-CAT-103 la tabla admin de categorias pagina (no renderiza todo de una vez)', async ({
     page,
   }) => {
-    test.fail(true, 'DEF-WEB-002: la tabla de categorias no tiene paginacion');
     await loginUi(page, 'admin');
     await visit(page, '/admin/categories', 'admin-categories-muchas');
     const rows = await page.getByRole('row').count();
     expect(rows, 'filas renderizadas (incluye encabezado)').toBeLessThanOrEqual(
-      21,
+      11,
     );
-    await expect(
-      page.getByRole('button', { name: 'Página siguiente' }),
-    ).toBeVisible();
+    const next = page.getByRole('button', { name: 'Página siguiente' });
+    await expect(next).toBeVisible();
+    await expect(page.getByText(/^Página 1 de \d+$/)).toBeVisible();
+    await next.click();
+    await expect(page.getByText(/^Página 2 de \d+$/)).toBeVisible();
+    expect(await page.getByRole('row').count()).toBeLessThanOrEqual(11);
   });
 });

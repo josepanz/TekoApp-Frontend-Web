@@ -12,10 +12,49 @@ export type UpdateCategoryDto = components['schemas']['UpdateCategoryDto'];
 // categorías). GET /categories/all (CategoriesController_findAllWithRelations) está documentado
 // explícitamente como "para panel de administración" y devuelve el listado completo sin filtrar
 // por estado/visibilidad — por eso es el que usamos acá pese a no ser la ruta obvia por nombre.
-// Pese al nombre ("WithRelations") y a la descripción ("árbol completo"), el tipo de respuesta
-// generado sigue siendo un array plano de CategoryDetailResponseDTO (no paginado, no anidado).
-export function getCategories(): Promise<Category[]> {
-  return apiFetch<Category[]>('categories/all');
+//
+// Contrato (DEF-BE-012): pagina. Request `?page` (>=1) y `?pageSize` (1..100); respuesta
+// `{data:{data:[...], pagination}}`, doble envuelto igual que `/countries` — `apiFetch` desenvuelve
+// el primer `data` y queda `{data, pagination}`. El Swagger sigue declarando un array plano, por
+// eso el tipo de respuesta se arma acá en vez de usar el generado.
+export type CategoriesListResponse = {
+  data: Category[];
+  pagination: components['schemas']['PaginationResponseDTO'];
+};
+
+export interface GetCategoriesParams {
+  page?: number;
+  pageSize?: number;
+}
+
+export const CATEGORIES_MAX_PAGE_SIZE = 100;
+
+export function getCategoriesPage({
+  page = 1,
+  pageSize = 10,
+}: GetCategoriesParams = {}): Promise<CategoriesListResponse> {
+  const query = new URLSearchParams({
+    page: String(page),
+    pageSize: String(pageSize),
+  });
+  return apiFetch<CategoriesListResponse>(`categories/all?${query.toString()}`);
+}
+
+// Para selectores (material-catalog, tipos de documento) que necesitan TODAS las categorías:
+// recorre las páginas de `/categories/all` con el pageSize máximo.
+export async function getCategories(): Promise<Category[]> {
+  const first = await getCategoriesPage({
+    page: 1,
+    pageSize: CATEGORIES_MAX_PAGE_SIZE,
+  });
+  const rest = await Promise.all(
+    Array.from(
+      { length: Math.max(first.pagination.totalPages - 1, 0) },
+      (_, i) =>
+        getCategoriesPage({ page: i + 2, pageSize: CATEGORIES_MAX_PAGE_SIZE }),
+    ),
+  );
+  return [first, ...rest].flatMap((response) => response.data);
 }
 
 // GET /categories/:id (CategoriesController_findOne) — sin guard, devuelve el detalle completo de

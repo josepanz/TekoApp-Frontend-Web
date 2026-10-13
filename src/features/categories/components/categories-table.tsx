@@ -26,17 +26,23 @@ import { deleteCategory, type Category } from '../api';
 import { CategoryIcon } from './category-label';
 import {
   CATEGORIES_QUERY_KEY,
-  useCategoriesQuery,
+  useCategoriesPageQuery,
   useDeleteCategoryMutation,
   useToggleCategoryVisibilityMutation,
 } from '../hooks';
 import { CategoryFormDialog } from './category-form-dialog';
 
+const PAGE_SIZE = 10;
+
 export function CategoriesTable() {
   const t = useTranslations('categories');
   const tCommon = useTranslations('common');
   const queryClient = useQueryClient();
-  const { data, isPending, isError, refetch } = useCategoriesQuery();
+  const [page, setPage] = useState(1);
+  const { data, isPending, isError, refetch } = useCategoriesPageQuery({
+    page,
+    pageSize: PAGE_SIZE,
+  });
   const toggleVisibilityMutation = useToggleCategoryVisibilityMutation();
   const deleteMutation = useDeleteCategoryMutation();
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -130,9 +136,13 @@ export function CategoriesTable() {
     },
   ];
 
+  // Si se borra la ultima fila de la ultima pagina, vuelve a la ultima pagina que aun existe.
+  const totalPages = data?.pagination.totalPages;
+  if (totalPages && page > totalPages) setPage(totalPages);
+
   async function handleBulkDelete() {
     if (!data) return;
-    const selected = data.filter((category) =>
+    const selected = data.data.filter((category) =>
       selectedIds.includes(String(category.id)),
     );
     setIsBulkDeleting(true);
@@ -190,8 +200,13 @@ export function CategoriesTable() {
 
       <DataTable
         columns={columns}
-        data={data}
+        data={data.data}
         emptyMessage={t('table.empty')}
+        pagination={{
+          page: data.pagination.page,
+          totalPages: data.pagination.totalPages,
+          onPageChange: setPage,
+        }}
         selection={{
           selectedIds,
           onSelectionChange: setSelectedIds,
