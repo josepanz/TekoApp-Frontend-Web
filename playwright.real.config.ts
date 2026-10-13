@@ -26,7 +26,7 @@ export default defineConfig({
     command: 'node scripts/e2e-real/serve.mjs',
     url: `http://127.0.0.1:${PORT}/api/health`,
     // Siempre fresco: la clave RSA del backend cambia por corrida.
-    reuseExistingServer: false,
+    reuseExistingServer: process.env.E2E_REAL_REUSE === '1',
     timeout: 360_000,
     stdout: 'pipe',
     stderr: 'pipe',
