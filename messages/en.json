@@ -1402,6 +1402,31 @@
         "completion": "Profile completion",
         "ratingsCount": "{count, plural, one {# rating} other {# ratings}}"
       }
+    },
+    "status": {
+      "PENDING": "Pending approval",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    },
+    "verification": {
+      "UNVERIFIED": "Unverified",
+      "VERIFIED": "Verified",
+      "REJECTED": "Verification rejected"
+    },
+    "statusBanner": {
+      "PENDING": {
+        "title": "Your application is pending approval",
+        "description": "While staff reviews it you cannot see or accept requests. Upload your documents in My documents to speed up the review."
+      },
+      "REJECTED": {
+        "title": "Your application was rejected",
+        "description": "You cannot see or accept requests. Contact support if you think this is a mistake."
+      },
+      "SUSPENDED": {
+        "title": "Your professional account is suspended",
+        "description": "You cannot see or accept requests while suspended. Contact support for more information."
+      }
     }
   },
   "professionalApplication": {

@@ -42,6 +42,7 @@ function getInitials(firstName: string, lastName: string): string {
 
 export function ProfessionalProfileForm() {
   const t = useTranslations('professionalProfile.form');
+  const tProfile = useTranslations('professionalProfile');
   const tCommon = useTranslations('common');
   const {
     data: professional,
@@ -113,8 +114,20 @@ export function ProfessionalProfileForm() {
                 {professional.user.firstName} {professional.user.lastName}
               </span>
               <Badge>{professional.category.name}</Badge>
+              <Badge
+                variant={
+                  professional.status === 'APPROVED'
+                    ? 'default'
+                    : professional.status === 'PENDING'
+                      ? 'secondary'
+                      : 'destructive'
+                }
+                data-testid="professional-status-badge"
+              >
+                {tProfile(`status.${professional.status}`)}
+              </Badge>
               <Badge variant="secondary">
-                {professional.verificationStatus}
+                {tProfile(`verification.${professional.verificationStatus}`)}
               </Badge>
               <AvailabilityToggle professional={professional} />
             </div>

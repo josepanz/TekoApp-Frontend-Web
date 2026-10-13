@@ -1402,6 +1402,31 @@
         "completion": "Completitud del perfil",
         "ratingsCount": "{count, plural, one {# calificación} other {# calificaciones}}"
       }
+    },
+    "status": {
+      "PENDING": "Pendiente de aprobación",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "SUSPENDED": "Suspendido"
+    },
+    "verification": {
+      "UNVERIFIED": "Sin verificar",
+      "VERIFIED": "Verificado",
+      "REJECTED": "Verificación rechazada"
+    },
+    "statusBanner": {
+      "PENDING": {
+        "title": "Tu postulación está pendiente de aprobación",
+        "description": "Mientras el staff la revisa no podés ver ni aceptar solicitudes. Cargá tus documentos en Mis documentos para acelerar la revisión."
+      },
+      "REJECTED": {
+        "title": "Tu postulación fue rechazada",
+        "description": "No podés ver ni aceptar solicitudes. Contactá a soporte si creés que se trata de un error."
+      },
+      "SUSPENDED": {
+        "title": "Tu cuenta profesional está suspendida",
+        "description": "No podés ver ni aceptar solicitudes mientras dure la suspensión. Contactá a soporte para más información."
+      }
     }
   },
   "professionalApplication": {
