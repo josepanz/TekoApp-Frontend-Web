@@ -784,7 +784,14 @@
         "all": "All",
         "documentTypeLabel": "Document type",
         "countryIdLabel": "Country (internal id)",
-        "userReferenceIdLabel": "User (referenceId)"
+        "userReferenceIdLabel": "User (referenceId)",
+        "countryLabel": "Country",
+        "userLabel": "User",
+        "searchCountryPlaceholder": "Search country…",
+        "searchUserPlaceholder": "Search user by name…",
+        "noCountries": "No matching countries",
+        "noUsers": "No matching users",
+        "clearFilter": "Clear filter"
       },
       "table": {
         "user": "User",
@@ -808,7 +815,11 @@
         "contentTypeLabel": "Content type",
         "statusLabel": "Status",
         "usageScopeLabel": "Usage scope",
-        "uploaderReferenceIdLabel": "Uploaded by (referenceId)"
+        "uploaderReferenceIdLabel": "Uploaded by (referenceId)",
+        "uploaderLabel": "Uploaded by",
+        "searchUserPlaceholder": "Search user by name…",
+        "noUsers": "No matching users",
+        "clearFilter": "Clear filter"
       },
       "table": {
         "uploader": "Uploaded by",
@@ -1261,14 +1272,14 @@
     "map": {
       "missingApiKey": "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured, so the map can't be shown.",
       "markerTitle": "Professional #{id} · ⭐ {rating}",
-      "markerTitleWithDistance": "Professional #{id} · ⭐ {rating} · {distance} km"
+      "markerTitleWithDistance": "Professional #{id} · ⭐ {rating} · {distance} km",
+      "approximateNotice": "Approximate location (±300 m) · online professionals only"
     },
     "search": {
       "latitude": "Latitude",
       "longitude": "Longitude",
       "radius": "Radius (km)",
       "availableOnly": "Available only",
-      "onlineOnly": "Online only",
       "searching": "Searching..."
     },
     "onlineStat": {

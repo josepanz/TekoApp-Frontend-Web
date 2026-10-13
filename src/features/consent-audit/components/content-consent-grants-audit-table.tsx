@@ -2,9 +2,8 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { useState, type KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -13,8 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
+import { UserCombobox } from '@/features/users/components/user-combobox';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
 import { useContentConsentGrantsAuditQuery } from '../hooks';
@@ -57,25 +56,15 @@ export function ContentConsentGrantsAuditTable() {
   const [uploaderReferenceId, setUploaderReferenceId] = useState<
     string | undefined
   >(undefined);
-  const { data, isPending, isError } = useContentConsentGrantsAuditQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    contentType,
-    usageScope,
-    revoked,
-    uploaderReferenceId,
-  });
-
-  function commitUploaderReferenceId(value: string) {
-    setUploaderReferenceId(value.trim() || undefined);
-    setPage(1);
-  }
-
-  function handleCommitOnEnter(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
-      commitUploaderReferenceId(event.currentTarget.value);
-    }
-  }
+  const { data, isPending, isError, isFetching, refetch } =
+    useContentConsentGrantsAuditQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      contentType,
+      usageScope,
+      revoked,
+      uploaderReferenceId,
+    });
 
   const columns: ColumnDef<ContentConsentGrantAudit, unknown>[] = [
     {
@@ -189,36 +178,47 @@ export function ContentConsentGrantsAuditTable() {
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="uploaderReferenceIdFilter">
-            {t('filter.uploaderReferenceIdLabel')}
+            {t('filter.uploaderLabel')}
           </Label>
-          <Input
+          <UserCombobox
             id="uploaderReferenceIdFilter"
-            className="w-64"
-            defaultValue={uploaderReferenceId ?? ''}
-            onBlur={(event) =>
-              commitUploaderReferenceId(event.currentTarget.value)
-            }
-            onKeyDown={handleCommitOnEnter}
+            className="w-72"
+            placeholder={t('filter.searchUserPlaceholder')}
+            emptyText={t('filter.noUsers')}
+            clearLabel={t('filter.clearFilter')}
+            onChange={(referenceId) => {
+              setUploaderReferenceId(referenceId);
+              setPage(1);
+            }}
           />
         </div>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={
+          contentType !== undefined ||
+          usageScope !== undefined ||
+          revoked !== undefined ||
+          uploaderReferenceId !== undefined
+        }
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

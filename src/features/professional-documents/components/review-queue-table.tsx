@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import {
   Select,
   SelectContent,
@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
 import type {
@@ -62,12 +61,13 @@ export function ReviewQueueTable() {
   const [reviewing, setReviewing] = useState<AdminProfessionalDocument | null>(
     null,
   );
-  const { data, isPending, isError } = useAdminProfessionalDocumentsQueueQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    status,
-    category,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useAdminProfessionalDocumentsQueueQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      status,
+      category,
+    });
 
   const columns: ColumnDef<AdminProfessionalDocument, unknown>[] = [
     {
@@ -172,22 +172,26 @@ export function ReviewQueueTable() {
         </Select>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={status !== undefined || category !== undefined}
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
 
       <DocumentReviewDialog
         document={reviewing}

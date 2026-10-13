@@ -2,9 +2,8 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { useState, type KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -13,8 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
+import { CountryCombobox } from '@/features/countries/components/country-combobox';
+import { UserCombobox } from '@/features/users/components/user-combobox';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { formatDate } from '@/lib/formatters';
 import { useUserConsentsAuditQuery } from '../hooks';
@@ -42,33 +42,14 @@ export function UserConsentsAuditTable() {
   const [userReferenceId, setUserReferenceId] = useState<string | undefined>(
     undefined,
   );
-  const { data, isPending, isError } = useUserConsentsAuditQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    documentType,
-    countryId,
-    userReferenceId,
-  });
-
-  function commitCountryId(value: string) {
-    const parsed = Number(value);
-    setCountryId(value.trim() && Number.isInteger(parsed) ? parsed : undefined);
-    setPage(1);
-  }
-
-  function commitUserReferenceId(value: string) {
-    setUserReferenceId(value.trim() || undefined);
-    setPage(1);
-  }
-
-  function handleCommitOnEnter(
-    event: KeyboardEvent<HTMLInputElement>,
-    commit: (value: string) => void,
-  ) {
-    if (event.key === 'Enter') {
-      commit(event.currentTarget.value);
-    }
-  }
+  const { data, isPending, isError, isFetching, refetch } =
+    useUserConsentsAuditQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      documentType,
+      countryId,
+      userReferenceId,
+    });
 
   const columns: ColumnDef<UserConsentAudit, unknown>[] = [
     {
@@ -143,50 +124,60 @@ export function UserConsentsAuditTable() {
         </Select>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="countryIdFilter">{t('filter.countryIdLabel')}</Label>
-          <Input
+          <Label htmlFor="countryIdFilter">{t('filter.countryLabel')}</Label>
+          <CountryCombobox
             id="countryIdFilter"
-            type="number"
-            min={1}
-            className="w-40"
-            defaultValue={countryId ?? ''}
-            onBlur={(event) => commitCountryId(event.currentTarget.value)}
-            onKeyDown={(event) => handleCommitOnEnter(event, commitCountryId)}
+            className="w-64"
+            placeholder={t('filter.searchCountryPlaceholder')}
+            emptyText={t('filter.noCountries')}
+            clearLabel={t('filter.clearFilter')}
+            onChange={(id) => {
+              setCountryId(id);
+              setPage(1);
+            }}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="userReferenceIdFilter">
-            {t('filter.userReferenceIdLabel')}
-          </Label>
-          <Input
+          <Label htmlFor="userReferenceIdFilter">{t('filter.userLabel')}</Label>
+          <UserCombobox
             id="userReferenceIdFilter"
-            className="w-64"
-            defaultValue={userReferenceId ?? ''}
-            onBlur={(event) => commitUserReferenceId(event.currentTarget.value)}
-            onKeyDown={(event) =>
-              handleCommitOnEnter(event, commitUserReferenceId)
-            }
+            className="w-72"
+            placeholder={t('filter.searchUserPlaceholder')}
+            emptyText={t('filter.noUsers')}
+            clearLabel={t('filter.clearFilter')}
+            onChange={(referenceId) => {
+              setUserReferenceId(referenceId);
+              setPage(1);
+            }}
           />
         </div>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={
+          documentType !== undefined ||
+          countryId !== undefined ||
+          userReferenceId !== undefined
+        }
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

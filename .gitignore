@@ -48,3 +48,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# QA: solo el informe .md se commitea; JSON crudo y artefactos pesados no
+test/qa/informes/**/*.json
+test/qa/informes/artefactos/

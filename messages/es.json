@@ -784,7 +784,14 @@
         "all": "Todos",
         "documentTypeLabel": "Tipo de documento",
         "countryIdLabel": "País (id interno)",
-        "userReferenceIdLabel": "Usuario (referenceId)"
+        "userReferenceIdLabel": "Usuario (referenceId)",
+        "countryLabel": "País",
+        "userLabel": "Usuario",
+        "searchCountryPlaceholder": "Buscar país…",
+        "searchUserPlaceholder": "Buscar usuario por nombre…",
+        "noCountries": "Sin países que coincidan",
+        "noUsers": "Sin usuarios que coincidan",
+        "clearFilter": "Quitar filtro"
       },
       "table": {
         "user": "Usuario",
@@ -808,7 +815,11 @@
         "contentTypeLabel": "Tipo de contenido",
         "statusLabel": "Estado",
         "usageScopeLabel": "Alcance de uso",
-        "uploaderReferenceIdLabel": "Subido por (referenceId)"
+        "uploaderReferenceIdLabel": "Subido por (referenceId)",
+        "uploaderLabel": "Subido por",
+        "searchUserPlaceholder": "Buscar usuario por nombre…",
+        "noUsers": "Sin usuarios que coincidan",
+        "clearFilter": "Quitar filtro"
       },
       "table": {
         "uploader": "Subido por",
@@ -1261,14 +1272,14 @@
     "map": {
       "missingApiKey": "Falta configurar NEXT_PUBLIC_GOOGLE_MAPS_API_KEY para mostrar el mapa.",
       "markerTitle": "Profesional #{id} · ⭐ {rating}",
-      "markerTitleWithDistance": "Profesional #{id} · ⭐ {rating} · {distance} km"
+      "markerTitleWithDistance": "Profesional #{id} · ⭐ {rating} · {distance} km",
+      "approximateNotice": "Ubicación aproximada (±300 m) · solo profesionales en línea"
     },
     "search": {
       "latitude": "Latitud",
       "longitude": "Longitud",
       "radius": "Radio (km)",
       "availableOnly": "Solo disponibles",
-      "onlineOnly": "Solo en línea",
       "searching": "Buscando..."
     },
     "onlineStat": {

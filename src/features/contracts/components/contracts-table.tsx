@@ -4,7 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import {
   Select,
   SelectContent,
@@ -12,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
@@ -63,11 +62,12 @@ function ContractsTableContent() {
   const locale = useAppLocale();
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<ContractStatus | undefined>(undefined);
-  const { data, isPending, isError } = useAdminContractsQueueQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    status,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useAdminContractsQueueQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      status,
+    });
 
   const columns: ColumnDef<ContractAudit, unknown>[] = [
     {
@@ -137,22 +137,26 @@ function ContractsTableContent() {
         </SelectContent>
       </Select>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={status !== undefined}
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
     </div>
   );
 }

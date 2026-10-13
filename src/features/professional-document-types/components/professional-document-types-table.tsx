@@ -5,8 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
-import { Skeleton } from '@/components/ui/skeleton';
+import { DataTable } from '@/components/data-table';
 import { Switch } from '@/components/ui/switch';
 import type {
   ProfessionalDocumentType,
@@ -21,7 +20,8 @@ import { ProfessionalDocumentTypeFormDialog } from './professional-document-type
 export function ProfessionalDocumentTypesTable() {
   const t = useTranslations('professionalDocumentTypes');
   const tCommon = useTranslations('common');
-  const { data, isPending, isError } = useProfessionalDocumentTypesQuery();
+  const { data, isPending, isError, refetch } =
+    useProfessionalDocumentTypesQuery();
   const updateMutation = useUpdateProfessionalDocumentTypeMutation();
   const [editingType, setEditingType] =
     useState<ProfessionalDocumentType | null>(null);
@@ -105,12 +105,17 @@ export function ProfessionalDocumentTypesTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

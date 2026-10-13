@@ -1,3 +1,10 @@
+/**
+ * Suite: Auditoría de consentimientos de usuario: filas, vacío y filtro por país/usuario con combobox
+ * Casos: CP-WEB-ADMIN-011 (ver test/qa/casos/CP-ADMIN.md)
+ * Tipo: integración (componente + MSW)   Prioridad: P2
+ * Precondiciones: Vitest + jsdom + MSW (GET /api/backend/admin/legal/consents).
+ * Trazabilidad: commit 0c0fb4a; openspec/specs/data-and-media-consent-admin.md
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
@@ -54,7 +61,7 @@ describe('UserConsentsAuditTable', () => {
     ).toBeInTheDocument();
   });
 
-  it('filtra por país y por usuario al salir de esos campos', async () => {
+  it('filtra por país y por usuario eligiendo de los combobox con búsqueda', async () => {
     // Arrange
     const user = userEvent.setup();
     const onRequest = vi.fn();
@@ -75,14 +82,19 @@ describe('UserConsentsAuditTable', () => {
     await waitFor(() => expect(onRequest).toHaveBeenCalledWith(null, null));
 
     // Act
-    await user.type(screen.getByLabelText('País (id interno)'), '1');
-    await user.tab();
-    await user.type(screen.getByLabelText('Usuario (referenceId)'), 'user-42');
-    await user.tab();
+    await user.click(screen.getByLabelText('País'));
+    await user.click(await screen.findByRole('option', { name: /Argentina/ }));
+    await user.click(screen.getByLabelText('Usuario'));
+    await user.click(
+      await screen.findByRole('option', { name: /Ana González/ }),
+    );
 
     // Assert
     await waitFor(() =>
-      expect(onRequest).toHaveBeenLastCalledWith('1', 'user-42'),
+      expect(onRequest).toHaveBeenLastCalledWith(
+        '2',
+        'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      ),
     );
   });
 });

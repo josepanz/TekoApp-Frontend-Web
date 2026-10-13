@@ -31,7 +31,9 @@
     "build-storybook": "storybook build",
     "generate:api-types": "node scripts/generate-api-types.mjs",
     "generate:feature": "node scripts/generate-feature.mjs",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "qa:unit": "node scripts/qa/report.mjs unit",
+    "qa:e2e": "node scripts/qa/report.mjs e2e"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

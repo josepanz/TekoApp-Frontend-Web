@@ -3,24 +3,26 @@ import type { components } from '@/core/api-client/types.generated';
 
 export type OnlineCount = components['schemas']['OnlineCountResponseDTO'];
 
-// `GET /locations/nearby` y `GET /locations/area` no están anotados con `@ApiResponse({ type })`
-// en el backend (ver LocationsController) — devuelven filas crudas de Prisma `Professionals`
-// (sin el `user`/`category` incluidos) más, solo en el caso de `/nearby`, un campo `distance`
-// calculado en SQL. No hay DTO generado para esto; el tipo de acá se arma a mano leyendo
-// `LocationsDbService.findNearby`/`findMany` en TekoApp-Backend. Los campos `Decimal` de Prisma
-// (lat/lng/rating) pueden serializarse como number o string según el interceptor de serialización
-// — siempre parsealos con `Number(...)` antes de usarlos, nunca asumas que ya vienen como number.
+// Contrato NUEVO de `GET /locations/nearby` y `/locations/area`: rama `fix/hallazgos-exploracion-e2e`
+// de TekoApp-Backend (`NearbyProfessionalResponseDTO`), todavia NO mergeada - por eso no esta en
+// `types.generated.ts` (no se regenera hasta que el backend mergee) y se tipa a mano aca. Cambios
+// respecto del contrato viejo: exige JWT, devuelve solo profesionales EN LINEA con posicion
+// APROXIMADA (ofuscada ~200-300 m, determinista por dia) en `latitude`/`longitude` (ya no
+// `currentLatitude`/`currentLongitude`) y `distanceKm` (ya no `distance`; solo en `nearby`). La
+// coordenada exacta esta en `GET /locations/professional/:id` (solo admin/propio/cliente con
+// servicio activo). Se parsea con Number() igual por robustez.
 export interface NearbyProfessional {
   id: number;
   referenceId: string;
   categoryId: number;
-  currentLatitude: number | string | null;
-  currentLongitude: number | string | null;
+  description: string;
+  hourlyRate: number;
+  latitude: number | string | null;
+  longitude: number | string | null;
+  distanceKm?: number;
   isAvailable: boolean;
   isOnline: boolean;
   averageRating: number | string;
-  totalRatings: number;
-  distance?: number;
 }
 
 export interface GetNearbyProfessionalsParams {
@@ -30,7 +32,6 @@ export interface GetNearbyProfessionalsParams {
   categoryId?: string;
   limit?: number;
   availableOnly?: boolean;
-  onlineOnly?: boolean;
 }
 
 export function getOnlineProfessionalsCount(): Promise<OnlineCount> {
@@ -48,8 +49,6 @@ export function getNearbyProfessionals(
   if (params.limit !== undefined) query.set('limit', String(params.limit));
   if (params.availableOnly !== undefined)
     query.set('availableOnly', String(params.availableOnly));
-  if (params.onlineOnly !== undefined)
-    query.set('onlineOnly', String(params.onlineOnly));
 
   return apiFetch<NearbyProfessional[]>(`locations/nearby?${query.toString()}`);
 }

@@ -19,8 +19,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { BulkActionsBar } from '@/components/layout/bulk-actions-bar';
-import { DataTable } from '@/components/layout/data-table';
-import { Skeleton } from '@/components/ui/skeleton';
+import { DataTable } from '@/components/data-table';
 import { Switch } from '@/components/ui/switch';
 import { runBulkAction } from '@/lib/run-bulk-action';
 import { deleteCategory, type Category } from '../api';
@@ -37,7 +36,7 @@ export function CategoriesTable() {
   const t = useTranslations('categories');
   const tCommon = useTranslations('common');
   const queryClient = useQueryClient();
-  const { data, isPending, isError } = useCategoriesQuery();
+  const { data, isPending, isError, refetch } = useCategoriesQuery();
   const toggleVisibilityMutation = useToggleCategoryVisibilityMutation();
   const deleteMutation = useDeleteCategoryMutation();
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -161,12 +160,17 @@ export function CategoriesTable() {
     }
   }
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import {
   Select,
   SelectContent,
@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
 import { useCategoriesQuery } from '@/features/categories/hooks';
 import type { MaterialCatalogItem, MaterialQualityTier } from '../api';
@@ -41,12 +40,13 @@ export function MaterialCatalogTable() {
   const [qualityTier, setQualityTier] = useState<
     MaterialQualityTier | undefined
   >(undefined);
-  const { data, isPending, isError } = useMaterialCatalogQuery({
-    page,
-    pageSize: PAGE_SIZE,
-    categoryId,
-    qualityTier,
-  });
+  const { data, isPending, isError, isFetching, refetch } =
+    useMaterialCatalogQuery({
+      page,
+      pageSize: PAGE_SIZE,
+      categoryId,
+      qualityTier,
+    });
   const updateMutation = useUpdateMaterialCatalogItemMutation();
   const [editingItem, setEditingItem] = useState<MaterialCatalogItem | null>(
     null,
@@ -167,22 +167,26 @@ export function MaterialCatalogTable() {
         </Select>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data.data}
-          emptyMessage={t('table.empty')}
-          pagination={{
-            page: data.pagination.page,
-            totalPages: data.pagination.totalPages,
-            onPageChange: setPage,
-          }}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        isFiltered={categoryId !== undefined || qualityTier !== undefined}
+        columns={columns}
+        data={data?.data ?? []}
+        emptyMessage={t('table.empty')}
+        pagination={
+          data
+            ? {
+                page: data.pagination.page,
+                totalPages: data.pagination.totalPages,
+                onPageChange: setPage,
+              }
+            : undefined
+        }
+      />
 
       <MaterialCatalogItemFormDialog
         open={!!editingItem}

@@ -3,7 +3,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RateProfessionalDialog } from '@/features/rate-professional/components/rate-professional-dialog';
 import { formatCurrency } from '@/lib/formatters';

@@ -6,8 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { useUsersQuery } from '../hooks';
 import type { User } from '../api';
 import { UserDetailDialog } from './user-detail-dialog';
@@ -34,7 +33,7 @@ export function UsersTable() {
   const [selectedReferenceId, setSelectedReferenceId] = useState<string | null>(
     null,
   );
-  const { data, isPending, isError } = useUsersQuery({
+  const { data, isPending, isError, refetch } = useUsersQuery({
     page,
     pageSize: PAGE_SIZE,
   });
@@ -100,12 +99,17 @@ export function UsersTable() {
     },
   ];
 
-  if (isPending) {
-    return <Skeleton className="h-64" />;
-  }
-
-  if (isError) {
-    return <p className="text-muted-foreground">{t('table.loadError')}</p>;
+  if (isPending || isError) {
+    return (
+      <DataTable
+        columns={columns}
+        data={[]}
+        isLoading={isPending}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   return (

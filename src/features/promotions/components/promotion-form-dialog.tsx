@@ -3,7 +3,7 @@
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,18 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
-import type { CreatePromotionRequest, Promotion } from '../api';
+import type { Promotion } from '../api';
 import {
   useCreatePromotionMutation,
   useUpdatePromotionMutation,
@@ -34,99 +23,23 @@ import {
   type PromotionFormInput,
   type PromotionFormValues,
 } from '../schemas';
-
-// Las etiquetas visibles viven en el namespace `promotions.type` (compartidas con la tabla).
-const TYPE_OPTIONS: PromotionFormValues['type'][] = [
-  'PERCENTAGE',
-  'FIXED_AMOUNT',
-  'FREE_SERVICE',
-];
+import {
+  buildDefaultValues,
+  toCreatePromotionRequest,
+} from './promotion-form-mapping';
+import {
+  PromotionAudienceSection,
+  PromotionBasicsSection,
+  PromotionDiscountSection,
+  PromotionLimitsSection,
+  PromotionValiditySection,
+} from './promotion-form-sections';
 
 interface PromotionFormDialogProps {
   /** Promoción a editar. Si se omite, el diálogo funciona en modo creación. */
   promotion?: Promotion;
   /** Elemento que abre el diálogo (botón "Nueva promoción" o "Editar" según el modo). */
   trigger: React.ReactElement;
-}
-
-// Fechas: PromotionDetailResponseDTO/CreatePromotionRequestDTO usan ISO 8601 completo
-// (2025-01-01T00:00:00Z), pero el form usa <input type="date"> (YYYY-MM-DD) — se convierte en
-// los bordes del componente.
-function toDateInputValue(isoDate: string): string {
-  return isoDate.slice(0, 10);
-}
-
-function toIsoDateTime(dateInputValue: string): string {
-  return new Date(dateInputValue).toISOString();
-}
-
-function buildDefaultValues(promotion?: Promotion): PromotionFormInput {
-  if (!promotion) {
-    return {
-      code: '',
-      name: '',
-      description: '',
-      type: 'PERCENTAGE',
-      discountValue: 0,
-      minimumAmount: undefined,
-      maximumDiscount: undefined,
-      maxUsage: undefined,
-      maxUsagePerUser: undefined,
-      validFrom: '',
-      validUntil: '',
-      isFirstTimeOnly: false,
-      isProfessionalOnly: false,
-      isClientOnly: false,
-    };
-  }
-
-  const discountValue =
-    promotion.type === 'PERCENTAGE'
-      ? (promotion.discountPercentage ?? 0)
-      : promotion.type === 'FIXED_AMOUNT'
-        ? (promotion.discountAmount ?? 0)
-        : 0;
-
-  return {
-    code: promotion.code,
-    name: promotion.name,
-    description: promotion.description ?? '',
-    type: promotion.type,
-    discountValue,
-    minimumAmount: promotion.minimumAmount,
-    maximumDiscount: promotion.maximumDiscount,
-    maxUsage: promotion.maxUsage === -1 ? undefined : promotion.maxUsage,
-    maxUsagePerUser: promotion.maxUsagePerUser,
-    validFrom: toDateInputValue(promotion.validFrom),
-    validUntil: toDateInputValue(promotion.validUntil),
-    // PromotionDetailResponseDTO no devuelve isFirstTimeOnly/isProfessionalOnly/isClientOnly (solo
-    // el `allowedUserTypes` derivado) — al editar, estos switches arrancan en `false` y el usuario
-    // los vuelve a marcar si corresponde; no hay forma de precargarlos desde la respuesta real.
-    isFirstTimeOnly: false,
-    isProfessionalOnly: false,
-    isClientOnly: false,
-  };
-}
-
-function toCreatePromotionRequest(
-  values: PromotionFormValues,
-): CreatePromotionRequest {
-  return {
-    code: values.code,
-    name: values.name,
-    description: values.description || undefined,
-    type: values.type,
-    discountValue: values.discountValue,
-    minimumAmount: values.minimumAmount,
-    maximumDiscount: values.maximumDiscount,
-    maxUsage: values.maxUsage,
-    maxUsagePerUser: values.maxUsagePerUser,
-    validFrom: toIsoDateTime(values.validFrom),
-    validUntil: toIsoDateTime(values.validUntil),
-    isFirstTimeOnly: values.isFirstTimeOnly,
-    isProfessionalOnly: values.isProfessionalOnly,
-    isClientOnly: values.isClientOnly,
-  };
 }
 
 export function PromotionFormDialog({
@@ -194,232 +107,15 @@ export function PromotionFormDialog({
           className="flex flex-col gap-4"
           noValidate
         >
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="code">{t('form.code')}</Label>
-              <Input
-                id="code"
-                aria-invalid={!!errors.code}
-                {...register('code')}
-              />
-              {errors.code && (
-                <p className="text-destructive text-sm">
-                  {errors.code.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">{t('form.name')}</Label>
-              <Input
-                id="name"
-                aria-invalid={!!errors.name}
-                {...register('name')}
-              />
-              {errors.name && (
-                <p className="text-destructive text-sm">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="description">{t('form.description')}</Label>
-            <Textarea id="description" {...register('description')} />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="type">{t('form.type')}</Label>
-              <Controller
-                control={control}
-                name="type"
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger id="type" className="w-full">
-                      <SelectValue placeholder={t('form.typePlaceholder')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {TYPE_OPTIONS.map((option) => (
-                        <SelectItem key={option} value={option}>
-                          {t(`type.${option}`)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              {errors.type && (
-                <p className="text-destructive text-sm">
-                  {errors.type.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="discountValue">{t('form.discountValue')}</Label>
-              <Input
-                id="discountValue"
-                type="number"
-                step="any"
-                aria-invalid={!!errors.discountValue}
-                {...register('discountValue')}
-              />
-              {errors.discountValue && (
-                <p className="text-destructive text-sm">
-                  {errors.discountValue.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="validFrom">{t('form.validFrom')}</Label>
-              <Input
-                id="validFrom"
-                type="date"
-                aria-invalid={!!errors.validFrom}
-                {...register('validFrom')}
-              />
-              {errors.validFrom && (
-                <p className="text-destructive text-sm">
-                  {errors.validFrom.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="validUntil">{t('form.validUntil')}</Label>
-              <Input
-                id="validUntil"
-                type="date"
-                aria-invalid={!!errors.validUntil}
-                {...register('validUntil')}
-              />
-              {errors.validUntil && (
-                <p className="text-destructive text-sm">
-                  {errors.validUntil.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="minimumAmount">{t('form.minimumAmount')}</Label>
-              <Input
-                id="minimumAmount"
-                type="number"
-                step="any"
-                {...register('minimumAmount')}
-              />
-              {errors.minimumAmount && (
-                <p className="text-destructive text-sm">
-                  {errors.minimumAmount.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="maximumDiscount">
-                {t('form.maximumDiscount')}
-              </Label>
-              <Input
-                id="maximumDiscount"
-                type="number"
-                step="any"
-                {...register('maximumDiscount')}
-              />
-              {errors.maximumDiscount && (
-                <p className="text-destructive text-sm">
-                  {errors.maximumDiscount.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="maxUsage">{t('form.maxUsage')}</Label>
-              <Input id="maxUsage" type="number" {...register('maxUsage')} />
-              {errors.maxUsage && (
-                <p className="text-destructive text-sm">
-                  {errors.maxUsage.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="maxUsagePerUser">
-                {t('form.maxUsagePerUser')}
-              </Label>
-              <Input
-                id="maxUsagePerUser"
-                type="number"
-                {...register('maxUsagePerUser')}
-              />
-              {errors.maxUsagePerUser && (
-                <p className="text-destructive text-sm">
-                  {errors.maxUsagePerUser.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <Controller
-              control={control}
-              name="isFirstTimeOnly"
-              render={({ field }) => (
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id="isFirstTimeOnly"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <Label htmlFor="isFirstTimeOnly" className="font-normal">
-                    {t('form.isFirstTimeOnly')}
-                  </Label>
-                </div>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="isProfessionalOnly"
-              render={({ field }) => (
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id="isProfessionalOnly"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <Label htmlFor="isProfessionalOnly" className="font-normal">
-                    {t('form.isProfessionalOnly')}
-                  </Label>
-                </div>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="isClientOnly"
-              render={({ field }) => (
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id="isClientOnly"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                  <Label htmlFor="isClientOnly" className="font-normal">
-                    {t('form.isClientOnly')}
-                  </Label>
-                </div>
-              )}
-            />
-          </div>
+          <PromotionBasicsSection register={register} errors={errors} />
+          <PromotionDiscountSection
+            register={register}
+            control={control}
+            errors={errors}
+          />
+          <PromotionValiditySection register={register} errors={errors} />
+          <PromotionLimitsSection register={register} errors={errors} />
+          <PromotionAudienceSection control={control} />
 
           <DialogFooter>
             <Button type="submit" disabled={isPending}>

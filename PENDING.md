@@ -17,10 +17,10 @@ Consolidado 2026-08-29. Objetivo: un solo lugar para ver qué queda sin resolver
 
 ## 2. Deuda técnica / gaps conocidos, no corregidos a propósito
 
-- **Filtros de país/usuario en auditoría de consentimiento** (`UserConsentsAuditTable`,
-  `ContentConsentGrantsAuditTable`): el backend soporta filtrar por país/usuario/uploader, pero acá
-  son inputs planos de id interno — no existe un componente de picker de país/usuario reusable en
-  este repo. Documentado como pendiente, no resuelto con un picker ad-hoc de bajo valor.
+- **Filtros de país/usuario en auditoría de consentimiento**: RESUELTO — ahora usan `CountryCombobox`
+  (`GET /countries?search=`) y `UserCombobox` (`GET /users?name=`, solo busca por nombre/apellido).
+  Caveat: `GET /users` exige permiso de listado de usuarios; un rol `compliance` sin ese permiso
+  vería el combobox de usuario vacío (el resto de la tabla funciona).
 - **Carpetas de ruta dinámica `[id]` sin renombrar a `[referenceId]`** (`/admin/payments/[id]`,
   etc.) — decisión deliberada al implementar id/referenceId: solo importaba que el VALOR que viaja
   en la URL sea el `referenceId` correcto, renombrar la carpeta es cosmético y se dejó pendiente.

@@ -6,8 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
-import { Skeleton } from '@/components/ui/skeleton';
+import { DataTable } from '@/components/data-table';
 import type { RetentionPolicy } from '../api';
 import { useRetentionPoliciesQuery } from '../hooks';
 import { RetentionPolicyFormDialog } from './retention-policy-form-dialog';
@@ -15,7 +14,8 @@ import { RetentionPolicyFormDialog } from './retention-policy-form-dialog';
 export function RetentionPoliciesTable() {
   const t = useTranslations('dataRetentionPolicies');
   const tCommon = useTranslations('common');
-  const { data, isPending, isError } = useRetentionPoliciesQuery();
+  const { data, isPending, isError, isFetching, refetch } =
+    useRetentionPoliciesQuery();
   const [editingPolicy, setEditingPolicy] = useState<RetentionPolicy | null>(
     null,
   );
@@ -93,17 +93,16 @@ export function RetentionPoliciesTable() {
         </Button>
       </div>
 
-      {isPending ? (
-        <Skeleton className="h-64" />
-      ) : isError ? (
-        <p className="text-muted-foreground">{t('table.loadError')}</p>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data}
-          emptyMessage={t('table.empty')}
-        />
-      )}
+      <DataTable
+        isLoading={isPending}
+        isFetching={isFetching}
+        isError={isError}
+        errorMessage={t('table.loadError')}
+        onRetry={() => void refetch()}
+        columns={columns}
+        data={data ?? []}
+        emptyMessage={t('table.empty')}
+      />
 
       <RetentionPolicyFormDialog
         open={!!editingPolicy}

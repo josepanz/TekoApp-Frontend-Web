@@ -373,7 +373,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { DataTable } from '@/components/layout/data-table';
+import { DataTable } from '@/components/data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { ${PascalSingular} } from '../api';
 import { use${PascalPlural}Query, useDelete${PascalSingular}Mutation } from '../hooks';

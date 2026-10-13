@@ -1,3 +1,10 @@
+/**
+ * Suite: Auditoría de grants de contenido: estado vigente/revocado y filtros
+ * Casos: CP-WEB-ADMIN-012 (ver test/qa/casos/CP-ADMIN.md)
+ * Tipo: integración (componente + MSW)   Prioridad: P2
+ * Precondiciones: Vitest + jsdom + MSW; combobox de país/usuario con búsqueda.
+ * Trazabilidad: commit 0c0fb4a; openspec/specs/data-and-media-consent-admin.md
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
@@ -108,15 +115,17 @@ describe('ContentConsentGrantsAuditTable', () => {
     // Act
     await user.click(screen.getByRole('combobox', { name: 'Alcance de uso' }));
     await user.click(await screen.findByRole('option', { name: 'Marketing' }));
-    await user.type(
-      screen.getByLabelText('Subido por (referenceId)'),
-      'user-7',
+    await user.click(screen.getByLabelText('Subido por'));
+    await user.click(
+      await screen.findByRole('option', { name: /Ana González/ }),
     );
-    await user.tab();
 
     // Assert
     await waitFor(() =>
-      expect(onRequest).toHaveBeenLastCalledWith('MARKETING', 'user-7'),
+      expect(onRequest).toHaveBeenLastCalledWith(
+        'MARKETING',
+        'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      ),
     );
   });
 });
