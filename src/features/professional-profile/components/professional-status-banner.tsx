@@ -16,12 +16,17 @@ export function ProfessionalStatusBanner({
   const t = useTranslations('professionalProfile.statusBanner');
   if (status === 'APPROVED') return null;
   const Icon = status === 'PENDING' ? Clock3 : ShieldAlert;
+  // Variante por defecto (texto con contraste AA sobre la tarjeta); el estado se comunica con el
+  // borde, el icono y el texto, no solo con color (DEF-WEB-010: la variante `warning` daba 4.19:1).
   return (
     <Alert
-      variant={status === 'PENDING' ? 'warning' : 'destructive'}
+      className={status === 'PENDING' ? 'border-warning' : 'border-destructive'}
       data-testid="professional-status-banner"
     >
-      <Icon aria-hidden="true" />
+      <Icon
+        aria-hidden="true"
+        className={status === 'PENDING' ? 'text-warning!' : 'text-destructive!'}
+      />
       <AlertTitle>{t(`${status}.title`)}</AlertTitle>
       <AlertDescription>{t(`${status}.description`)}</AlertDescription>
     </Alert>
