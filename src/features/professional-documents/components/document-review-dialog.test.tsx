@@ -1,3 +1,10 @@
+/**
+ * Suite: DocumentReviewDialog (revision admin de un documento del profesional)
+ * Casos: CP-WEB-IMG-004 (ver test/qa/casos/CP-ONB.md)
+ * Tipo: unitaria (componente + MSW)   Prioridad: P1
+ * Precondiciones: handlers MSW de professional-documents; sin backend real.
+ * Trazabilidad: DEF-WEB-008 (presigned 403/404 sin aviso en la revision de documentos), M3.
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
@@ -135,5 +142,36 @@ describe('DocumentReviewDialog', () => {
         'Foto ilegible',
       );
     });
+  });
+
+  // DEF-WEB-008
+  it('avisa que el archivo no está disponible si el presigned responde 404', async () => {
+    // Arrange
+    server.use(
+      http.get('/api/backend/uploads/presigned-url', () =>
+        HttpResponse.json(
+          {
+            success: false,
+            error: {
+              code: 404,
+              message: 'Archivo no encontrado',
+              error: 'Not Found',
+              timestamp: '2026-10-13T10:00:00.000Z',
+              path: '/x',
+            },
+          },
+          { status: 404 },
+        ),
+      ),
+    );
+
+    // Act
+    renderDialog();
+
+    // Assert
+    expect(await screen.findByTestId('file-unavailable')).toHaveTextContent(
+      'No se pudo cargar el archivo.',
+    );
+    expect(screen.queryByRole('button', { name: 'Ver archivo' })).toBeNull();
   });
 });

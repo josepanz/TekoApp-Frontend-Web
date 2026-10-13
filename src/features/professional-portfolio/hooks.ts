@@ -54,6 +54,9 @@ export function usePresignedUrlQuery(key: string) {
     queryKey: ['uploads', 'presigned-url', key],
     queryFn: () => getPresignedUrl(key),
     enabled: !!key,
+    // Un 403/404 del presigned lo resuelve el componente (placeholder): no debe tumbar la pagina
+    // entera con la pantalla de sin acceso del error boundary.
+    throwOnError: false,
   });
 }
 

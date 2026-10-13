@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { PresignedImage } from '@/features/uploads/components/presigned-image';
 import { ApiError } from '@/core/api-client/errors';
 import type { AdminPortfolioItem } from '../api';
 import { usePresignedUrlQuery, useReviewPortfolioItemMutation } from '../hooks';
@@ -96,12 +97,11 @@ export function PortfolioReviewDialog({
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
-          {presignedUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={presignedUrl.url}
+          {item && (
+            <PresignedImage
+              fileKey={item.fileKey}
               alt=""
-              className="max-h-72 w-full rounded-md object-contain"
+              className="h-48 w-full rounded-md object-contain"
             />
           )}
 

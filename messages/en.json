@@ -1613,5 +1613,9 @@
       "accept": "I accept and continue",
       "accepting": "Saving..."
     }
+  },
+  "uploads": {
+    "imageUnavailable": "Image unavailable",
+    "fileUnavailable": "The file could not be loaded."
   }
 }

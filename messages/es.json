@@ -1613,5 +1613,9 @@
       "accept": "Acepto y continuar",
       "accepting": "Registrando..."
     }
+  },
+  "uploads": {
+    "imageUnavailable": "Imagen no disponible",
+    "fileUnavailable": "No se pudo cargar el archivo."
   }
 }

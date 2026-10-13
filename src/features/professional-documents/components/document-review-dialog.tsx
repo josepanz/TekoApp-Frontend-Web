@@ -41,9 +41,10 @@ export function DocumentReviewDialog({
 }: DocumentReviewDialogProps) {
   const t = useTranslations('professionalDocuments.review');
   const tCommon = useTranslations('common');
+  const tUploads = useTranslations('uploads');
   const [rejecting, setRejecting] = useState(false);
   const reviewMutation = useReviewProfessionalDocumentMutation();
-  const { data: presignedUrl } = usePresignedUrlQuery(
+  const { data: presignedUrl, isError: presignedError } = usePresignedUrlQuery(
     document?.fileKey ?? '',
     !!document,
   );
@@ -105,6 +106,14 @@ export function DocumentReviewDialog({
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
+          {presignedError && (
+            <p
+              data-testid="file-unavailable"
+              className="text-muted-foreground text-sm"
+            >
+              {tUploads('fileUnavailable')}
+            </p>
+          )}
           {presignedUrl && (
             <Button
               variant="outline"

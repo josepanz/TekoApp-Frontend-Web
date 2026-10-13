@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { PresignedImage } from '@/features/uploads/components/presigned-image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -25,7 +26,6 @@ import type { PortfolioItem, PortfolioReviewStatus } from '../api';
 import {
   useDeletePortfolioItemMutation,
   useMyPortfolioQuery,
-  usePresignedUrlQuery,
   useUpdatePortfolioItemMutation,
   useUploadPortfolioItemMutation,
 } from '../hooks';
@@ -125,7 +125,6 @@ export function MyPortfolioManager() {
 
 function PortfolioItemCard({ item }: { item: PortfolioItem }) {
   const t = useTranslations('professionalPortfolio');
-  const { data: presignedUrl } = usePresignedUrlQuery(item.fileKey);
   const updateMutation = useUpdatePortfolioItemMutation();
   const deleteMutation = useDeletePortfolioItemMutation();
   const [caption, setCaption] = useState(item.caption ?? '');
@@ -142,16 +141,11 @@ function PortfolioItemCard({ item }: { item: PortfolioItem }) {
   return (
     <div className="border-border flex flex-col gap-3 rounded-lg border p-3">
       <div className="bg-muted aspect-square overflow-hidden rounded-md">
-        {presignedUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={presignedUrl.url}
-            alt={item.caption ?? ''}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <Skeleton className="h-full w-full" />
-        )}
+        <PresignedImage
+          fileKey={item.fileKey}
+          alt={item.caption ?? ''}
+          className="h-full w-full object-cover"
+        />
       </div>
 
       <Badge variant={STATUS_VARIANT[item.status]} className="w-fit">
