@@ -227,6 +227,21 @@ Cada página visitada por los specs reales se escanea con `scanA11y` (`e2e/real/
 | Resultado esperado | 0 violaciones serious/critical.                                                                                                                                                                                                                                                                                                       |
 | Automatizado en    | `e2e/real/onboarding-profesional.spec.ts` — `CP-WEB-ONB-101 ...` · `e2e/real/imagenes-presigned.spec.ts` — `CP-WEB-IMG-104 ...`                                                                                                                                                                                                       |
 
+### CP-WEB-A11Y-016 — El hover de Button y Badge primarios mantiene contraste AA
+
+| Campo              | Contenido                                                                                                                                                                                                                     |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-A11Y-016                                                                                                                                                                                                               |
+| Título             | El hover de Button y Badge primarios mantiene contraste AA                                                                                                                                                                    |
+| Tipo / Nivel       | unitaria (componente) + a11y                                                                                                                                                                                                  |
+| Prioridad          | P2                                                                                                                                                                                                                            |
+| Trazabilidad       | DEF-WEB-012 (Corregido, 0f105a0); detectado por axe en CP-WEB-MKT-103 y CP-WEB-ONB-103 con el puntero sobre el botón                                                                                                          |
+| Precondiciones     | jsdom (`pnpm test`); el contraste real lo cubre el escaneo axe de los e2e.                                                                                                                                                    |
+| Pasos              | 1. Renderizar `Button` y `Badge` default.<br>2. Leer sus clases.                                                                                                                                                              |
+| Datos de prueba    | —                                                                                                                                                                                                                             |
+| Resultado esperado | El hover no usa `bg-primary/80` (3.58:1 con texto blanco en claro) sino un `color-mix` con `--foreground` que oscurece el fondo (≥ 5.6:1 en claro y oscuro).                                                                  |
+| Automatizado en    | `src/components/ui/button.test.tsx` — `CP-WEB-A11Y-016 el hover del botón primario oscurece el fondo en vez de aclararlo con opacidad` · `CP-WEB-A11Y-016 el badge primario enlazado oscurece en hover con el mismo criterio` |
+
 ## Estado de defectos
 
 | Defecto                   | Estado              |
@@ -234,3 +249,4 @@ Cada página visitada por los specs reales se escanea con `scanA11y` (`e2e/real/
 | DEF-WEB-003 (media, a11y) | Corregido (801ac26) |
 | DEF-WEB-009 (media, a11y) | Corregido (ca29f4a) |
 | DEF-WEB-010 (media, a11y) | Corregido (34a49a9) |
+| DEF-WEB-012 (media, a11y) | Corregido (0f105a0) |
