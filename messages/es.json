@@ -1347,7 +1347,8 @@
         "whatDescription": "Contanos qué tipo de trabajo buscás y una breve descripción.",
         "whereTitle": "Dónde es el trabajo",
         "whenTitle": "Cuándo"
-      }
+      },
+      "mapLabel": "Mapa para elegir la ubicación. También podés cargarla con la latitud y la longitud."
     }
   },
   "rateProfessional": {

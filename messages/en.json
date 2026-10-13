@@ -1347,7 +1347,8 @@
         "whatDescription": "Tell us what kind of work you're looking for and a short description.",
         "whereTitle": "Where the job is",
         "whenTitle": "When"
-      }
+      },
+      "mapLabel": "Map to pick the location. You can also enter the latitude and longitude."
     }
   },
   "rateProfessional": {

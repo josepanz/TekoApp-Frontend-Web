@@ -2,6 +2,7 @@
 
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 
 // Leaflet + OpenStreetMap — sin API key, 100% gratuito (a diferencia de Google Maps, que además
@@ -27,6 +28,7 @@ export function LocationPickerMap({
   longitude,
   onChange,
 }: LocationPickerMapProps) {
+  const t = useTranslations('requestService.form');
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
@@ -87,7 +89,11 @@ export function LocationPickerMap({
     <div
       ref={containerRef}
       className="h-64 w-full overflow-hidden rounded-md border"
-      aria-hidden="true"
+      // Leaflet vuelve focusable el contenedor, el marcador y los controles de zoom: no puede ir
+      // `aria-hidden` (axe `aria-hidden-focus`, DEF-WEB-009). Es un grupo con nombre accesible; la
+      // ubicacion tambien se puede cargar con los inputs de latitud y longitud.
+      role="group"
+      aria-label={t('mapLabel')}
     />
   );
 }
