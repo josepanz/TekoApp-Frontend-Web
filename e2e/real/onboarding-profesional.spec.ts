@@ -1,14 +1,14 @@
 /**
  * Suite: M3 Onboarding profesional - flujo que cruza roles (usuario nuevo -> admin -> cliente)
  * contra el backend REAL de e2e. Un `browser.newContext()` por rol (nuevo pro, admin, cliente).
- * Casos: CP-WEB-ONB-101..108 (ver test/qa/casos/CP-ONB.md)
+ * Casos: CP-WEB-ONB-101..109 (ver test/qa/casos/CP-ONB.md)
  * Tipo: e2e (+ a11y)   Prioridad: P1
  * Precondiciones: stack e2e del Backend arriba y sembrado (`pnpm e2e:up && pnpm e2e:seed &&
  *   pnpm e2e:serve`); fixtures admin y cliente_a; categoria Plomeria y tipos de documento del
  *   seed; archivos chicos en `e2e/real/fixtures/`. El usuario nuevo se registra con email unico.
  * Trazabilidad: plan maestro M3; contrato W2 (POST /professionals/me/documents multipart con
  *   403 CONSENT_REQUIRED, rechazo sin motivo -> 400, profesionales no aprobados -> 404 para
- *   no-admin); DEF-WEB-004 (consentimiento), DEF-WEB-005 (estado del pro), DEF-WEB-007 (404 amable).
+ *   no-admin; reactivate con motivo obligatorio y status-history); DEF-WEB-004 (consentimiento), DEF-WEB-005 (estado del pro), DEF-WEB-007 (404 amable).
  */
 import { expect, test, type Browser, type Page } from '@playwright/test';
 import { resolve } from 'node:path';
@@ -443,6 +443,150 @@ test.describe.serial('M3 Onboarding profesional', () => {
     });
     await pro.context().close();
     await admin.context().close();
+    await cliente.context().close();
+  });
+
+  test('CP-WEB-ONB-109 el admin suspende y reactiva al pro con motivo; el historial lo registra y el pro opera de nuevo', async ({
+    browser,
+  }) => {
+    const title = `E2E ONB ${RUN_ID} suspension`;
+    const admin = await newPage(browser);
+    const pro = await newPage(browser);
+    const cliente = await newPage(browser);
+    await loginUi(admin, 'admin');
+    await loginWith(pro, newPro);
+    await loginUi(cliente, 'cliente_a');
+
+    // Una solicitud pendiente que el pro (categoria Plomeria) podria aceptar.
+    await cliente.goto('/solicitar');
+    await settle(cliente);
+    await cliente.getByLabel('Título').fill(title);
+    await cliente.getByLabel('Descripción').fill('Canilla que gotea (e2e)');
+    await cliente.getByLabel('Categoría').click();
+    await cliente.getByRole('option', { name: 'Plomería' }).click();
+    await cliente.getByLabel('Tipo de servicio').click();
+    await cliente.getByRole('option').first().click();
+    await cliente.getByLabel('Dirección').fill('Av. España 1234, Asunción');
+    await cliente
+      .getByRole('button', { name: 'Solicitar profesional' })
+      .click();
+    await expect(cliente).toHaveURL('/mis-servicios');
+    await expect(cliente.getByRole('cell', { name: title })).toBeVisible();
+    const mine = await backendFetch(
+      cliente,
+      'services/my-services?role=client',
+    );
+    const serviceRef = (
+      JSON.parse(mine.text) as {
+        data: { referenceId: string; title: string }[];
+      }
+    ).data.find((svc) => svc.title === title)?.referenceId;
+    expect(serviceRef, 'referencia del servicio creado').toBeTruthy();
+
+    await test.step('el admin suspende: el motivo es obligatorio', async () => {
+      await visit(
+        admin,
+        `/admin/professionals/${proRef}`,
+        'admin-profesional-aprobado-con-acciones',
+      );
+      await expect(
+        admin.getByRole('button', { name: 'Reactivar' }),
+      ).toHaveCount(0);
+      await admin
+        .getByRole('button', { name: 'Suspender', exact: true })
+        .click();
+      const dialog = admin.getByRole('dialog');
+      await dialog
+        .getByRole('button', { name: 'Confirmar suspensión' })
+        .click();
+      await expect(dialog.getByText('El motivo es obligatorio')).toBeVisible();
+      await dialog.getByLabel('Motivo').fill('Conducta reportada (e2e)');
+      await dialog
+        .getByRole('button', { name: 'Confirmar suspensión' })
+        .click();
+      await expect(dialog).toBeHidden();
+      await expect(
+        admin.getByText('Suspendido', { exact: true }).first(),
+      ).toBeVisible();
+      await expect(
+        admin.getByRole('button', { name: 'Reactivar' }),
+      ).toBeVisible();
+      await expect(
+        admin.getByRole('button', { name: 'Suspender', exact: true }),
+      ).toHaveCount(0);
+    });
+
+    await test.step('el pro ve su estado suspendido y no puede aceptar', async () => {
+      await pro.goto('/pro/solicitudes');
+      await settle(pro);
+      await expect(pro.getByTestId('professional-status-banner')).toContainText(
+        'Tu cuenta profesional está suspendida',
+      );
+      await expect(pro.getByRole('button', { name: 'Aceptar' })).toHaveCount(0);
+      await scanA11y(pro, 'pro-solicitudes-suspendido');
+      const accept = await backendFetch(pro, `services/${serviceRef}/accept`, {
+        method: 'POST',
+      });
+      expect(accept.status, 'aceptar estando suspendido').toBe(403);
+    });
+
+    await test.step('el admin reactiva: el motivo es obligatorio', async () => {
+      await admin.getByRole('button', { name: 'Reactivar' }).click();
+      const dialog = admin.getByRole('dialog');
+      await dialog
+        .getByRole('button', { name: 'Confirmar reactivación' })
+        .click();
+      await expect(dialog.getByText('El motivo es obligatorio')).toBeVisible();
+      await scanA11y(admin, 'admin-reactivar-dialogo');
+      await dialog.getByLabel('Motivo').fill('Apelación aceptada (e2e)');
+      await dialog
+        .getByRole('button', { name: 'Confirmar reactivación' })
+        .click();
+      await expect(dialog).toBeHidden();
+      await expect(
+        admin.getByText('Aprobado', { exact: true }).first(),
+      ).toBeVisible();
+      await expect(
+        admin.getByRole('button', { name: 'Reactivar' }),
+      ).toHaveCount(0);
+    });
+
+    await test.step('el historial muestra las 2 transiciones con actor y motivo (mas reciente primero)', async () => {
+      await admin.getByRole('tab', { name: 'Historial' }).click();
+      const table = admin.getByRole('table', { name: 'Historial de estados' });
+      await expect(table.getByText('Apelación aceptada (e2e)')).toBeVisible();
+      const rows = table.getByRole('row');
+      // Encabezado + reactivar + suspender + la verificacion previa (ONB-106).
+      await expect(rows).toHaveCount(4);
+      const reactivate = rows.nth(1);
+      await expect(reactivate).toContainText('Apelación aceptada (e2e)');
+      await expect(reactivate).toContainText('admin@tekoapp.com.py');
+      await expect(reactivate).toContainText('Suspendido');
+      await expect(reactivate).toContainText('Aprobado');
+      const suspend = rows.nth(2);
+      await expect(suspend).toContainText('Conducta reportada (e2e)');
+      await expect(suspend).toContainText('admin@tekoapp.com.py');
+      await expect(suspend).toContainText('Aprobado');
+      await expect(suspend).toContainText('Suspendido');
+      await expect(rows.nth(3)).toContainText('Pendiente');
+      await settle(admin);
+      await scanA11y(admin, 'admin-profesional-historial');
+    });
+
+    await test.step('el pro vuelve a operar: sin banner y acepta la solicitud', async () => {
+      await pro.goto('/pro/solicitudes');
+      await settle(pro);
+      await expect(pro.getByTestId('professional-status-banner')).toHaveCount(
+        0,
+      );
+      const row = await findRowAcrossPages(pro, title);
+      await row.getByRole('button', { name: 'Aceptar' }).click();
+      await expect(pro.getByText('Servicio aceptado')).toBeVisible();
+      await scanA11y(pro, 'pro-solicitudes-reactivado');
+    });
+
+    await admin.context().close();
+    await pro.context().close();
     await cliente.context().close();
   });
 });

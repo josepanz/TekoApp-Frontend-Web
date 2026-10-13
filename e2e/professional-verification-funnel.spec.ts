@@ -60,5 +60,30 @@ test.describe('Postulación → verificación de profesional', () => {
     await page.getByRole('button', { name: 'Confirmar' }).click();
 
     await expect(row.getByText('VERIFIED')).toBeVisible();
+
+    // Suspende desde el detalle (motivo obligatorio), reactiva (motivo obligatorio) y el historial
+    // registra las transiciones, la mas reciente primero.
+    await row.getByRole('button', { name: 'Ver', exact: true }).click();
+    await expect(page).toHaveURL(/\/admin\/professionals\/professional-/);
+    await expect(page.getByRole('tab', { name: 'Historial' })).toBeVisible();
+    await page.getByRole('button', { name: 'Suspender', exact: true }).click();
+    await page.getByRole('button', { name: 'Confirmar suspensión' }).click();
+    await expect(page.getByText('El motivo es obligatorio')).toBeVisible();
+    await page.getByLabel('Motivo').fill('Conducta reportada');
+    await page.getByRole('button', { name: 'Confirmar suspensión' }).click();
+    await page.getByRole('button', { name: 'Reactivar' }).click();
+    await page.getByLabel('Motivo').fill('Apelación aceptada');
+    await page.getByRole('button', { name: 'Confirmar reactivación' }).click();
+    await expect(page.getByRole('button', { name: 'Reactivar' })).toBeHidden();
+
+    await page.getByRole('tab', { name: 'Historial' }).click();
+    const history = page.getByRole('table', { name: 'Historial de estados' });
+    await expect(history.getByRole('row')).toHaveCount(4);
+    await expect(history.getByRole('row').nth(1)).toContainText(
+      'Apelación aceptada',
+    );
+    await expect(history.getByRole('row').nth(2)).toContainText(
+      'Conducta reportada',
+    );
   });
 });
