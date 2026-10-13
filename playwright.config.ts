@@ -12,7 +12,8 @@ const TEST_JWT_PUBLIC_KEY =
 
 export default defineConfig({
   testDir: './e2e',
-  testIgnore: '**/fake-backend/**',
+  // `e2e/real` corre solo con `playwright.real.config.ts` (backend real), no en el CI con fake-backend.
+  testIgnore: ['**/fake-backend/**', '**/real/**'],
   // Un solo worker: los webServer (fake-backend + Next standalone) son una única instancia
   // compartida, no pensada para servir carga concurrente de varios browser contexts a la vez —
   // 5 workers en paralelo generaban fallas intermitentes de red bajo contención, no bugs reales.
