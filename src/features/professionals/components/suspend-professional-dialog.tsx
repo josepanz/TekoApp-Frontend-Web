@@ -15,12 +15,15 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { applyApiFieldErrors } from '@/core/api-client/form-errors';
 import { useSuspendProfessionalMutation } from '../hooks';
 import {
   suspendProfessionalSchema,
   type SuspendProfessionalFormValues,
 } from '../schemas';
 import type { Professional } from '../api';
+
+const SUSPEND_FIELDS = ['reason'] as const;
 
 interface SuspendProfessionalDialogProps {
   professional: Professional;
@@ -37,6 +40,7 @@ export function SuspendProfessionalDialog({
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<SuspendProfessionalFormValues>({
     resolver: standardSchemaResolver(suspendProfessionalSchema),
@@ -51,6 +55,8 @@ export function SuspendProfessionalDialog({
           setOpen(false);
           reset();
         },
+        onError: (error) =>
+          applyApiFieldErrors(error, setError, SUSPEND_FIELDS),
       },
     );
   }
@@ -78,6 +84,7 @@ export function SuspendProfessionalDialog({
             <Textarea
               id="reason"
               aria-invalid={!!errors.reason}
+              aria-required
               {...register('reason')}
             />
             {errors.reason && (

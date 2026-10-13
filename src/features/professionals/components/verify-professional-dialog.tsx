@@ -3,7 +3,7 @@
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -16,12 +16,15 @@ import {
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
+import { applyApiFieldErrors } from '@/core/api-client/form-errors';
 import { useVerifyProfessionalMutation } from '../hooks';
 import {
   verifyProfessionalSchema,
   type VerifyProfessionalFormValues,
 } from '../schemas';
 import type { Professional } from '../api';
+
+const VERIFY_FIELDS = ['notes'] as const;
 
 interface VerifyProfessionalDialogProps {
   professional: Professional;
@@ -40,11 +43,15 @@ export function VerifyProfessionalDialog({
     control,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<VerifyProfessionalFormValues>({
     resolver: standardSchemaResolver(verifyProfessionalSchema),
     defaultValues: { isVerified: true, notes: '' },
   });
+
+  // Al rechazar (switch apagado) la nota es obligatoria; al verificar es opcional.
+  const isRejecting = !useWatch({ control, name: 'isVerified' });
 
   function onSubmit(values: VerifyProfessionalFormValues) {
     verifyMutation.mutate(
@@ -52,7 +59,7 @@ export function VerifyProfessionalDialog({
         id: professional.id,
         dto: {
           isVerified: values.isVerified,
-          notes: values.notes || undefined,
+          notes: values.notes?.trim() || undefined,
         },
       },
       {
@@ -60,6 +67,7 @@ export function VerifyProfessionalDialog({
           setOpen(false);
           reset();
         },
+        onError: (error) => applyApiFieldErrors(error, setError, VERIFY_FIELDS),
       },
     );
   }
@@ -94,10 +102,13 @@ export function VerifyProfessionalDialog({
           />
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="notes">{t('notes')}</Label>
+            <Label htmlFor="notes">
+              {isRejecting ? t('notesRequired') : t('notesOptional')}
+            </Label>
             <Textarea
               id="notes"
               aria-invalid={!!errors.notes}
+              aria-required={isRejecting}
               {...register('notes')}
             />
             {errors.notes && (

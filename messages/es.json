@@ -500,7 +500,8 @@
       "trigger": "Verificar",
       "title": "Verificar profesional",
       "verifiedLabel": "Marcar como verificado",
-      "notes": "Notas"
+      "notesOptional": "Notas (opcional)",
+      "notesRequired": "Nota (obligatoria al rechazar)"
     },
     "bulk": {
       "verifyButton": "Verificar seleccionados ({count})",
