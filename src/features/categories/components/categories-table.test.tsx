@@ -3,7 +3,10 @@ import { render, screen, waitFor, within } from '@/test/render';
 import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { categoriesHandlers } from '@/test/msw/handlers/categories';
+import {
+  categoriesHandlers,
+  fakeCategories,
+} from '@/test/msw/handlers/categories';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import { CategoriesTable } from './categories-table';
@@ -75,10 +78,49 @@ describe('CategoriesTable', () => {
     });
   });
 
+  it('pide cada pagina al backend con page/pageSize y navega con los controles de paginacion (DEF-WEB-002)', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const requested: string[] = [];
+    server.use(
+      http.get('/api/backend/categories/all', ({ request }) => {
+        const params = new URL(request.url).searchParams;
+        requested.push(`${params.get('page')}:${params.get('pageSize')}`);
+        const page = Number(params.get('page'));
+        return HttpResponse.json({
+          data: [
+            {
+              ...fakeCategories[0],
+              id: page,
+              name: `Categoría pagina ${page}`,
+            },
+          ],
+          pagination: { total: 25, page, pageSize: 10, totalPages: 3 },
+        });
+      }),
+    );
+    renderCategoriesTable();
+    expect(await screen.findByText('Categoría pagina 1')).toBeInTheDocument();
+    expect(requested).toEqual(['1:10']);
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Página siguiente' }));
+
+    // Assert
+    expect(await screen.findByText('Categoría pagina 2')).toBeInTheDocument();
+    expect(requested).toContain('2:10');
+    expect(screen.getByText('Página 2 de 3')).toBeInTheDocument();
+  });
+
   it('muestra un mensaje vacío cuando el backend no devuelve categorías', async () => {
     // Arrange
     server.use(
-      http.get('/api/backend/categories/all', () => HttpResponse.json([])),
+      http.get('/api/backend/categories/all', () =>
+        HttpResponse.json({
+          data: [],
+          pagination: { total: 0, page: 1, pageSize: 10, totalPages: 0 },
+        }),
+      ),
     );
 
     // Act

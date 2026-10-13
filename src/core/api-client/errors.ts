@@ -1,3 +1,9 @@
+/** Error de un campo de formulario extraido de `error.errors[]` del 400 de validacion. */
+export interface ApiFieldError {
+  field: string;
+  message: string;
+}
+
 export class ApiError extends Error {
   constructor(
     public readonly status: number,
@@ -10,6 +16,10 @@ export class ApiError extends Error {
     // puntual (no solo mostrar `message`) debería leerlos de acá, no cavar en `body` a mano.
     public readonly errorCode?: string,
     public readonly details?: unknown,
+    // Errores por campo del 400 de validacion (`error.errors[]`) y segundos de espera del 429
+    // (`error.retryAfter`).
+    public readonly fieldErrors: ApiFieldError[] = [],
+    public readonly retryAfter?: number,
   ) {
     super(message);
     this.name = 'ApiError';

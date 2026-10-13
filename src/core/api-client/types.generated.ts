@@ -1,4 +1,4 @@
-// GENERADO por `pnpm generate:api-types` desde http://localhost:3000/tekoapp-backend/api/swagger-json — no editar a mano.
+// GENERADO por `pnpm generate:api-types` desde http://localhost:3100/tekoapp-backend/api/swagger-json — no editar a mano.
 export interface paths {
     "/tekoapp-backend/api/healthcheck": {
         parameters: {
@@ -195,6 +195,22 @@ export interface paths {
          * @description Endpoint para obtener un nuevo token de acceso a partir de un token de refresco válido.
          */
         post: operations["AuthApiController_refreshToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthApiController_logout"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1402,7 +1418,7 @@ export interface paths {
         };
         /**
          * Buscar profesionales cercanos via Haversine
-         * @description Retorna profesionales optimizados basados en radio y disponibilidad.
+         * @description Solo profesionales en línea, con posición APROXIMADA (ofuscada ~200-300 m).
          */
         get: operations["LocationsController_findNearbyProfessionals"];
         put?: never;
@@ -1454,7 +1470,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Filtrar profesionales inscritos dentro de un área bounding-box cuadrangular */
+        /** Profesionales en línea dentro de un bounding-box, con posición APROXIMADA */
         get: operations["LocationsController_getProfessionalsByArea"];
         put?: never;
         post?: never;
@@ -2043,7 +2059,7 @@ export interface paths {
         };
         /**
          * Obtener todas las categorías (incluyendo inactivas)
-         * @description Retorna todo el árbol de categorías para panel de administración.
+         * @description Listado paginado para panel de administración. Query: page (>=1, default 1), pageSize (1..100, default 10). Respuesta: { data, pagination: { total, page, pageSize, totalPages } }.
          */
         get: operations["CategoriesController_findAllWithRelations"];
         put?: never;
@@ -5199,17 +5215,17 @@ export interface components {
              */
             hourlyRate: number;
             /**
-             * @description Latitud actual
+             * @description Latitud APROXIMADA (ofuscada ~200-300 m, determinista por día)
              * @example -25.2637
              */
             latitude: number;
             /**
-             * @description Longitud actual
+             * @description Longitud APROXIMADA (ofuscada ~200-300 m, determinista por día)
              * @example -57.5759
              */
             longitude: number;
             /**
-             * @description Distancia al punto de búsqueda en km
+             * @description Distancia en km calculada sobre la posición aproximada
              * @example 2.34
              */
             distanceKm: number;
@@ -5253,6 +5269,58 @@ export interface components {
              * @example 42
              */
             count: number;
+        };
+        AreaProfessionalResponseDTO: {
+            /**
+             * @description ID interno — solo para ordenamiento
+             * @example 5
+             */
+            id: number;
+            /**
+             * @description UUID público del profesional
+             * @example e2c1a6b0-4c2f-4b7a-9c1d-3f6a9b2e7d10
+             */
+            referenceId: string;
+            /**
+             * @description ID de categoría del profesional
+             * @example 3
+             */
+            categoryId: number;
+            /**
+             * @description Descripción del profesional
+             * @example Plomero
+             */
+            description: string;
+            /**
+             * @description Tarifa por hora
+             * @example 50000
+             */
+            hourlyRate: number;
+            /**
+             * @description Latitud APROXIMADA (ofuscada ~200-300 m, determinista por día)
+             * @example -25.2637
+             */
+            latitude: number;
+            /**
+             * @description Longitud APROXIMADA (ofuscada ~200-300 m, determinista por día)
+             * @example -57.5759
+             */
+            longitude: number;
+            /**
+             * @description Disponible para tomar servicios
+             * @example true
+             */
+            isAvailable: boolean;
+            /**
+             * @description Conectado en tiempo real
+             * @example true
+             */
+            isOnline: boolean;
+            /**
+             * @description Calificación promedio
+             * @example 4.5
+             */
+            averageRating: number;
         };
         DistanceResponseDTO: {
             /**
@@ -7879,6 +7947,23 @@ export interface operations {
             };
         };
     };
+    AuthApiController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     AuthApiController_scope: {
         parameters: {
             query?: never;
@@ -8295,7 +8380,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9085,7 +9170,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9184,7 +9269,7 @@ export interface operations {
             query: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9430,7 +9515,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9467,7 +9552,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9576,7 +9661,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -9931,7 +10016,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -10571,6 +10656,13 @@ export interface operations {
                     "application/json": components["schemas"]["ProfessionalLocationResponseDTO"];
                 };
             };
+            /** @description Solo el propio profesional, un admin o un cliente con servicio activo. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     LocationsController_getOnlineProfessionalsCount: {
@@ -10614,7 +10706,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["AreaProfessionalResponseDTO"][];
+                };
             };
         };
     };
@@ -11816,7 +11910,20 @@ export interface operations {
     };
     CategoriesController_findAllWithRelations: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -12141,7 +12248,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -12185,7 +12292,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -12229,7 +12336,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -12626,7 +12733,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -12663,7 +12770,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -12804,7 +12911,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -13131,7 +13238,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -13337,7 +13444,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -13396,7 +13503,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -13729,7 +13836,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -13857,7 +13964,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;
@@ -14026,7 +14133,7 @@ export interface operations {
             query?: {
                 /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
                 page?: number;
-                /** @description Pagina para paginación de resultados (opcional, por defecto 10) */
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
                 pageSize?: number;
                 /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
                 orderBy?: string;

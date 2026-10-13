@@ -17,7 +17,8 @@ import {
   SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { BRAND_NAME } from '@/design-system/tokens/brand';
-import { NAV_ITEMS } from './nav-items';
+import { getAllowedAdminSections } from '@/core/auth/permissions';
+import { NAV_ITEMS, type NavItem } from './nav-items';
 import { PRO_NAV_ITEMS } from './pro-nav-items';
 import { CLIENT_NAV_ITEMS } from './client-nav-items';
 import { ModeSwitcher, useOtherModes } from './mode-switcher';
@@ -36,6 +37,9 @@ const VARIANT_CONFIG = {
 
 interface AppSidebarProps {
   variant?: SidebarVariant;
+  // Permisos del usuario (serializables, vienen del layout server). En `admin` filtran los items
+  // a las secciones permitidas; si se omiten se muestran todos (stories/tests de otras variantes).
+  permissions?: readonly string[];
 }
 
 // Reusado por las 3 áreas (admin/pro/cliente). Recibe un `variant` (string, serializable) en vez
@@ -43,12 +47,29 @@ interface AppSidebarProps {
 // `NavItem[]` (con el ícono como referencia a un componente/función) como prop desde un Server
 // Component a este Client Component rompe en runtime ("Functions cannot be passed directly to
 // Client Components"). Los items + íconos se resuelven acá adentro, nunca cruzan el límite RSC.
-export function AppSidebar({ variant = 'admin' }: AppSidebarProps) {
+/** En `admin`, deja solo los items de las secciones que `permissions` habilita. */
+export function filterNavItems(
+  variant: SidebarVariant,
+  items: readonly NavItem[],
+  permissions: readonly string[] | undefined,
+): readonly NavItem[] {
+  if (variant !== 'admin' || !permissions) return items;
+  const allowed = new Set<string>(
+    getAllowedAdminSections(permissions).map((section) => section.href),
+  );
+  return items.filter((item) => allowed.has(item.href));
+}
+
+export function AppSidebar({
+  variant = 'admin',
+  permissions,
+}: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations('layout');
   // Translator raíz: los items de nav guardan la clave completa (`layout.nav.<área>.<item>`).
   const tRoot = useTranslations();
-  const { items } = VARIANT_CONFIG[variant];
+  const allItems = VARIANT_CONFIG[variant].items;
+  const items = filterNavItems(variant, allItems, permissions);
   const label = t(`brand.${variant}`, { brand: BRAND_NAME });
   const otherModes = useOtherModes(variant);
 

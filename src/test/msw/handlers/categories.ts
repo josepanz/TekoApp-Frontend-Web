@@ -61,9 +61,23 @@ export function buildCategoryStats(
 }
 
 export const categoriesHandlers = [
-  http.get('/api/backend/categories/all', () =>
-    HttpResponse.json(fakeCategories),
-  ),
+  // Contrato paginado de `GET /categories/all` (DEF-BE-012): `{data, pagination}` ya desenvuelto
+  // del primer `data` del envelope, igual que el handler de `/countries`.
+  http.get('/api/backend/categories/all', ({ request }) => {
+    const params = new URL(request.url).searchParams;
+    const page = Number(params.get('page') ?? 1);
+    const pageSize = Number(params.get('pageSize') ?? 10);
+    const start = (page - 1) * pageSize;
+    return HttpResponse.json({
+      data: fakeCategories.slice(start, start + pageSize),
+      pagination: {
+        total: fakeCategories.length,
+        page,
+        pageSize,
+        totalPages: Math.ceil(fakeCategories.length / pageSize),
+      },
+    });
+  }),
 
   http.get('/api/backend/categories/:id/stats', ({ params }) => {
     const existing = fakeCategories.find(

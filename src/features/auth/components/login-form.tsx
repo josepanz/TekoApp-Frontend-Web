@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
 import { ApiError } from '@/core/api-client/errors';
+import { getPostLoginPath } from '../api';
 import { useLoginMutation } from '../hooks';
 import { loginSchema, type LoginFormValues } from '../schemas';
 
@@ -34,8 +35,9 @@ export function LoginForm() {
 
   function onSubmit(values: LoginFormValues) {
     loginMutation.mutate(values, {
-      onSuccess: () => {
-        const redirectTo = searchParams.get('from') || '/';
+      onSuccess: async () => {
+        // `from` (lo agrega proxy.ts) manda; si no hay, aterriza segun el rol.
+        const redirectTo = await getPostLoginPath(searchParams.get('from'));
         router.push(redirectTo);
         router.refresh();
       },

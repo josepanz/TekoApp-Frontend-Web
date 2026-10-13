@@ -1,15 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ApiError } from '@/core/api-client/errors';
 import {
   createCategory,
   deleteCategory,
   getCategories,
+  getCategoriesPage,
   getCategoryById,
   getCategoryStats,
   toggleCategoryVisibility,
   updateCategory,
   type CreateCategoryDto,
+  type GetCategoriesParams,
   type UpdateCategoryDto,
 } from './api';
 
@@ -19,10 +26,19 @@ function getErrorMessage(error: unknown, fallback: string): string {
   return error instanceof ApiError ? error.message : fallback;
 }
 
+// Todas las categorías (selectores). La tabla admin usa `useCategoriesPageQuery`.
 export function useCategoriesQuery() {
   return useQuery({
-    queryKey: CATEGORIES_QUERY_KEY,
+    queryKey: [...CATEGORIES_QUERY_KEY, 'all'],
     queryFn: getCategories,
+  });
+}
+
+export function useCategoriesPageQuery(params: GetCategoriesParams) {
+  return useQuery({
+    queryKey: [...CATEGORIES_QUERY_KEY, 'page', params],
+    queryFn: () => getCategoriesPage(params),
+    placeholderData: keepPreviousData,
   });
 }
 

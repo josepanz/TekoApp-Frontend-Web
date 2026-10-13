@@ -18,11 +18,18 @@ function getErrorMessage(error: unknown, fallback: string): string {
   return error instanceof ApiError ? error.message : fallback;
 }
 
-export function useUsersQuery(params: GetUsersParams) {
+export function useUsersQuery(
+  params: GetUsersParams,
+  // `throwOnError: false` para usos auxiliares (ej. el picker de usuario de las auditorias): un 403
+  // por falta de `user:read` (compliance) degrada a lista vacia en vez de mandar toda la pagina a
+  // "sin acceso".
+  options: { throwOnError?: boolean } = {},
+) {
   return useQuery({
     queryKey: ['users', params],
     queryFn: () => getUsers(params),
     placeholderData: keepPreviousData,
+    ...(options.throwOnError === false ? { throwOnError: false } : {}),
   });
 }
 

@@ -9,10 +9,7 @@ test.describe('Admin — Categorías', () => {
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
-    await expect(page).toHaveURL('/');
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
+    // Aterrizaje por rol: la cuenta admin:all entra directo a /admin.
     await expect(page).toHaveURL('/admin');
     await page.getByRole('link', { name: 'Categorías' }).click();
     await expect(page).toHaveURL('/admin/categories');

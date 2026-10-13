@@ -33,9 +33,9 @@ Mismos archivos que 2.1 cuando el test monta tabla/formulario completo con provi
 - Ejecución: `pnpm qa:e2e`.
 - Limitación: no valida el contrato real con el backend ni roles distintos.
 
-### 2.5 e2e real contra backend (pendiente, oleada W1)
+### 2.5 e2e real contra backend (oleada W1: M1 Auth y M2 Catálogos)
 
-Stack compose con el backend real, usuarios fixture por rol (cliente, profesional, staff), recorrido M1..M11 del plan maestro. Aún no existe; cuando se implemente tendrá su propio `CP-*` y un informe tipo `e2e-real`.
+Playwright (`playwright.real.config.ts`, specs en `e2e/real/`) contra el backend real de e2e del repo TekoApp-Backend (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, puerto 3100) con usuarios fixture por rol (admin, cliente_a, pro_aprobado, compliance). `scripts/e2e-real/serve.mjs` levanta el build standalone de Next y lee el secret y la clave pública RSA de ESA corrida (nunca commiteados). Cada página visitada se escanea con axe (`CP-A11Y.md`); las violaciones serious/critical se documentan como `DEF-WEB` y no fallan el run. Casos en `CP-AUTH.md` (101..111), `CP-CAT.md` y `CP-A11Y.md`; informe tipo `e2e-real` (`pnpm qa:e2e-real`). Cobertura actual: M1 y M2; M3..M11 en oleadas siguientes. El fake-backend (2.4) sigue siendo el e2e del CI.
 
 ## 3. Entornos
 

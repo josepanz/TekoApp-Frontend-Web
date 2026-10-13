@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { AccessDenied } from '@/components/layout/access-denied';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { Topbar } from '@/components/layout/topbar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -17,15 +18,16 @@ export default async function AdminLayout({
     redirect('/login');
   }
 
-  // Gate del modo Admin/staff: todo usuario autenticado es cliente implícito, pero solo el
-  // staff (permisos admin/dashboard) entra al backoffice — ver decisión de IA en el plan.
+  // Gate del modo Admin/staff: todo usuario autenticado es cliente implícito, pero solo quien
+  // tiene al menos un permiso de staff entra al backoffice. Cada sección exige después el suyo
+  // (`AdminSectionGate`, layout de cada carpeta). Sin ningún permiso: pantalla de "sin acceso".
   if (!isStaffUser(session.permissions)) {
-    redirect('/');
+    return <AccessDenied />;
   }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar variant="admin" permissions={session.permissions} />
       <SidebarInset>
         <Topbar
           userName={`${session.firstName} ${session.lastName}`.trim()}

@@ -10,16 +10,13 @@ test.describe('Pagos', () => {
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
-    await expect(page).toHaveURL('/');
+    // Aterrizaje por rol: la cuenta admin:all entra directo a /admin.
+    await expect(page).toHaveURL('/admin');
   });
 
   test('reembolsa un pago desde el panel de administración', async ({
     page,
   }) => {
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
-    await expect(page).toHaveURL('/admin');
     await page.getByRole('link', { name: 'Pagos' }).click();
     await expect(page).toHaveURL('/admin/payments');
 
@@ -38,6 +35,7 @@ test.describe('Pagos', () => {
   });
 
   test('cancela un pago propio desde Mis pagos', async ({ page }) => {
+    await page.goto('/');
     await page.getByRole('link', { name: 'Mis pagos' }).click();
     await expect(page).toHaveURL('/mis-pagos');
 
@@ -55,6 +53,7 @@ test.describe('Pagos', () => {
   test('deja una propina desde el detalle de un pago propio', async ({
     page,
   }) => {
+    await page.goto('/');
     await page.getByRole('link', { name: 'Mis pagos' }).click();
     await expect(page).toHaveURL('/mis-pagos');
 

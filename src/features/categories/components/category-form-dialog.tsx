@@ -20,6 +20,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/core/api-client/errors';
+import { applyApiFieldErrors } from '@/core/api-client/form-errors';
 import type { Category, CreateCategoryDto } from '../api';
 import { useCreateCategoryMutation, useUpdateCategoryMutation } from '../hooks';
 import { categoryFormSchema, type CategoryFormValues } from '../schemas';
@@ -67,6 +68,14 @@ function buildPayload(
   };
 }
 
+const CATEGORY_FIELDS = [
+  'name',
+  'slug',
+  'color',
+  'parentCategoryId',
+  'maxBudgetOptionsPerRequest',
+] as const;
+
 export function CategoryFormDialog({
   open,
   onOpenChange,
@@ -90,6 +99,7 @@ export function CategoryFormDialog({
     control,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: standardSchemaResolver(categoryFormSchema),
@@ -107,11 +117,17 @@ export function CategoryFormDialog({
     if (category) {
       updateMutation.mutate(
         { id: category.id, dto: payload },
-        { onSuccess: () => onOpenChange(false) },
+        {
+          onSuccess: () => onOpenChange(false),
+          onError: (error) =>
+            applyApiFieldErrors(error, setError, CATEGORY_FIELDS),
+        },
       );
     } else {
       createMutation.mutate(payload, {
         onSuccess: () => onOpenChange(false),
+        onError: (error) =>
+          applyApiFieldErrors(error, setError, CATEGORY_FIELDS),
       });
     }
   }

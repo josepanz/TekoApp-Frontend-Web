@@ -39,7 +39,7 @@ export function StatCard({
           <span
             className={cn(
               'text-sm font-medium',
-              trendDirection === 'up' && 'text-success',
+              trendDirection === 'up' && 'text-success-text',
               trendDirection === 'down' && 'text-destructive',
               trendDirection === 'neutral' && 'text-muted-foreground',
             )}

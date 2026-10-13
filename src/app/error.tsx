@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { BrandGradientBackground } from '@/components/layout/brand-gradient-background';
+import { AccessDenied } from '@/components/layout/access-denied';
+import { ApiError } from '@/core/api-client/errors';
 import { Button } from '@/components/ui/button';
 
 /**
@@ -23,6 +25,11 @@ export default function RootError({
   useEffect(() => {
     console.error(error);
   }, [error]);
+
+  // 403 de un query del cliente (lanzado por `throwOnError`): pantalla de sin acceso, no de error.
+  if (error instanceof ApiError && error.status === 403) {
+    return <AccessDenied />;
+  }
 
   return (
     <BrandGradientBackground className="flex min-h-svh flex-col items-center justify-center gap-4 px-4 text-center text-white">

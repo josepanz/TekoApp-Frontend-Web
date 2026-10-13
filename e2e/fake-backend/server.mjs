@@ -292,7 +292,25 @@ const server = createServer(async (req, res) => {
   }
 
   if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories/all') {
-    return sendJson(res, 200, categories);
+    // Contrato paginado (DEF-BE-012): doble envuelto `{data:{data, pagination}}`, como /countries.
+    const page = Math.max(Number(url.searchParams.get('page') ?? 1) || 1, 1);
+    const pageSize = Math.min(
+      Math.max(Number(url.searchParams.get('pageSize') ?? 10) || 10, 1),
+      100,
+    );
+    const start = (page - 1) * pageSize;
+    return sendJson(res, 200, {
+      success: true,
+      data: {
+        data: categories.slice(start, start + pageSize),
+        pagination: {
+          total: categories.length,
+          page,
+          pageSize,
+          totalPages: Math.ceil(categories.length / pageSize),
+        },
+      },
+    });
   }
 
   if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories') {

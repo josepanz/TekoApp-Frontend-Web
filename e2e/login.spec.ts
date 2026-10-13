@@ -1,3 +1,11 @@
+/**
+ * Suite: login contra el fake-backend (CI). Modificado en W1: el 401 muestra el mensaje generico
+ * "Email o contraseña incorrectos." (ver CP-WEB-AUTH-001).
+ * Casos: ver test/qa/casos/CP-E2E.md y CP-AUTH.md
+ * Tipo: e2e   Prioridad: P0
+ * Precondiciones: fake-backend (`e2e/fake-backend/server.mjs`) + build de Next
+ * Trazabilidad: bug login:false / contrato 401 de W1
+ */
 import { expect, test } from '@playwright/test';
 
 // Contra el fake-backend (e2e/fake-backend/server.mjs), no el backend real — ver
@@ -17,11 +25,7 @@ test.describe('Login', () => {
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
 
-    await expect(page).toHaveURL('/');
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
-
+    // Aterrizaje por rol: la cuenta admin:all entra directo a /admin.
     await expect(page).toHaveURL('/admin');
     await expect(page.getByText('Usuarios totales')).toBeVisible();
     await expect(page.getByText('1.500')).toBeVisible();
@@ -36,7 +40,9 @@ test.describe('Login', () => {
     await page.getByLabel('Contraseña', { exact: true }).fill('loQueSea');
     await page.getByRole('button', { name: 'Ingresar' }).click();
 
-    await expect(page.getByText('Credenciales inválidas')).toBeVisible();
+    await expect(
+      page.getByText('Email o contraseña incorrectos.'),
+    ).toBeVisible();
     await expect(page).toHaveURL(/\/login/);
   });
 
@@ -47,11 +53,6 @@ test.describe('Login', () => {
     await page.getByLabel('Email').fill('ana@tekoapp.com.py');
     await page.getByLabel('Contraseña', { exact: true }).fill('Sup3rSecreto!');
     await page.getByRole('button', { name: 'Ingresar' }).click();
-    await expect(page).toHaveURL('/');
-
-    await page
-      .getByRole('link', { name: 'Ir al panel de administración' })
-      .click();
     await expect(page).toHaveURL('/admin');
 
     await page.getByRole('link', { name: 'Usuarios' }).click();

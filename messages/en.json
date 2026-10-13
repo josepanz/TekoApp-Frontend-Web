@@ -427,6 +427,12 @@
         "description": "Upload the qualification/background-check documents your category requires."
       }
     },
+    "accessDenied": {
+      "title": "You do not have access to this section",
+      "description": "Your account does not have the permissions required to view this screen. If you think this is a mistake, contact an administrator.",
+      "backHome": "Back to home"
+    },
+    "rateLimited": "Too many requests. Try again in {seconds} s.",
     "error": {
       "title": "Something went wrong",
       "description": "We couldn't complete the request. It may be a temporary server issue — try again in a few seconds."

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ShieldCheck, User, Wrench } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { isStaffUser } from '@/core/auth/permissions';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { useMyProfessionalProfileQuery } from '@/features/professional-profile/hooks';
 import {
@@ -33,9 +34,7 @@ export function useOtherModes(current: SidebarVariant): SidebarVariant[] {
   const { data: professional, isError: noProfessionalProfile } =
     useMyProfessionalProfileQuery();
 
-  const isStaff = scope?.permissions.some(
-    (p) => p.name === 'admin:all' || p.name === 'dashboard:read',
-  );
+  const isStaff = isStaffUser(scope?.permissions.map((p) => p.name) ?? []);
   const isProfessional = !!professional && !noProfessionalProfile;
 
   const modes: SidebarVariant[] = ['client'];

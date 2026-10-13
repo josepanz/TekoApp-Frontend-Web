@@ -64,6 +64,9 @@ export const PERMISSIONS = {
   PROFESSIONALS: {
     VERIFY: 'professionals.verification:manage',
   },
+  CATEGORIES: {
+    MANAGE: 'categories.catalog:manage',
+  },
   MATERIAL_CATALOG: {
     MANAGE: 'material-catalog.catalog:manage',
   },
@@ -75,6 +78,9 @@ export const PERMISSIONS = {
   },
   PAYMENTS: {
     AUDIT_VIEW: 'payments.audit:read',
+  },
+  DISPUTES: {
+    ADJUDICATE: 'disputes.adjudication:manage',
   },
   SYSTEM: {
     AUDIT_VIEW: 'system.audit:read',
@@ -99,13 +105,144 @@ export function hasAnyPermission(
 }
 
 /**
- * Gate de acceso al modo Admin/staff (`/admin/*`). No hay un permiso "admin" dedicado en el
- * backend todavía (ver nota arriba) — se usa `ADMIN.ALL` (superusuario) o `DASHBOARD` (acceso al
- * resumen/analytics, lo mínimo que cualquier staff necesita) como proxy de "es parte del staff".
+ * Secciones del backoffice (`/admin/*`) y los permisos que dan acceso a cada una (semantica OR).
+ * `href` es el prefijo de ruta de la seccion (incluye sus detalles). Los permisos salen de los
+ * `@Permissions(...)` de los controllers del backend; `ADMIN.ALL` (superusuario) entra a todas.
+ * Las secciones cuyo backend no exige un permiso propio (users/services/promotions/locations/
+ * notifications...) quedan con el gate historico `DASHBOARD`.
+ * El orden es el de aterrizaje: la primera seccion permitida es el destino por defecto.
+ */
+const ADMIN = PERMISSIONS.ADMIN.ALL;
+const GENERAL = [ADMIN, PERMISSIONS.DASHBOARD] as const;
+
+export const ADMIN_SECTIONS = [
+  { id: 'dashboard', href: '/admin', permissions: GENERAL },
+  {
+    id: 'users',
+    href: '/admin/users',
+    permissions: [ADMIN, PERMISSIONS.USER.READ],
+  },
+  {
+    id: 'professionals',
+    href: '/admin/professionals',
+    permissions: [ADMIN, PERMISSIONS.PROFESSIONALS.VERIFY],
+  },
+  { id: 'services', href: '/admin/services', permissions: GENERAL },
+  {
+    id: 'payments',
+    href: '/admin/payments',
+    permissions: [ADMIN, PERMISSIONS.PAYMENTS.AUDIT_VIEW],
+  },
+  { id: 'promotions', href: '/admin/promotions', permissions: GENERAL },
+  {
+    id: 'ratings',
+    href: '/admin/ratings',
+    permissions: [ADMIN, PERMISSIONS.RATINGS.AUDIT_VIEW],
+  },
+  {
+    id: 'rolesPermission',
+    href: '/admin/roles-permission',
+    permissions: [ADMIN, PERMISSIONS.ROLE.READ],
+  },
+  {
+    id: 'categories',
+    href: '/admin/categories',
+    permissions: [ADMIN, PERMISSIONS.CATEGORIES.MANAGE],
+  },
+  { id: 'locations', href: '/admin/locations', permissions: GENERAL },
+  { id: 'notifications', href: '/admin/notifications', permissions: GENERAL },
+  {
+    id: 'aiDisclosures',
+    href: '/admin/ai-disclosures',
+    permissions: [ADMIN, PERMISSIONS.AI_DISCLOSURE.AUDIT_VIEW],
+  },
+  {
+    id: 'professionalDocumentTypes',
+    href: '/admin/professional-document-types',
+    permissions: [ADMIN, PERMISSIONS.PROFESSIONAL_DOCUMENT_TYPES.MANAGE],
+  },
+  {
+    id: 'professionalDocuments',
+    href: '/admin/professional-documents',
+    permissions: [ADMIN, PERMISSIONS.PROFESSIONAL_DOCUMENTS.REVIEW],
+  },
+  {
+    id: 'professionalPortfolio',
+    href: '/admin/professional-portfolio',
+    permissions: [ADMIN, PERMISSIONS.PROFESSIONAL_PORTFOLIO.REVIEW],
+  },
+  {
+    id: 'legalDocumentVersions',
+    href: '/admin/legal/document-versions',
+    permissions: [ADMIN, PERMISSIONS.LEGAL.CONFIG_MANAGE],
+  },
+  {
+    id: 'dataRetentionPolicies',
+    href: '/admin/legal/retention-policies',
+    permissions: [ADMIN, PERMISSIONS.LEGAL.CONFIG_MANAGE],
+  },
+  {
+    id: 'consentAudit',
+    href: '/admin/legal/consent-audit',
+    permissions: [ADMIN, PERMISSIONS.LEGAL.CONSENT_AUDIT_VIEW],
+  },
+  {
+    id: 'materialCatalog',
+    href: '/admin/material-catalog',
+    permissions: [ADMIN, PERMISSIONS.MATERIAL_CATALOG.MANAGE],
+  },
+  {
+    id: 'contracts',
+    href: '/admin/contracts',
+    permissions: [ADMIN, PERMISSIONS.CONTRACTS.AUDIT_VIEW],
+  },
+  {
+    id: 'auditLog',
+    href: '/admin/audit-log',
+    permissions: [ADMIN, PERMISSIONS.SYSTEM.AUDIT_VIEW],
+  },
+] as const satisfies readonly {
+  id: string;
+  href: string;
+  permissions: readonly Permission[];
+}[];
+
+export type AdminSection = (typeof ADMIN_SECTIONS)[number];
+export type AdminSectionId = AdminSection['id'];
+
+/** Todos los permisos que habilitan al menos una seccion del backoffice (lista de "staff"). */
+export const STAFF_PERMISSIONS: readonly Permission[] = [
+  ...new Set(ADMIN_SECTIONS.flatMap((section) => section.permissions)),
+];
+
+/**
+ * Gate de entrada al modo Admin/staff (`/admin/*`): basta UN permiso de staff. Cada seccion
+ * exige despues el suyo (ver `canAccessAdminSection` y `AdminSectionGate`).
  */
 export function isStaffUser(userPermissions: readonly string[]): boolean {
-  return hasAnyPermission(userPermissions, [
-    PERMISSIONS.ADMIN.ALL,
-    PERMISSIONS.DASHBOARD,
-  ]);
+  return hasAnyPermission(userPermissions, STAFF_PERMISSIONS);
+}
+
+export function canAccessAdminSection(
+  userPermissions: readonly string[],
+  id: AdminSectionId,
+): boolean {
+  const section = ADMIN_SECTIONS.find((s) => s.id === id);
+  return !!section && hasAnyPermission(userPermissions, section.permissions);
+}
+
+/** Secciones del backoffice que el usuario puede ver, en el orden de `ADMIN_SECTIONS`. */
+export function getAllowedAdminSections(
+  userPermissions: readonly string[],
+): AdminSection[] {
+  return ADMIN_SECTIONS.filter((section) =>
+    hasAnyPermission(userPermissions, section.permissions),
+  );
+}
+
+/** Ruta de aterrizaje en `/admin/*`: la primera seccion permitida (o `null` si no es staff). */
+export function getAdminLandingPath(
+  userPermissions: readonly string[],
+): string | null {
+  return getAllowedAdminSections(userPermissions)[0]?.href ?? null;
 }
