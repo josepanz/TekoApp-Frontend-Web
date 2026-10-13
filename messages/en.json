@@ -1321,7 +1321,10 @@
       "loadError": "Couldn't load this professional's profile.",
       "rating": "⭐ {rating} ({count} reviews)",
       "hourlyRate": "Hourly rate: {rate}",
-      "experience": "{years} years of experience"
+      "experience": "{years} years of experience",
+      "notFoundTitle": "Professional not available",
+      "notFoundDescription": "This professional does not exist or is not yet available to receive requests.",
+      "backToList": "Back to professionals"
     }
   },
   "requestService": {
