@@ -519,6 +519,18 @@
       "suspendPartialResult": "{succeeded} de {total} profesionales suspendidos. {failed} fallaron: {names}.",
       "suspendFailedAll": "No se pudo suspender a ninguno de los {count} profesionales seleccionados."
     },
+    "history": {
+      "title": "Historial de estados",
+      "date": "Fecha",
+      "actor": "Realizado por",
+      "change": "Cambio",
+      "to": "a",
+      "reason": "Motivo",
+      "system": "Sistema",
+      "loadError": "No se pudo cargar el historial de estados.",
+      "emptyTitle": "Sin cambios de estado",
+      "emptyDescription": "Todavía no se registraron verificaciones, suspensiones ni reactivaciones de este profesional."
+    },
     "detail": {
       "back": "Volver a profesionales",
       "loadError": "No se pudo cargar el perfil de este profesional.",
@@ -533,7 +545,8 @@
       "requiredDocumentsNotVerified": "Documentos obligatorios sin verificar",
       "tabs": {
         "profile": "Perfil",
-        "documents": "Documentos"
+        "documents": "Documentos",
+        "history": "Historial"
       }
     }
   },

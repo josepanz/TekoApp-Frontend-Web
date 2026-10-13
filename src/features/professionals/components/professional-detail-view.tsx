@@ -18,6 +18,7 @@ import {
   canSuspendProfessional,
   canVerifyProfessional,
 } from '../rules';
+import { ProfessionalStatusHistory } from './professional-status-history';
 import { ReactivateProfessionalDialog } from './reactivate-professional-dialog';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
@@ -55,7 +56,7 @@ export function ProfessionalDetailView({
   } = useProfessionalDetailQuery(referenceId);
 
   if (isPending) {
-    return <Skeleton className="h-96 max-w-2xl" />;
+    return <Skeleton className="h-96 max-w-4xl" />;
   }
 
   if (isError || !professional) {
@@ -70,7 +71,7 @@ export function ProfessionalDetailView({
   };
 
   return (
-    <div className="flex max-w-2xl flex-col gap-4">
+    <div className="flex max-w-4xl flex-col gap-4">
       <Button
         variant="ghost"
         size="sm"
@@ -143,6 +144,7 @@ export function ProfessionalDetailView({
           <TabsTrigger value="documents">
             {t('detail.tabs.documents')}
           </TabsTrigger>
+          <TabsTrigger value="history">{t('detail.tabs.history')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="detail">
@@ -216,6 +218,13 @@ export function ProfessionalDetailView({
               <ProfessionalDocumentsHistoryTab
                 professionalReferenceId={referenceId}
               />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="history">
+          <Card>
+            <CardContent className="pt-6">
+              <ProfessionalStatusHistory professionalId={professional.id} />
             </CardContent>
           </Card>
         </TabsContent>

@@ -519,6 +519,18 @@
       "suspendPartialResult": "{succeeded} of {total} professionals suspended. {failed} failed: {names}.",
       "suspendFailedAll": "Couldn't suspend any of the {count} selected professionals."
     },
+    "history": {
+      "title": "Status history",
+      "date": "Date",
+      "actor": "Performed by",
+      "change": "Change",
+      "to": "to",
+      "reason": "Reason",
+      "system": "System",
+      "loadError": "Couldn't load the status history.",
+      "emptyTitle": "No status changes",
+      "emptyDescription": "No verifications, suspensions or reactivations have been recorded for this professional yet."
+    },
     "detail": {
       "back": "Back to professionals",
       "loadError": "Couldn't load this professional's profile.",
@@ -533,7 +545,8 @@
       "requiredDocumentsNotVerified": "Required documents not verified",
       "tabs": {
         "profile": "Profile",
-        "documents": "Documents"
+        "documents": "Documents",
+        "history": "History"
       }
     }
   },

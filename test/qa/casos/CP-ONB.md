@@ -15,6 +15,7 @@ Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx
 | CP-WEB-ONB-007 | La UI admin solo ofrece verificar en PENDING/REJECTED y suspender en APPROVED; el 409 muestra un mensaje claro (DEF-WEB-013) | unitaria (componente)     | P2   |
 | CP-WEB-ONB-008 | Suspender y rechazar exigen motivo (con trim) y verificar admite nota opcional, alineado al contrato                         | unitaria (componente)     | P1   |
 | CP-WEB-ONB-009 | La UI admin ofrece reactivar solo a un profesional SUSPENDED, con motivo obligatorio y errores 400/409 claros                | unitaria (componente)     | P1   |
+| CP-WEB-ONB-010 | El detalle admin muestra el historial de estados del profesional (fecha, actor, de → a, motivo), paginado y con estado vacío | unitaria (componente)     | P1   |
 | CP-WEB-ONB-101 | Un usuario nuevo se registra y se postula como profesional                                                                   | e2e (backend real)        | P1   |
 | CP-WEB-ONB-102 | Mientras está PENDING el nuevo profesional ve su estado y un mensaje claro de que no puede ver solicitudes                   | e2e (backend real) + a11y | P1   |
 | CP-WEB-ONB-103 | Subir un documento sin consentimiento muestra el pedido de aceptación y, al aceptar, se sube                                 | e2e (backend real) + a11y | P1   |
@@ -174,6 +175,21 @@ Los casos `CP-WEB-ONB-00x` y `CP-WEB-IMG-00x` son unitarios (Vitest + MSW); `1xx
 | Datos de prueba    | motivo "Apelación aceptada"                                                                                                                                                                                                                                                                                                                         |
 | Resultado esperado | Solo el SUSPENDED muestra "Reactivar" (también en el menú de acciones de la tabla). Motivo vacío/en blanco: "El motivo es obligatorio" y sin request. Con motivo: POST `{reason}` y cierra el diálogo. 400 por campo: el mensaje queda en el campo motivo, sin toast. 409: toast "Solo se puede reactivar a un profesional suspendido…".            |
 | Automatizado en    | `src/features/professionals/components/reactivate-professional-dialog.test.tsx` (4 casos `CP-WEB-ONB-009 …`) · `src/features/professionals/components/professional-detail-view.test.tsx` — `CP-WEB-ONB-009 un profesional APROBADO no ofrece reactivar` · `src/features/professionals/rules.test.ts` — `CP-WEB-ONB-009 reactivar solo en SUSPENDED` |
+
+### CP-WEB-ONB-010 — El detalle admin muestra el historial de estados del profesional (fecha, actor, de → a, motivo), paginado y con estado vacío
+
+| Campo              | Contenido                                                                                                                                                                                                      |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID                 | CP-WEB-ONB-010                                                                                                                                                                                                 |
+| Título             | El detalle admin muestra el historial de estados del profesional (fecha, actor, de → a, motivo), paginado y con estado vacío                                                                                   |
+| Tipo / Nivel       | unitaria (componente)                                                                                                                                                                                          |
+| Prioridad          | P1                                                                                                                                                                                                             |
+| Trazabilidad       | contrato `GET /professionals/:id/status-history?page&pageSize` (más reciente primero, máx. 100)                                                                                                                |
+| Precondiciones     | Vitest + Testing Library + MSW (`pnpm test`); sin backend real.                                                                                                                                                |
+| Pasos              | 1. Abrir la pestaña "Historial" del detalle admin con 2 transiciones.<br>2. Abrir con respuesta vacía.<br>3. Con 2 páginas, pulsar "Página siguiente".<br>4. Con respuesta 500.                                |
+| Datos de prueba    | transiciones SUSPEND (APPROVED → SUSPENDED) y REACTIVATE (SUSPENDED → APPROVED) de "Ada Lovelace"                                                                                                              |
+| Resultado esperado | Tabla "Historial de estados" con fecha, actor (nombre y email), badges de→a y motivo, en el orden recibido; vacío: EmptyState "Sin cambios de estado"; pagina pidiendo `page=2`; error: mensaje con reintento. |
+| Automatizado en    | `src/features/professionals/components/professional-status-history.test.tsx` (4 casos `CP-WEB-ONB-010 …`)                                                                                                      |
 
 ### CP-WEB-ONB-101 — Un usuario nuevo se registra y se postula como profesional
 
