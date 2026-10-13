@@ -33,11 +33,14 @@ export function UserCombobox({
   const [selected, setSelected] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState('');
   const name = useDebouncedValue(inputValue.trim(), 250);
-  const { data, isFetching } = useUsersQuery({
-    page: 1,
-    pageSize: 20,
-    name: selected ? undefined : name || undefined,
-  });
+  const { data, isFetching } = useUsersQuery(
+    {
+      page: 1,
+      pageSize: 20,
+      name: selected ? undefined : name || undefined,
+    },
+    { throwOnError: false },
+  );
 
   return (
     <SearchCombobox<User>

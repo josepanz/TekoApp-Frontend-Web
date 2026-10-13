@@ -4,13 +4,14 @@ import { useTranslations } from 'next-intl';
 
 /**
  * Pantalla de "sin acceso" (403): se muestra en lugar de redirigir o romper cuando el usuario
- * esta autenticado pero no tiene permisos para la seccion.
+ * esta autenticado pero no tiene permisos para la seccion. `embedded` la dibuja dentro de un shell
+ * que ya tiene `<main>` (secciones del backoffice) para no duplicar el landmark.
  */
-export function AccessDenied() {
+export function AccessDenied({ embedded = false }: { embedded?: boolean }) {
   const t = useTranslations('pages.accessDenied');
+  const Container = embedded ? 'div' : 'main';
   return (
-    <main
-      role="main"
+    <Container
       data-testid="access-denied"
       className="flex min-h-[60vh] flex-1 flex-col items-center justify-center gap-4 p-6 text-center"
     >
@@ -25,6 +26,6 @@ export function AccessDenied() {
       >
         {t('backHome')}
       </Link>
-    </main>
+    </Container>
   );
 }

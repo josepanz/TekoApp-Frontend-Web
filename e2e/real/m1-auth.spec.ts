@@ -145,15 +145,11 @@ test.describe('M1 Auth', () => {
     await scanA11y(page, 'sin-acceso');
   });
 
-  // DEF-WEB-001: `isStaffUser` exige admin:all o dashboard:read; compliance solo tiene permisos
-  // `legal.*`, asi que el layout de /admin le muestra "sin acceso" incluso en las paginas legales.
-  test('CP-WEB-AUTH-109 DEF-WEB-001 compliance ve las paginas legales', async ({
+  // DEF-WEB-001 (corregido): el layout admin deja entrar a cualquier staff y cada seccion exige su
+  // permiso; compliance (solo legal.*) entra a las paginas legales.
+  test('CP-WEB-AUTH-109 compliance ve las paginas legales', async ({
     page,
   }) => {
-    test.fail(
-      true,
-      'DEF-WEB-001: compliance no entra a /admin/legal (gate isStaffUser)',
-    );
     await loginUi(page, 'compliance');
     for (const path of [
       '/admin/legal/consent-audit',
@@ -163,6 +159,26 @@ test.describe('M1 Auth', () => {
       await visit(page, path, `compliance${path}`);
       await expect(page.getByTestId('access-denied')).toHaveCount(0);
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    }
+  });
+
+  test('CP-WEB-AUTH-129 compliance ve solo Legal en el sidebar y /admin lo redirige a su primera seccion', async ({
+    page,
+  }) => {
+    await loginUi(page, 'compliance');
+    await page.goto('/admin');
+    await expect(page).toHaveURL('/admin/legal/document-versions');
+    const sidebar = page.locator('[data-sidebar="sidebar"]').first();
+    await expect(
+      sidebar.getByRole('link', { name: 'Documentos legales' }),
+    ).toBeVisible();
+    await expect(
+      sidebar.getByRole('link', { name: 'Auditoría de consentimiento' }),
+    ).toBeVisible();
+    for (const name of ['Usuarios', 'Resumen', 'Pagos', 'Categorías']) {
+      await expect(
+        sidebar.getByRole('link', { name, exact: true }),
+      ).toHaveCount(0);
     }
   });
 

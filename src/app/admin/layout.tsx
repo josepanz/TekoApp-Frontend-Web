@@ -18,16 +18,16 @@ export default async function AdminLayout({
     redirect('/login');
   }
 
-  // Gate del modo Admin/staff: todo usuario autenticado es cliente implícito, pero solo el
-  // staff (permisos admin/dashboard) entra al backoffice — ver decisión de IA en el plan.
-  // Sin permisos: pantalla de "sin acceso" (no un redirect silencioso ni un crash).
+  // Gate del modo Admin/staff: todo usuario autenticado es cliente implícito, pero solo quien
+  // tiene al menos un permiso de staff entra al backoffice. Cada sección exige después el suyo
+  // (`AdminSectionGate`, layout de cada carpeta). Sin ningún permiso: pantalla de "sin acceso".
   if (!isStaffUser(session.permissions)) {
     return <AccessDenied />;
   }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar variant="admin" permissions={session.permissions} />
       <SidebarInset>
         <Topbar
           userName={`${session.firstName} ${session.lastName}`.trim()}

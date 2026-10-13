@@ -12,12 +12,15 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
 
-function renderSidebar(variant: 'client' | 'pro' | 'admin' = 'client') {
+function renderSidebar(
+  variant: 'client' | 'pro' | 'admin' = 'client',
+  permissions?: readonly string[],
+) {
   const queryClient = createTestQueryClient();
   return render(
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
-        <AppSidebar variant={variant} />
+        <AppSidebar variant={variant} permissions={permissions} />
       </SidebarProvider>
     </QueryClientProvider>,
   );
@@ -58,5 +61,39 @@ describe('AppSidebar', () => {
     expect(
       screen.getByRole('link', { name: /modo profesional/i }),
     ).toHaveAttribute('href', '/pro');
+  });
+
+  it('admin con admin:all ve todos los items del backoffice', () => {
+    renderSidebar('admin', ['admin:all']);
+
+    expect(screen.getByRole('link', { name: 'Usuarios' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Resumen' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Documentos legales' }),
+    ).toBeInTheDocument();
+  });
+
+  it('compliance ve solo los items de Legal', () => {
+    renderSidebar('admin', ['legal.config:manage', 'legal.consent-audit:read']);
+
+    expect(
+      screen.getByRole('link', { name: 'Documentos legales' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Políticas de retención' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Auditoría de consentimiento' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Usuarios' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Resumen' })).toBeNull();
+    expect(screen.queryByRole('link', { name: 'Pagos' })).toBeNull();
+  });
+
+  it('un permiso suelto muestra solo su item', () => {
+    renderSidebar('admin', ['payments.audit:read']);
+
+    expect(screen.getByRole('link', { name: 'Pagos' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Calificaciones' })).toBeNull();
   });
 });
