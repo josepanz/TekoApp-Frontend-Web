@@ -488,6 +488,14 @@
       "submit": "Confirmar suspensión",
       "submitting": "Suspendiendo..."
     },
+    "reactivate": {
+      "trigger": "Reactivar",
+      "title": "Reactivar profesional",
+      "description": "Vuelve a estado Aprobado, pero sin disponibilidad ni conexión: tendrá que activarlas él mismo.",
+      "reason": "Motivo",
+      "submit": "Confirmar reactivación",
+      "submitting": "Reactivando..."
+    },
     "verify": {
       "trigger": "Verificar",
       "title": "Verificar profesional",

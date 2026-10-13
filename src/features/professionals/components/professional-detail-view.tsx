@@ -13,7 +13,12 @@ import { useAppLocale } from '@/i18n/use-app-locale';
 import { ProfessionalDocumentsHistoryTab } from '@/features/professional-documents/components/professional-documents-history-tab';
 import { useProfessionalDetailQuery } from '../hooks';
 import type { Professional } from '../api';
-import { canSuspendProfessional, canVerifyProfessional } from '../rules';
+import {
+  canReactivateProfessional,
+  canSuspendProfessional,
+  canVerifyProfessional,
+} from '../rules';
+import { ReactivateProfessionalDialog } from './reactivate-professional-dialog';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
 
@@ -98,6 +103,9 @@ export function ProfessionalDetailView({
             )}
             {canSuspendProfessional(professional.status) && (
               <SuspendProfessionalDialog professional={professional} />
+            )}
+            {canReactivateProfessional(professional.status) && (
+              <ReactivateProfessionalDialog professional={professional} />
             )}
           </div>
         </CardHeader>

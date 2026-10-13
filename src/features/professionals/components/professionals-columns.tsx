@@ -6,7 +6,12 @@ import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Professional } from '../api';
-import { canSuspendProfessional, canVerifyProfessional } from '../rules';
+import {
+  canReactivateProfessional,
+  canSuspendProfessional,
+  canVerifyProfessional,
+} from '../rules';
+import { ReactivateProfessionalDialog } from './reactivate-professional-dialog';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
 
@@ -105,6 +110,9 @@ export function useProfessionalsColumns(): ColumnDef<Professional, unknown>[] {
           )}
           {canSuspendProfessional(row.original.status) && (
             <SuspendProfessionalDialog professional={row.original} />
+          )}
+          {canReactivateProfessional(row.original.status) && (
+            <ReactivateProfessionalDialog professional={row.original} />
           )}
         </div>
       ),

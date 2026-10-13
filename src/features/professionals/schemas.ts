@@ -16,3 +16,11 @@ export const suspendProfessionalSchema = z.object({
 export type SuspendProfessionalFormValues = z.infer<
   typeof suspendProfessionalSchema
 >;
+
+export const reactivateProfessionalSchema = z.object({
+  reason: z.string().trim().min(1, 'El motivo es obligatorio'),
+});
+
+export type ReactivateProfessionalFormValues = z.infer<
+  typeof reactivateProfessionalSchema
+>;

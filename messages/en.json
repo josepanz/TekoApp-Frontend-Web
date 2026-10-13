@@ -488,6 +488,14 @@
       "submit": "Confirm suspension",
       "submitting": "Suspending..."
     },
+    "reactivate": {
+      "trigger": "Reactivate",
+      "title": "Reactivate professional",
+      "description": "Returns to Approved, but offline and unavailable: they must switch availability on themselves.",
+      "reason": "Reason",
+      "submit": "Confirm reactivation",
+      "submitting": "Reactivating..."
+    },
     "verify": {
       "trigger": "Verify",
       "title": "Verify professional",

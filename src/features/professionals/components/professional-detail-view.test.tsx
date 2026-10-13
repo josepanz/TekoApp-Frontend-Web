@@ -1,6 +1,6 @@
 /**
  * Suite: ProfessionalDetailView: acciones admin segun el estado del profesional
- * Casos: CP-WEB-ONB-007 (ver test/qa/casos/CP-ONB.md); el resto de la suite es de carga/errores del detalle
+ * Casos: CP-WEB-ONB-007, CP-WEB-ONB-009 (ver test/qa/casos/CP-ONB.md); el resto de la suite es de carga/errores del detalle
  * Tipo: unitaria (componente + MSW)   Prioridad: P2
  * Precondiciones: handlers MSW de professionals; sin backend real.
  * Trazabilidad: DEF-WEB-013 (verify solo en PENDING/REJECTED, suspend solo en APPROVED; si no, 409).
@@ -72,7 +72,7 @@ describe('ProfessionalDetailView', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('CP-WEB-ONB-007 un profesional SUSPENDIDO no ofrece verificar ni suspender (DEF-WEB-013)', async () => {
+  it('CP-WEB-ONB-007 un profesional SUSPENDIDO no ofrece verificar ni suspender, solo reactivar (DEF-WEB-013)', async () => {
     server.use(
       http.get('/api/backend/professionals/reference/:referenceId', () =>
         HttpResponse.json({
@@ -88,6 +88,17 @@ describe('ProfessionalDetailView', () => {
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'Suspender' }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Reactivar' }),
+    ).toBeInTheDocument();
+  });
+
+  it('CP-WEB-ONB-009 un profesional APROBADO no ofrece reactivar', async () => {
+    renderDetailView('p1a2b3c4-d5e6-7890-abcd-ef1234567890');
+    await screen.findByText('Juan Pérez', {}, { timeout: 3000 });
+    expect(
+      screen.queryByRole('button', { name: 'Reactivar' }),
     ).not.toBeInTheDocument();
   });
 });
