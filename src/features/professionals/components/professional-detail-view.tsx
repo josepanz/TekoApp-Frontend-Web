@@ -13,6 +13,13 @@ import { useAppLocale } from '@/i18n/use-app-locale';
 import { ProfessionalDocumentsHistoryTab } from '@/features/professional-documents/components/professional-documents-history-tab';
 import { useProfessionalDetailQuery } from '../hooks';
 import type { Professional } from '../api';
+import {
+  canReactivateProfessional,
+  canSuspendProfessional,
+  canVerifyProfessional,
+} from '../rules';
+import { ProfessionalStatusHistory } from './professional-status-history';
+import { ReactivateProfessionalDialog } from './reactivate-professional-dialog';
 import { SuspendProfessionalDialog } from './suspend-professional-dialog';
 import { VerifyProfessionalDialog } from './verify-professional-dialog';
 
@@ -49,7 +56,7 @@ export function ProfessionalDetailView({
   } = useProfessionalDetailQuery(referenceId);
 
   if (isPending) {
-    return <Skeleton className="h-96 max-w-2xl" />;
+    return <Skeleton className="h-96 max-w-4xl" />;
   }
 
   if (isError || !professional) {
@@ -64,7 +71,7 @@ export function ProfessionalDetailView({
   };
 
   return (
-    <div className="flex max-w-2xl flex-col gap-4">
+    <div className="flex max-w-4xl flex-col gap-4">
       <Button
         variant="ghost"
         size="sm"
@@ -92,11 +99,14 @@ export function ProfessionalDetailView({
             </p>
           </div>
           <div className="flex gap-2">
-            {professional.verificationStatus !== 'VERIFIED' && (
+            {canVerifyProfessional(professional.status) && (
               <VerifyProfessionalDialog professional={professional} />
             )}
-            {professional.status !== 'SUSPENDED' && (
+            {canSuspendProfessional(professional.status) && (
               <SuspendProfessionalDialog professional={professional} />
+            )}
+            {canReactivateProfessional(professional.status) && (
+              <ReactivateProfessionalDialog professional={professional} />
             )}
           </div>
         </CardHeader>
@@ -134,6 +144,7 @@ export function ProfessionalDetailView({
           <TabsTrigger value="documents">
             {t('detail.tabs.documents')}
           </TabsTrigger>
+          <TabsTrigger value="history">{t('detail.tabs.history')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="detail">
@@ -207,6 +218,13 @@ export function ProfessionalDetailView({
               <ProfessionalDocumentsHistoryTab
                 professionalReferenceId={referenceId}
               />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="history">
+          <Card>
+            <CardContent className="pt-6">
+              <ProfessionalStatusHistory professionalId={professional.id} />
             </CardContent>
           </Card>
         </TabsContent>

@@ -488,11 +488,20 @@
       "submit": "Confirmar suspensión",
       "submitting": "Suspendiendo..."
     },
+    "reactivate": {
+      "trigger": "Reactivar",
+      "title": "Reactivar profesional",
+      "description": "Vuelve a estado Aprobado, pero sin disponibilidad ni conexión: tendrá que activarlas él mismo.",
+      "reason": "Motivo",
+      "submit": "Confirmar reactivación",
+      "submitting": "Reactivando..."
+    },
     "verify": {
       "trigger": "Verificar",
       "title": "Verificar profesional",
       "verifiedLabel": "Marcar como verificado",
-      "notes": "Notas"
+      "notesOptional": "Notas (opcional)",
+      "notesRequired": "Nota (obligatoria al rechazar)"
     },
     "bulk": {
       "verifyButton": "Verificar seleccionados ({count})",
@@ -510,6 +519,18 @@
       "suspendPartialResult": "{succeeded} de {total} profesionales suspendidos. {failed} fallaron: {names}.",
       "suspendFailedAll": "No se pudo suspender a ninguno de los {count} profesionales seleccionados."
     },
+    "history": {
+      "title": "Historial de estados",
+      "date": "Fecha",
+      "actor": "Realizado por",
+      "change": "Cambio",
+      "to": "a",
+      "reason": "Motivo",
+      "system": "Sistema",
+      "loadError": "No se pudo cargar el historial de estados.",
+      "emptyTitle": "Sin cambios de estado",
+      "emptyDescription": "Todavía no se registraron verificaciones, suspensiones ni reactivaciones de este profesional."
+    },
     "detail": {
       "back": "Volver a profesionales",
       "loadError": "No se pudo cargar el perfil de este profesional.",
@@ -524,7 +545,8 @@
       "requiredDocumentsNotVerified": "Documentos obligatorios sin verificar",
       "tabs": {
         "profile": "Perfil",
-        "documents": "Documentos"
+        "documents": "Documentos",
+        "history": "Historial"
       }
     }
   },
@@ -1321,7 +1343,10 @@
       "loadError": "No se pudo cargar el perfil de este profesional.",
       "rating": "⭐ {rating} ({count} reseñas)",
       "hourlyRate": "Tarifa por hora: {rate}",
-      "experience": "{years} años de experiencia"
+      "experience": "{years} años de experiencia",
+      "notFoundTitle": "Profesional no disponible",
+      "notFoundDescription": "Este profesional no existe o todavía no está disponible para recibir solicitudes.",
+      "backToList": "Volver a profesionales"
     }
   },
   "requestService": {
@@ -1344,7 +1369,8 @@
         "whatDescription": "Contanos qué tipo de trabajo buscás y una breve descripción.",
         "whereTitle": "Dónde es el trabajo",
         "whenTitle": "Cuándo"
-      }
+      },
+      "mapLabel": "Mapa para elegir la ubicación. También podés cargarla con la latitud y la longitud."
     }
   },
   "rateProfessional": {
@@ -1401,6 +1427,31 @@
       "preview": {
         "completion": "Completitud del perfil",
         "ratingsCount": "{count, plural, one {# calificación} other {# calificaciones}}"
+      }
+    },
+    "status": {
+      "PENDING": "Pendiente de aprobación",
+      "APPROVED": "Aprobado",
+      "REJECTED": "Rechazado",
+      "SUSPENDED": "Suspendido"
+    },
+    "verification": {
+      "UNVERIFIED": "Sin verificar",
+      "VERIFIED": "Verificado",
+      "REJECTED": "Verificación rechazada"
+    },
+    "statusBanner": {
+      "PENDING": {
+        "title": "Tu postulación está pendiente de aprobación",
+        "description": "Mientras el staff la revisa no podés ver ni aceptar solicitudes. Cargá tus documentos en Mis documentos para acelerar la revisión."
+      },
+      "REJECTED": {
+        "title": "Tu postulación fue rechazada",
+        "description": "No podés ver ni aceptar solicitudes. Contactá a soporte si creés que se trata de un error."
+      },
+      "SUSPENDED": {
+        "title": "Tu cuenta profesional está suspendida",
+        "description": "No podés ver ni aceptar solicitudes mientras dure la suspensión. Contactá a soporte para más información."
       }
     }
   },
@@ -1470,7 +1521,8 @@
       "actions": "Acciones",
       "accept": "Aceptar",
       "empty": "No hay solicitudes pendientes en tu categoría",
-      "loadError": "No se pudieron cargar las solicitudes pendientes. Intentá recargar la página."
+      "loadError": "No se pudieron cargar las solicitudes pendientes. Intentá recargar la página.",
+      "notApproved": "Tu perfil profesional todavía no está aprobado: no podés ver ni aceptar solicitudes hasta que el staff lo apruebe."
     }
   },
   "professionalServices": {
@@ -1558,5 +1610,35 @@
       "user": "Usuario",
       "professional": "Profesional"
     }
+  },
+  "legalConsents": {
+    "required": {
+      "title": {
+        "DATA_PROCESSING_CONSENT": "Consentimiento de tratamiento de datos",
+        "IMAGE_USAGE_CONSENT": "Consentimiento de uso de imágenes",
+        "TERMS_OF_SERVICE": "Términos de servicio",
+        "PRIVACY_POLICY": "Política de privacidad",
+        "SERVICE_CONTRACT_TERMS": "Términos del contrato de servicio",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Responsabilidad por contenido del usuario"
+      },
+      "description": {
+        "DATA_PROCESSING_CONSENT": "Para subir tus documentos necesitamos tu consentimiento para tratar tus datos personales. Leé el documento y aceptalo para continuar.",
+        "IMAGE_USAGE_CONSENT": "Para subir fotos necesitamos tu consentimiento para el uso de imágenes. Leé el documento y aceptalo para continuar.",
+        "TERMS_OF_SERVICE": "Aceptá los términos de servicio para continuar.",
+        "PRIVACY_POLICY": "Aceptá la política de privacidad para continuar.",
+        "SERVICE_CONTRACT_TERMS": "Aceptá los términos del contrato de servicio para continuar.",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Aceptá el aviso de responsabilidad por contenido para continuar."
+      },
+      "viewDocument": "Leer el documento (versión {version})",
+      "nothingPending": "No hay documentos pendientes de aceptar. Probá subir el archivo de nuevo.",
+      "loadError": "No se pudo cargar el documento legal. Intentá de nuevo.",
+      "acceptError": "No se pudo registrar tu aceptación. Intentá de nuevo.",
+      "accept": "Acepto y continuar",
+      "accepting": "Registrando..."
+    }
+  },
+  "uploads": {
+    "imageUnavailable": "Imagen no disponible",
+    "fileUnavailable": "No se pudo cargar el archivo."
   }
 }

@@ -53,6 +53,8 @@ test.describe('M1 Auth', () => {
     page,
   }) => {
     await loginUi(page, 'pro_aprobado');
+    // Aterriza en /pro (que redirige a la bandeja); se navega explicito para no depender del salto.
+    await page.goto('/pro/solicitudes');
     await expect(page).toHaveURL('/pro/solicitudes');
     await settle(page);
     await scanA11y(page, 'pro-home');

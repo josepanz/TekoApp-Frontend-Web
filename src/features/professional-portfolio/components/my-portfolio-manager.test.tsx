@@ -81,4 +81,78 @@ describe('MyPortfolioManager', () => {
     // Assert
     await waitFor(() => expect(onDelete).toHaveBeenCalledWith('portfolio-1'));
   });
+
+  // DEF-WEB-004: 403 CONSENT_REQUIRED de IMAGE_USAGE_CONSENT -> aceptar y reintentar
+  it('CP-WEB-ONB-003 ante 403 CONSENT_REQUIRED pide aceptar el consentimiento de imágenes y reintenta', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    let uploads = 0;
+    const accepted: string[] = [];
+    server.use(
+      http.post('/api/backend/professionals/me/portfolio', () => {
+        uploads += 1;
+        if (accepted.length === 0) {
+          return HttpResponse.json(
+            {
+              success: false,
+              error: {
+                code: 403,
+                message: 'Necesitás aceptar el documento legal vigente',
+                error: 'Forbidden',
+                errorCode: 'CONSENT_REQUIRED',
+                timestamp: '2026-10-13T10:00:00.000Z',
+                path: '/x',
+              },
+            },
+            { status: 403 },
+          );
+        }
+        return HttpResponse.json(
+          {
+            referenceId: 'portfolio-3',
+            fileKey: 'otra.jpg',
+            sortOrder: 0,
+            isVisible: true,
+            status: 'PENDING',
+            createdAt: '2026-09-01T10:00:00.000Z',
+          },
+          { status: 201 },
+        );
+      }),
+      http.get('/api/backend/legal/consents/pending', () =>
+        HttpResponse.json([
+          {
+            referenceId: 'v-imagen',
+            documentType: 'IMAGE_USAGE_CONSENT',
+            version: 'v1',
+            contentUrl: 'https://legal.example/imagen',
+            publishedAt: '2026-10-01T00:00:00.000Z',
+            isActive: true,
+          },
+        ]),
+      ),
+      http.post(
+        '/api/backend/legal/consents/:versionReferenceId/accept',
+        ({ params }) => {
+          accepted.push(String(params.versionReferenceId));
+          return HttpResponse.json({ referenceId: 'c-1' }, { status: 201 });
+        },
+      ),
+    );
+    renderManager();
+    await screen.findByText('Pendiente');
+
+    // Act
+    await user.upload(
+      screen.getByLabelText('Subir foto'),
+      new File(['foto'], 'foto.jpg', { type: 'image/jpeg' }),
+    );
+    await user.click(
+      await screen.findByRole('button', { name: 'Acepto y continuar' }),
+    );
+
+    // Assert
+    await waitFor(() => expect(uploads).toBe(2));
+    expect(accepted).toEqual(['v-imagen']);
+  });
 });

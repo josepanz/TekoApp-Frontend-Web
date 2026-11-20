@@ -29,6 +29,13 @@ function useServiceTransitionMutation(
       });
     },
     onError: (error) => {
+      // 409: otra pestaña/usuario ya movió el servicio. Se refresca la vista para que deje de
+      // ofrecer la acción vieja (DEF-WEB-011).
+      if (error instanceof ApiError && error.status === 409) {
+        void queryClient.invalidateQueries({
+          queryKey: ['professional-services'],
+        });
+      }
       toast.error(
         error instanceof ApiError
           ? error.message

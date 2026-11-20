@@ -125,6 +125,28 @@ export const professionalsHandlers = [
     );
   }),
 
+  http.post('/api/backend/professionals/:id/reactivate', ({ params }) => {
+    const professional = fakeProfessionalsPage1.data.find(
+      (item) => String(item.id) === params.id,
+    );
+    return HttpResponse.json(
+      buildProfessional({
+        ...professional,
+        status: 'APPROVED',
+        isAvailable: false,
+        isOnline: false,
+      }),
+    );
+  }),
+
+  http.get('/api/backend/professionals/:id/status-history', ({ request }) => {
+    const page = Number(new URL(request.url).searchParams.get('page') ?? '1');
+    return HttpResponse.json({
+      data: [],
+      pagination: { total: 0, page, pageSize: 10, totalPages: 0 },
+    });
+  }),
+
   http.get(
     '/api/backend/professionals/reference/:referenceId',
     ({ params }) => {

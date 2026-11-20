@@ -36,7 +36,13 @@ const FAKE_DASHBOARD_STATS = {
   success: true,
   users: { total: 1500, new: 120, active: 450, growth: 12.5 },
   professionals: { total: 350, new: 25, verified: 310, growth: 5.4 },
-  services: { total: 850, active: 45, completed: 750, pending: 55, growth: 8.2 },
+  services: {
+    total: 850,
+    active: 45,
+    completed: 750,
+    pending: 55,
+    growth: 8.2,
+  },
   revenue: { total: 25000000, period: 4500000, average: 150000, growth: 15.3 },
   ratings: { average: 4.7, total: 980, period: 120, distribution: {} },
   period: {
@@ -230,6 +236,29 @@ function readBody(req) {
   });
 }
 
+// Historial de transiciones de estado por id de profesional (mas antiguo primero; la API lo invierte).
+const statusHistory = new Map();
+let nextHistoryId = 1;
+function recordStatusChange(professional, action, fromStatus, reason) {
+  const items = statusHistory.get(professional.id) ?? [];
+  items.push({
+    id: String(nextHistoryId++),
+    action,
+    fromStatus,
+    toStatus: professional.status,
+    reason: reason?.trim() || null,
+    changedAt: new Date().toISOString(),
+    ipAddress: '127.0.0.1',
+    userAgent: 'fake-backend',
+    actor: {
+      referenceId: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      name: 'Ana Test',
+      email: 'ana@tekoapp.com.py',
+    },
+  });
+  statusHistory.set(professional.id, items);
+}
+
 function sendJson(res, status, body, headers = {}) {
   res.writeHead(status, { 'Content-Type': 'application/json', ...headers });
   res.end(JSON.stringify(body));
@@ -238,14 +267,20 @@ function sendJson(res, status, body, headers = {}) {
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/auth/nonce') {
+  if (
+    req.method === 'POST' &&
+    url.pathname === '/tekoapp-backend/api/v1/auth/nonce'
+  ) {
     return sendJson(res, 200, {
       success: true,
       data: { nonce: 'fake-e2e-nonce' },
     });
   }
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/auth/login') {
+  if (
+    req.method === 'POST' &&
+    url.pathname === '/tekoapp-backend/api/v1/auth/login'
+  ) {
     const body = await readBody(req);
     if (body.email === 'fail@tekoapp.com.py') {
       return sendJson(res, 401, { message: 'Credenciales inválidas' });
@@ -263,7 +298,10 @@ const server = createServer(async (req, res) => {
     );
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/auth/scope') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/auth/scope'
+  ) {
     return sendJson(res, 200, {
       success: true,
       data: {
@@ -283,15 +321,24 @@ const server = createServer(async (req, res) => {
     });
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/analytics/dashboard') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/analytics/dashboard'
+  ) {
     return sendJson(res, 200, FAKE_DASHBOARD_STATS);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/users') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/users'
+  ) {
     return sendJson(res, 200, FAKE_USERS_PAGE);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories/all') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/categories/all'
+  ) {
     // Contrato paginado (DEF-BE-012): doble envuelto `{data:{data, pagination}}`, como /countries.
     const page = Math.max(Number(url.searchParams.get('page') ?? 1) || 1, 1);
     const pageSize = Math.min(
@@ -313,15 +360,28 @@ const server = createServer(async (req, res) => {
     });
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/categories') {
-    return sendJson(res, 200, categories.filter((c) => c.isVisible));
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/categories'
+  ) {
+    return sendJson(
+      res,
+      200,
+      categories.filter((c) => c.isVisible),
+    );
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/service-types') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/service-types'
+  ) {
     return sendJson(res, 200, FAKE_SERVICE_TYPES);
   }
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/services') {
+  if (
+    req.method === 'POST' &&
+    url.pathname === '/tekoapp-backend/api/v1/services'
+  ) {
     const body = await readBody(req);
     const service = {
       id: `svc-${nextServiceId++}`,
@@ -350,11 +410,17 @@ const server = createServer(async (req, res) => {
     return sendJson(res, 201, service);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/services/my-services') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/services/my-services'
+  ) {
     return sendJson(res, 200, clientServices);
   }
 
-  if (req.method === 'POST' && url.pathname === '/tekoapp-backend/api/v1/categories') {
+  if (
+    req.method === 'POST' &&
+    url.pathname === '/tekoapp-backend/api/v1/categories'
+  ) {
     const body = await readBody(req);
     const category = {
       id: nextCategoryId++,
@@ -379,36 +445,56 @@ const server = createServer(async (req, res) => {
     /^\/tekoapp-backend\/api\/v1\/categories\/(\d+)\/toggle-visibility$/,
   );
   if (req.method === 'PATCH' && toggleVisibilityMatch) {
-    const category = categories.find((c) => c.id === Number(toggleVisibilityMatch[1]));
-    if (!category) return sendJson(res, 404, { message: 'Categoría no encontrada' });
+    const category = categories.find(
+      (c) => c.id === Number(toggleVisibilityMatch[1]),
+    );
+    if (!category)
+      return sendJson(res, 404, { message: 'Categoría no encontrada' });
     category.isVisible = !category.isVisible;
     return sendJson(res, 200, category);
   }
 
-  const categoryByIdMatch = url.pathname.match(/^\/tekoapp-backend\/api\/v1\/categories\/(\d+)$/);
+  const categoryByIdMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/categories\/(\d+)$/,
+  );
   if (req.method === 'PATCH' && categoryByIdMatch) {
     const body = await readBody(req);
-    const category = categories.find((c) => c.id === Number(categoryByIdMatch[1]));
-    if (!category) return sendJson(res, 404, { message: 'Categoría no encontrada' });
+    const category = categories.find(
+      (c) => c.id === Number(categoryByIdMatch[1]),
+    );
+    if (!category)
+      return sendJson(res, 404, { message: 'Categoría no encontrada' });
     Object.assign(category, body);
     return sendJson(res, 200, category);
   }
   if (req.method === 'DELETE' && categoryByIdMatch) {
-    const index = categories.findIndex((c) => c.id === Number(categoryByIdMatch[1]));
-    if (index === -1) return sendJson(res, 404, { message: 'Categoría no encontrada' });
+    const index = categories.findIndex(
+      (c) => c.id === Number(categoryByIdMatch[1]),
+    );
+    if (index === -1)
+      return sendJson(res, 404, { message: 'Categoría no encontrada' });
     categories.splice(index, 1);
     return sendJson(res, 204, null);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/payments/me') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/payments/me'
+  ) {
     return sendJson(res, 200, payments);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/payments') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/payments'
+  ) {
     return sendJson(res, 200, payments);
   }
 
-  if (req.method === 'GET' && url.pathname === '/tekoapp-backend/api/v1/tips/config') {
+  if (
+    req.method === 'GET' &&
+    url.pathname === '/tekoapp-backend/api/v1/tips/config'
+  ) {
     return sendJson(res, 200, FAKE_TIP_CONFIG);
   }
 
@@ -567,9 +653,95 @@ const server = createServer(async (req, res) => {
     if (!professional) {
       return sendJson(res, 404, { message: 'Profesional no encontrado' });
     }
+    // Contrato: `notes` es obligatorio (con trim) al rechazar.
+    if (!body.isVerified && !String(body.notes ?? '').trim()) {
+      return sendJson(res, 400, {
+        message: 'notes es obligatorio al rechazar',
+      });
+    }
+    const fromStatus = professional.status;
     professional.verificationStatus = body.isVerified ? 'VERIFIED' : 'REJECTED';
-    if (body.isVerified) professional.status = 'APPROVED';
+    professional.status = body.isVerified ? 'APPROVED' : 'REJECTED';
+    recordStatusChange(
+      professional,
+      body.isVerified ? 'VERIFY' : 'REJECT',
+      fromStatus,
+      body.notes,
+    );
     return sendJson(res, 200, professional);
+  }
+
+  // POST /professionals/:id/suspend (APPROVED -> SUSPENDED, `reason` obligatorio) y
+  // POST /professionals/:id/reactivate (SUSPENDED -> APPROVED, `reason` obligatorio, sin
+  // disponibilidad ni conexion). Cualquier otro estado -> 409.
+  const transitionMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/professionals\/(\d+)\/(suspend|reactivate)$/,
+  );
+  if (req.method === 'POST' && transitionMatch) {
+    const body = await readBody(req);
+    const professional = professionals.find(
+      (p) => p.id === Number(transitionMatch[1]),
+    );
+    if (!professional) {
+      return sendJson(res, 404, { message: 'Profesional no encontrado' });
+    }
+    const reactivating = transitionMatch[2] === 'reactivate';
+    if (!String(body.reason ?? '').trim()) {
+      return sendJson(res, 400, { message: 'reason es obligatorio' });
+    }
+    const expected = reactivating ? 'SUSPENDED' : 'APPROVED';
+    if (professional.status !== expected) {
+      return sendJson(res, 409, {
+        message: 'Estado invalido para la transicion',
+      });
+    }
+    professional.status = reactivating ? 'APPROVED' : 'SUSPENDED';
+    if (reactivating) {
+      professional.isAvailable = false;
+      professional.isOnline = false;
+    }
+    recordStatusChange(
+      professional,
+      reactivating ? 'REACTIVATE' : 'SUSPEND',
+      expected,
+      body.reason,
+    );
+    return sendJson(res, 200, professional);
+  }
+
+  // GET /professionals/reference/:referenceId (detalle admin).
+  const professionalByRefMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/professionals\/reference\/([^/]+)$/,
+  );
+  if (req.method === 'GET' && professionalByRefMatch) {
+    const professional = professionals.find(
+      (p) => p.referenceId === professionalByRefMatch[1],
+    );
+    if (!professional) {
+      return sendJson(res, 404, { message: 'Profesional no encontrado' });
+    }
+    return sendJson(res, 200, professional);
+  }
+
+  // GET /professionals/:id/status-history: mas reciente primero.
+  const statusHistoryMatch = url.pathname.match(
+    /^\/tekoapp-backend\/api\/v1\/professionals\/(\d+)\/status-history$/,
+  );
+  if (req.method === 'GET' && statusHistoryMatch) {
+    const all = (statusHistory.get(Number(statusHistoryMatch[1])) ?? [])
+      .slice()
+      .reverse();
+    const page = Number(url.searchParams.get('page') ?? '1');
+    const pageSize = Number(url.searchParams.get('pageSize') ?? '10');
+    return sendJson(res, 200, {
+      data: all.slice((page - 1) * pageSize, page * pageSize),
+      pagination: {
+        total: all.length,
+        page,
+        pageSize,
+        totalPages: Math.ceil(all.length / pageSize),
+      },
+    });
   }
 
   if (
@@ -641,12 +813,14 @@ const server = createServer(async (req, res) => {
     });
   }
 
-  sendJson(res, 404, { message: `Fake backend: ruta no implementada ${req.method} ${url.pathname}` });
+  sendJson(res, 404, {
+    message: `Fake backend: ruta no implementada ${req.method} ${url.pathname}`,
+  });
 });
 
 // Bind explícito a 127.0.0.1 (no "localhost"/dual-stack) — Playwright resuelve "localhost" a
 // ::1 primero en este entorno y su chequeo de webServer.url no encuentra el puerto si el server
 // solo escucha en IPv4 por default (mismo tipo de bug que Redis/WSL2 en esta sesión).
-server.listen(PORT, "127.0.0.1", () => {
+server.listen(PORT, '127.0.0.1', () => {
   console.log(`Fake backend escuchando en http://127.0.0.1:${PORT}`);
 });

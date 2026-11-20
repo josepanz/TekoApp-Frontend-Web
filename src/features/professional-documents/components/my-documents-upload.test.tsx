@@ -1,8 +1,16 @@
+/**
+ * Suite: subida de documentos propios del profesional (MyDocumentsUpload), incl. el flujo de
+ * consentimiento requerido.
+ * Casos: CP-WEB-ONB-001..002 (ver test/qa/casos/CP-ONB.md)
+ * Tipo: unitaria (componente + MSW)   Prioridad: P1
+ * Precondiciones: handlers MSW de professional-documents; sin backend real.
+ * Trazabilidad: DEF-WEB-004 (403 CONSENT_REQUIRED sin forma de aceptar), plan maestro M3.
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { HttpResponse, http } from 'msw';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { render, screen } from '@/test/render';
+import { render, screen, waitFor, within } from '@/test/render';
 import { server } from '@/test/msw/server';
 import { createTestQueryClient } from '@/test/query-client';
 import {
@@ -107,5 +115,130 @@ describe('MyDocumentsUpload', () => {
 
     // Assert: tras subir, el tipo pasa a mostrar el botón "Reemplazar" en vez de "Subir"
     await screen.findByRole('button', { name: 'Reemplazar' });
+  });
+
+  // CP-WEB-ONB-001 / DEF-WEB-004
+  it('CP-WEB-ONB-001 ante 403 CONSENT_REQUIRED ofrece aceptar el consentimiento y reintenta la subida', async () => {
+    // Arrange
+    let uploads = 0;
+    const accepted: string[] = [];
+    server.use(
+      http.post('/api/backend/professionals/me/documents', () => {
+        uploads += 1;
+        if (accepted.length === 0) {
+          return HttpResponse.json(
+            {
+              success: false,
+              error: {
+                code: 403,
+                message: 'Necesitás aceptar el documento legal vigente',
+                error: 'Forbidden',
+                errorCode: 'CONSENT_REQUIRED',
+                timestamp: '2026-10-13T10:00:00.000Z',
+                path: '/x',
+              },
+            },
+            { status: 403 },
+          );
+        }
+        return HttpResponse.json(buildProfessionalDocument(), { status: 201 });
+      }),
+      http.get('/api/backend/legal/consents/pending', () =>
+        HttpResponse.json([
+          {
+            referenceId: 'v-datos',
+            documentType: 'DATA_PROCESSING_CONSENT',
+            version: 'v1',
+            contentUrl: 'https://legal.example/datos',
+            publishedAt: '2026-10-01T00:00:00.000Z',
+            isActive: true,
+          },
+          {
+            referenceId: 'v-imagen',
+            documentType: 'IMAGE_USAGE_CONSENT',
+            version: 'v1',
+            contentUrl: 'https://legal.example/imagen',
+            publishedAt: '2026-10-01T00:00:00.000Z',
+            isActive: true,
+          },
+        ]),
+      ),
+      http.post(
+        '/api/backend/legal/consents/:versionReferenceId/accept',
+        ({ params }) => {
+          accepted.push(String(params.versionReferenceId));
+          return HttpResponse.json({ referenceId: 'c-1' }, { status: 201 });
+        },
+      ),
+    );
+    const user = userEvent.setup();
+    renderComponent();
+    const input = await screen.findByLabelText(
+      'Archivo para Antecedentes policiales',
+    );
+
+    // Act
+    await user.upload(
+      input,
+      new File(['x'], 'ant.pdf', { type: 'application/pdf' }),
+    );
+    const dialog = await screen.findByTestId('consent-required-dialog');
+    await user.click(
+      within(dialog).getByRole('button', { name: 'Acepto y continuar' }),
+    );
+
+    // Assert: acepta SOLO el consentimiento de datos y reintenta la subida con el mismo archivo
+    await waitFor(() => expect(uploads).toBe(2));
+    expect(accepted).toEqual(['v-datos']);
+    await waitFor(() =>
+      expect(screen.queryByTestId('consent-required-dialog')).toBeNull(),
+    );
+  });
+
+  // CP-WEB-ONB-002 / DEF-WEB-004
+  it('CP-WEB-ONB-002 si el usuario cancela el diálogo de consentimiento no reintenta la subida', async () => {
+    // Arrange
+    let uploads = 0;
+    server.use(
+      http.post('/api/backend/professionals/me/documents', () => {
+        uploads += 1;
+        return HttpResponse.json(
+          {
+            success: false,
+            error: {
+              code: 403,
+              message: 'Necesitás aceptar el documento legal vigente',
+              error: 'Forbidden',
+              errorCode: 'CONSENT_REQUIRED',
+              timestamp: '2026-10-13T10:00:00.000Z',
+              path: '/x',
+            },
+          },
+          { status: 403 },
+        );
+      }),
+      http.get('/api/backend/legal/consents/pending', () =>
+        HttpResponse.json([]),
+      ),
+    );
+    const user = userEvent.setup();
+    renderComponent();
+    const input = await screen.findByLabelText(
+      'Archivo para Antecedentes policiales',
+    );
+
+    // Act
+    await user.upload(
+      input,
+      new File(['x'], 'ant.pdf', { type: 'application/pdf' }),
+    );
+    const dialog = await screen.findByTestId('consent-required-dialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Cancelar' }));
+
+    // Assert
+    await waitFor(() =>
+      expect(screen.queryByTestId('consent-required-dialog')).toBeNull(),
+    );
+    expect(uploads).toBe(1);
   });
 });

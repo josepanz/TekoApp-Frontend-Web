@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { ApiError } from '@/core/api-client/errors';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -16,12 +18,31 @@ export function ProfessionalDetailCard({
   const t = useTranslations('browseProfessionals');
   const {
     data: professional,
+    error,
     isPending,
     isError,
   } = useProfessionalDetailQuery(referenceId);
 
   if (isPending) {
     return <Skeleton className="h-64 max-w-xl" />;
+  }
+
+  // 404: el profesional no existe o todavía no está aprobado (el backend no distingue a propósito).
+  if (error instanceof ApiError && error.status === 404) {
+    return (
+      <div
+        data-testid="professional-not-found"
+        className="flex max-w-xl flex-col items-start gap-3"
+      >
+        <p className="font-medium">{t('detail.notFoundTitle')}</p>
+        <p className="text-muted-foreground">
+          {t('detail.notFoundDescription')}
+        </p>
+        <Link href="/profesionales" className="text-primary text-sm underline">
+          {t('detail.backToList')}
+        </Link>
+      </div>
+    );
   }
 
   if (isError || !professional) {

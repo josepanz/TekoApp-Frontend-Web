@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { ApiError } from '@/core/api-client/errors';
+import { isConsentRequiredError } from '@/features/legal-consents/api';
 import {
   deletePortfolioItem,
   getAdminPortfolioQueue,
@@ -53,6 +54,9 @@ export function usePresignedUrlQuery(key: string) {
     queryKey: ['uploads', 'presigned-url', key],
     queryFn: () => getPresignedUrl(key),
     enabled: !!key,
+    // Un 403/404 del presigned lo resuelve el componente (placeholder): no debe tumbar la pagina
+    // entera con la pantalla de sin acceso del error boundary.
+    throwOnError: false,
   });
 }
 
@@ -68,6 +72,8 @@ export function useUploadPortfolioItemMutation() {
       toast.success('Foto subida — queda pendiente de revisión.');
     },
     onError: (error) => {
+      // 403 CONSENT_REQUIRED: el componente abre el diálogo de aceptación, no es un error a mostrar.
+      if (isConsentRequiredError(error)) return;
       toast.error(getErrorMessage(error, 'No se pudo subir la foto.'));
     },
   });

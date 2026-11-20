@@ -11,7 +11,8 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   retries: 0,
-  timeout: 60_000,
+  // Los specs cruzados (varios roles + escaneo axe sobre tablas que crecen entre corridas) pasan los 60 s.
+  timeout: 120_000,
   expect: { timeout: 10_000 },
   reporter: 'html',
   use: {
@@ -26,7 +27,7 @@ export default defineConfig({
     command: 'node scripts/e2e-real/serve.mjs',
     url: `http://127.0.0.1:${PORT}/api/health`,
     // Siempre fresco: la clave RSA del backend cambia por corrida.
-    reuseExistingServer: false,
+    reuseExistingServer: process.env.E2E_REAL_REUSE === '1',
     timeout: 360_000,
     stdout: 'pipe',
     stderr: 'pipe',

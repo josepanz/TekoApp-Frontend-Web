@@ -29,6 +29,9 @@ const NAME_EDITED = `${NAME}-editada`;
 
 async function optionNames(page: Page): Promise<string[]> {
   await page.getByLabel('Categoría').click();
+  // Espera a que carguen las opciones: leerlas apenas abre el select puede devolver [] (flaky de
+  // test visto en la corrida 2 del 2026-10-13: las categorias llegan por una request aparte).
+  await expect(page.getByRole('option').first()).toBeVisible();
   const names = await page.getByRole('option').allInnerTexts();
   await page.keyboard.press('Escape');
   return names.map((n) => n.trim());

@@ -37,6 +37,10 @@ Mismos archivos que 2.1 cuando el test monta tabla/formulario completo con provi
 
 Playwright (`playwright.real.config.ts`, specs en `e2e/real/`) contra el backend real de e2e del repo TekoApp-Backend (`pnpm e2e:up && pnpm e2e:seed && pnpm e2e:serve`, puerto 3100) con usuarios fixture por rol (admin, cliente_a, pro_aprobado, compliance). `scripts/e2e-real/serve.mjs` levanta el build standalone de Next y lee el secret y la clave pública RSA de ESA corrida (nunca commiteados). Cada página visitada se escanea con axe (`CP-A11Y.md`); las violaciones serious/critical se documentan como `DEF-WEB` y no fallan el run. Casos en `CP-AUTH.md` (101..111), `CP-CAT.md` y `CP-A11Y.md`; informe tipo `e2e-real` (`pnpm qa:e2e-real`). Cobertura actual: M1 y M2; M3..M11 en oleadas siguientes. El fake-backend (2.4) sigue siendo el e2e del CI.
 
+### 2.6 e2e real: oleada W2 (M3 Onboarding profesional y M4 Marketplace)
+
+Specs `onboarding-profesional`, `marketplace`, `imagenes-presigned` y `backend-contrato-w2` en `e2e/real/`, contra el backend de la rama `test/e2e-w2-onboarding-marketplace`. Cubren flujos que cruzan roles con **varios `browser.newContext()` en el mismo test** (usuario nuevo → admin → cliente; cliente ↔ profesional con dos pestañas para el 409), el IDOR por UI, las vistas con URL presignada (placeholder ante 403/404) y el contrato de servicios, ofertas, profesionales y uploads por el BFF. Los defectos de backend se registran como `DEF-BE-0NN` con `test.fail()` (no se toca el backend) y los de Web se corrigen en la rama, uno por commit, con su prueba unitaria. Casos: `casos/CP-ONB.md`, `casos/CP-MKT.md` y `casos/CP-A11Y.md`.
+
 ## 3. Entornos
 
 | Entorno        | Composición                                          | Uso              |
@@ -44,7 +48,7 @@ Playwright (`playwright.real.config.ts`, specs en `e2e/real/`) contra el backend
 | Local unit     | Node >= 22, jsdom                                    | `qa:unit`        |
 | Local e2e fake | Node >= 22, Chromium, fake-backend :4000, Next :3001 | `qa:e2e`         |
 | CI             | GitLab/GitHub CI (lint → typecheck → unit → e2e)     | regresión por PR |
-| Real (W1)      | compose backend + Postgres + Mongo + Redis           | pendiente        |
+| Real (W1, W2)  | compose backend + Postgres + Mongo + Redis + MinIO   | `qa:e2e-real`    |
 
 ## 4. Criterios
 

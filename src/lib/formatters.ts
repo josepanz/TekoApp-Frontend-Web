@@ -83,3 +83,22 @@ export function formatDate(
 ): string {
   return getDateFormatter(resolveIntlLocale(locale)).format(new Date(value));
 }
+
+const dateTimeFormatters = new Map<string, Intl.DateTimeFormat>();
+
+// Fecha y hora cortas localizadas (zona horaria del entorno, igual que `formatDate`).
+export function formatDateTime(
+  value: string | number | Date,
+  locale: AppLocale = defaultLocale,
+): string {
+  const intlLocale = resolveIntlLocale(locale);
+  let formatter = dateTimeFormatters.get(intlLocale);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(intlLocale, {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    });
+    dateTimeFormatters.set(intlLocale, formatter);
+  }
+  return formatter.format(new Date(value));
+}

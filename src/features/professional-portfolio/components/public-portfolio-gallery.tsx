@@ -2,8 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PresignedImage } from '@/features/uploads/components/presigned-image';
 import type { PortfolioItem } from '../api';
-import { usePresignedUrlQuery, usePublicPortfolioQuery } from '../hooks';
+import { usePublicPortfolioQuery } from '../hooks';
 
 // Galería visible para un cliente navegando el perfil público de un profesional — solo lo
 // aprobado + visible ya llega filtrado por el backend (`GET .../portfolio/public`), acá no hay
@@ -38,16 +39,9 @@ export function PublicPortfolioGallery({
 }
 
 function PublicPortfolioPhoto({ item }: { item: PortfolioItem }) {
-  const { data: presignedUrl, isPending } = usePresignedUrlQuery(item.fileKey);
-
-  if (isPending || !presignedUrl) {
-    return <Skeleton className="aspect-square rounded-md" />;
-  }
-
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={presignedUrl.url}
+    <PresignedImage
+      fileKey={item.fileKey}
       alt={item.caption ?? ''}
       className="aspect-square rounded-md object-cover"
     />

@@ -35,7 +35,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [
     {
-      command: `node e2e/fake-backend/server.mjs`,
+      command: `node scripts/qa/tee.mjs fake-backend node e2e/fake-backend/server.mjs`,
       // `port` (no `url`): Playwright solo espera que el puerto acepte conexiones TCP — el
       // fake-backend no tiene healthcheck propio y devuelve 404 en "/", que `url` NO acepta
       // como señal de "listo" (solo 2xx/3xx/400-403).
@@ -50,7 +50,7 @@ export default defineConfig({
       // después de que Playwright ya interactuó con el HTML servido por SSR, causando un
       // submit nativo del <form> (GET con los campos como query string) en vez del handler de
       // React — no reproducible contra un build real.
-      command: 'pnpm build && pnpm start',
+      command: 'pnpm build && node scripts/qa/tee.mjs next pnpm start',
       url: 'http://127.0.0.1:3001',
       reuseExistingServer: !process.env.CI,
       timeout: 180_000,

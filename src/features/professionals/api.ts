@@ -13,6 +13,12 @@ export type VerifyProfessionalRequest =
   components['schemas']['VerifyProfessionalRequestDTO'];
 export type SuspendProfessionalRequest =
   components['schemas']['SuspendProfessionalRequestDTO'];
+export type ReactivateProfessionalRequest =
+  components['schemas']['ReactivateProfessionalRequestDTO'];
+export type ProfessionalStatusHistoryResponse =
+  components['schemas']['ProfessionalStatusHistoryResponseDTO'];
+export type ProfessionalStatusHistoryItem =
+  components['schemas']['ProfessionalStatusHistoryItemDTO'];
 
 // El Swagger no nombra un DTO para el query de este listado — los params viven inline en la
 // operación (`ProfessionalsController_getProfessionals`). Se referencia `operations[...]` en vez
@@ -63,6 +69,31 @@ export function suspendProfessional(
     method: 'POST',
     body: JSON.stringify(dto),
   });
+}
+
+// POST /professionals/{id}/reactivate: SUSPENDED -> APPROVED (isAvailable/isOnline en false). `reason` obligatorio.
+export function reactivateProfessional(
+  id: number,
+  dto: ReactivateProfessionalRequest,
+): Promise<Professional> {
+  return apiFetch<Professional>(`professionals/${id}/reactivate`, {
+    method: 'POST',
+    body: JSON.stringify(dto),
+  });
+}
+
+// GET /professionals/{id}/status-history: transiciones de estado, mas recientes primero (pageSize max 100).
+export function getProfessionalStatusHistory(
+  id: number,
+  params: { page: number; pageSize: number },
+): Promise<ProfessionalStatusHistoryResponse> {
+  const query = new URLSearchParams({
+    page: String(params.page),
+    pageSize: String(params.pageSize),
+  });
+  return apiFetch<ProfessionalStatusHistoryResponse>(
+    `professionals/${id}/status-history?${query.toString()}`,
+  );
 }
 
 // GET /admin/professionals/export (AdminProfessionalsExportController_export) — CSV solamente,

@@ -17,6 +17,12 @@ export function usePendingServicesQuery(params: GetPendingServicesParams) {
     queryKey: ['professional-requests', params],
     queryFn: () => getPendingServices(params),
     placeholderData: keepPreviousData,
+    // El 403 de un profesional no aprobado lo explica la propia tabla (y el banner de estado): no
+    // debe tumbar toda el area /pro con la pantalla de sin acceso del error boundary.
+    throwOnError: false,
+    // Un 4xx (p. ej. 403 de un profesional no aprobado) no se arregla reintentando.
+    retry: (failureCount, error) =>
+      !(error instanceof ApiError && error.status < 500) && failureCount < 2,
   });
 }
 
@@ -34,6 +40,16 @@ export function useAcceptServiceMutation() {
       });
     },
     onError: (error) => {
+      // 409: otro profesional ya aceptó la solicitud (o el cliente la canceló): se refresca la
+      // lista para que desaparezca (DEF-WEB-011).
+      if (error instanceof ApiError && error.status === 409) {
+        void queryClient.invalidateQueries({
+          queryKey: ['professional-requests'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['professional-services'],
+        });
+      }
       toast.error(
         error instanceof ApiError
           ? error.message

@@ -9,6 +9,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { openLog, teeChild } from '../qa/tee.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const BACKEND_API_URL =
@@ -61,9 +62,12 @@ if (process.env.E2E_REAL_SKIP_BUILD !== '1') {
   if (build.status !== 0) process.exit(build.status ?? 1);
 }
 
+// stdout/stderr de Next: se muestran y, con `QA_LOGS_DIR` (lo define `qa:e2e-real`), se guardan en
+// `<QA_LOGS_DIR>/next.log` para el resumen de logs del informe (QA-DOC-STANDARD.md §3.7).
+const nextLog = openLog('next');
 const server = spawn(process.execPath, ['.next/standalone/server.js'], {
   cwd: ROOT,
-  stdio: 'inherit',
+  stdio: ['ignore', 'pipe', 'pipe'],
   env: {
     ...process.env,
     PORT,
@@ -76,7 +80,11 @@ const server = spawn(process.execPath, ['.next/standalone/server.js'], {
     BACKEND_SOCKET_URL: new URL(BACKEND_API_URL).origin,
   },
 });
+teeChild(server, nextLog);
 for (const sig of ['SIGINT', 'SIGTERM']) {
   process.on(sig, () => server.kill(sig));
 }
-server.on('exit', (code) => process.exit(code ?? 0));
+server.on('exit', (code) => {
+  nextLog?.end();
+  process.exit(code ?? 0);
+});

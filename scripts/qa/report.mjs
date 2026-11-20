@@ -8,6 +8,10 @@
  *     test/qa/informes/AAAA-MM-DD_<tipo>_<rama-corta>.md
  *   - Si el informe ya existe, conserva lo escrito a mano (secciones 3, 4 y 6) en vez de pisarlo.
  *   - Variables: QA_EXECUTOR (ejecutor, default "humano").
+ *   - Logs de servicios (§3.7): guarda en test/qa/informes/artefactos/<tipo>/logs/ el log de Next
+ *     (`next.log`, via QA_LOGS_DIR), el del backend e2e (e2e-real: QA_BACKEND_LOG, default
+ *     artefactos/backend-e2e-serve.log, solo lo escrito durante la corrida) y `docker compose logs`
+ *     por contenedor (e2e-real: QA_BACKEND_DIR, default ../TekoApp-Backend). Los resume en la seccion 7.
  *   - Devuelve el exit code del runner, pero el informe se escribe siempre.
  */
 import { spawnSync } from 'node:child_process';
@@ -16,8 +20,16 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
+  rmSync,
+  statSync,
   writeFileSync,
 } from 'node:fs';
+import {
+  analyzeLog,
+  hasBlockingSignals,
+  isHttp4xxException,
+  unexplainedErrors,
+} from './log-parser.mjs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -70,6 +82,18 @@ if (type === 'unit') {
     PLAYWRIGHT_HTML_OPEN: 'never',
   };
 }
+// ---------- 1b. captura de logs de servicios (§3.7) ----------
+const logsDir = join(ARTEFACTOS, type, 'logs');
+rmSync(logsDir, { recursive: true, force: true });
+mkdirSync(logsDir, { recursive: true });
+env = { ...env, QA_LOGS_DIR: logsDir };
+const backendLog =
+  process.env.QA_BACKEND_LOG ?? join(ARTEFACTOS, 'backend-e2e-serve.log');
+const backendDir =
+  process.env.QA_BACKEND_DIR ?? join(ROOT, '..', 'TekoApp-Backend');
+const composeFile = join(backendDir, 'docker-compose.e2e.yml');
+const backendOffset =
+  type === 'e2e-real' && existsSync(backendLog) ? statSync(backendLog).size : 0;
 const startedAt = new Date();
 const run = spawnSync(command, {
   shell: true,
@@ -84,6 +108,39 @@ if (!existsSync(jsonOut)) {
   process.exit(run.status ?? 1);
 }
 const data = JSON.parse(readFileSync(jsonOut, 'utf8'));
+
+if (type === 'e2e-real') {
+  if (existsSync(backendLog)) {
+    writeFileSync(
+      join(logsDir, 'backend.log'),
+      readFileSync(backendLog).subarray(backendOffset),
+    );
+  } else {
+    console.warn(
+      `Sin log del backend (${backendLog}): ¿se redirigio e2e:serve?`,
+    );
+  }
+  if (existsSync(composeFile)) {
+    const compose = `docker compose -f "${composeFile}"`;
+    const services = spawnSync(`${compose} config --services`, {
+      shell: true,
+      encoding: 'utf8',
+    })
+      .stdout.split(/\r?\n/)
+      .map((x) => x.trim())
+      .filter(Boolean);
+    for (const svc of services) {
+      const r = spawnSync(
+        `${compose} logs --no-color --since ${startedAt.toISOString()} ${svc}`,
+        { shell: true, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 },
+      );
+      writeFileSync(
+        join(logsDir, `docker-${svc}.log`),
+        `${r.stdout ?? ''}${r.stderr ?? ''}`,
+      );
+    }
+  }
+}
 
 // ---------- 2. mapa archivo/test -> CP- desde casos/*.md ----------
 const cpByTest = new Map(); // "archivo::nombre" -> ID
@@ -328,6 +385,47 @@ if (type === 'e2e-real') {
   }
 }
 
+// ---------- 5c. resumen de logs de servicios ----------
+const logAnalyses = existsSync(logsDir)
+  ? readdirSync(logsDir)
+      .filter((n) => n.endsWith('.log'))
+      .sort()
+      .map((n) => ({
+        service: n.replace(/\.log$/, ''),
+        file: rel(join(logsDir, n)),
+        a: analyzeLog(readFileSync(join(logsDir, n), 'utf8')),
+      }))
+  : [];
+const blocking = logAnalyses.filter((l) => hasBlockingSignals(l.a));
+let logsMd = '';
+if (type === 'unit') {
+  logsMd =
+    'No aplica: las pruebas unitarias corren en jsdom y no levantan servicios.\n';
+} else if (logAnalyses.length === 0) {
+  logsMd = 'Sin logs capturados en esta corrida.\n';
+} else {
+  logsMd +=
+    '| Servicio | Líneas | ERROR/FATAL | de ellos HTTP 4xx manejados | 5xx | No manejados | WARN | Archivo |\n|---|---|---|---|---|---|---|---|\n';
+  for (const { service, file, a } of logAnalyses)
+    logsMd += `| ${service} | ${a.lines} | ${a.error} (FATAL ${a.fatal}) | ${a.http4xx} | ${a.fivexx} | ${a.unhandled} | ${a.warn} | \`${file}\` |\n`;
+  for (const { service, a } of logAnalyses) {
+    if (a.groups.length) {
+      logsMd += `\n**${service}** — errores agrupados por excepción (top 15):\n\n| Excepción: mensaje | Veces | Tipo |\n|---|---|---|\n`;
+      for (const g of a.groups.slice(0, 15))
+        logsMd += `| ${esc(g.key)} | ${g.n} | ${isHttp4xxException(g.key) ? '4xx manejado' : 'INTERNO (5xx)'} |\n`;
+    }
+    if (a.firstErrors.length === 0) continue;
+    logsMd += `\n**${service}** — primeras ${a.firstErrors.length} líneas de error:\n\n\`\`\`text\n${a.firstErrors.join('\n')}\n\`\`\`\n`;
+  }
+  const unexplained = logAnalyses.filter((l) => unexplainedErrors(l.a) > 0);
+  if (unexplained.length) {
+    logsMd += `\nERROR que no son una excepción HTTP 4xx manejada: ${unexplained.map((l) => `${l.service} (${unexplainedErrors(l.a)})`).join(', ')}. Revisarlos a mano.\n`;
+  }
+  if (blocking.length) {
+    logsMd += `\n**Señales bloqueantes** (5xx o errores no manejados) en: ${blocking.map((l) => l.service).join(', ')}. Con todos los tests en verde esto impide el veredicto APROBADO salvo que cada una quede explicada abajo y mapeada a un CP negativo esperado (o registrada como DEF).\n`;
+  }
+}
+
 // ---------- 6. encabezado + secciones ----------
 const branch = sh('git rev-parse --abbrev-ref HEAD');
 const short =
@@ -353,16 +451,25 @@ const reportDir =
 const evidencia =
   type === 'unit'
     ? `- JSON crudo de vitest: \`${rel(jsonOut)}\` (ignorado por git, regenerable).\n- Cobertura HTML: \`${rel(join(ARTEFACTOS, 'unit-coverage', 'index.html'))}\` (ignorado por git).`
-    : `- Reporte HTML de Playwright: \`${rel(join(ARTEFACTOS, reportDir, 'index.html'))}\` (abrir con \`pnpm exec playwright show-report ${rel(join(ARTEFACTOS, reportDir))}\`; ignorado por git).\n- JSON crudo: \`${rel(jsonOut)}\` (ignorado por git).\n- Trazas/capturas de fallos: \`test-results/\` (ignorado por git).`;
+    : `- Reporte HTML de Playwright: \`${rel(join(ARTEFACTOS, reportDir, 'index.html'))}\` (abrir con \`pnpm exec playwright show-report ${rel(join(ARTEFACTOS, reportDir))}\`; ignorado por git).\n- JSON crudo: \`${rel(jsonOut)}\` (ignorado por git).\n- Trazas/capturas de fallos: \`test-results/\` (ignorado por git).
+- Logs de servicios: \`${rel(logsDir)}/\` (ignorado por git; resumen en la sección 7).`;
 
 // Preservar lo escrito a mano si el informe ya existe.
 const manual = {
   3: '_Completar a mano: ID `DEF-WEB-NNN`, severidad, caso que lo detectó, repro y estado. Si no hay, escribir "Ninguno"._',
   4: '_Completar a mano: flakies, timeouts, entorno y omitidos con su motivo._',
   6: '_Completar a mano: APROBADO / APROBADO CON OBSERVACIONES / RECHAZADO, con su criterio._',
+  7: blocking.length
+    ? '_SIN EXPLICAR: completar a mano cada 5xx / error no manejado con su CP negativo esperado o su DEF. Mientras tanto el veredicto no puede ser APROBADO._'
+    : '_Sin señales bloqueantes._',
 };
 if (existsSync(outFile)) {
   const prev = readFileSync(outFile, 'utf8');
+  const mm = prev.match(
+    /### Explicación de señales\n\n([\s\S]*?)(?=\n## \d\. |$)/,
+  );
+  if (mm && mm[1].trim() && !/SIN EXPLICAR|Sin señales bloqueantes/.test(mm[1]))
+    manual[7] = mm[1].trim();
   for (const n of [3, 4, 6]) {
     const m = prev.match(
       new RegExp(`## ${n}\\. [^\\n]*\\n\\n([\\s\\S]*?)(?=\\n## \\d\\. |$)`),
@@ -418,6 +525,13 @@ ${evidencia}
 ## 6. Veredicto
 
 ${manual[6]}
+
+## 7. Logs de servicios
+
+${logsMd}
+### Explicación de señales
+
+${manual[7]}
 `;
 writeFileSync(outFile, md);
 console.log(`Informe escrito: ${rel(outFile)}`);

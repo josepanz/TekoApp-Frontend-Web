@@ -15,15 +15,17 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { PresignedImage } from '@/features/uploads/components/presigned-image';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
+import { isConsentRequiredError } from '@/features/legal-consents/api';
+import { ConsentRequiredDialog } from '@/features/legal-consents/components/consent-required-dialog';
 import type { PortfolioItem, PortfolioReviewStatus } from '../api';
 import {
   useDeletePortfolioItemMutation,
   useMyPortfolioQuery,
-  usePresignedUrlQuery,
   useUpdatePortfolioItemMutation,
   useUploadPortfolioItemMutation,
 } from '../hooks';
@@ -45,12 +47,31 @@ export function MyPortfolioManager() {
   const { data, isPending, isError } = useMyPortfolioQuery();
   const uploadMutation = useUploadPortfolioItemMutation();
   const inputRef = useRef<HTMLInputElement>(null);
+  // Subida bloqueada por 403 CONSENT_REQUIRED: se conserva el archivo para reintentar al aceptar.
+  const [blockedFile, setBlockedFile] = useState<File | null>(null);
+
+  function upload(file: File) {
+    uploadMutation.mutate(
+      { file },
+      {
+        onError: (error) => {
+          if (isConsentRequiredError(error)) setBlockedFile(file);
+        },
+      },
+    );
+  }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     event.target.value = '';
     if (!file) return;
-    uploadMutation.mutate({ file });
+    upload(file);
+  }
+
+  function handleConsentAccepted() {
+    const file = blockedFile;
+    setBlockedFile(null);
+    if (file) upload(file);
   }
 
   return (
@@ -77,6 +98,15 @@ export function MyPortfolioManager() {
         />
       </div>
 
+      <ConsentRequiredDialog
+        documentType="IMAGE_USAGE_CONSENT"
+        open={blockedFile !== null}
+        onOpenChange={(open) => {
+          if (!open) setBlockedFile(null);
+        }}
+        onAccepted={handleConsentAccepted}
+      />
+
       {isPending && <Skeleton className="h-48" />}
       {isError && <p className="text-muted-foreground">{t('loadError')}</p>}
       {!isPending && !isError && data.data.length === 0 && (
@@ -95,7 +125,6 @@ export function MyPortfolioManager() {
 
 function PortfolioItemCard({ item }: { item: PortfolioItem }) {
   const t = useTranslations('professionalPortfolio');
-  const { data: presignedUrl } = usePresignedUrlQuery(item.fileKey);
   const updateMutation = useUpdatePortfolioItemMutation();
   const deleteMutation = useDeletePortfolioItemMutation();
   const [caption, setCaption] = useState(item.caption ?? '');
@@ -112,16 +141,11 @@ function PortfolioItemCard({ item }: { item: PortfolioItem }) {
   return (
     <div className="border-border flex flex-col gap-3 rounded-lg border p-3">
       <div className="bg-muted aspect-square overflow-hidden rounded-md">
-        {presignedUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={presignedUrl.url}
-            alt={item.caption ?? ''}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <Skeleton className="h-full w-full" />
-        )}
+        <PresignedImage
+          fileKey={item.fileKey}
+          alt={item.caption ?? ''}
+          className="h-full w-full object-cover"
+        />
       </div>
 
       <Badge variant={STATUS_VARIANT[item.status]} className="w-fit">

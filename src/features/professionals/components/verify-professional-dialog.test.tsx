@@ -1,3 +1,10 @@
+/**
+ * Suite: VerifyProfessionalDialog (verificar con nota opcional; rechazar con nota obligatoria)
+ * Casos: CP-WEB-ONB-008 (ver test/qa/casos/CP-ONB.md)
+ * Tipo: unitaria (componente + MSW)   Prioridad: P1
+ * Precondiciones: MSW; sin backend real.
+ * Trazabilidad: contrato `POST /professionals/:id/verify` (notes obligatorio al rechazar) y `/suspend` (reason obligatorio).
+ */
 import { QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@/test/render';
 import userEvent from '@testing-library/user-event';
@@ -43,7 +50,7 @@ describe('VerifyProfessionalDialog', () => {
     // Act
     await user.click(screen.getByRole('button', { name: 'Verificar' }));
     await user.type(
-      await screen.findByLabelText('Notas'),
+      await screen.findByLabelText('Notas (opcional)'),
       'Documentación validada',
     );
     await user.click(screen.getByRole('button', { name: 'Confirmar' }));
@@ -82,11 +89,73 @@ describe('VerifyProfessionalDialog', () => {
     // en jsdom vía la secuencia de puntero de `user-event` — `fireEvent.click` es el caso puntual
     // documentado en rules/test.md donde se justifica no usar `user-event`.
     fireEvent.click(screen.getByRole('switch'));
+    await user.type(
+      await screen.findByLabelText('Nota (obligatoria al rechazar)'),
+      'Documentación ilegible',
+    );
     await user.click(screen.getByRole('button', { name: 'Confirmar' }));
 
     // Assert
     await waitFor(() => {
-      expect(onRequest).toHaveBeenCalledWith('7', { isVerified: false });
+      expect(onRequest).toHaveBeenCalledWith('7', {
+        isVerified: false,
+        notes: 'Documentación ilegible',
+      });
     });
+  }, 15000);
+
+  it('CP-WEB-ONB-008 verificar sin nota es válido (la nota es opcional)', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onRequest = vi.fn();
+    server.use(
+      http.post(
+        '/api/backend/professionals/:id/verify',
+        async ({ request }) => {
+          onRequest(await request.json());
+          return HttpResponse.json(
+            buildProfessional({ verificationStatus: 'VERIFIED' }),
+          );
+        },
+      ),
+    );
+    renderDialog();
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Verificar' }));
+    await user.click(await screen.findByRole('button', { name: 'Confirmar' }));
+
+    // Assert
+    await waitFor(() =>
+      expect(onRequest).toHaveBeenCalledWith({ isVerified: true }),
+    );
+  }, 15000);
+
+  it('CP-WEB-ONB-008 rechazar sin nota (vacía o en blanco) muestra el error y no envía', async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onRequest = vi.fn();
+    server.use(
+      http.post('/api/backend/professionals/:id/verify', async () => {
+        onRequest();
+        return HttpResponse.json(buildProfessional({ status: 'REJECTED' }));
+      }),
+    );
+    renderDialog();
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Verificar' }));
+    fireEvent.click(screen.getByRole('switch'));
+    await user.type(
+      await screen.findByLabelText('Nota (obligatoria al rechazar)'),
+      '   ',
+    );
+    await user.click(screen.getByRole('button', { name: 'Confirmar' }));
+
+    // Assert
+    expect(
+      await screen.findByText('La nota es obligatoria al rechazar'),
+    ).toBeInTheDocument();
+    expect(onRequest).not.toHaveBeenCalled();
   }, 15000);
 });

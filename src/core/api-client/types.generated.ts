@@ -901,6 +901,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tekoapp-backend/api/v1/professionals/{id}/status-history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial de cambios de estado del profesional (solo admin)
+         * @description Transiciones verify/reject/suspend/reactivate tomadas del audit-log, más recientes primero. page/pageSize (máx. 100).
+         */
+        get: operations["ProfessionalsController_getStatusHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tekoapp-backend/api/v1/professionals/{id}/verify": {
         parameters: {
             query?: never;
@@ -910,7 +930,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Verificar identidad del profesional (solo admin) */
+        /**
+         * Verificar o rechazar al profesional (solo admin)
+         * @description PENDING/REJECTED -> APPROVED (isVerified=true, nota opcional) o REJECTED (isVerified=false, nota obligatoria).
+         */
         post: operations["ProfessionalsController_verifyProfessional"];
         delete?: never;
         options?: never;
@@ -929,6 +952,26 @@ export interface paths {
         put?: never;
         /** Suspender profesional (solo admin) */
         post: operations["ProfessionalsController_suspendProfessional"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tekoapp-backend/api/v1/professionals/{id}/reactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reactivar un profesional suspendido (solo admin)
+         * @description SUSPENDED -> APPROVED; cualquier otro estado responde 409. El motivo es obligatorio.
+         */
+        post: operations["ProfessionalsController_reactivateProfessional"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4670,19 +4713,56 @@ export interface components {
             /** @example 35 */
             totalRatings: number;
         };
+        StatusHistoryActorDTO: {
+            /** @description referenceId del usuario que hizo el cambio (null si no quedó registrado) */
+            referenceId: string | null;
+            /** @example Ada Lovelace */
+            name: string | null;
+            email: string | null;
+        };
+        ProfessionalStatusHistoryItemDTO: {
+            /** @description id del registro de auditoría (string) */
+            id: string;
+            /** @enum {string} */
+            action: "VERIFY" | "REJECT" | "SUSPEND" | "REACTIVATE" | "STATUS_CHANGE";
+            /** @enum {string} */
+            fromStatus: "PENDING" | "APPROVED" | "REJECTED" | "SUSPENDED";
+            /** @enum {string} */
+            toStatus: "PENDING" | "APPROVED" | "REJECTED" | "SUSPENDED";
+            reason: string | null;
+            /** Format: date-time */
+            changedAt: string;
+            actor: components["schemas"]["StatusHistoryActorDTO"];
+            ipAddress: string | null;
+            userAgent: string | null;
+        };
+        ProfessionalStatusHistoryResponseDTO: {
+            data: components["schemas"]["ProfessionalStatusHistoryItemDTO"][];
+            pagination: components["schemas"]["PaginationResponseDTO"];
+        };
         VerifyProfessionalRequestDTO: {
             /**
              * @description true = verificado, false = rechazado
              * @example true
              */
             isVerified: boolean;
-            /** @description Notas del proceso de verificación */
+            /**
+             * @description Nota del proceso de verificación. Opcional al verificar (isVerified=true), obligatoria al rechazar (isVerified=false). Queda en la auditoría.
+             * @example Documentos válidos
+             */
             notes?: string;
         };
         SuspendProfessionalRequestDTO: {
             /**
              * @description Motivo de la suspensión
              * @example Conducta inapropiada reportada
+             */
+            reason: string;
+        };
+        ReactivateProfessionalRequestDTO: {
+            /**
+             * @description Motivo de la reactivación (obligatorio, queda en la auditoría)
+             * @example Apelación aceptada tras revisar el caso
              */
             reason: string;
         };
@@ -9604,6 +9684,48 @@ export interface operations {
             };
         };
     };
+    ProfessionalsController_getStatusHistory: {
+        parameters: {
+            query?: {
+                /** @description Pagina para paginación de resultados (opcional, por defecto 1) */
+                page?: number;
+                /** @description Tamaño de página (opcional, por defecto 10, máximo 100) */
+                pageSize?: number;
+                /** @description Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por : */
+                orderBy?: string;
+                /** @description Fecha de rango de inicio de consulta */
+                startDate?: string;
+                /** @description Fecha de rango de fin de consulta */
+                endDate?: string;
+                /** @description Código/s de sucursal/es especifica hasta 10 */
+                branches?: string;
+            };
+            header?: never;
+            path: {
+                /** @description ID del profesional */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalStatusHistoryResponseDTO"];
+                };
+            };
+            /** @description Profesional no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     ProfessionalsController_verifyProfessional: {
         parameters: {
             query?: never;
@@ -9653,6 +9775,39 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProfessionalDetailResponseDTO"];
                 };
+            };
+        };
+    };
+    ProfessionalsController_reactivateProfessional: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID del profesional */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReactivateProfessionalRequestDTO"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfessionalDetailResponseDTO"];
+                };
+            };
+            /** @description El profesional no está SUSPENDED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

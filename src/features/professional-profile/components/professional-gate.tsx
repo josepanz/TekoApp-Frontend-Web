@@ -4,13 +4,18 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useMyProfessionalProfileQuery } from '../hooks';
+import { ProfessionalStatusBanner } from './professional-status-banner';
 
 // Gate de acceso al modo Profesional: no hay un rol/claim "profesional" en el JWT — se determina
 // consultando GET /professionals/me una vez (cacheado por TanStack Query) y redirigiendo a "/"
 // si el usuario autenticado no tiene perfil profesional (404).
 export function ProfessionalGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { isPending, isError } = useMyProfessionalProfileQuery();
+  const {
+    data: professional,
+    isPending,
+    isError,
+  } = useMyProfessionalProfileQuery();
 
   useEffect(() => {
     if (isError) {
@@ -30,5 +35,12 @@ export function ProfessionalGate({ children }: { children: React.ReactNode }) {
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {professional && (
+        <ProfessionalStatusBanner status={professional.status} />
+      )}
+      {children}
+    </>
+  );
 }

@@ -488,11 +488,20 @@
       "submit": "Confirm suspension",
       "submitting": "Suspending..."
     },
+    "reactivate": {
+      "trigger": "Reactivate",
+      "title": "Reactivate professional",
+      "description": "Returns to Approved, but offline and unavailable: they must switch availability on themselves.",
+      "reason": "Reason",
+      "submit": "Confirm reactivation",
+      "submitting": "Reactivating..."
+    },
     "verify": {
       "trigger": "Verify",
       "title": "Verify professional",
       "verifiedLabel": "Mark as verified",
-      "notes": "Notes"
+      "notesOptional": "Notes (optional)",
+      "notesRequired": "Note (required when rejecting)"
     },
     "bulk": {
       "verifyButton": "Verify selected ({count})",
@@ -510,6 +519,18 @@
       "suspendPartialResult": "{succeeded} of {total} professionals suspended. {failed} failed: {names}.",
       "suspendFailedAll": "Couldn't suspend any of the {count} selected professionals."
     },
+    "history": {
+      "title": "Status history",
+      "date": "Date",
+      "actor": "Performed by",
+      "change": "Change",
+      "to": "to",
+      "reason": "Reason",
+      "system": "System",
+      "loadError": "Couldn't load the status history.",
+      "emptyTitle": "No status changes",
+      "emptyDescription": "No verifications, suspensions or reactivations have been recorded for this professional yet."
+    },
     "detail": {
       "back": "Back to professionals",
       "loadError": "Couldn't load this professional's profile.",
@@ -524,7 +545,8 @@
       "requiredDocumentsNotVerified": "Required documents not verified",
       "tabs": {
         "profile": "Profile",
-        "documents": "Documents"
+        "documents": "Documents",
+        "history": "History"
       }
     }
   },
@@ -1321,7 +1343,10 @@
       "loadError": "Couldn't load this professional's profile.",
       "rating": "⭐ {rating} ({count} reviews)",
       "hourlyRate": "Hourly rate: {rate}",
-      "experience": "{years} years of experience"
+      "experience": "{years} years of experience",
+      "notFoundTitle": "Professional not available",
+      "notFoundDescription": "This professional does not exist or is not yet available to receive requests.",
+      "backToList": "Back to professionals"
     }
   },
   "requestService": {
@@ -1344,7 +1369,8 @@
         "whatDescription": "Tell us what kind of work you're looking for and a short description.",
         "whereTitle": "Where the job is",
         "whenTitle": "When"
-      }
+      },
+      "mapLabel": "Map to pick the location. You can also enter the latitude and longitude."
     }
   },
   "rateProfessional": {
@@ -1401,6 +1427,31 @@
       "preview": {
         "completion": "Profile completion",
         "ratingsCount": "{count, plural, one {# rating} other {# ratings}}"
+      }
+    },
+    "status": {
+      "PENDING": "Pending approval",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SUSPENDED": "Suspended"
+    },
+    "verification": {
+      "UNVERIFIED": "Unverified",
+      "VERIFIED": "Verified",
+      "REJECTED": "Verification rejected"
+    },
+    "statusBanner": {
+      "PENDING": {
+        "title": "Your application is pending approval",
+        "description": "While staff reviews it you cannot see or accept requests. Upload your documents in My documents to speed up the review."
+      },
+      "REJECTED": {
+        "title": "Your application was rejected",
+        "description": "You cannot see or accept requests. Contact support if you think this is a mistake."
+      },
+      "SUSPENDED": {
+        "title": "Your professional account is suspended",
+        "description": "You cannot see or accept requests while suspended. Contact support for more information."
       }
     }
   },
@@ -1470,7 +1521,8 @@
       "actions": "Actions",
       "accept": "Accept",
       "empty": "There are no pending requests in your category",
-      "loadError": "We couldn't load the pending requests. Try reloading the page."
+      "loadError": "We couldn't load the pending requests. Try reloading the page.",
+      "notApproved": "Your professional profile is not approved yet: you cannot see or accept requests until staff approves it."
     }
   },
   "professionalServices": {
@@ -1558,5 +1610,35 @@
       "user": "User",
       "professional": "Professional"
     }
+  },
+  "legalConsents": {
+    "required": {
+      "title": {
+        "DATA_PROCESSING_CONSENT": "Data processing consent",
+        "IMAGE_USAGE_CONSENT": "Image usage consent",
+        "TERMS_OF_SERVICE": "Terms of service",
+        "PRIVACY_POLICY": "Privacy policy",
+        "SERVICE_CONTRACT_TERMS": "Service contract terms",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "User content liability"
+      },
+      "description": {
+        "DATA_PROCESSING_CONSENT": "To upload your documents we need your consent to process your personal data. Read the document and accept it to continue.",
+        "IMAGE_USAGE_CONSENT": "To upload photos we need your consent for image usage. Read the document and accept it to continue.",
+        "TERMS_OF_SERVICE": "Accept the terms of service to continue.",
+        "PRIVACY_POLICY": "Accept the privacy policy to continue.",
+        "SERVICE_CONTRACT_TERMS": "Accept the service contract terms to continue.",
+        "USER_CONTENT_LIABILITY_DISCLAIMER": "Accept the content liability notice to continue."
+      },
+      "viewDocument": "Read the document (version {version})",
+      "nothingPending": "There is nothing pending to accept. Try uploading the file again.",
+      "loadError": "Could not load the legal document. Try again.",
+      "acceptError": "Could not record your acceptance. Try again.",
+      "accept": "I accept and continue",
+      "accepting": "Saving..."
+    }
+  },
+  "uploads": {
+    "imageUnavailable": "Image unavailable",
+    "fileUnavailable": "The file could not be loaded."
   }
 }

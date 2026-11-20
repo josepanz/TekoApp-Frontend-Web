@@ -7,7 +7,8 @@ import { formatDate } from '@/lib/formatters';
 import { useAppLocale } from '@/i18n/use-app-locale';
 import { useSessionScopeQuery } from '@/core/auth/hooks';
 import { hasAnyPermission, PERMISSIONS } from '@/core/auth/permissions';
-import { usePresignedUrlQuery, useServiceProgressQuery } from '../hooks';
+import { useServiceProgressQuery } from '../hooks';
+import { PresignedImage } from '@/features/uploads/components/presigned-image';
 import type { ServiceProgressEntry } from '../api';
 
 // Bitácora de avance de un servicio, visible para staff en el detalle admin — decisión de alcance
@@ -84,21 +85,9 @@ function ProgressEntryRow({ entry }: { entry: ServiceProgressEntry }) {
 
 function ProgressEntryPhoto({ imageKey }: { imageKey: string }) {
   const t = useTranslations('services');
-  const { data, isPending, isError } = usePresignedUrlQuery(imageKey);
-
-  if (isPending) {
-    return <Skeleton className="h-16 w-16 rounded-md" />;
-  }
-  if (isError || !data) {
-    return null;
-  }
-
   return (
-    // `next/image` no se usa en ningún lado de este repo todavía (ver Avatar/AvatarImage, que
-    // también renderiza un <img> plano) — no se introduce acá para una sola miniatura.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={data.url}
+    <PresignedImage
+      fileKey={imageKey}
       alt={t('detail.progressLog.photoAlt')}
       className="h-16 w-16 rounded-md object-cover"
     />
